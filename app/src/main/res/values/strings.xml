@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="drawer_open">op</string>
+    <string name="drawer_close">cl</string>
+
 </resources>

@@ -1,12 +1,11 @@
 package com.comrax.mouseappandroid;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by bez on 10/05/2015.
  */
-public class MainListActivity extends AppCompatActivity {
+public class MainListActivity extends MyDrawerLayoutActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +13,11 @@ public class MainListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_list);
 
 
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return 0;
     }
 
 }
