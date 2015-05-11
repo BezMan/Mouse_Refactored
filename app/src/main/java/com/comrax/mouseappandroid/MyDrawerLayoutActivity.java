@@ -2,13 +2,17 @@ package com.comrax.mouseappandroid;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,10 +32,42 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
 
+        final ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+        mTitleTextView.setText("My Own Title");
+
+
+        ImageButton imageButtonInfo = (ImageButton) mCustomView.findViewById(R.id.image_info);
+        imageButtonInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "info Clicked!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.image_burger);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCloseNavDrawer();
+            }
+        });
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
         mDrawerList = (ListView) findViewById(R.id.myNavList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
 
         setNavDrawerData();
+
+
 
     }
 
@@ -55,8 +91,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         addDrawerItems();
         setupDrawer();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 
@@ -75,14 +111,15 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 
             }
+
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
 //                getSupportActionBar().setTitle("regular");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+//        mDrawerToggle.setDrawerIndicatorEnabled(true);
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
@@ -96,35 +133,35 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.icon_info) {
-//            openCloseNavDrawer();
-            return true;
-        }
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-//    private void openCloseNavDrawer() {
-//        if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
-//            mDrawerLayout.openDrawer(GravityCompat.START);
 //
-//        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
-//            mDrawerLayout.closeDrawers();
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
 //    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.icon_info) {
+////            openCloseNavDrawer();
+//            return true;
+//        }
+//        if (mDrawerToggle.onOptionsItemSelected(item)) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
+
+    private void openCloseNavDrawer() {
+        if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
+            mDrawerLayout.openDrawer(GravityCompat.START);
+
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawers();
+    }
 
     public void onNavDrawerItemClick(int mPosition) {
         DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
@@ -174,8 +211,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
     private void logout() {
     }
-
-
 
 
 }

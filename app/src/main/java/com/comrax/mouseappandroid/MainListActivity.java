@@ -16,6 +16,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 //        initVars();
 
 
+
+
     }
 
     @Override
