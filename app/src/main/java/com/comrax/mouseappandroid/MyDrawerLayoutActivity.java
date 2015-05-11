@@ -24,24 +24,29 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-
     public ArrayList<DrawerModel> customDrawerItemsArr = new ArrayList<>();
+
+    View mCustomView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
 
-        final ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
 
-        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
-        mTitleTextView.setText("My Own Title");
+        setActionBarData();
+        setClickableIcons();
+
+        mDrawerList = (ListView) findViewById(R.id.myNavList);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
+
+        setNavDrawerData();
 
 
+
+    }
+
+    private void setClickableIcons() {
         ImageButton imageButtonInfo = (ImageButton) mCustomView.findViewById(R.id.image_info);
         imageButtonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,18 +63,27 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                 openCloseNavDrawer();
             }
         });
+    }
 
-        mActionBar.setCustomView(mCustomView);
+
+    private void setActionBarData() {
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+
+        final ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+        mTitleTextView.setText("My Own Title");
+
+        ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+
+        mActionBar.setCustomView(mCustomView, layout);
         mActionBar.setDisplayShowCustomEnabled(true);
 
-        mDrawerList = (ListView) findViewById(R.id.myNavList);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
-
-        setNavDrawerData();
-
-
-
     }
+
+
 
     protected abstract int getLayoutResourceId();
 

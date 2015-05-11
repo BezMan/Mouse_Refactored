@@ -17,10 +17,11 @@
 
     <ImageButton
         android:id="@+id/image_burger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:padding="4dp"
         android:src="@drawable/burger"
         android:scaleType="fitXY"
 
@@ -28,10 +29,11 @@
 
     <ImageButton
         android:id="@+id/image_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:padding="4dp"
         android:src="@drawable/icon_info"
         android:scaleType="fitXY"
         />
