@@ -110,10 +110,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
 
     private void openCloseNavDrawer() {
-        if (!mDrawerLayout.isDrawerOpen(GravityCompat.START))
-            mDrawerLayout.openDrawer(GravityCompat.END);
+        if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
+            mDrawerLayout.openDrawer(GravityCompat.START);
 
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.END))
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             mDrawerLayout.closeDrawers();
     }
 

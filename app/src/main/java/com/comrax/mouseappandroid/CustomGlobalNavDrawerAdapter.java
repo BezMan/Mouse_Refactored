@@ -74,7 +74,6 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
 
         holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
         holder.imageViewIcon = (ImageView) view.findViewById(R.id.nav_drawer_imageView);
-        holder.imageViewAttendingCount = (ImageView) view.findViewById(R.id.attending_count_imageView);
 
         /************  Set Model values in Holder elements ***********/
 //        holder.textView.setText(tempValues.getBtnTitle());
@@ -101,8 +100,8 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
      */
     public static class NavDrawerViewHolder {
 
-        public TextView textView, attendingCountTxt;
-        public ImageView imageViewIcon, imageViewAttendingCount;
+        public TextView textView;
+        public ImageView imageViewIcon;
 
     }
 

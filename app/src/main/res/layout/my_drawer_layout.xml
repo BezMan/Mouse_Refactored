@@ -4,29 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--<LinearLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
 
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/white">
+        <!--android:layout_width="match_parent" android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:background="@android:color/white">-->
+        <!-- -->
 
-        <!--<include layout="@layout/loader"/>-->
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/dummy_list"-->
+            <!-->-->
+        <!--</ListView>-->
 
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/dummy_list"
-            >
-        </ListView>
-
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <RelativeLayout
-        android:layout_width="100dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         >
 
         <!-- Side navigation drawer UI -->
@@ -34,19 +32,16 @@
             android:id="@+id/myNavList"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_below="@+id/nav_drawer_imageView"
+        />
 
-           />
 
-
-        <ImageView
+        <SearchView
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/nav_drawer_imageView"
             android:layout_gravity="center"
-            android:layout_below="@+id/myNavList"
-            android:src="@drawable/janssen_logo_white"
             android:padding="8dp"
-            android:background="@android:color/black"
 
             />
     </RelativeLayout>
