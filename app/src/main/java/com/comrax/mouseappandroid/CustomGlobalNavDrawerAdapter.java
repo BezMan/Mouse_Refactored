@@ -70,13 +70,13 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
         tempValues = null;
         tempValues = (DrawerModel) _listModelList.get(position);
 
-//        view = inflater.inflate(R.layout.details_nav_drawer_item_layout, null);
-//
-//        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
-//        holder.imageViewIcon = (ImageView) view.findViewById(R.id.nav_drawer_imageView);
-//        holder.imageViewAttendingCount = (ImageView) view.findViewById(R.id.attending_count_imageView);
-//
-//        /************  Set Model values in Holder elements ***********/
+        view = inflater.inflate(R.layout.details_nav_drawer_item_layout, null);
+
+        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
+        holder.imageViewIcon = (ImageView) view.findViewById(R.id.nav_drawer_imageView);
+        holder.imageViewAttendingCount = (ImageView) view.findViewById(R.id.attending_count_imageView);
+
+        /************  Set Model values in Holder elements ***********/
 //        holder.textView.setText(tempValues.getBtnTitle());
 //        holder.imageViewIcon.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempValues.getBtnImage(), null, null));
 ////
@@ -88,7 +88,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
 //        }
 //
 //        /******** Set Item Click Listner for LayoutInflater for each row ***********/
-//        view.setOnClickListener(new OnItemClickListener(position));
+        view.setOnClickListener(new OnItemClickListener(position));
 //
 //
         return view;
@@ -109,18 +109,18 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
     /**
      * ****** Called when Item click in ListView ***********
      */
-//    private class OnItemClickListener implements View.OnClickListener {
-//        private int mPosition;
-//
-//        OnItemClickListener(int position) {
-//            mPosition = position;
-//        }
-//
-//        @Override
-//        public void onClick(View arg0) {
-//
-//        if(_activity instanceof ConfDetailsActivity)
-//            ((ConfDetailsActivity) _activity).onNavDrawerItemClick(mPosition);
+    private class OnItemClickListener implements View.OnClickListener {
+        private int mPosition;
+
+        OnItemClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public void onClick(View arg0) {
+
+        if(_activity instanceof MainListActivity)
+            ((MainListActivity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof ConfListActivity)
 //            ((ConfListActivity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof HelpActivity)
@@ -134,7 +134,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
 //        else if(_activity instanceof SearchExtendedActivity)
 //            ((SearchExtendedActivity) _activity).onNavDrawerItemClick(mPosition);
 //
-//        }
-//    }
+        }
+    }
 
 }
