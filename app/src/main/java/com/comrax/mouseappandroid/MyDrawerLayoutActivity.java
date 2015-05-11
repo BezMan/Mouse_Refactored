@@ -2,7 +2,6 @@ package com.comrax.mouseappandroid;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +54,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
         addDrawerItems();
         setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
 
@@ -68,12 +71,18 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+//                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 
             }
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
+//                getSupportActionBar().setTitle("regular");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
@@ -97,8 +106,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.my_menu) {
-            openCloseNavDrawer();
+        if (id == R.id.icon_info) {
+//            openCloseNavDrawer();
             return true;
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -109,13 +118,13 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
 
-    private void openCloseNavDrawer() {
-        if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
-            mDrawerLayout.openDrawer(GravityCompat.START);
-
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
-            mDrawerLayout.closeDrawers();
-    }
+//    private void openCloseNavDrawer() {
+//        if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
+//            mDrawerLayout.openDrawer(GravityCompat.START);
+//
+//        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+//            mDrawerLayout.closeDrawers();
+//    }
 
     public void onNavDrawerItemClick(int mPosition) {
         DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
