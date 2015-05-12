@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid;
+package com.comrax.mouseappandroid.model;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class GlobalVars {
 
-    public static final String SERVER_URL = "https://confinder.comrax.com/srvapi";
+    public static final String SERVER_URL = "http://www.mouse.co.il";
 
     public static final String[] ColorNames = {"orange_", "red_", "grey_", "purple_", "blue_", "light_blue_", "green_", "yellow_"};
     public static final String[] ColorCodes = {"#eb8f2c", "#e31232", "#706e73", "#641f89", "#284f94", "#3f98dc", "#7bc741", "#ecf247"};

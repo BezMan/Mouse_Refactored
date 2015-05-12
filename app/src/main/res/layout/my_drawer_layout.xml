@@ -4,22 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<LinearLayout-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
 
-        <!--android:layout_width="match_parent" android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:background="@android:color/white">-->
-        <!-- -->
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white">
 
-        <!--<ListView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/dummy_list"-->
-            <!-->-->
-        <!--</ListView>-->
 
-    <!--</LinearLayout>-->
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_grid"
+            android:numColumns="2"
+            >
+        </GridView>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="300dp"
@@ -31,19 +32,19 @@
         <ListView
             android:id="@+id/myNavList"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="4500dp"
             android:layout_below="@+id/nav_drawer_imageView"
         />
 
 
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nav_drawer_imageView"
-            android:layout_gravity="center"
-            android:padding="8dp"
+        <!--<SearchView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/nav_drawer_imageView"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:padding="8dp"-->
 
-            />
+            <!--/>-->
     </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

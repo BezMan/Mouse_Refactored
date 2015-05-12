@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid;
+package com.comrax.mouseappandroid.model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.comrax.mouseappandroid.activities.MainListActivity;
+import com.comrax.mouseappandroid.R;
 
 import java.util.ArrayList;
 

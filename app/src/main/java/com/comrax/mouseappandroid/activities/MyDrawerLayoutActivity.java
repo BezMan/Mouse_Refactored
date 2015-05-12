@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid;
+package com.comrax.mouseappandroid.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +13,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.model.CustomGlobalNavDrawerAdapter;
+import com.comrax.mouseappandroid.model.DrawerModel;
+import com.comrax.mouseappandroid.model.GlobalVars;
 
 import java.util.ArrayList;
 
