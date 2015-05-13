@@ -13,11 +13,11 @@
 
     <Button
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:text="New Button"
         android:id="@+id/button1"
-        android:layout_margin="10dp"
+        android:layout_margin="6dp"
         android:background="@color/White"
         />
 
@@ -29,11 +29,11 @@
 
     <Button
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:text="New Button"
         android:id="@+id/button2"
-        android:layout_margin="10dp"
+        android:layout_margin="6dp"
         android:background="@color/White"
 
         />
@@ -49,22 +49,22 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:text="New Button"
             android:id="@+id/button3"
-            android:layout_margin="10dp"
+            android:layout_margin="6dp"
             android:background="@color/White"
 
             />
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:text="New Button"
             android:id="@+id/button4"
-            android:layout_margin="10dp"
+            android:layout_margin="6dp"
             android:background="@color/White"
             />
 
@@ -77,7 +77,6 @@
         android:id="@+id/toDownloadTxt"
         android:textSize="20dp"
         android:background="@color/Achbar_green"
-        android:paddingRight="10dp"
         />
 
 

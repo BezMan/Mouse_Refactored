@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="152dp" android:layout_height="150dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginTop="12dp"
-    android:background="@color/White"
-    android:layout_margin="22dp"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="152dp"
+    android:layout_height="160dp"
+    android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/cityImageView"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        />
-
-    <TextView
-        android:id="@+id/cityNameText"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/cityImageView"
-        android:text="לונדון"
-        android:textColor="@color/Black"
-        android:gravity="bottom"
-        android:padding="9dp"
-        />
-    <ImageView
-        android:id="@+id/cityImageArrow"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_below="@+id/cityImageView"
-        android:src="@drawable/down_arrow"
-        android:padding="5dp"
-        android:layout_alignBottom="@+id/cityNameText"
-        />
+        android:layout_margin="6dp"
+        android:background="@color/White">
 
-</RelativeLayout>
+
+        <ImageView
+            android:id="@+id/cityImageView"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/cityNameText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cityImageView"
+            android:gravity="bottom"
+            android:padding="9dp"
+            android:text="לונדון"
+            android:textColor="@color/Black"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/cityImageArrow"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignBottom="@+id/cityNameText"
+            android:layout_below="@+id/cityImageView"
+            android:padding="5dp"
+            android:src="@drawable/down_arrow" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
