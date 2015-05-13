@@ -1,8 +1,12 @@
 package com.comrax.mouseappandroid.activities;
 
 import android.os.Bundle;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.model.CitiesModel;
+import com.comrax.mouseappandroid.model.citiesAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,21 +19,29 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by bez on 10/05/2015.
  */
 public class MainListActivity extends MyDrawerLayoutActivity {
 
-//    public ListView _listView;
+    private GridView gridView;
+    public ArrayList<CitiesModel> customListViewValuesArr = new ArrayList<>();
+    citiesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        _listView = (ListView) findViewById(R.id.dummy_list);
+
+        gridView = (GridView)findViewById(R.id.main_grid);
 
         openCities(loadJsonDataFromFile("/sdcard/Mouse_App/cities.json"));
+
+        adapter = new citiesAdapter(this, customListViewValuesArr, getResources());
+
+        gridView.setAdapter(adapter);
+
     }
 
     private void openCities(JSONObject jsonObj) {
@@ -39,26 +51,25 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             data = jsonObj.getJSONArray("cities");
             // looping through All nodes
             for (int i = 0; i < data.length(); i++) {
-                JSONObject c = data.getJSONObject(i);
+                JSONObject item = data.getJSONObject(i);
 
-                String id = c.getString("id");
-                String title = c.getString("boneId");
-                String duration = c.getString("duration");
-                //use >  int id = c.getInt("duration"); if you want get an int
-
-
-                // tmp hashmap for single node
-                HashMap<String, String> parsedData = new HashMap<String, String>();
-
-                // adding each child node to HashMap key => value
-                parsedData.put("id", id);
-                parsedData.put("title", title);
-                parsedData.put("duration", duration);
+                String id = item.getString("id");
+                String boneId = item.getString("boneId");
+                String image = item.getString("image");
+                String name = item.getString("name");
 
 
-                // do what do you want on your interface
+                final CitiesModel cityItem = new CitiesModel();
+
+                cityItem.setId(id);
+                cityItem.setBoneId(boneId);
+                cityItem.setImage(image);
+                cityItem.setName(name);
+
+                customListViewValuesArr.add(cityItem);
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -105,6 +116,19 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     }
 //            JSONObject jsonObj = new JSONObject(jsonStr);
+
+
+    public void onListItemClick(int mPosition) {
+        CitiesModel tempValues = customListViewValuesArr.get(mPosition);
+
+//        Intent detailsIntent = new Intent(this, ConfDetailsActivity.class);
+//        detailsIntent.putExtra("NID", tempValues.getNid());
+//        detailsIntent.putExtra("COLORPOS", mColorPos);
+//        startActivity(detailsIntent);
+
+        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
+    }
+
 
 
 }

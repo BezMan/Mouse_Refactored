@@ -6,10 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.model.ListModel;
+import com.comrax.mouseappandroid.model.InitialFilesModel;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -40,10 +39,12 @@ import java.util.zip.ZipInputStream;
 
 public class SplashActivity extends Activity {
 
-    public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
+    public ArrayList<InitialFilesModel> customListViewValuesArr = new ArrayList<>();
+
     enum Request {
         PRIMARY, ZIP
     }
+
     private static Request _request;
 
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
@@ -58,7 +59,7 @@ public class SplashActivity extends Activity {
         getAllData();
     }
 
-    private void getAllData(){
+    private void getAllData() {
         _request = Request.PRIMARY;
         new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
 
@@ -80,12 +81,12 @@ public class SplashActivity extends Activity {
             try {
                 response = httpclient.execute(new HttpGet(uri[0]));
                 StatusLine statusLine = response.getStatusLine();
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     response.getEntity().writeTo(out);
                     responseString = out.toString();
                     out.close();
-                } else{
+                } else {
                     //Closes the connection.
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
@@ -102,7 +103,7 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             //Do anything with response..
-                setAllItemsData(result);
+            setAllItemsData(result);
         }
     }
 
@@ -123,14 +124,13 @@ public class SplashActivity extends Activity {
 //                final ListModel listModel = new ListModel();
 //
 //                listModel.setId(item.getString("id"));
-//                listModel.setCityId(item.getString("CityId"));
-//                listModel.setFile(item.getString("File"));
-//                listModel.setUpdate_date(item.getString("Update_date"));
+//                listModel.setBoneId(item.getString("CityId"));
+//                listModel.setImage(item.getString("File"));
+//                listModel.setName(item.getString("Update_date"));
 //
 //                customListViewValuesArr.add(listModel);
 //            }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -177,7 +177,7 @@ public class SplashActivity extends Activity {
                 File file = new File("/sdcard/Default_master.zip");
 
                 //only continue if non-existant.
-                if(!file.exists()) {
+                if (!file.exists()) {
 
                     OutputStream output = new FileOutputStream(file);
 
@@ -195,12 +195,13 @@ public class SplashActivity extends Activity {
                     output.close();
                     input.close();
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             return null;
 
         }
+
         protected void onProgressUpdate(String... progress) {
-            Log.d("ANDRO_ASYNC",progress[0]);
             mProgressDialog.setProgress(Integer.parseInt(progress[0]));
         }
 
@@ -219,37 +220,35 @@ public class SplashActivity extends Activity {
     }
 
 
-
 //    http://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android
 
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(new FileInputStream(zipFile)));
-        try {
-            ZipEntry ze;
-            int count;
-            byte[] buffer = new byte[8192];
-            while ((ze = zis.getNextEntry()) != null) {
-                File file = new File(targetDirectory, ze.getName());
-                File dir = ze.isDirectory() ? file : file.getParentFile();
-                if (!dir.isDirectory() && !dir.mkdirs())
-                    throw new FileNotFoundException("Failed to ensure directory: " +
-                            dir.getAbsolutePath());
-                if (ze.isDirectory())
-                    continue;
-                FileOutputStream fout = new FileOutputStream(file);
-                try {
-                    while ((count = zis.read(buffer)) != -1)
-                        fout.write(buffer, 0, count);
-                } finally {
-                    fout.close();
+        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
+        if (!zipFile.exists())  //non-existant:
+            try {
+                ZipEntry ze;
+                int count;
+                byte[] buffer = new byte[8192];
+                while ((ze = zis.getNextEntry()) != null) {
+                    File file = new File(targetDirectory, ze.getName());
+                    File dir = ze.isDirectory() ? file : file.getParentFile();
+                    if (!dir.isDirectory() && !dir.mkdirs())
+                        throw new FileNotFoundException("Failed to ensure directory: " +
+                                dir.getAbsolutePath());
+                    if (ze.isDirectory())
+                        continue;
+                    FileOutputStream fout = new FileOutputStream(file);
+                    try {
+                        while ((count = zis.read(buffer)) != -1)
+                            fout.write(buffer, 0, count);
+                    } finally {
+                        fout.close();
+                    }
                 }
-              }
-        } finally {
-            zis.close();
-        }
+            } finally {
+                zis.close();
+            }
     }
-
 
 
 }

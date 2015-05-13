@@ -3,7 +3,7 @@ package com.comrax.mouseappandroid.model;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class ListModel {
+public class InitialFilesModel {
     private  String Id ="";
     private  String CityId ="";
     private  String File="";

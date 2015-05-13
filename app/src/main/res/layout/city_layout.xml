@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="152dp" android:layout_height="150dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
+    android:background="@color/White">
+
+
+    <ImageView
+        android:id="@+id/cityImageView"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        />
+
+    <TextView
+        android:id="@+id/cityNameText"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/cityImageView"
+        android:text="לונדון"
+        android:textColor="@color/Black"
+        android:gravity="bottom"
+        android:padding="9dp"
+        />
+    <ImageView
+        android:id="@+id/cityImageArrow"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_below="@+id/cityImageView"
+        android:src="@drawable/side_arrow"
+        android:padding="5dp"
+        android:layout_alignBottom="@+id/cityNameText"
+        />
+
+</RelativeLayout>
