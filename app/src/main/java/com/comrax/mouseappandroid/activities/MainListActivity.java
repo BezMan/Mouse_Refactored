@@ -1,6 +1,8 @@
 package com.comrax.mouseappandroid.activities;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
+
 /**
  * Created by bez on 10/05/2015.
  */
@@ -29,6 +33,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     private GridView gridView;
     public ArrayList<CitiesModel> customListViewValuesArr = new ArrayList<>();
     citiesAdapter adapter;
+    View footerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         openCities(loadJsonDataFromFile("/sdcard/Mouse_App/cities.json"));
 
-        adapter = new citiesAdapter(this, customListViewValuesArr, getResources());
+        addFooter();
 
+        adapter = new citiesAdapter(this, customListViewValuesArr, getResources());
         gridView.setAdapter(adapter);
 
     }
@@ -73,6 +80,17 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void addFooter() {
+        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)findViewById(R.id.main_grid);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View headerView = layoutInflater.inflate(R.layout.banner_layout, null);
+//        View footerView = layoutInflater.inflate(R.layout.test_footer_view, null);
+        gridView.addHeaderView(headerView);
+//        gridView.addFooterView(footerView);
 
     }
 

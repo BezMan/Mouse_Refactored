@@ -3,7 +3,9 @@
     android:layout_width="152dp" android:layout_height="150dp"
     android:layout_marginLeft="12dp"
     android:layout_marginTop="12dp"
-    android:background="@color/White">
+    android:background="@color/White"
+    android:layout_margin="22dp"
+    >
 
 
     <ImageView
@@ -27,7 +29,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_below="@+id/cityImageView"
-        android:src="@drawable/side_arrow"
+        android:src="@drawable/down_arrow"
         android:padding="5dp"
         android:layout_alignBottom="@+id/cityNameText"
         />

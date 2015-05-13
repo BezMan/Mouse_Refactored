@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Gray"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:text="New Button"
+        android:id="@+id/button1"
+        android:layout_margin="10dp"
+        android:background="@color/White"
+        />
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="70dp"-->
+
+            <!--/>-->
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_margin="10dp"
+        android:background="@color/White"
+
+        />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="New Button"
+            android:id="@+id/button3"
+            android:layout_margin="10dp"
+            android:background="@color/White"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="New Button"
+            android:id="@+id/button4"
+            android:layout_margin="10dp"
+            android:background="@color/White"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:text="מדריכי ערים להורדה"
+        android:id="@+id/toDownloadTxt"
+        android:textSize="20dp"
+        android:background="@color/Achbar_green"
+        android:paddingRight="10dp"
+        />
+
+
+</LinearLayout>

@@ -5,23 +5,24 @@
     android:layout_height="match_parent"
     >
 
-    <LinearLayout
+    <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/white">
+        >
 
-
-        <GridView
+        <in.srain.cube.views.GridViewWithHeaderAndFooter
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main_grid"
             android:numColumns="2"
-            >
-        </GridView>
 
-    </LinearLayout>
+            >
+        </in.srain.cube.views.GridViewWithHeaderAndFooter>
+
+
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="300dp"
