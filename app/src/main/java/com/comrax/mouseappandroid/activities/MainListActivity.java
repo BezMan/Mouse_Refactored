@@ -36,6 +36,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     public ArrayList<BannersModel> BannersArray = new ArrayList<>();
     CitiesAdapter citiesAdapter;
 
+    View headerView;
     Button b1, b2, b3, b4;
 
 
@@ -58,18 +59,19 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View headerView = layoutInflater.inflate(R.layout.banner_layout, null);
+        headerView = layoutInflater.inflate(R.layout.banner_layout, null);
         gridView.addHeaderView(headerView);
 
-        b1 = (Button) headerView.findViewById(R.id.banner_button1);
-        b2 = (Button) headerView.findViewById(R.id.banner_button2);
-        b3 = (Button) headerView.findViewById(R.id.banner_button3);
-        b4 = (Button) headerView.findViewById(R.id.banner_button4);
+//        b1 = (Button) headerView.findViewById(R.id.banner_button1);
+//        b2 = (Button) headerView.findViewById(R.id.banner_button2);
+//        b3 = (Button) headerView.findViewById(R.id.banner_button3);
+//        b4 = (Button) headerView.findViewById(R.id.banner_button4);
     }
 
 
     private void setBanners(JSONObject jsonObj) {
-        // Getting data JSON Array nodes
+        Button[] buttons = {b1,b2, b3, b4};
+         // Getting data JSON Array nodes
         JSONArray data = null;
         try {
             data = jsonObj.getJSONArray("banners");
@@ -89,11 +91,14 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 bannerItem.setUrlAndroid(urlAndroid);
 
                 BannersArray.add(bannerItem);
+
+                int resID = getResources().getIdentifier("banner_button"+ (i+1),
+                        "id", getPackageName());
+                buttons[i] = (Button) headerView.findViewById(resID);
+
+                buttons[i].setText(BannersArray.get(i).getText());
+
             }
-            b1.setText(BannersArray.get(0).getText());
-            b2.setText(BannersArray.get(1).getText());
-            b3.setText(BannersArray.get(2).getText());
-            b4.setText(BannersArray.get(3).getText());
 
         } catch (JSONException e) {
             e.printStackTrace();
