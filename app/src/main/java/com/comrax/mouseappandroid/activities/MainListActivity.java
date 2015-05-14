@@ -1,9 +1,12 @@
 package com.comrax.mouseappandroid.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -38,6 +41,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     View headerView;
     Button b1, b2, b3, b4;
+    ImageView image1,image2,image3,image4;
 
 
     @Override
@@ -61,16 +65,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         headerView = layoutInflater.inflate(R.layout.banner_layout, null);
         gridView.addHeaderView(headerView);
-
-//        b1 = (Button) headerView.findViewById(R.id.banner_button1);
-//        b2 = (Button) headerView.findViewById(R.id.banner_button2);
-//        b3 = (Button) headerView.findViewById(R.id.banner_button3);
-//        b4 = (Button) headerView.findViewById(R.id.banner_button4);
     }
 
 
     private void setBanners(JSONObject jsonObj) {
         Button[] buttons = {b1,b2, b3, b4};
+        ImageView[] images = {image1, image2, image3, image4};
          // Getting data JSON Array nodes
         JSONArray data = null;
         try {
@@ -92,11 +92,20 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 BannersArray.add(bannerItem);
 
-                int resID = getResources().getIdentifier("banner_button"+ (i+1),
-                        "id", getPackageName());
-                buttons[i] = (Button) headerView.findViewById(resID);
-
+                int buttonID = getResources().getIdentifier("banner_button"+ (i+1), "id", getPackageName());
+                buttons[i] = (Button) headerView.findViewById(buttonID);
                 buttons[i].setText(BannersArray.get(i).getText());
+
+
+                int imageID = getResources().getIdentifier("banner_image"+ (i+1), "id", getPackageName());
+                images[i] = (ImageView) headerView.findViewById(imageID);
+
+                File file = new File("/sdcard/Mouse_App/" + BannersArray.get(i).getImageBIG());
+                if (file.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    images[i].setImageBitmap(bitmap);
+                }
+
 
             }
 

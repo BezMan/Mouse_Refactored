@@ -16,7 +16,7 @@
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:text="New Button"
         android:id="@+id/banner_button1"
         android:layout_marginTop="6dp"
@@ -26,20 +26,18 @@
         />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="57dp"
             android:layout_height="match_parent"
             android:id="@+id/banner_image1"
-            android:src="@drawable/side_arrow"
-            android:layout_gravity="center"
             android:background="@color/White"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
 
             />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:text="New Button"
         android:id="@+id/banner_button2"
         android:layout_marginTop="6dp"
@@ -50,13 +48,11 @@
         />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="57dp"
             android:layout_height="match_parent"
             android:id="@+id/banner_image2"
-            android:src="@drawable/side_arrow"
-            android:layout_gravity="center"
             android:background="@color/White"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:layout_marginRight="6dp"
 
             />
@@ -85,13 +81,11 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="57dp"
             android:layout_height="match_parent"
             android:id="@+id/banner_image3"
-            android:src="@drawable/side_arrow"
-            android:layout_gravity="center"
             android:background="@color/White"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
 
             />
 
@@ -109,13 +103,11 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="57dp"
             android:layout_height="match_parent"
             android:id="@+id/banner_image4"
-            android:src="@drawable/side_arrow"
-            android:layout_gravity="center"
             android:background="@color/White"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:layout_marginRight="6dp"
 
             />
