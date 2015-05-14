@@ -12,17 +12,24 @@
 
         >
 
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/banner_layout1"
+
+            >
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:text="New Button"
+        android:text="1 Button"
         android:id="@+id/banner_button1"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="6dp"
         android:background="@color/White"
-        android:onClick="bannerSelected"
+        android:clickable="false"
         />
 
         <ImageView
@@ -33,30 +40,38 @@
             android:layout_marginTop="6dp"
 
             />
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/banner_layout3"
+
+                >
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:text="New Button"
-        android:id="@+id/banner_button2"
+        android:text="3 Button"
+        android:id="@+id/banner_button3"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="6dp"
         android:background="@color/White"
-        android:onClick="bannerSelected"
-
+        android:clickable="false"
         />
 
         <ImageView
             android:layout_width="57dp"
             android:layout_height="match_parent"
-            android:id="@+id/banner_image2"
+            android:id="@+id/banner_image3"
             android:background="@color/White"
             android:layout_marginTop="6dp"
             android:layout_marginRight="6dp"
 
             />
 
+            </LinearLayout>
 
 
     </LinearLayout>
@@ -65,40 +80,61 @@
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
+
         >
+
+
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/banner_layout2"
+
+
+            >
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="New Button"
-            android:id="@+id/banner_button3"
+            android:text="2 Button"
+            android:id="@+id/banner_button2"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="6dp"
             android:background="@color/White"
-            android:onClick="bannerSelected"
+            android:clickable="false"
+
             />
 
 
         <ImageView
             android:layout_width="57dp"
             android:layout_height="match_parent"
-            android:id="@+id/banner_image3"
+            android:id="@+id/banner_image2"
             android:background="@color/White"
             android:layout_marginTop="6dp"
 
             />
 
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/banner_layout4"
+            >
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="New Button"
+            android:text="4 Button"
             android:id="@+id/banner_button4"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="6dp"
             android:background="@color/White"
-            android:onClick="bannerSelected"
+            android:clickable="false"
             />
 
 
@@ -112,6 +148,7 @@
 
             />
 
+    </LinearLayout>
     </LinearLayout>
 
     <TextView

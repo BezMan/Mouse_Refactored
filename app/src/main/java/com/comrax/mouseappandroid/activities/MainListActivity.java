@@ -1,12 +1,15 @@
 package com.comrax.mouseappandroid.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -42,6 +45,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     View headerView;
     Button b1, b2, b3, b4;
     ImageView image1,image2,image3,image4;
+    LinearLayout layout1, layout2, layout3, layout4;
 
 
     @Override
@@ -71,6 +75,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     private void setBanners(JSONObject jsonObj) {
         Button[] buttons = {b1,b2, b3, b4};
         ImageView[] images = {image1, image2, image3, image4};
+        LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
          // Getting data JSON Array nodes
         JSONArray data = null;
         try {
@@ -107,6 +112,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 }
 
 
+                int layoutID = getResources().getIdentifier("banner_layout"+ (i+1), "id", getPackageName());
+                layouts[i]= (LinearLayout) headerView.findViewById(layoutID);
+                layouts[i].setOnClickListener(new OnBannerClick(i));
+
+
             }
 
         } catch (JSONException e) {
@@ -116,7 +126,24 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     }
 
-    private void setCities(JSONObject jsonObj) {
+    private class OnBannerClick implements View.OnClickListener {
+        private int mposition;
+
+        OnBannerClick(int position) {
+            mposition = position;
+        }
+
+        @Override
+        public void onClick(View arg0) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BannersArray.get(mposition).getUrlAndroid()));
+            startActivity(browserIntent);
+        }
+    }
+
+
+
+
+        private void setCities(JSONObject jsonObj) {
         // Getting data JSON Array nodes
         JSONArray data = null;
         try {
@@ -149,21 +176,25 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
 
-    public void bannerSelected(View view) {
-        switch (view.getId()) {
-            case R.id.banner_button1:
-                Toast.makeText(getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.banner_button2:
-                Toast.makeText(getApplicationContext(), "222", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.banner_button3:
-                Toast.makeText(getApplicationContext(), "333", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.banner_button4:
-                Toast.makeText(getApplicationContext(), "444", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void bannerSelected(View view) {
+////        switch (view.getId()) {
+//
+////            case R.id.layouttt:
+//                                Toast.makeText(getApplicationContext(), "layout", Toast.LENGTH_SHORT).show();
+//
+////            case R.id.banner_button1:
+////                Toast.makeText(getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
+////                break;
+////            case R.id.banner_button2:
+////                Toast.makeText(getApplicationContext(), "222", Toast.LENGTH_SHORT).show();
+////                break;
+////            case R.id.banner_button3:
+////                Toast.makeText(getApplicationContext(), "333", Toast.LENGTH_SHORT).show();
+////                break;
+////            case R.id.banner_button4:
+////                Toast.makeText(getApplicationContext(), "444", Toast.LENGTH_SHORT).show();
+////        }
+//    }
 
     @Override
     protected int getLayoutResourceId() {
