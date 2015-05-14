@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
         PRIMARY, ZIP
     }
 
-    private static Request _request;
+    public static Request _request;
 
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
@@ -56,10 +56,10 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        getAllData();
+        getInitialData();
     }
 
-    private void getAllData() {
+    private void getInitialData() {
         _request = Request.PRIMARY;
         new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
 
@@ -123,12 +123,12 @@ public class SplashActivity extends Activity {
 //
 //                final ListModel listModel = new ListModel();
 //
-//                listModel.setId(item.getString("id"));
-//                listModel.setBoneId(item.getString("CityId"));
-//                listModel.setImage(item.getString("File"));
+//                listModel.setText(item.getString("id"));
+//                listModel.setImageBIG(item.getString("CityId"));
+//                listModel.setUrlAndroid(item.getString("File"));
 //                listModel.setName(item.getString("Update_date"));
 //
-//                customListViewValuesArr.add(listModel);
+//                CitiesArray.add(listModel);
 //            }
         } catch (JSONException e) {
             e.printStackTrace();

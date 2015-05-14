@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.model;
+package com.comrax.mouseappandroid.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities.MainListActivity;
+import com.comrax.mouseappandroid.model.CitiesModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class citiesAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
+public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
 
     private static LayoutInflater inflater = null;
     CitiesModel tempValues = null;
@@ -35,7 +36,7 @@ public class citiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
      /* **********  CustomAdapter Constructor ****************
      */
-    public citiesAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    public CitiesAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;

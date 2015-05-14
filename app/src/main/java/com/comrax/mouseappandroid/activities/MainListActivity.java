@@ -3,12 +3,13 @@ package com.comrax.mouseappandroid.activities;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.adapters.CitiesAdapter;
+import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
-import com.comrax.mouseappandroid.model.citiesAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,28 +31,78 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
  */
 public class MainListActivity extends MyDrawerLayoutActivity {
 
-    private GridView gridView;
-    public ArrayList<CitiesModel> customListViewValuesArr = new ArrayList<>();
-    citiesAdapter adapter;
-    View footerView;
+    GridViewWithHeaderAndFooter gridView;
+    public ArrayList<CitiesModel> CitiesArray = new ArrayList<>();
+    public ArrayList<BannersModel> BannersArray = new ArrayList<>();
+    CitiesAdapter citiesAdapter;
+
+    Button b1, b2, b3, b4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gridView = (GridView)findViewById(R.id.main_grid);
+        initVarsAndHeaders();
 
-        openCities(loadJsonDataFromFile("/sdcard/Mouse_App/cities.json"));
+        setBanners(loadJsonDataFromFile("/sdcard/Mouse_App/banners.json"));
+        setCities(loadJsonDataFromFile("/sdcard/Mouse_App/cities.json"));
 
-        addFooter();
-
-        adapter = new citiesAdapter(this, customListViewValuesArr, getResources());
-        gridView.setAdapter(adapter);
+        citiesAdapter = new CitiesAdapter(this, CitiesArray, getResources());
+        gridView.setAdapter(citiesAdapter);
 
     }
 
-    private void openCities(JSONObject jsonObj) {
+
+    private void initVarsAndHeaders() {
+
+        gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View headerView = layoutInflater.inflate(R.layout.banner_layout, null);
+        gridView.addHeaderView(headerView);
+
+        b1 = (Button) headerView.findViewById(R.id.banner_button1);
+        b2 = (Button) headerView.findViewById(R.id.banner_button2);
+        b3 = (Button) headerView.findViewById(R.id.banner_button3);
+        b4 = (Button) headerView.findViewById(R.id.banner_button4);
+    }
+
+
+    private void setBanners(JSONObject jsonObj) {
+        // Getting data JSON Array nodes
+        JSONArray data = null;
+        try {
+            data = jsonObj.getJSONArray("banners");
+            // looping through All nodes
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject item = data.getJSONObject(i);
+
+                String text = item.getString("text");
+                String imageBIG = item.getString("imageBIG");
+                String urlAndroid = item.getString("UrlAndroid");
+
+
+                final BannersModel bannerItem = new BannersModel();
+
+                bannerItem.setText(text);
+                bannerItem.setImageBIG(imageBIG);
+                bannerItem.setUrlAndroid(urlAndroid);
+
+                BannersArray.add(bannerItem);
+            }
+            b1.setText(BannersArray.get(0).getText());
+            b2.setText(BannersArray.get(1).getText());
+            b3.setText(BannersArray.get(2).getText());
+            b4.setText(BannersArray.get(3).getText());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void setCities(JSONObject jsonObj) {
         // Getting data JSON Array nodes
         JSONArray data = null;
         try {
@@ -73,32 +124,38 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 cityItem.setImage(image);
                 cityItem.setName(name);
 
-                customListViewValuesArr.add(cityItem);
+                CitiesArray.add(cityItem);
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
     }
 
-    private void addFooter() {
-        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)findViewById(R.id.main_grid);
 
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View headerView = layoutInflater.inflate(R.layout.banner_layout, null);
-//        View footerView = layoutInflater.inflate(R.layout.test_footer_view, null);
-        gridView.addHeaderView(headerView);
-//        gridView.addFooterView(footerView);
 
+    public void bannerSelected(View view) {
+        switch (view.getId()) {
+            case R.id.banner_button1:
+                Toast.makeText(getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.banner_button2:
+                Toast.makeText(getApplicationContext(), "222", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.banner_button3:
+                Toast.makeText(getApplicationContext(), "333", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.banner_button4:
+                Toast.makeText(getApplicationContext(), "444", Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     @Override
     protected int getLayoutResourceId() {
         return R.layout.my_drawer_layout;
     }
+
 
 
     public JSONObject loadJsonDataFromFile(String FILENAME) {
@@ -137,7 +194,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     public void onListItemClick(int mPosition) {
-        CitiesModel tempValues = customListViewValuesArr.get(mPosition);
+        CitiesModel tempValues = CitiesArray.get(mPosition);
 
 //        Intent detailsIntent = new Intent(this, ConfDetailsActivity.class);
 //        detailsIntent.putExtra("NID", tempValues.getNid());
@@ -146,7 +203,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
     }
-
 
 
 }
