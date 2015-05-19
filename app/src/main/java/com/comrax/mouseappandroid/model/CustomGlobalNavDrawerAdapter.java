@@ -14,10 +14,8 @@ import com.comrax.mouseappandroid.activities.MainListActivity;
 
 import java.util.ArrayList;
 
-/**
- * Created by betzalel on 20/04/2015.
- */
-public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
+
+public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     DrawerModel tempValues = null;

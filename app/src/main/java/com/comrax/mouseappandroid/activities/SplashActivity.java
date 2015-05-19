@@ -38,7 +38,7 @@ import java.util.zip.ZipInputStream;
 
 public class SplashActivity extends Activity {
 
-    public static final String MY_PREFS_NAME = "zipDates";
+    public static final String DATE_PREFS = "zipDates", URL_PREFS = "zipUrls";
 
     enum Request {
         PRIMARY, ZIP
@@ -108,7 +108,8 @@ public class SplashActivity extends Activity {
 
 
     public void compareDataDates(String result) {
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences fileDate = getSharedPreferences(DATE_PREFS, MODE_PRIVATE), fileUrl = getSharedPreferences(URL_PREFS, MODE_PRIVATE);
+
         boolean nextActivityHappening=false;
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -116,10 +117,10 @@ public class SplashActivity extends Activity {
 
             JSONObject item = (JSONObject) files.get(0);
 
-            String restoredText = prefs.getString(item.getString("CityId"), "-1");
+            String restoredText = fileDate.getString(item.getString("CityId"), null);
 
-            if (restoredText.equals("-1") || !restoredText.equals(item.getString("Update_date"))) { //not equal, so there is an update:
-                prefs.edit().putString(item.getString("CityId"), item.getString("Update_date")).commit();
+            if (restoredText == null || !restoredText.equals(item.getString("Update_date"))) { //not equal, so there is an update:
+                fileDate.edit().putString(item.getString("CityId"), item.getString("Update_date")).apply();
                 nextActivityHappening=true;
                 getZip(item.getString("File"));
 
@@ -127,12 +128,15 @@ public class SplashActivity extends Activity {
 
             for (int i = 1; i < files.length(); i++) {
                 item = (JSONObject) files.get(i);
-                prefs.edit().putString(item.getString("CityId"), item.getString("Update_date")).commit();
+                String temp = fileDate.getString(item.getString("CityId"), null);
+                if(temp == null || !temp.equals(item.getString("Update_date"))) {//only get values if nin-existant
+                    fileDate.edit().putString(item.getString("CityId"), item.getString("Update_date")).apply();
+                    fileUrl.edit().putString(item.getString("CityId"), item.getString("File")).apply();
+                }
             }
-//            prefs.edit().commit();
 
-            if(nextActivityHappening==false)
-                nextActivity();
+            if(!nextActivityHappening)
+                doAtLast();
 
 
         } catch (JSONException e) {
@@ -213,12 +217,12 @@ public class SplashActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            nextActivity();
+            doAtLast();
         }
     }
 
 
-    private void nextActivity() {
+    private void doAtLast() {
         startActivity(new Intent(SplashActivity.this, MainListActivity.class));
         finish();
 

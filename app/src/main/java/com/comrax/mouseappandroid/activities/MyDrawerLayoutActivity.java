@@ -18,9 +18,7 @@ import com.comrax.mouseappandroid.model.GlobalVars;
 
 import java.util.ArrayList;
 
-/**
- * Created by bez on 10/05/2015.
- */
+
 public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
