@@ -64,6 +64,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void initVarsAndHeaders() {
+
         gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         headerView = layoutInflater.inflate(R.layout.banner_layout, null);

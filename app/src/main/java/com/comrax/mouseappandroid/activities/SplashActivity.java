@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.model.GlobalVars;
+import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -37,8 +38,6 @@ import java.util.zip.ZipInputStream;
 
 
 public class SplashActivity extends Activity {
-
-    public static final String DATE_PREFS = "zipDates", URL_PREFS = "zipUrls";
 
     enum Request {
         PRIMARY, ZIP
@@ -108,35 +107,32 @@ public class SplashActivity extends Activity {
 
 
     public void compareDataDates(String result) {
-        SharedPreferences fileDate = getSharedPreferences(DATE_PREFS, MODE_PRIVATE), fileUrl = getSharedPreferences(URL_PREFS, MODE_PRIVATE);
 
-        boolean nextActivityHappening=false;
+        boolean nextActivityHappening = false;
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
 
-            JSONObject item = (JSONObject) files.get(0);
+            if (GlobalVars.initDataModelArrayList.size() == 0) {//dont wanna to double the drawer items...
 
-            String restoredText = fileDate.getString(item.getString("CityId"), null);
+                for (int i = 0; i < files.length(); i++) {
+                    JSONObject jsonItem = (JSONObject) files.get(i);
 
-            if (restoredText == null || !restoredText.equals(item.getString("Update_date"))) { //not equal, so there is an update:
-                fileDate.edit().putString(item.getString("CityId"), item.getString("Update_date")).apply();
-                nextActivityHappening=true;
-                getZip(item.getString("File"));
+                    final InitDataModel arrayItem = new InitDataModel();
 
-            }
+                    /******* Firstly take data in model object ******/
+                    arrayItem.setCityId(jsonItem.getString("CityId"));
+                    arrayItem.setFile(jsonItem.getString("File"));
+                    arrayItem.setUpdate_date(jsonItem.getString("Update_file"));
 
-            for (int i = 1; i < files.length(); i++) {
-                item = (JSONObject) files.get(i);
-                String temp = fileDate.getString(item.getString("CityId"), null);
-                if(temp == null || !temp.equals(item.getString("Update_date"))) {//only get values if nin-existant
-                    fileDate.edit().putString(item.getString("CityId"), item.getString("Update_date")).apply();
-                    fileUrl.edit().putString(item.getString("CityId"), item.getString("File")).apply();
+                    /******** Add Model Object in ArrayList **********/
+                    GlobalVars.initDataModelArrayList.add(arrayItem);
                 }
+
             }
 
-            if(!nextActivityHappening)
-                doAtLast();
+            if (!nextActivityHappening)
+                nextActivity();
 
 
         } catch (JSONException e) {
@@ -217,12 +213,12 @@ public class SplashActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            doAtLast();
+            nextActivity();
         }
     }
 
 
-    private void doAtLast() {
+    private void nextActivity() {
         startActivity(new Intent(SplashActivity.this, MainListActivity.class));
         finish();
 
