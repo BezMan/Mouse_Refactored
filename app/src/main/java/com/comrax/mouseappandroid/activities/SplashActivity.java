@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -108,31 +109,27 @@ public class SplashActivity extends Activity {
 
     public void compareDataDates(String result) {
 
-        boolean nextActivityHappening = false;
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
+            GlobalVars.initDataModelArrayList = new ArrayList<>();
 
-            if (GlobalVars.initDataModelArrayList.size() == 0) {//dont wanna to double the drawer items...
+            for (int i = 0; i < files.length(); i++) {
+                JSONObject jsonItem = (JSONObject) files.get(i);
 
-                for (int i = 0; i < files.length(); i++) {
-                    JSONObject jsonItem = (JSONObject) files.get(i);
+                final InitDataModel arrayItem = new InitDataModel();
 
-                    final InitDataModel arrayItem = new InitDataModel();
+                /******* Firstly take data in model object ******/
+                arrayItem.setCityId(jsonItem.getString("CityId"));
+                arrayItem.setFile(jsonItem.getString("File"));
+                arrayItem.setUpdate_date(jsonItem.getString("Update_date"));
 
-                    /******* Firstly take data in model object ******/
-                    arrayItem.setCityId(jsonItem.getString("CityId"));
-                    arrayItem.setFile(jsonItem.getString("File"));
-                    arrayItem.setUpdate_date(jsonItem.getString("Update_file"));
-
-                    /******** Add Model Object in ArrayList **********/
-                    GlobalVars.initDataModelArrayList.add(arrayItem);
-                }
-
+                /******** Add Model Object in ArrayList **********/
+                GlobalVars.initDataModelArrayList.add(arrayItem);
             }
 
-            if (!nextActivityHappening)
-                nextActivity();
+
+            getZip(GlobalVars.initDataModelArrayList.get(0).getFile());
 
 
         } catch (JSONException e) {

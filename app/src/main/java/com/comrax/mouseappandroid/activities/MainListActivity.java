@@ -1,9 +1,12 @@
 package com.comrax.mouseappandroid.activities;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +19,28 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
+import com.comrax.mouseappandroid.model.GlobalVars;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
@@ -46,6 +58,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     Button b1, b2, b3, b4;
     ImageView image1,image2,image3,image4;
     LinearLayout layout1, layout2, layout3, layout4;
+
+    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -227,7 +242,134 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 //        startActivity(detailsIntent);
 
         Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
+        for (int i=0; i< GlobalVars.initDataModelArrayList.size(); i++){
+            if(GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())){
+                new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(i).getFile());
+
+            }
+        }
     }
+
+
+
+
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_DOWNLOAD_PROGRESS:
+                mProgressDialog = new ProgressDialog(this);
+                mProgressDialog.setMessage("Downloading file..");
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+                return mProgressDialog;
+            default:
+                return null;
+        }
+    }
+
+    class DownloadFileAsync extends AsyncTask<String, String, String> {
+
+        String fileName;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+        }
+
+        @Override
+        protected String doInBackground(String... aurl) {
+            int count;
+            fileName = aurl[0].substring(aurl[0].lastIndexOf("/") + 1);
+            try {
+
+                URL url = new URL(aurl[0]);
+                URLConnection conexion = url.openConnection();
+                conexion.connect();
+
+                int lenghtOfFile = conexion.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream());
+                File file = new File("/sdcard/" + fileName);
+                //only continue if non-existant.
+                if (!file.exists()) {
+
+                    OutputStream output = new FileOutputStream(file);
+                    byte data[] = new byte[1024];
+                    long total = 0;
+
+                    while ((count = input.read(data)) != -1) {
+                        total += count;
+                        publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                        output.write(data, 0, count);
+                    }
+
+                    output.flush();
+                    output.close();
+                    input.close();
+                }
+            } catch (Exception e) {
+            }
+            return null;
+
+        }
+
+        protected void onProgressUpdate(String... progress) {
+            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String unused) {
+            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
+
+            try {
+                unzip(new File("/sdcard/" + fileName), new File("/sdcard/Mouse_App"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            nextActivity();
+        }
+    }
+
+
+    public static void unzip(File zipFile, File targetDirectory) throws IOException {
+        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
+        if (!targetDirectory.exists())  //non-existant:
+            try {
+                ZipEntry ze;
+                int count;
+                byte[] buffer = new byte[8192];
+                while ((ze = zis.getNextEntry()) != null) {
+                    File file = new File(targetDirectory, ze.getName());
+                    File dir = ze.isDirectory() ? file : file.getParentFile();
+                    if (!dir.isDirectory() && !dir.mkdirs())
+                        throw new FileNotFoundException("Failed to ensure directory: " +
+                                dir.getAbsolutePath());
+                    if (ze.isDirectory())
+                        continue;
+                    FileOutputStream fout = new FileOutputStream(file);
+                    try {
+                        while ((count = zis.read(buffer)) != -1)
+                            fout.write(buffer, 0, count);
+                    } finally {
+                        fout.close();
+                    }
+                }
+            } finally {
+                zis.close();
+            }
+    }
+
+
+
+    private void nextActivity() {
+//        startActivity(new Intent(SplashActivity.this, MainListActivity.class));
+//        finish();
+
+    }
+
+
 
 
 }
