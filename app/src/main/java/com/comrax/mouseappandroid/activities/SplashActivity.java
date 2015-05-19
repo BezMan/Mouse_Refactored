@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.model.InitialFilesModel;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -32,14 +32,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 
 public class SplashActivity extends Activity {
 
-    public ArrayList<InitialFilesModel> customListViewValuesArr = new ArrayList<>();
+    public static final String MY_PREFS_NAME = "zipDates";
 
     enum Request {
         PRIMARY, ZIP
@@ -103,33 +102,39 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             //Do anything with response..
-            setAllItemsData(result);
+            compareDataDates(result);
         }
     }
 
 
-    public void setAllItemsData(String result) {
+    public void compareDataDates(String result) {
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        boolean nextActivityHappening=false;
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
 
             JSONObject item = (JSONObject) files.get(0);
 
-            getZip(item.getString("File"));
+            String restoredText = prefs.getString(item.getString("CityId"), "-1");
+
+            if (restoredText.equals("-1") || !restoredText.equals(item.getString("Update_date"))) { //not equal, so there is an update:
+                prefs.edit().putString(item.getString("CityId"), item.getString("Update_date")).commit();
+                nextActivityHappening=true;
+                getZip(item.getString("File"));
+
+            }
+
+            for (int i = 1; i < files.length(); i++) {
+                item = (JSONObject) files.get(i);
+                prefs.edit().putString(item.getString("CityId"), item.getString("Update_date")).commit();
+            }
+//            prefs.edit().commit();
+
+            if(nextActivityHappening==false)
+                nextActivity();
 
 
-//            for (int i = 0; i < files.length(); i++) {
-//                JSONObject item = (JSONObject) files.get(i);
-//
-//                final ListModel listModel = new ListModel();
-//
-//                listModel.setText(item.getString("id"));
-//                listModel.setImageBIG(item.getString("CityId"));
-//                listModel.setUrlAndroid(item.getString("File"));
-//                listModel.setName(item.getString("Update_date"));
-//
-//                CitiesArray.add(listModel);
-//            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -163,7 +168,6 @@ public class SplashActivity extends Activity {
         @Override
         protected String doInBackground(String... aurl) {
             int count;
-
             try {
 
                 URL url = new URL(aurl[0]);
@@ -171,18 +175,13 @@ public class SplashActivity extends Activity {
                 conexion.connect();
 
                 int lenghtOfFile = conexion.getContentLength();
-
                 InputStream input = new BufferedInputStream(url.openStream());
-
                 File file = new File("/sdcard/Default_master.zip");
-
                 //only continue if non-existant.
                 if (!file.exists()) {
 
                     OutputStream output = new FileOutputStream(file);
-
                     byte data[] = new byte[1024];
-
                     long total = 0;
 
                     while ((count = input.read(data)) != -1) {
@@ -214,13 +213,17 @@ public class SplashActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(SplashActivity.this, MainListActivity.class));
-            finish();
+            nextActivity();
         }
     }
 
 
-//    http://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android
+    private void nextActivity() {
+        startActivity(new Intent(SplashActivity.this, MainListActivity.class));
+        finish();
+
+    }
+
 
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
         ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
