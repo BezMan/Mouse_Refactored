@@ -1,0 +1,56 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_awesome_toolbar"
+    android:layout_height="60dp"
+    android:layout_width="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    android:background="@color/Achbar_green"
+
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/Achbar_green" >
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            android:textSize="28dp"
+            android:text="לונדוןןן"/>
+
+        <ImageButton
+            android:id="@+id/image_burger"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/burger"
+            android:scaleType="fitXY"
+            android:background="@color/Achbar_green"
+
+
+            />
+
+        <ImageButton
+            android:id="@+id/image_info"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/icon_info"
+            android:scaleType="fitXY"
+            android:background="@color/Achbar_green"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

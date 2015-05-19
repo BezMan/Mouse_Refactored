@@ -39,8 +39,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         setContentView(getLayoutResourceId());
 
 
-        setActionBarData();
-        setClickableIcons();
+//        setActionBarData();
+//        setClickableIcons();
 
         mDrawerList = (ListView) findViewById(R.id.myNavList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
