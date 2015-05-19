@@ -176,25 +176,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
 
-//    public void bannerSelected(View view) {
-////        switch (view.getId()) {
-//
-////            case R.id.layouttt:
-//                                Toast.makeText(getApplicationContext(), "layout", Toast.LENGTH_SHORT).show();
-//
-////            case R.id.banner_button1:
-////                Toast.makeText(getApplicationContext(), "111", Toast.LENGTH_SHORT).show();
-////                break;
-////            case R.id.banner_button2:
-////                Toast.makeText(getApplicationContext(), "222", Toast.LENGTH_SHORT).show();
-////                break;
-////            case R.id.banner_button3:
-////                Toast.makeText(getApplicationContext(), "333", Toast.LENGTH_SHORT).show();
-////                break;
-////            case R.id.banner_button4:
-////                Toast.makeText(getApplicationContext(), "444", Toast.LENGTH_SHORT).show();
-////        }
-//    }
 
     @Override
     protected int getLayoutResourceId() {
@@ -235,7 +216,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     }
-//            JSONObject jsonObj = new JSONObject(jsonStr);
 
 
     public void onListItemClick(int mPosition) {
