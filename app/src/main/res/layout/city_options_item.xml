@@ -10,7 +10,7 @@
         android:text="מילים בעברית"
         android:textSize="21dp"
         android:padding="16dp"
-        android:drawableLeft="@drawable/side_arrow"
+        android:drawableLeft="@drawable/grey_left_arrow"
         android:layout_weight="5"
         android:textStyle="bold"
 

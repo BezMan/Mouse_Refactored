@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -53,9 +52,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        setSupportActionBar(toolbar);
-
         initVarsAndHeaders();
 
         setBanners(loadJsonDataFromFile("/sdcard/Mouse_App/banners.json"));
@@ -68,7 +64,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void initVarsAndHeaders() {
-
         gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         headerView = layoutInflater.inflate(R.layout.banner_layout, null);

@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.comrax.mouseappandroid.activities.MainListActivity;
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.activities.MainListActivity;
 
 import java.util.ArrayList;
 
@@ -75,20 +74,13 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
 
         view = inflater.inflate(R.layout.details_nav_drawer_item_layout, null);
 
-        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
+//        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
         holder.imageViewIcon = (ImageView) view.findViewById(R.id.nav_drawer_imageView);
 
         /************  Set Model values in Holder elements ***********/
 //        holder.textView.setText(tempValues.getBtnTitle());
-//        holder.imageViewIcon.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempValues.getBtnImage(), null, null));
-////
-//        if(_activity instanceof ConfDetailsActivity && position==3) {
-//            holder.imageViewAttendingCount.setVisibility(View.VISIBLE);
-//            holder.attendingCountTxt = (TextView) view.findViewById(R.id.attending_count_txt);
-//
-//            holder.attendingCountTxt.setText(String.valueOf(ConfDetailsActivity.attending_count));
-//        }
-//
+        holder.imageViewIcon.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + tempValues.getBtnImage(), null, null));
+
 //        /******** Set Item Click Listner for LayoutInflater for each row ***********/
         view.setOnClickListener(new OnItemClickListener(position));
 //
@@ -103,7 +95,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter /*implements View.
      */
     public static class NavDrawerViewHolder {
 
-        public TextView textView;
+//        public TextView textView;
         public ImageView imageViewIcon;
 
     }

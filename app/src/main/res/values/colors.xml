@@ -1,6 +1,7 @@
 <resources>
 
     <color name="Achbar_green">#96c61a</color>
+    <color name="Achbar_gray">#353333</color>
 
 
     <color name="White">#FFFFFF</color>

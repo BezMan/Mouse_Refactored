@@ -5,11 +5,11 @@ package com.comrax.mouseappandroid.model;
  */
 public class DrawerModel {
 
-    private  String Text ="";
+//    private  String Text ="";
     private  String Image ="";
 
 
-    public void setBtnTitle(String Text) { this.Text = Text; }
+//    public void setBtnTitle(String Text) { this.Text = Text; }
 
     public void setBtnImage(String Image)
     {
@@ -18,10 +18,10 @@ public class DrawerModel {
 
 
 
-    public String getBtnTitle()
-    {
-        return this.Text;
-    }
+//    public String getBtnTitle()
+//    {
+//        return this.Text;
+//    }
 
     public String getBtnImage()
     {
