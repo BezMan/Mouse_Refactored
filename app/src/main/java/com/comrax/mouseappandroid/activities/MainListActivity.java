@@ -1,7 +1,7 @@
 package com.comrax.mouseappandroid.activities;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -254,20 +254,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("Downloading file..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
-    }
 
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
@@ -276,7 +262,18 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+            mProgressDialog = new ProgressDialog(MainListActivity.this);
+            mProgressDialog.setMessage("Downloading file..");
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setCancelable(true);
+            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DownloadFileAsync.this.cancel(true);
+                    dialog.dismiss();
+                }
+            });
+                    mProgressDialog.show();
         }
 
         @Override
@@ -303,6 +300,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         total += count;
                         publishProgress("" + (int) ((total * 100) / lenghtOfFile));
                         output.write(data, 0, count);
+
+                        if (isCancelled())
+                            break;
                     }
 
                     output.flush();
@@ -321,14 +321,20 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         @Override
         protected void onPostExecute(String unused) {
-            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
-
+            mProgressDialog.dismiss();
             try {
                 unzip(new File("/sdcard/Mouse_App/" + fileName), new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             nextActivity();
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+//            delete downloaded zip file on cancel:
+            new File("/sdcard/Mouse_App/" + fileName).delete();
+
         }
     }
 
