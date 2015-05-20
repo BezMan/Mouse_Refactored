@@ -6,5 +6,6 @@
 
     <string name="drawer_open">op</string>
     <string name="drawer_close">cl</string>
+    <string name="title_activity_detail__city_">Detail_City_Activity</string>
 
 </resources>

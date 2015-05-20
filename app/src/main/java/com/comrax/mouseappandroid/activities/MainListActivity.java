@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
+import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
 import com.comrax.mouseappandroid.model.GlobalVars;
@@ -27,20 +27,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
@@ -59,9 +52,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     ImageView image1,image2,image3,image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
-    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
-    private ProgressDialog mProgressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +59,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         initVarsAndHeaders();
 
-        setBanners(loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/banners.json"));
-        setCities(loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/cities.json"));
+        setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/banners.json"));
+        setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/cities.json"));
 
         citiesAdapter = new CitiesAdapter(this, CitiesArray, getResources());
         gridView.setAdapter(citiesAdapter);
@@ -103,7 +93,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 String imageBIG = item.getString("imageBIG");
                 String urlAndroid = item.getString("UrlAndroid");
 
-
                 final BannersModel bannerItem = new BannersModel();
 
                 bannerItem.setText(text);
@@ -126,31 +115,27 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     images[i].setImageBitmap(bitmap);
                 }
 
-
                 int layoutID = getResources().getIdentifier("banner_layout"+ (i+1), "id", getPackageName());
                 layouts[i]= (LinearLayout) headerView.findViewById(layoutID);
                 layouts[i].setOnClickListener(new OnBannerClick(i));
-
-
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
     }
 
     private class OnBannerClick implements View.OnClickListener {
-        private int mposition;
+        private int mPosition;
 
         OnBannerClick(int position) {
-            mposition = position;
+            mPosition = position;
         }
 
         @Override
         public void onClick(View arg0) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BannersArray.get(mposition).getUrlAndroid()));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BannersArray.get(mPosition).getUrlAndroid()));
             startActivity(browserIntent);
         }
     }
@@ -199,49 +184,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
 
-    public JSONObject loadJsonDataFromFile(String FILENAME) {
-        File yourFile = new File(FILENAME);
-        FileInputStream stream = null;
-        String jsonStr = null;
-        JSONObject jsonObject = null;
-
-        try {
-            stream = new FileInputStream(yourFile);
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = null;
-            bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-
-            jsonStr = Charset.defaultCharset().decode(bb).toString();
-            stream.close();
-
-            try {
-                jsonObject = new JSONObject(jsonStr);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return jsonObject;
-
-
-    }
 
 
     public void onListItemClick(int mPosition) {
         CitiesModel tempValues = CitiesArray.get(mPosition);
 
-//        Intent detailsIntent = new Intent(this, ConfDetailsActivity.class);
-//        detailsIntent.putExtra("NID", tempValues.getNid());
-//        detailsIntent.putExtra("COLORPOS", mColorPos);
-//        startActivity(detailsIntent);
-
-        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
         for (int i=0; i< GlobalVars.initDataModelArrayList.size(); i++){
             if(GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())){
                 new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(i).getFile());
@@ -257,7 +205,10 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
+        private ProgressDialog mProgressDialog;
         String fileName;
+        File sourceZipFile, destinationFolder;
+
 
         @Override
         protected void onPreExecute() {
@@ -288,11 +239,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                File file = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
+                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
                 //only continue if non-existant.
-                if (!file.exists()) {
+                if (!sourceZipFile.exists()) {
 
-                    OutputStream output = new FileOutputStream(file);
+                    OutputStream output = new FileOutputStream(sourceZipFile);
                     byte data[] = new byte[1024];
                     long total = 0;
 
@@ -323,11 +274,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         protected void onPostExecute(String unused) {
             mProgressDialog.dismiss();
             try {
-                unzip(new File("/sdcard/Mouse_App/" + fileName), new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))));
+                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                HelperMethods.unzip(sourceZipFile, destinationFolder);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            nextActivity();
+            nextActivity(destinationFolder);
         }
 
         @Override
@@ -339,40 +291,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
-    public static void unzip(File zipFile, File targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));
-        if (!targetDirectory.exists())  //non-existant:
-            try {
-                ZipEntry ze;
-                int count;
-                byte[] buffer = new byte[8192];
-                while ((ze = zis.getNextEntry()) != null) {
-                    File file = new File(targetDirectory, ze.getName());
-                    File dir = ze.isDirectory() ? file : file.getParentFile();
-                    if (!dir.isDirectory() && !dir.mkdirs())
-                        throw new FileNotFoundException("Failed to ensure directory: " +
-                                dir.getAbsolutePath());
-                    if (ze.isDirectory())
-                        continue;
-                    FileOutputStream fout = new FileOutputStream(file);
-                    try {
-                        while ((count = zis.read(buffer)) != -1)
-                            fout.write(buffer, 0, count);
-                    } finally {
-                        fout.close();
-                    }
-                }
-            } finally {
-                zis.close();
-            }
-    }
 
 
-
-    private void nextActivity() {
-//        startActivity(new Intent(SplashActivity.this, MainListActivity.class));
-//        finish();
-
+    private void nextActivity(File file) {
+        Intent dataFileIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
+        dataFileIntent.putExtra("cityFolderName", file.toString());
+        startActivity(dataFileIntent);
     }
 
 
