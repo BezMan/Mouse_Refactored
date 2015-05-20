@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.model.GlobalVars;
@@ -173,23 +174,32 @@ public class SplashActivity extends Activity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                File file = new File("/sdcard/Default_master.zip");
+                File file = new File("/sdcard/Mouse_App/Default_master.zip");
                 //only continue if non-existant.
+
+                boolean success = true;
                 if (!file.exists()) {
+                    success = file.mkdir();
 
-                    OutputStream output = new FileOutputStream(file);
-                    byte data[] = new byte[1024];
-                    long total = 0;
+                    if (success) {
+                        // Do something on success create folder
+                        OutputStream output = new FileOutputStream(file);
+                        byte data[] = new byte[1024];
+                        long total = 0;
 
-                    while ((count = input.read(data)) != -1) {
-                        total += count;
-                        publishProgress("" + (int) ((total * 100) / lenghtOfFile));
-                        output.write(data, 0, count);
+                        while ((count = input.read(data)) != -1) {
+                            total += count;
+                            publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                            output.write(data, 0, count);
+                        }
+
+                        output.flush();
+                        output.close();
+                        input.close();
+                    } else {
+                        // Do something else on failure
+                        Toast.makeText(getApplicationContext(), "failure to download file", Toast.LENGTH_LONG);
                     }
-
-                    output.flush();
-                    output.close();
-                    input.close();
                 }
             } catch (Exception e) {
             }
@@ -206,7 +216,7 @@ public class SplashActivity extends Activity {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
 
             try {
-                unzip(new File("/sdcard/Default_master.zip"), new File("/sdcard/Mouse_App/Default_master.zip"));
+                unzip(new File("/sdcard/Mouse_App/Default_master.zip"), new File("/sdcard/Mouse_App/Default_master.zip"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
