@@ -294,9 +294,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void nextActivity(File file) {
-        Intent dataFileIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
-        dataFileIntent.putExtra("cityFolderName", file.toString());
-        startActivity(dataFileIntent);
+        Intent cityFolderNameIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
+        cityFolderNameIntent.putExtra("cityFolderName", file.toString());
+        startActivity(cityFolderNameIntent);
     }
 
 
