@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.comrax.mouseappandroid.MyFragment;
+import com.comrax.mouseappandroid.fragments.MyFragment;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
 
@@ -44,6 +44,13 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         addPagerData(jsonData);
 
+        addMainList();
+
+    }
+
+    private void addMainList() {
+        ArrayList<String> myStringArray1 = new ArrayList<String>();
+
     }
 
 
@@ -79,6 +86,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         }
         return fList;
     }
+
+
 
 
     class MyPageAdapter extends FragmentPagerAdapter {
