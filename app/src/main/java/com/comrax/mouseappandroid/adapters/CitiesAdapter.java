@@ -95,7 +95,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         /************  Set Model values in Holder elements ***********/
         holder.nameCity.setText(tempValues.getName());
 
-        File file = new File("/sdcard/Mouse_App/" + tempValues.getImage());
+        File file = new File("/sdcard/Mouse_App/Default_master.zip/" + tempValues.getImage());
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             holder.imageCity.setImageBitmap(bitmap);

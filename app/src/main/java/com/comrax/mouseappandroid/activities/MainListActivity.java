@@ -69,8 +69,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         initVarsAndHeaders();
 
-        setBanners(loadJsonDataFromFile("/sdcard/Mouse_App/banners.json"));
-        setCities(loadJsonDataFromFile("/sdcard/Mouse_App/cities.json"));
+        setBanners(loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/banners.json"));
+        setCities(loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/cities.json"));
 
         citiesAdapter = new CitiesAdapter(this, CitiesArray, getResources());
         gridView.setAdapter(citiesAdapter);
@@ -120,7 +120,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 int imageID = getResources().getIdentifier("banner_image"+ (i+1), "id", getPackageName());
                 images[i] = (ImageView) headerView.findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/" + BannersArray.get(i).getImageBIG());
+                File file = new File("/sdcard/Mouse_App/Default_master.zip/" + BannersArray.get(i).getImageBIG());
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -291,7 +291,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                File file = new File("/sdcard/" + fileName);
+                File file = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
                 //only continue if non-existant.
                 if (!file.exists()) {
 
@@ -324,7 +324,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
 
             try {
-                unzip(new File("/sdcard/" + fileName), new File("/sdcard/Mouse_App"));
+                unzip(new File("/sdcard/Mouse_App/" + fileName), new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))));
             } catch (IOException e) {
                 e.printStackTrace();
             }

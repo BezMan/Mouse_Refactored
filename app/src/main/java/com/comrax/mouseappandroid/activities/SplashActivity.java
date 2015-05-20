@@ -206,7 +206,7 @@ public class SplashActivity extends Activity {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
 
             try {
-                unzip(new File("/sdcard/Default_master.zip"), new File("/sdcard/Mouse_App"));
+                unzip(new File("/sdcard/Default_master.zip"), new File("/sdcard/Mouse_App/Default_master.zip"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
