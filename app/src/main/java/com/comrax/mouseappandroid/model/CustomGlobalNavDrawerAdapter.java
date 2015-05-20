@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.activities.Detail_City_Activity;
 import com.comrax.mouseappandroid.activities.MainListActivity;
 
 import java.util.ArrayList;
@@ -113,8 +114,8 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
         if(_activity instanceof MainListActivity)
             ((MainListActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof ConfListActivity)
-//            ((ConfListActivity) _activity).onNavDrawerItemClick(mPosition);
+        else if(_activity instanceof Detail_City_Activity)
+            ((Detail_City_Activity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof HelpActivity)
 //            ((HelpActivity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof ContactUsActivity)
