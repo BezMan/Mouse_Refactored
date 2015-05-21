@@ -37,7 +37,7 @@ public class MyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_layout, container, false);
+        View v = inflater.inflate(R.layout.viewpager_fragment_layout, container, false);
 
         String title = getArguments().getString(EXTRA_TITLE);
         TextView titleText = (TextView)v.findViewById(R.id.pager_title);

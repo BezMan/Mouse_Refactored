@@ -27,7 +27,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     MyPageAdapter pageAdapter;
     DetailsListAdapter detailsListAdapter;
 
-    public String CITY_FOLDER_NAME;
+    public String CITY_FOLDER_NAME, strNum;
 
     @Override
     protected int getLayoutResourceId() {
@@ -46,7 +46,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private void getMainPageArticles() {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/1146_mainPageArticles.json");
+        strNum = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/"+ strNum +"_mainPageArticles.json");
 
         addPagerData(jsonData);
 
@@ -54,9 +55,10 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     }
 
+
     private void setMainList() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<DetailsListModel>();
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/1146_menu.json");
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/"+ strNum+"_menu.json");
         try {
             JSONArray articlesArray = jsonData.getJSONArray("menu");
 
