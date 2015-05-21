@@ -53,13 +53,6 @@
             android:background="@color/WhiteSmoke"
         />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/DimGray"
-            android:layout_below="@+id/myNavList"
-
-            />
 
 
         <!--<SearchView-->
