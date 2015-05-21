@@ -51,12 +51,12 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         addPagerData(jsonData);
 
-        setMainList();
+        setListItems();
 
     }
 
 
-    private void setMainList() {
+    private void setListItems() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<DetailsListModel>();
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/"+ strNum+"_menu.json");
         try {

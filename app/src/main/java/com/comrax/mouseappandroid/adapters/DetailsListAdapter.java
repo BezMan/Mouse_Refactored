@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities.MainListActivity;
+import com.comrax.mouseappandroid.activities.MyDrawerLayoutActivity;
 import com.comrax.mouseappandroid.model.DetailsListModel;
 
 import java.io.File;
@@ -120,8 +120,8 @@ public class DetailsListAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View arg0) {
-            MainListActivity cla = (MainListActivity) _activity;
-            cla.onListItemClick(mPosition);
+            MyDrawerLayoutActivity activity = (MyDrawerLayoutActivity) _activity;
+            activity.onListItemClick(mPosition);
         }
     }
 

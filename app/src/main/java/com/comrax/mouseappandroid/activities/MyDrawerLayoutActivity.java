@@ -194,4 +194,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
 
+    //on city details list item clicked:
+    public void onListItemClick(int mPosition) {
+        Toast.makeText(getApplicationContext(), ""+mPosition, Toast.LENGTH_SHORT).show();
+    }
 }
