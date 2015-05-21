@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WhiteSmoke"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="44dp"
     android:background="@color/White"
-    android:layout_margin="6dp">
+        android:layout_margin="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/details_item_arrow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/grey_left_arrow"
+        android:padding="12dp"/>
+
     <TextView
         android:id="@+id/details_item_title"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:text="מילים בעברית"
-        android:textSize="21dp"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/grey_left_arrow"
+        android:textSize="19dp"
+        android:layout_margin="8dp"
         android:layout_weight="5"
-        android:textStyle="bold"
+        android:textColor="@color/Black"
 
         />
 
@@ -22,8 +37,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/down_arrow"
     />
 
+    </LinearLayout>
 
 </LinearLayout>
