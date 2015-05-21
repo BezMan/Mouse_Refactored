@@ -59,8 +59,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         initVarsAndHeaders();
 
-        setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/banners.json"));
-        setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master.zip/cities.json"));
+        setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
+        setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
 
         citiesAdapter = new CitiesAdapter(this, CitiesArray, getResources());
         gridView.setAdapter(citiesAdapter);
@@ -109,7 +109,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 int imageID = getResources().getIdentifier("banner_image"+ (i+1), "id", getPackageName());
                 images[i] = (ImageView) headerView.findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/Default_master.zip/" + BannersArray.get(i).getImageBIG());
+                File file = new File("/sdcard/Mouse_App/Default_master/" + BannersArray.get(i).getImageBIG());
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);

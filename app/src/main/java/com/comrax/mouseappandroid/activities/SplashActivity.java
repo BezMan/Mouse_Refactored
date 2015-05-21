@@ -1,12 +1,11 @@
 package com.comrax.mouseappandroid.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
@@ -43,9 +42,6 @@ public class SplashActivity extends Activity {
     }
 
     public static Request _request;
-
-    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
-    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -137,32 +133,33 @@ public class SplashActivity extends Activity {
     }
 
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("Downloading file..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
-    }
-
     class DownloadFileAsync extends AsyncTask<String, String, String> {
+
+        private ProgressDialog mProgressDialog;
+        String fileName;
+        File sourceZipFile, destinationFolder;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+            mProgressDialog = new ProgressDialog(SplashActivity.this);
+            mProgressDialog.setMessage("Downloading file..");
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.setCancelable(true);
+            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DownloadFileAsync.this.cancel(true);
+                    dialog.dismiss();
+                }
+            });
+            mProgressDialog.show();
         }
 
         @Override
         protected String doInBackground(String... aurl) {
             int count;
+            fileName = aurl[0].substring(aurl[0].lastIndexOf("/") + 1);
             try {
 
                 URL url = new URL(aurl[0]);
@@ -171,16 +168,14 @@ public class SplashActivity extends Activity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                File file = new File("/sdcard/Mouse_App/Default_master.zip");
+                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
+                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+
                 //only continue if non-existant.
 
-                boolean success = true;
-                if (!file.exists()) {
-                    success = file.mkdir();
+                if (!sourceZipFile.exists()) {
 
-                    if (success) {
-                        // Do something on success create folder
-                        OutputStream output = new FileOutputStream(file);
+                        OutputStream output = new FileOutputStream(sourceZipFile);
                         byte data[] = new byte[1024];
                         long total = 0;
 
@@ -188,16 +183,16 @@ public class SplashActivity extends Activity {
                             total += count;
                             publishProgress("" + (int) ((total * 100) / lenghtOfFile));
                             output.write(data, 0, count);
+
+                            if (isCancelled())
+                                break;
                         }
 
                         output.flush();
                         output.close();
                         input.close();
-                    } else {
-                        // Do something else on failure
-                        Toast.makeText(getApplicationContext(), "failure to download file", Toast.LENGTH_LONG);
                     }
-                }
+
             } catch (Exception e) {
             }
             return null;
@@ -210,15 +205,22 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPostExecute(String unused) {
-            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
-
+            mProgressDialog.dismiss();
             try {
-                HelperMethods.unzip(new File("/sdcard/Mouse_App/Default_master.zip"), new File("/sdcard/Mouse_App/Default_master.zip"));
+                HelperMethods.unzip(sourceZipFile, destinationFolder);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             nextActivity();
         }
+
+        @Override
+            protected void onCancelled(String s) {
+//            delete downloaded zip file on cancel:
+            new File("/sdcard/Mouse_App/" + fileName).delete();
+
+        }
+
     }
 
 

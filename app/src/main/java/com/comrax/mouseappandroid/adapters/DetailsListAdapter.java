@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities.MainListActivity;
-import com.comrax.mouseappandroid.model.CitiesModel;
+import com.comrax.mouseappandroid.model.DetailsListModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
+public class DetailsListAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    CitiesModel tempValues = null;
+    DetailsListModel tempValues = null;
     /**
      * ******** Declare Used Variables ********
      */
@@ -36,7 +36,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
      /* **********  CustomAdapter Constructor ****************
      */
-    public CitiesAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    public DetailsListAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
@@ -72,8 +72,8 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     public static class ViewHolder {
 
-        public TextView nameCity;
-        public ImageView imageCity;
+        public TextView title;
+        public ImageView image;
 
     }
 
@@ -84,21 +84,21 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
         ViewHolder holder = new ViewHolder();
         tempValues = null;
-        tempValues = (CitiesModel) _listModelList.get(position);
+        tempValues = (DetailsListModel) _listModelList.get(position);
 
-        view = inflater.inflate(R.layout.city_layout, null);
+        view = inflater.inflate(R.layout.city_details_item, null);
 
-        holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
-        holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
+        holder.title = (TextView) view.findViewById(R.id.details_item_title);
+        holder.image = (ImageView) view.findViewById(R.id.details_item_image);
 
 
         /************  Set Model values in Holder elements ***********/
-        holder.nameCity.setText(tempValues.getName());
+        holder.title.setText(tempValues.getBtnTitle());
 
-        File file = new File("/sdcard/Mouse_App/Default_master/" + tempValues.getImage());
+        File file = new File(tempValues.getBtnImage());
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            holder.imageCity.setImageBitmap(bitmap);
+            holder.image.setImageBitmap(bitmap);
         }
 
         /******** Set Item Click Listner for LayoutInflater for each row ***********/
