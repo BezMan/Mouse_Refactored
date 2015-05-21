@@ -68,13 +68,13 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
     public void setNavDrawerData() {
 
-        for (int i = 0; i < GlobalVars.Nav10_imageList.length; i++) {
+        for (int i = 0; i < GlobalVars.Drawer_imageList.length; i++) {
 
             final DrawerModel item = new DrawerModel();
 
             /******* Firstly take data in model object ******/
-//            item.setBtnTitle(GlobalVars.Nav10_textList[i]);
-            item.setBtnImage(GlobalVars.Nav10_imageList[i]);
+            item.setBtnTitle(GlobalVars.Drawer_textList[i]);
+            item.setBtnImage(GlobalVars.Drawer_imageList[i]);
 
             /******** Add Model Object in ArrayList **********/
             customDrawerItemsArr.add(item);

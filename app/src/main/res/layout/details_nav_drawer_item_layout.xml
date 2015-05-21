@@ -4,19 +4,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="55dp"
     android:layout_width="336dp"
-    android:background="@color/Gray"
+    android:background="@color/DimGray"
     android:orientation="horizontal"
+    android:padding="5dp"
     >
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:id="@+id/nav_drawer_imageView"
+    <TextView
+        android:id="@+id/nav_drawer_text"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:textSize="20dp"
+        android:textColor="@color/White"
+        android:text="מועדפים שלי"
+        android:layout_margin="10dp"
         />
 
 
+    <ImageView
+        android:id="@+id/nav_drawer_imageView"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
 
+        />
 
 </LinearLayout>
 

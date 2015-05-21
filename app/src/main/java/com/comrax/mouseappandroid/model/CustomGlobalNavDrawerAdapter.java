@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities.Detail_City_Activity;
@@ -73,15 +74,16 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
         view = inflater.inflate(R.layout.details_nav_drawer_item_layout, null);
 
-//        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
+        holder.textView = (TextView) view.findViewById(R.id.nav_drawer_text);
         holder.imageViewIcon = (ImageView) view.findViewById(R.id.nav_drawer_imageView);
 
         /************  Set Model values in Holder elements ***********/
-//        holder.textView.setText(tempValues.getBtnTitle());
+        holder.textView.setText(tempValues.getBtnTitle());
         holder.imageViewIcon.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + tempValues.getBtnImage(), null, null));
 
 //        /******** Set Item Click Listner for LayoutInflater for each row ***********/
-        view.setOnClickListener(new OnItemClickListener(position));
+        if(position<7)
+            view.setOnClickListener(new OnItemClickListener(position));
 //
 //
         return view;
@@ -94,7 +96,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
      */
     public static class NavDrawerViewHolder {
 
-//        public TextView textView;
+        public TextView textView;
         public ImageView imageViewIcon;
 
     }
