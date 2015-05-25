@@ -183,6 +183,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
 
+//    searchOnClick
+
+    public void searchOnClick(View view){
+        Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_SHORT).show();
+
+    }
+
+
     @Override
     public void onBackPressed() {
 
