@@ -47,10 +47,16 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     public ArrayList<BannersModel> BannersArray = new ArrayList<>();
     CitiesAdapter citiesAdapter;
 
-    View headerView;
+    View bannerLayout;
     Button b1, b2, b3, b4;
     ImageView image1,image2,image3,image4;
     LinearLayout layout1, layout2, layout3, layout4;
+
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.my_drawer_layout;
+    }
 
 
     @Override
@@ -69,11 +75,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void initVarsAndHeaders() {
-
-        gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        headerView = layoutInflater.inflate(R.layout.banner_layout, null);
-        gridView.addHeaderView(headerView);
+        gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
+        bannerLayout = layoutInflater.inflate(R.layout.banner_layout, null);
+        gridView.addHeaderView(bannerLayout);
+
+
     }
 
 
@@ -102,12 +109,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 BannersArray.add(bannerItem);
 
                 int buttonID = getResources().getIdentifier("banner_button"+ (i+1), "id", getPackageName());
-                buttons[i] = (Button) headerView.findViewById(buttonID);
+                buttons[i] = (Button) bannerLayout.findViewById(buttonID);
                 buttons[i].setText(BannersArray.get(i).getText());
 
 
                 int imageID = getResources().getIdentifier("banner_image"+ (i+1), "id", getPackageName());
-                images[i] = (ImageView) headerView.findViewById(imageID);
+                images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
                 File file = new File("/sdcard/Mouse_App/Default_master/" + BannersArray.get(i).getImageBIG());
                 if (file.exists()) {
@@ -116,7 +123,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 }
 
                 int layoutID = getResources().getIdentifier("banner_layout"+ (i+1), "id", getPackageName());
-                layouts[i]= (LinearLayout) headerView.findViewById(layoutID);
+                layouts[i]= (LinearLayout) bannerLayout.findViewById(layoutID);
                 layouts[i].setOnClickListener(new OnBannerClick(i));
             }
 
@@ -165,7 +172,17 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 cityItem.setImage(image);
                 cityItem.setName(name);
 
-                CitiesArray.add(cityItem);
+                String s =  GlobalVars.initDataModelArrayList.get(i+1).getFile();
+                String s2 =  s.substring(0, s.lastIndexOf('.'));
+                String cityFolder = s2.substring(s2.lastIndexOf("/")+1, s2.length());
+
+                File file = new File("/sdcard/Mouse_App/" + cityFolder);
+                if(!file.exists() && CitiesArray.size()>0) {
+                    CitiesArray.add(CitiesArray.size(), cityItem);
+                }
+                else {
+                    CitiesArray.add(0, cityItem);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -173,15 +190,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     }
-
-
-
-
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.my_drawer_layout;
-    }
-
 
 
 

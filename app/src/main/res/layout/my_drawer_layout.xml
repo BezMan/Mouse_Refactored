@@ -10,22 +10,21 @@
 
         <include layout="@layout/app_bar" />
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <in.srain.cube.views.GridViewWithHeaderAndFooter
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" android:layout_height="match_parent"
                 android:id="@+id/main_grid"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:numColumns="2"
+                >
+            </in.srain.cube.views.GridViewWithHeaderAndFooter>
 
-                ></in.srain.cube.views.GridViewWithHeaderAndFooter>
-
-
-        </FrameLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>
@@ -41,19 +40,6 @@
             android:layout_height="60dp"
             android:background="@color/Achbar_green" />
 
-        <!--<SearchView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_margin="8dp"-->
-            <!--android:background="@color/White"-->
-            <!--android:focusable="true"-->
-            <!--android:focusableInTouchMode="true"-->
-            <!--android:queryHint="חפש"-->
-            <!--android:textDirection="rtl"-->
-
-            <!--/>-->
-
         <EditText android:id="@+id/inputSearch"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -63,7 +49,7 @@
             android:drawableStart="@android:drawable/ic_menu_search"
             android:hint="חפש"
             android:textColorHint="@color/Gray"
-            android:background="@drawable/layout_bg"
+            android:background="@drawable/rounded_corners_layout"
 
             />
 

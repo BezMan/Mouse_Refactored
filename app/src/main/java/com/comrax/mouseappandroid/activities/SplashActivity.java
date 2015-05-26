@@ -58,11 +58,6 @@ public class SplashActivity extends Activity {
 
     }
 
-    private void getZip(String zipUrl) {
-        _request = Request.ZIP;
-        new DownloadFileAsync().execute(zipUrl);
-    }
-
 
     class RequestTask extends AsyncTask<String, String, String> {
 
@@ -96,12 +91,12 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             //Do anything with response..
-            compareDataDates(result);
+            setInitCitiesData(result);
         }
     }
 
 
-    public void compareDataDates(String result) {
+    public void setInitCitiesData(String result) {
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -122,8 +117,8 @@ public class SplashActivity extends Activity {
                 GlobalVars.initDataModelArrayList.add(arrayItem);
             }
 
-
-            getZip(GlobalVars.initDataModelArrayList.get(0).getFile());
+            _request = Request.ZIP;
+            new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
 
 
         } catch (JSONException e) {
@@ -166,13 +161,12 @@ public class SplashActivity extends Activity {
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
 
-                int lenghtOfFile = conexion.getContentLength();
+                int lengthOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
                 sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
                 destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
                 //only continue if non-existant.
-
                 if (!sourceZipFile.exists()) {
 
                         OutputStream output = new FileOutputStream(sourceZipFile);
@@ -181,7 +175,7 @@ public class SplashActivity extends Activity {
 
                         while ((count = input.read(data)) != -1) {
                             total += count;
-                            publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                            publishProgress("" + (int) ((total * 100) / lengthOfFile));
                             output.write(data, 0, count);
 
                             if (isCancelled())
