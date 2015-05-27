@@ -152,9 +152,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         private void setCities(JSONObject jsonObj) {
         // Getting data JSON Array nodes
-        JSONArray data = null;
         try {
-            data = jsonObj.getJSONArray("cities");
+            JSONArray data = jsonObj.getJSONArray("cities");
             // looping through All nodes
             for (int i = 0; i < data.length(); i++) {
                 JSONObject item = data.getJSONObject(i);

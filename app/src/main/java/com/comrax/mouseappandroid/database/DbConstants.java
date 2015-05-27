@@ -1,6 +1,6 @@
 package com.comrax.mouseappandroid.database;
 
-public class AppDataDbConstants {
+public class DBConstants {
     public static final String DATABASE_NAME = "mouseAppData.db";
     public static final int DATABASE_VERSION = 1;
 

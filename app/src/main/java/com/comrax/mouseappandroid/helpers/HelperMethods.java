@@ -23,15 +23,12 @@ public class HelperMethods {
 
     public static JSONObject loadJsonDataFromFile(String FILENAME) {
         File yourFile = new File(FILENAME);
-        FileInputStream stream = null;
-        String jsonStr = null;
         JSONObject jsonObject = null;
         try {
-            stream = new FileInputStream(yourFile);
+            FileInputStream stream = new FileInputStream(yourFile);
             FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = null;
-            bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            jsonStr = Charset.defaultCharset().decode(bb).toString();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            String jsonStr = Charset.defaultCharset().decode(bb).toString();
             stream.close();
             try {
                 jsonObject = new JSONObject(jsonStr);
