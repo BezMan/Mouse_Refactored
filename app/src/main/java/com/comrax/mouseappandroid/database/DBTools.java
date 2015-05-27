@@ -14,15 +14,12 @@ public class DBTools extends SQLiteOpenHelper {
 
 
     public DBTools(Context applicationContext){
-
         super(applicationContext, DBConstants.DATABASE_NAME, null, DBConstants.DATABASE_VERSION);
 
     }
 
-    public DBTools(Context context, String name, CursorFactory factory,
-                   int version) {
+    public DBTools(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -32,7 +29,6 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.ARTICLE_TABLE_NAME + " ("
                 + DBConstants.boneId + " INTEGER, "
                 + DBConstants.cityId + " INTEGER, "
-                + DBConstants.dictionary + " TEXT, "
                 + DBConstants.imagePath + " TEXT, "
                 + DBConstants.menuItemId + " INTEGER, "
                 + DBConstants.name + " TEXT, "
@@ -120,6 +116,32 @@ public class DBTools extends SQLiteOpenHelper {
 
 
 
+    public void insertCityTable(HashMap<String, String> queryValues){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DBConstants.boneId, queryValues.get("nid"));
+        values.put(DBConstants.cityId, queryValues.get("title"));
+        values.put(DBConstants.imagePath, queryValues.get("country"));
+        values.put(DBConstants.menuItemId, queryValues.get("country"));
+        values.put(DBConstants.name, queryValues.get("country"));
+        values.put(DBConstants.nsId, queryValues.get("country"));
+        values.put(DBConstants.objId, queryValues.get("country"));
+        values.put(DBConstants.rating, queryValues.get("country"));
+        values.put(DBConstants.ratingCount, queryValues.get("country"));
+        values.put(DBConstants.responses, queryValues.get("country"));
+        values.put(DBConstants.title, queryValues.get("country"));
+        values.put(DBConstants.url, queryValues.get("country"));
+        values.put(DBConstants.urlContent, queryValues.get("country"));
+
+        database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
+
+        database.close();
+
+    }
+
     public void insertArticleTable(HashMap<String, String> queryValues){
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -128,7 +150,6 @@ public class DBTools extends SQLiteOpenHelper {
 
         values.put(DBConstants.boneId, queryValues.get("nid"));
         values.put(DBConstants.cityId, queryValues.get("title"));
-        values.put(DBConstants.dictionary, queryValues.get("date"));
         values.put(DBConstants.imagePath, queryValues.get("country"));
         values.put(DBConstants.menuItemId, queryValues.get("country"));
         values.put(DBConstants.name, queryValues.get("country"));

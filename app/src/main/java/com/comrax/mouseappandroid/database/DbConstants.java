@@ -13,7 +13,6 @@ public class DBConstants {
 
             boneId = "boneId",
             cityId = "cityId",
-            dictionary = "dictionary",
             imagePath = "imagePath",
             menuItemId = "menuItemId",
             name = "name",
