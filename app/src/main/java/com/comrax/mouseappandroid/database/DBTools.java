@@ -52,15 +52,15 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.name + " TEXT, "
                 + DBConstants.serviceMenu + " TEXT, "
                 + DBConstants.stopsArticle + " TEXT, "
-                + DBConstants.touristArticles + " TEXT " + ")";
+                + DBConstants.touristArticles + " TEXT " + ");";
 
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
                 + DBConstants.address + " TEXT, "
                 + DBConstants.boneId + " INTEGER, "
-                + DBConstants.cityId + " INTEGER, "
-                + DBConstants.descriptionBody + " TEXT, "
+//                + DBConstants.cityId + " INTEGER, "
+                + DBConstants.description + " TEXT, "
                 + DBConstants.fullDescriptionBody + " TEXT, "
                 + DBConstants.fullPlace + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
@@ -69,24 +69,25 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.objId + " INTEGER, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.price + " INTEGER, "
-                + DBConstants.rating + " REAL, "
+                + DBConstants.rating + " INTEGER, "
+                + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.type + " TEXT, "
-                + DBConstants.urlString + " TEXT, "
-                + DBConstants.userComments + " TEXT " + ")";
+                + DBConstants.url + " TEXT, "
+                + DBConstants.userComments + " TEXT " + ");";
 
 
         String CREATE_PLACE_FAVORITE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
                 + DBConstants.address + " TEXT, "
                 + DBConstants.categoryId + " INTEGER, "
-                + DBConstants.descriptionBody + " TEXT, "
+                + DBConstants.description + " TEXT, "
                 + DBConstants.index + " TEXT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.price + " INTEGER, "
                 + DBConstants.rating + " REAL, "
                 + DBConstants.type + " TEXT, "
-                + DBConstants.urlString + " TEXT " + ")";
+                + DBConstants.urlString + " TEXT " + ");";
 
         try {
             db.execSQL(CREATE_ARTICLE_TABLE);
@@ -132,7 +133,7 @@ public class DBTools extends SQLiteOpenHelper {
         values.put(DBConstants.url, queryValues.get("country"));
         values.put(DBConstants.urlContent, queryValues.get("country"));
 
-        database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
+        database.insert(DBConstants.CITY_TABLE_NAME, null, values);
 
         database.close();
 
@@ -173,19 +174,15 @@ public class DBTools extends SQLiteOpenHelper {
 
         values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));
         values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
-//        values.put(DBConstants.imagePath, queryValues.get("country"));
-//        values.put(DBConstants.menuItemId, queryValues.get("country"));
         values.put(DBConstants.name, queryValues.get(DBConstants.name));
         values.put(DBConstants.nsId, queryValues.get(DBConstants.nsId));
         values.put(DBConstants.objId, queryValues.get(DBConstants.objId));
         values.put(DBConstants.rating, queryValues.get(DBConstants.rating));
         values.put(DBConstants.ratingCount, queryValues.get(DBConstants.ratingCount));
-//        values.put(DBConstants.responses, queryValues.get("country"));
-//        values.put(DBConstants.title, queryValues.get("country"));
         values.put(DBConstants.url, queryValues.get(DBConstants.url));
         values.put(DBConstants.urlContent, queryValues.get(DBConstants.urlContent));
 
-        database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
+        database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
 
         database.close();
 
