@@ -286,6 +286,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            loopThruJsonFiles();
             nextActivity(destinationFolder);
         }
 
@@ -297,7 +299,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         }
     }
 
+    private void loopThruJsonFiles() {
 
+    }
 
 
     private void nextActivity(File file) {

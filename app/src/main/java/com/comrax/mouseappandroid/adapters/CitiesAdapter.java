@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         /************  Set Model values in Holder elements ***********/
         holder.nameCity.setText(tempValues.getName());
 
-        File file = new File("/sdcard/Mouse_App/Default_master/" + tempValues.getImage());
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Mouse_App/Default_master/" + tempValues.getImage());
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             holder.imageCity.setImageBitmap(bitmap);

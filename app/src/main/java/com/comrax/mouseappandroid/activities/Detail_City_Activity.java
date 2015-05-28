@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.DetailsListAdapter;
+import com.comrax.mouseappandroid.database.DBConstants;
+import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.fragments.MyFragment;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.DetailsListModel;
@@ -19,7 +21,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Detail_City_Activity extends MyDrawerLayoutActivity {
@@ -28,6 +32,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     DetailsListAdapter detailsListAdapter;
 
     public String CITY_FOLDER_NAME, strNum;
+
+    DBTools dbTools = new DBTools(this);
 
     @Override
     protected int getLayoutResourceId() {
@@ -47,18 +53,56 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
         strNum = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/"+ strNum +"_mainPageArticles.json");
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + strNum + "_mainPageArticles.json");
 
-        addPagerData(jsonData);
+        File dir = new File(CITY_FOLDER_NAME);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                // Do something with child
+                if (child.toString().contains("PlacesList")) {
+                    try {
+                        JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonPlace.getJSONArray("places");
+                        // looping through All nodes if json file:
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject item = data.getJSONObject(i);
 
-        setListItems();
+                            HashMap<String, String> queryValuesMap = new HashMap<String, String>();
 
+                            queryValuesMap.put(DBConstants.name, item.getString(DBConstants.name));
+                            queryValuesMap.put(DBConstants.nsId, item.getString(DBConstants.nsId));
+                            queryValuesMap.put(DBConstants.objId, item.getString(DBConstants.objId));
+                            queryValuesMap.put(DBConstants.boneId, item.getString(DBConstants.boneId));
+                            queryValuesMap.put(DBConstants.url, item.getString(DBConstants.url));
+                            queryValuesMap.put(DBConstants.urlContent, item.getString(DBConstants.urlContent));
+                            queryValuesMap.put(DBConstants.boneId, item.getString(DBConstants.boneId));
+
+                            queryValuesMap.put(DBConstants.rating, item.getString(DBConstants.rating));
+                            queryValuesMap.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
+
+                            // Call for the HashMap to be added to the database
+                            dbTools.insertPlaceTable(queryValuesMap);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            addPagerData(jsonData);
+
+            setListItems();
+
+        }
     }
+
 
 
     private void setListItems() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<DetailsListModel>();
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/"+ strNum+"_menu.json");
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + strNum + "_menu.json");
         try {
             JSONArray articlesArray = jsonData.getJSONArray("menu");
 

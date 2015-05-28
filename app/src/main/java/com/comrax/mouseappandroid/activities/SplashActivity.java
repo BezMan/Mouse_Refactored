@@ -118,6 +118,9 @@ public class SplashActivity extends Activity {
             }
 
             _request = Request.ZIP;
+            File mouseFolder = new File("/sdcard/Mouse_App");
+            if(mouseFolder.isDirectory()==false)
+                mouseFolder.mkdirs();
             new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
 
 
@@ -169,23 +172,23 @@ public class SplashActivity extends Activity {
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
 
-                        OutputStream output = new FileOutputStream(sourceZipFile);
-                        byte data[] = new byte[1024];
-                        long total = 0;
+                    OutputStream output = new FileOutputStream(sourceZipFile);
+                    byte data[] = new byte[1024];
+                    long total = 0;
 
-                        while ((count = input.read(data)) != -1) {
-                            total += count;
-                            publishProgress("" + (int) ((total * 100) / lengthOfFile));
-                            output.write(data, 0, count);
+                    while ((count = input.read(data)) != -1) {
+                        total += count;
+                        publishProgress("" + (int) ((total * 100) / lengthOfFile));
+                        output.write(data, 0, count);
 
-                            if (isCancelled())
-                                break;
-                        }
-
-                        output.flush();
-                        output.close();
-                        input.close();
+                        if (isCancelled())
+                            break;
                     }
+
+                    output.flush();
+                    output.close();
+                    input.close();
+                }
 
             } catch (Exception e) {
             }
@@ -209,7 +212,7 @@ public class SplashActivity extends Activity {
         }
 
         @Override
-            protected void onCancelled(String s) {
+        protected void onCancelled(String s) {
 //            delete downloaded zip file on cancel:
             new File("/sdcard/Mouse_App/" + fileName).delete();
 
@@ -223,7 +226,6 @@ public class SplashActivity extends Activity {
         finish();
 
     }
-
 
 
 }

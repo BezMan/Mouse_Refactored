@@ -1,7 +1,7 @@
 package com.comrax.mouseappandroid.database;
 
 public class DBConstants {
-    public static final String DATABASE_NAME = "mouseAppData.db";
+    public static final String DATABASE_NAME = "/sdcard/Mouse_App/mouseAppData.db";
     public static final int DATABASE_VERSION = 1;
 
 

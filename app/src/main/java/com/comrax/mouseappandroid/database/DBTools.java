@@ -3,7 +3,6 @@ package com.comrax.mouseappandroid.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -18,9 +17,6 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
-    public DBTools(Context context, String name, CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -168,5 +164,31 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
+
+    public void insertPlaceTable(HashMap<String, String> queryValues){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));
+        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
+//        values.put(DBConstants.imagePath, queryValues.get("country"));
+//        values.put(DBConstants.menuItemId, queryValues.get("country"));
+        values.put(DBConstants.name, queryValues.get(DBConstants.name));
+        values.put(DBConstants.nsId, queryValues.get(DBConstants.nsId));
+        values.put(DBConstants.objId, queryValues.get(DBConstants.objId));
+        values.put(DBConstants.rating, queryValues.get(DBConstants.rating));
+        values.put(DBConstants.ratingCount, queryValues.get(DBConstants.ratingCount));
+//        values.put(DBConstants.responses, queryValues.get("country"));
+//        values.put(DBConstants.title, queryValues.get("country"));
+        values.put(DBConstants.url, queryValues.get(DBConstants.url));
+        values.put(DBConstants.urlContent, queryValues.get(DBConstants.urlContent));
+
+        database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
+
+        database.close();
+
+    }
 
 }
