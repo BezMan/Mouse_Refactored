@@ -33,29 +33,12 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.name + " TEXT, "
                 + DBConstants.nsId + " INTEGER, "
                 + DBConstants.objId + " INTEGER, "
-                + DBConstants.rating + " INTEGER, "
-                + DBConstants.ratingCount + " INTEGER, "
+                + DBConstants.rating + " TEXT, "
+                + DBConstants.ratingCount + " TEXT, "
                 + DBConstants.responses + " TEXT, "
                 + DBConstants.title + " TEXT, "
                 + DBConstants.url + " TEXT, "
-                + DBConstants.urlContent + " TEXT " + ");";
-
-
-        String CREATE_CITY_TABLE = "CREATE TABLE "
-                + DBConstants.CITY_TABLE_NAME + " ("
-                + DBConstants.centerCoordinateLat + " REAL, "
-                + DBConstants.centerCoordinateLon + " REAL, "
-                + DBConstants.cityFolderPath + " TEXT, "
-                + DBConstants.coordinates + " TEXT, "
-                + DBConstants.dateUpdated + " TEXT, "
-                + DBConstants.imageName + " TEXT, "
-                + DBConstants.index + " INTEGER, "
-                + DBConstants.mainArticles + " TEXT, "
-                + DBConstants.menu + " TEXT, "
-                + DBConstants.name + " TEXT, "
-                + DBConstants.serviceMenu + " TEXT, "
-                + DBConstants.stopsArticle + " TEXT, "
-                + DBConstants.touristArticles + " TEXT " + ");";
+                + DBConstants.content + " TEXT " + ");";
 
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
@@ -79,6 +62,24 @@ public class DBTools extends SQLiteOpenHelper {
                 + ");";
 
 
+        String CREATE_CITY_TABLE = "CREATE TABLE "
+                + DBConstants.CITY_TABLE_NAME + " ("
+                + DBConstants.centerCoordinateLat + " REAL, "
+                + DBConstants.centerCoordinateLon + " REAL, "
+                + DBConstants.cityFolderPath + " TEXT, "
+                + DBConstants.coordinates + " TEXT, "
+                + DBConstants.dateUpdated + " TEXT, "
+                + DBConstants.imageName + " TEXT, "
+                + DBConstants.index + " INTEGER, "
+                + DBConstants.mainArticles + " TEXT, "
+                + DBConstants.menu + " TEXT, "
+                + DBConstants.name + " TEXT, "
+                + DBConstants.serviceMenu + " TEXT, "
+                + DBConstants.stopsArticle + " TEXT, "
+                + DBConstants.touristArticles + " TEXT "
+                + ");";
+
+
         String CREATE_PLACE_FAVORITE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_FAVORITE_TABLE_NAME + " ("
                 + DBConstants.address + " TEXT, "
@@ -90,7 +91,8 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.price + " INTEGER, "
                 + DBConstants.rating + " INTEGER, "
                 + DBConstants.type + " TEXT, "
-                + DBConstants.urlString + " TEXT " + ");";
+                + DBConstants.urlString + " TEXT "
+                + ");";
 
         try {
             db.execSQL(CREATE_PLACE_FAVORITE_TABLE);
@@ -142,28 +144,34 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
-    public void insertArticleTable(HashMap<String, String> queryValues){
+    public void insertArticleTable(JSONObject item){
 
         SQLiteDatabase database = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
-        values.put(DBConstants.boneId, queryValues.get("nid"));
-        values.put(DBConstants.cityId, queryValues.get("title"));
-        values.put(DBConstants.imagePath, queryValues.get("country"));
-        values.put(DBConstants.menuItemId, queryValues.get("country"));
-        values.put(DBConstants.name, queryValues.get("country"));
-        values.put(DBConstants.nsId, queryValues.get("country"));
-        values.put(DBConstants.objId, queryValues.get("country"));
-        values.put(DBConstants.rating, queryValues.get("country"));
-        values.put(DBConstants.ratingCount, queryValues.get("country"));
-        values.put(DBConstants.responses, queryValues.get("country"));
-        values.put(DBConstants.title, queryValues.get("country"));
-        values.put(DBConstants.url, queryValues.get("country"));
-        values.put(DBConstants.urlContent, queryValues.get("country"));
+        try {
+            values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
+            values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
+            values.put(DBConstants.objId, item.getString(DBConstants.objId));
+            values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
+            values.put(DBConstants.url, item.getString(DBConstants.url));
+            values.put(DBConstants.title, item.getString(DBConstants.title));
+            values.put(DBConstants.menuItemId, item.getString(DBConstants.menuItemId));
+            values.put(DBConstants.imagePath, item.getString(DBConstants.imagePath));
+            values.put(DBConstants.rating, item.getString(DBConstants.rating));
+            values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
+
+            JSONObject urlContent = item.getJSONObject(DBConstants.urlContent);
+            values.put(DBConstants.name, urlContent.getString(DBConstants.name));
+            values.put(DBConstants.image, urlContent.getString(DBConstants.image));
+            values.put(DBConstants.content, urlContent.getString(DBConstants.content));
+            values.put(DBConstants.responses, urlContent.getString(DBConstants.responses));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
-
         database.close();
 
     }
@@ -176,7 +184,6 @@ public class DBTools extends SQLiteOpenHelper {
 
         try {
             values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
-
             values.put(DBConstants.name, item.getString(DBConstants.name));
             values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));

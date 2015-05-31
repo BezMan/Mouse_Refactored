@@ -29,9 +29,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     MyPageAdapter pageAdapter;
     DetailsListAdapter detailsListAdapter;
-
     public String CITY_FOLDER_NAME, cityId;
-
     DBTools dbTools = new DBTools(this);
 
     @Override
@@ -43,45 +41,62 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getMainPageArticles();
+        setDetailsListItems();
+
+        setDBdata();
 
     }
 
 
-    private void getMainPageArticles() {
+    private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
         cityId = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_mainPageArticles.json");
 
+        addPagerData(jsonData);
+
+        setListItems();
+
+    }
+
+    private void setDBdata() {
         File dir = new File(CITY_FOLDER_NAME);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                // Do something with child
-                if (child.toString().contains("PlacesList")) {
-                    try {
+
+                try { // loop thru json files in city directory//
+
+                    if (child.toString().contains("PlacesList")) {
                         JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonPlace.getJSONArray("places");
                         // looping through All nodes if json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-
                             item.put(DBConstants.cityId, cityId);
-
                             dbTools.insertPlaceTable(item);
-
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+
+                    else if (child.toString().contains("ArticalsList")) {
+
+                        JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonArticle.getJSONArray("articles");
+                        // looping through All nodes if json file:
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject item = data.getJSONObject(i);
+                            item.put(DBConstants.cityId, cityId);
+                            dbTools.insertArticleTable(item);
+                        }
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-
-            addPagerData(jsonData);
-
-            setListItems();
-
         }
     }
 
