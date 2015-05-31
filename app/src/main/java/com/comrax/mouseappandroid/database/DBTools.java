@@ -46,7 +46,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.coordinates + " TEXT, "
                 + DBConstants.dateUpdated + " TEXT, "
                 + DBConstants.imageName + " TEXT, "
-                + DBConstants.index + " INTEGER PRIMARY KEY, "
+                + DBConstants.index + " INTEGER, "
                 + DBConstants.mainArticles + " TEXT, "
                 + DBConstants.menu + " TEXT, "
                 + DBConstants.name + " TEXT, "
@@ -57,27 +57,24 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
-                + DBConstants.address + " TEXT, "
-                + DBConstants.boneId + " INTEGER, "
+                + DBConstants.boneId + " INTEGER "
 //                + DBConstants.cityId + " INTEGER, "
-                + DBConstants.description + " TEXT, "
-                + DBConstants.fullDescriptionBody + " TEXT, "
-                + DBConstants.fullPlace + " TEXT, "
-                + DBConstants.hebrewName + " TEXT, "
-                + DBConstants.name + " TEXT, "
-                + DBConstants.nsId + " INTEGER, "
-                + DBConstants.objId + " INTEGER, "
-                + DBConstants.phone + " TEXT, "
-                + DBConstants.price + " INTEGER, "
-                + DBConstants.rating + " INTEGER, "
-                + DBConstants.ratingCount + " INTEGER, "
-                + DBConstants.type + " TEXT, "
-                + DBConstants.url + " TEXT, "
-                + DBConstants.userComments + " TEXT " + ");";
+//                + DBConstants.imagePath + " TEXT, "
+//                + DBConstants.menuItemId + " INTEGER, "
+//                + DBConstants.name + " TEXT, "
+//                + DBConstants.nsId + " INTEGER, "
+//                + DBConstants.objId + " INTEGER, "
+//                + DBConstants.rating + " REAL, "
+//                + DBConstants.ratingCount + " INTEGER, "
+//                + DBConstants.responses + " TEXT, "
+//                + DBConstants.title + " TEXT, "
+//                + DBConstants.url + " TEXT, "
+//                + DBConstants.urlContent + " TEXT "
+                + ");";
 
 
         String CREATE_PLACE_FAVORITE_TABLE = "CREATE TABLE "
-                + DBConstants.PLACE_TABLE_NAME + " ("
+                + DBConstants.PLACE_FAVORITE_TABLE_NAME + " ("
                 + DBConstants.address + " TEXT, "
                 + DBConstants.categoryId + " INTEGER, "
                 + DBConstants.description + " TEXT, "
@@ -90,10 +87,10 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.urlString + " TEXT " + ");";
 
         try {
+            db.execSQL(CREATE_PLACE_FAVORITE_TABLE);
+            db.execSQL(CREATE_PLACE_TABLE);
             db.execSQL(CREATE_ARTICLE_TABLE);
             db.execSQL(CREATE_CITY_TABLE);
-            db.execSQL(CREATE_PLACE_TABLE);
-            db.execSQL(CREATE_PLACE_FAVORITE_TABLE);
 
         } catch (SQLiteException e) {
             Log.e("Create table exception:", e.getMessage());
@@ -173,14 +170,6 @@ public class DBTools extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));
-        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
-        values.put(DBConstants.name, queryValues.get(DBConstants.name));
-        values.put(DBConstants.nsId, queryValues.get(DBConstants.nsId));
-        values.put(DBConstants.objId, queryValues.get(DBConstants.objId));
-        values.put(DBConstants.rating, queryValues.get(DBConstants.rating));
-        values.put(DBConstants.ratingCount, queryValues.get(DBConstants.ratingCount));
-        values.put(DBConstants.url, queryValues.get(DBConstants.url));
-        values.put(DBConstants.urlContent, queryValues.get(DBConstants.urlContent));
 
         database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
 

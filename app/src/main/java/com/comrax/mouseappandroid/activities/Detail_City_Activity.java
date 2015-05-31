@@ -88,24 +88,24 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 //                            queryValuesMap.put(DBConstants.cityId, item.getString(DBConstants.cityId));
 
-                            queryValuesMap.put(DBConstants.address, item.getString(DBConstants.address));
-                            queryValuesMap.put(DBConstants.name, item.getString(DBConstants.name));
-                            queryValuesMap.put(DBConstants.nsId, item.getString(DBConstants.nsId));
-                            queryValuesMap.put(DBConstants.objId, item.getString(DBConstants.objId));
+//                            queryValuesMap.put(DBConstants.address, item.getString(DBConstants.address));
+//                            queryValuesMap.put(DBConstants.name, item.getString(DBConstants.name));
+//                            queryValuesMap.put(DBConstants.nsId, item.getString(DBConstants.nsId));
+//                            queryValuesMap.put(DBConstants.objId, item.getString(DBConstants.objId));
                             queryValuesMap.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-                            queryValuesMap.put(DBConstants.url, item.getString(DBConstants.url));
-                            queryValuesMap.put(DBConstants.description, item.getString(DBConstants.description));
-                            queryValuesMap.put(DBConstants.type, item.getString(DBConstants.type));
-                            queryValuesMap.put(DBConstants.phone, item.getString(DBConstants.phone));
-                            queryValuesMap.put(DBConstants.rating, item.getString(DBConstants.rating));
-                            queryValuesMap.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
-
-                            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.fullPlace);
-
-                            queryValuesMap.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
-                            queryValuesMap.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
-                            queryValuesMap.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
-                            queryValuesMap.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
+//                            queryValuesMap.put(DBConstants.url, item.getString(DBConstants.url));
+//                            queryValuesMap.put(DBConstants.description, item.getString(DBConstants.description));
+//                            queryValuesMap.put(DBConstants.type, item.getString(DBConstants.type));
+//                            queryValuesMap.put(DBConstants.phone, item.getString(DBConstants.phone));
+//                            queryValuesMap.put(DBConstants.rating, item.getString(DBConstants.rating));
+//                            queryValuesMap.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
+//
+//                            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.fullPlace);
+//
+//                            queryValuesMap.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
+//                            queryValuesMap.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
+//                            queryValuesMap.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
+//                            queryValuesMap.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
 
 
 

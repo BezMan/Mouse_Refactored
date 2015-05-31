@@ -1,17 +1,19 @@
 package com.comrax.mouseappandroid.database;
 
+import android.os.Environment;
+
 public class DBConstants {
-    public static final String DATABASE_NAME = "/sdcard/Mouse_App/mouseAppData.db";
+    public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath()+"/mouseAppData.db";
     public static final int DATABASE_VERSION = 1;
 
 
     public static final String
-            ARTICLE_TABLE_NAME = "article_table",
-            CITY_TABLE_NAME = "city_table",
-            PLACE_TABLE_NAME = "place_table",
-            PLACE_FAVORITE_TABLE_NAME = "place_favorite_table",
+            ARTICLE_TABLE_NAME = "article",
+            CITY_TABLE_NAME = "city",
+            PLACE_TABLE_NAME = "place",
+            PLACE_FAVORITE_TABLE_NAME = "favorites",
 
-        boneId = "boneId",
+                boneId = "boneId",
                 cityId = "cityId",
                 imagePath = "imagePath",
                 menuItemId = "menuItemId",
@@ -31,7 +33,7 @@ public class DBConstants {
                 dateUpdated = "dateUpdated",
                 image = "image",
                 imageName = "imageName",
-                index = "index",
+                index = "myIndex",
                 mainArticles = "mainArticles",
                 menu = "menu",
                 serviceMenu = "serviceMenu",
