@@ -172,7 +172,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-//        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
+        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
 
         values.put(DBConstants.name, queryValues.get(DBConstants.name));
         values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));

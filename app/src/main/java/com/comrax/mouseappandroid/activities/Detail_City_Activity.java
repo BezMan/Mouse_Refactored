@@ -31,7 +31,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     MyPageAdapter pageAdapter;
     DetailsListAdapter detailsListAdapter;
 
-    public String CITY_FOLDER_NAME, strNum;
+    public String CITY_FOLDER_NAME, cityId;
 
     DBTools dbTools = new DBTools(this);
 
@@ -52,8 +52,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private void getMainPageArticles() {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
-        strNum = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + strNum + "_mainPageArticles.json");
+        cityId = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_mainPageArticles.json");
 
         File dir = new File(CITY_FOLDER_NAME);
         File[] directoryListing = dir.listFiles();
@@ -70,7 +70,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
                             HashMap<String, String> queryValuesMap = new HashMap<String, String>();
 
-//                            queryValuesMap.put(DBConstants.cityId, item.getString(DBConstants.cityId));
+                            queryValuesMap.put(DBConstants.cityId, cityId);
 
                             queryValuesMap.put(DBConstants.name, item.getString(DBConstants.name));
                             queryValuesMap.put(DBConstants.nsId, item.getString(DBConstants.nsId));
@@ -113,7 +113,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private void setListItems() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<DetailsListModel>();
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + strNum + "_menu.json");
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
         try {
             JSONArray articlesArray = jsonData.getJSONArray("menu");
 
