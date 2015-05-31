@@ -30,7 +30,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.name + " TEXT, "
                 + DBConstants.nsId + " INTEGER, "
                 + DBConstants.objId + " INTEGER, "
-                + DBConstants.rating + " REAL, "
+                + DBConstants.rating + " INTEGER, "
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.responses + " TEXT, "
                 + DBConstants.title + " TEXT, "
@@ -57,19 +57,22 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
-                + DBConstants.boneId + " INTEGER "
-//                + DBConstants.cityId + " INTEGER, "
-//                + DBConstants.imagePath + " TEXT, "
-//                + DBConstants.menuItemId + " INTEGER, "
-//                + DBConstants.name + " TEXT, "
-//                + DBConstants.nsId + " INTEGER, "
-//                + DBConstants.objId + " INTEGER, "
-//                + DBConstants.rating + " REAL, "
-//                + DBConstants.ratingCount + " INTEGER, "
-//                + DBConstants.responses + " TEXT, "
-//                + DBConstants.title + " TEXT, "
-//                + DBConstants.url + " TEXT, "
-//                + DBConstants.urlContent + " TEXT "
+                + DBConstants.price + " INTEGER, "
+                + DBConstants.boneId + " INTEGER, "
+                + DBConstants.cityId + " INTEGER, "
+                + DBConstants.nsId + " INTEGER, "
+                + DBConstants.objId + " INTEGER, "
+                + DBConstants.address + " TEXT, "
+                + DBConstants.description + " TEXT, "
+                + DBConstants.fullDescriptionBody + " TEXT, "
+                + DBConstants.hebrewName + " TEXT, "
+                + DBConstants.name + " TEXT, "
+                + DBConstants.rating + " INTEGER, "
+                + DBConstants.ratingCount + " INTEGER, "
+                + DBConstants.phone + " TEXT, "
+                + DBConstants.type + " TEXT, "
+                + DBConstants.urlString + " TEXT, "
+                + DBConstants.userComments + " TEXT "
                 + ");";
 
 
@@ -78,11 +81,11 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.address + " TEXT, "
                 + DBConstants.categoryId + " INTEGER, "
                 + DBConstants.description + " TEXT, "
-                + DBConstants.index + " TEXT, "
+                + DBConstants.index + " INTEGER, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.price + " INTEGER, "
-                + DBConstants.rating + " REAL, "
+                + DBConstants.rating + " INTEGER, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.urlString + " TEXT " + ");";
 
@@ -169,12 +172,32 @@ public class DBTools extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
+//        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
+
+        values.put(DBConstants.name, queryValues.get(DBConstants.name));
         values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));
+        values.put(DBConstants.nsId, queryValues.get(DBConstants.nsId));
+        values.put(DBConstants.objId, queryValues.get(DBConstants.objId));
+
+        values.put(DBConstants.urlString, queryValues.get(DBConstants.urlString));
+        values.put(DBConstants.description, queryValues.get(DBConstants.description));
+        values.put(DBConstants.address, queryValues.get(DBConstants.address));
+        values.put(DBConstants.phone, queryValues.get(DBConstants.phone));
+        values.put(DBConstants.type, queryValues.get(DBConstants.type));
+        values.put(DBConstants.rating, queryValues.get(DBConstants.rating));
+        values.put(DBConstants.ratingCount, queryValues.get(DBConstants.ratingCount));
+
+        values.put(DBConstants.price, queryValues.get(DBConstants.price));
+        values.put(DBConstants.fullDescriptionBody, queryValues.get(DBConstants.fullDescriptionBody));
+        values.put(DBConstants.hebrewName, queryValues.get(DBConstants.hebrewName));
+        values.put(DBConstants.userComments, queryValues.get(DBConstants.userComments));
 
         database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
 
         database.close();
 
     }
+
+
 
 }

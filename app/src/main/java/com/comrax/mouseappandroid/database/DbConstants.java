@@ -4,7 +4,7 @@ import android.os.Environment;
 
 public class DBConstants {
     public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath()+"/mouseAppData.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
 
     public static final String
@@ -45,7 +45,7 @@ public class DBConstants {
                 fullPlace = "urlContent",
                 hebrewName = "hebrewName",
                 type = "type",
-                urlString = "urlString",
+                urlString = "url",
                 userComments = "responses",
                 categoryId = "categoryId",
                 phone = "phone",
