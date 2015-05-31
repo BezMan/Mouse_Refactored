@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class DBTools extends SQLiteOpenHelper {
@@ -166,34 +169,37 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public void insertPlaceTable(HashMap<String, String> queryValues){
+    public void insertPlaceTable(JSONObject item){
 
         SQLiteDatabase database = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
-        values.put(DBConstants.cityId, queryValues.get(DBConstants.cityId));
+        try {
+            values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
 
-        values.put(DBConstants.name, queryValues.get(DBConstants.name));
-        values.put(DBConstants.boneId, queryValues.get(DBConstants.boneId));
-        values.put(DBConstants.nsId, queryValues.get(DBConstants.nsId));
-        values.put(DBConstants.objId, queryValues.get(DBConstants.objId));
+            values.put(DBConstants.name, item.getString(DBConstants.name));
+            values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
+            values.put(DBConstants.objId, item.getString(DBConstants.objId));
+            values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
+            values.put(DBConstants.urlString, item.getString(DBConstants.urlString));
+            values.put(DBConstants.description, item.getString(DBConstants.description));
+            values.put(DBConstants.address, item.getString(DBConstants.address));
+            values.put(DBConstants.phone, item.getString(DBConstants.phone));
+            values.put(DBConstants.type, item.getString(DBConstants.type));
+            values.put(DBConstants.rating, item.getString(DBConstants.rating));
+            values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
 
-        values.put(DBConstants.urlString, queryValues.get(DBConstants.urlString));
-        values.put(DBConstants.description, queryValues.get(DBConstants.description));
-        values.put(DBConstants.address, queryValues.get(DBConstants.address));
-        values.put(DBConstants.phone, queryValues.get(DBConstants.phone));
-        values.put(DBConstants.type, queryValues.get(DBConstants.type));
-        values.put(DBConstants.rating, queryValues.get(DBConstants.rating));
-        values.put(DBConstants.ratingCount, queryValues.get(DBConstants.ratingCount));
+            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.fullPlace);
+            values.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
+            values.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
+            values.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
+            values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
 
-        values.put(DBConstants.price, queryValues.get(DBConstants.price));
-        values.put(DBConstants.fullDescriptionBody, queryValues.get(DBConstants.fullDescriptionBody));
-        values.put(DBConstants.hebrewName, queryValues.get(DBConstants.hebrewName));
-        values.put(DBConstants.userComments, queryValues.get(DBConstants.userComments));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
-
         database.close();
 
     }

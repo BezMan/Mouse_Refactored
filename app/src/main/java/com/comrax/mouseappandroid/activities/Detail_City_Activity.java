@@ -23,7 +23,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Detail_City_Activity extends MyDrawerLayoutActivity {
@@ -68,32 +67,9 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
 
-                            HashMap<String, String> queryValuesMap = new HashMap<String, String>();
+                            item.put(DBConstants.cityId, cityId);
 
-                            queryValuesMap.put(DBConstants.cityId, cityId);
-
-                            queryValuesMap.put(DBConstants.name, item.getString(DBConstants.name));
-                            queryValuesMap.put(DBConstants.nsId, item.getString(DBConstants.nsId));
-                            queryValuesMap.put(DBConstants.objId, item.getString(DBConstants.objId));
-                            queryValuesMap.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-
-                            queryValuesMap.put(DBConstants.urlString, item.getString(DBConstants.urlString));
-                            queryValuesMap.put(DBConstants.description, item.getString(DBConstants.description));
-                            queryValuesMap.put(DBConstants.address, item.getString(DBConstants.address));
-                            queryValuesMap.put(DBConstants.phone, item.getString(DBConstants.phone));
-                            queryValuesMap.put(DBConstants.type, item.getString(DBConstants.type));
-                            queryValuesMap.put(DBConstants.rating, item.getString(DBConstants.rating));
-                            queryValuesMap.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
-//
-                            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.fullPlace);
-
-                            queryValuesMap.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
-                            queryValuesMap.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
-                            queryValuesMap.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
-                            queryValuesMap.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
-
-                            // Call for the HashMap to be added to the database
-                            dbTools.insertPlaceTable(queryValuesMap);
+                            dbTools.insertPlaceTable(item);
 
                         }
                     } catch (JSONException e) {
