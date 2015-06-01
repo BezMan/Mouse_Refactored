@@ -29,7 +29,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     MyPageAdapter pageAdapter;
     DetailsListAdapter detailsListAdapter;
-    public String CITY_FOLDER_NAME, cityId;
+    public String CITY_FOLDER_NAME, CITY_UPDATE_DATE, cityId;
     DBTools dbTools = new DBTools(this);
 
     @Override
@@ -51,6 +51,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
+        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
         cityId = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_mainPageArticles.json");
 

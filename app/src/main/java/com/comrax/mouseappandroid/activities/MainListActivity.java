@@ -176,6 +176,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 String cityFolder = s2.substring(s2.lastIndexOf("/")+1, s2.length());
 
                 File file = new File("/sdcard/Mouse_App/" + cityFolder);
+
+                //order the cities trial//
                 if(!file.exists() && CitiesArray.size()>0) {
                     CitiesArray.add(CitiesArray.size(), cityItem);
                 }
@@ -199,8 +201,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 //        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
         for (int i=0; i< GlobalVars.initDataModelArrayList.size(); i++){
             if(GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())){
-                new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(i).getFile());
-
+                new DownloadFileAsync().execute( GlobalVars.initDataModelArrayList.get(i).getFile(), GlobalVars.initDataModelArrayList.get(i).getUpdate_date() );
+                break;
             }
         }
     }
@@ -213,7 +215,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
-        String fileName;
+        String fileName, updateDate;
         File sourceZipFile, destinationFolder;
 
 
@@ -235,12 +237,13 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         }
 
         @Override
-        protected String doInBackground(String... aurl) {
+        protected String doInBackground(String... initData) {//filepath + date//
             int count;
-            fileName = aurl[0].substring(aurl[0].lastIndexOf("/") + 1);
+            fileName = initData[0].substring(initData[0].lastIndexOf("/") + 1);
+            updateDate = initData[1];
             try {
 
-                URL url = new URL(aurl[0]);
+                URL url = new URL(initData[0]);
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
 
@@ -288,7 +291,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             }
 
             loopThruJsonFiles();
-            nextActivity(destinationFolder);
+            nextActivity(destinationFolder, updateDate);
         }
 
         @Override
@@ -304,9 +307,10 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
-    private void nextActivity(File file) {
+    private void nextActivity(File file, String updateDate) {
         Intent cityFolderNameIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
         cityFolderNameIntent.putExtra("cityFolderName", file.toString());
+        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);
     }
 
