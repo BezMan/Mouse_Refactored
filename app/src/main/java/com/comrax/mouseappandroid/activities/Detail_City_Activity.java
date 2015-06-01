@@ -57,7 +57,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         setListItems();
 
-        if(!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, cityId, cityId)){
+        if(!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, "cityId", cityId)){
             setDBdata();
         }
 
@@ -106,7 +106,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 
     private void setListItems() {
-        ArrayList<DetailsListModel> myDetailsArray = new ArrayList<DetailsListModel>();
+        ArrayList<DetailsListModel> myDetailsArray = new ArrayList<>();
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
         try {
             JSONArray articlesArray = jsonData.getJSONArray("menu");
@@ -146,7 +146,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 
     private List<Fragment> getFragmentsFromJson(JSONObject jsonData) {
-        List<Fragment> fList = new ArrayList<Fragment>();
+        List<Fragment> fList = new ArrayList<>();
         try {
             JSONArray articlesArray = jsonData.getJSONArray("articles");
 
