@@ -31,7 +31,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     DetailsListAdapter detailsListAdapter;
     public String CITY_FOLDER_NAME, CITY_UPDATE_DATE, cityId;
     DBTools dbTools = new DBTools(this);
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_detail_city;
@@ -57,21 +56,48 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         setListItems();
 
-        if(!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, "cityId", cityId)){
+        if (!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, "cityId", cityId)) {
             setDBdata();
         }
 
     }
 
     private void setDBdata() {
+
+        JSONObject cityObject = new JSONObject();
         File dir = new File(CITY_FOLDER_NAME);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
-            for (File child : directoryListing) {
+            try {
+                for (File child : directoryListing) {
 
-                try { // loop thru json files in city directory//
+                    // loop thru json files in city directory//
 
-                    if (child.toString().contains("PlacesList")) {
+                    if (child.toString().contains("CityCoordinates")) {
+                        JSONObject jsonCityCoordinates = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONObject fullObject = jsonCityCoordinates.getJSONObject("cityCoordinates");
+                        cityObject.put(DBConstants.cityId, cityId);
+                        cityObject.put(DBConstants.hebrewName, fullObject.getString("name"));
+                        cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
+                        cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
+                        cityObject.put(DBConstants.centerCoordinateLon, fullObject.getString("longitude"));
+                    }
+                    else if (child.toString().contains("StopsArticle")) {
+                        JSONObject jsonStopsArticle = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.stopsArticle, jsonStopsArticle.toString());
+                    }
+
+                    else if (child.toString().contains("TuristArticalsList")) {
+                        JSONObject jsonTuristArticalsList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.touristArticlesList, jsonTuristArticalsList.toString());
+                    }
+
+                    else if (child.toString().contains("PlacesCoordinatesList")) {
+                        JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
+                    }
+
+                    else if (child.toString().contains("PlacesList")) {
                         JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonPlace.getJSONArray("places");
                         // looping through All nodes if json file:
@@ -80,9 +106,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                             item.put(DBConstants.cityId, cityId);
                             dbTools.insertPlaceTable(item);
                         }
-                    }
-
-                    else if (child.toString().contains("ArticalsList")) {
+                    } else if (child.toString().contains("ArticalsList")) {
 
                         JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonArticle.getJSONArray("articles");
@@ -92,17 +116,22 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                             item.put(DBConstants.cityId, cityId);
                             dbTools.insertArticleTable(item);
                         }
+                    }
 
 
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //add extra important data//
+                cityObject.put(DBConstants.dateUpdated, CITY_UPDATE_DATE);
+                cityObject.put(DBConstants.cityFolderPath, CITY_FOLDER_NAME);
+
+                dbTools.insertCityTable(cityObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
     }
-
 
 
     private void setListItems() {

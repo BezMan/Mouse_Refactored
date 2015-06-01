@@ -11,8 +11,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 public class DBTools extends SQLiteOpenHelper {
 
 
@@ -68,16 +66,13 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.centerCoordinateLat + " REAL, "
                 + DBConstants.centerCoordinateLon + " REAL, "
                 + DBConstants.cityFolderPath + " TEXT, "
-                + DBConstants.coordinates + " TEXT, "
                 + DBConstants.dateUpdated + " TEXT, "
-                + DBConstants.imageName + " TEXT, "
-                + DBConstants.index + " INTEGER, "
-                + DBConstants.mainArticles + " TEXT, "
-                + DBConstants.menu + " TEXT, "
+                + DBConstants.cityId + " INTEGER, "
+                + DBConstants.hebrewName + " TEXT, "
                 + DBConstants.name + " TEXT, "
-                + DBConstants.serviceMenu + " TEXT, "
                 + DBConstants.stopsArticle + " TEXT, "
-                + DBConstants.touristArticles + " TEXT "
+                + DBConstants.placesCoordinatesList + " TEXT, "
+                + DBConstants.touristArticlesList + " TEXT "
                 + ");";
 
 
@@ -96,10 +91,10 @@ public class DBTools extends SQLiteOpenHelper {
                 + ");";
 
         try {
+            db.execSQL(CREATE_CITY_TABLE);
             db.execSQL(CREATE_PLACE_FAVORITE_TABLE);
             db.execSQL(CREATE_PLACE_TABLE);
             db.execSQL(CREATE_ARTICLE_TABLE);
-            db.execSQL(CREATE_CITY_TABLE);
 
         } catch (SQLiteException e) {
             Log.e("Create table exception:", e.getMessage());
@@ -119,28 +114,28 @@ public class DBTools extends SQLiteOpenHelper {
 
 
 
-    public void insertCityTable(HashMap<String, String> queryValues){
+    public void insertCityTable(JSONObject item){
 
         SQLiteDatabase database = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
-        values.put(DBConstants.boneId, queryValues.get("nid"));
-        values.put(DBConstants.cityId, queryValues.get("title"));
-        values.put(DBConstants.imagePath, queryValues.get("country"));
-        values.put(DBConstants.menuItemId, queryValues.get("country"));
-        values.put(DBConstants.name, queryValues.get("country"));
-        values.put(DBConstants.nsId, queryValues.get("country"));
-        values.put(DBConstants.objId, queryValues.get("country"));
-        values.put(DBConstants.rating, queryValues.get("country"));
-        values.put(DBConstants.ratingCount, queryValues.get("country"));
-        values.put(DBConstants.responses, queryValues.get("country"));
-        values.put(DBConstants.title, queryValues.get("country"));
-        values.put(DBConstants.url, queryValues.get("country"));
-        values.put(DBConstants.urlContent, queryValues.get("country"));
+        try {
+            values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
+            values.put(DBConstants.hebrewName, item.getString(DBConstants.hebrewName));
+            values.put(DBConstants.name, item.getString(DBConstants.name));
+            values.put(DBConstants.centerCoordinateLat, item.getString(DBConstants.centerCoordinateLat));
+            values.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
+            values.put(DBConstants.stopsArticle, item.getString(DBConstants.stopsArticle));
+            values.put(DBConstants.dateUpdated, item.getString(DBConstants.dateUpdated));
+            values.put(DBConstants.cityFolderPath, item.getString(DBConstants.cityFolderPath));
+            values.put(DBConstants.placesCoordinatesList, item.getString(DBConstants.placesCoordinatesList));
+            values.put(DBConstants.touristArticlesList, item.getString(DBConstants.touristArticlesList));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         database.insert(DBConstants.CITY_TABLE_NAME, null, values);
-
         database.close();
 
     }
@@ -216,14 +211,10 @@ public class DBTools extends SQLiteOpenHelper {
 
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = null;
         String sql ="SELECT "+colName+" FROM "+TableName+" WHERE " +colName+ "=" +rowValue;
-        cursor= database.rawQuery(sql,null);
+        Cursor cursor= database.rawQuery(sql,null);
 
-        if(cursor.getCount()>0){
-            return true;
-        }
-        return false;
+        return cursor.getCount()>0;
     }
 
 
