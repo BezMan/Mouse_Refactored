@@ -43,8 +43,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         setDetailsListItems();
 
-        setDBdata();
-
     }
 
 
@@ -58,6 +56,10 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         addPagerData(jsonData);
 
         setListItems();
+
+        if(!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, cityId, cityId)){
+            setDBdata();
+        }
 
     }
 

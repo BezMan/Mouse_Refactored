@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -209,6 +210,20 @@ public class DBTools extends SQLiteOpenHelper {
         database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
         database.close();
 
+    }
+
+
+
+    public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = null;
+        String sql ="SELECT "+colName+" FROM "+TableName+" WHERE " +colName+ "=" +rowValue;
+        cursor= database.rawQuery(sql,null);
+
+        if(cursor.getCount()>0){
+            return true;
+        }
+        return false;
     }
 
 
