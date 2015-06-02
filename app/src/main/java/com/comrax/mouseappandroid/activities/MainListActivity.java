@@ -74,8 +74,31 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
         setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
 
+        addDummyViews();
+
         citiesAdapter = new CitiesAdapter(this, CitiesArray, existingCityCounter, getResources());
         gridView.setAdapter(citiesAdapter);
+
+    }
+
+    private void addDummyViews(){
+
+        final CitiesModel cityItem = new CitiesModel();
+        cityItem.setId("green");
+
+        if(existingCityCounter>0){
+
+            CitiesArray.add(existingCityCounter, cityItem);
+            CitiesArray.add(existingCityCounter, cityItem);
+            if(existingCityCounter%2==1){
+                final CitiesModel blankCityItem = new CitiesModel();
+                blankCityItem.setId("blank");
+                CitiesArray.add(existingCityCounter, blankCityItem);
+            }
+        }
+
+        CitiesArray.add(0, cityItem);
+        CitiesArray.add(0, cityItem);
 
     }
 

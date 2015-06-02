@@ -89,33 +89,46 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         tempValues = null;
         tempValues = (CitiesModel) _listModelList.get(position);
 
-        view = inflater.inflate(R.layout.city_layout, null);
 
-        holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
-        holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
-        holder.imageArrow = (ImageView) view.findViewById(R.id.cityImageArrow);
-
-        /************  Set Model values in Holder elements ***********/
-        holder.nameCity.setText(tempValues.getName());
-
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mouse_App/Default_master/" + tempValues.getImage());
-        if (file.exists()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            holder.imageCity.setImageBitmap(bitmap);
-        }
-
-
-        if(position < _existingCityCounter){
-            holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "side_arrow", null, null));
-        }
-        else{
-            holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "down_arrow", null, null));
+        if (tempValues.getId().equals("green")) {
+            view = inflater.inflate(R.layout.green_title, null);
 
         }
-        /******** Set Item Click Listner for LayoutInflater for each row ***********/
-        view.setOnClickListener(new OnItemClickListener(position));
+        else if(tempValues.getId().equals("blank")){
+            view = inflater.inflate(R.layout.city_layout, null);
+
+        }
+
+        else {
 
 
+            view = inflater.inflate(R.layout.city_layout, null);
+
+            holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
+            holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
+            holder.imageArrow = (ImageView) view.findViewById(R.id.cityImageArrow);
+
+            /************  Set Model values in Holder elements ***********/
+            holder.nameCity.setText(tempValues.getName());
+
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mouse_App/Default_master/" + tempValues.getImage());
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                holder.imageCity.setImageBitmap(bitmap);
+            }
+
+
+            if (position < _existingCityCounter) {
+                holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "side_arrow", null, null));
+            } else {
+                holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "down_arrow", null, null));
+
+            }
+            /******** Set Item Click Listner for LayoutInflater for each row ***********/
+            view.setOnClickListener(new OnItemClickListener(position));
+
+
+        }
         return view;
     }
 
