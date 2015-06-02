@@ -87,25 +87,42 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     private void addDummyViews() {
 
-        final CitiesModel cityItem = new CitiesModel();
-        cityItem.setId("green");
+        final CitiesModel greenNotDownloaded = new CitiesModel();
+        greenNotDownloaded.setId("greenNotDownloaded");
+
+        final CitiesModel greenYesDownloaded = new CitiesModel();
+        greenYesDownloaded .setId("greenYesDownloaded");
+
+        final CitiesModel greenBlankItem = new CitiesModel();
+        greenBlankItem .setId("greenBlankItem");
+
+        final CitiesModel blankCityItem = new CitiesModel();
+        blankCityItem.setId("blankCityItem");
+
+
 
         if (existingCityCounter > 0) {
 
-            CitiesArray.add(existingCityCounter, cityItem);
-            CitiesArray.add(existingCityCounter, cityItem);
+            //2 greens at middle:
+            CitiesArray.add(existingCityCounter, greenBlankItem);
+            CitiesArray.add(existingCityCounter, greenNotDownloaded);
             if (existingCityCounter % 2 == 1) {
-                final CitiesModel blankCityItem = new CitiesModel();
-                blankCityItem.setId("blank");
+                //fill the missing gap:
                 CitiesArray.add(existingCityCounter, blankCityItem);
+                //2 blanks at the end, fixes bug:
                 CitiesArray.add(CitiesArray.size(), blankCityItem);
                 CitiesArray.add(CitiesArray.size(), blankCityItem);
             }
+            //2 greens at beginning:
+            CitiesArray.add(0, greenBlankItem);
+            CitiesArray.add(0, greenYesDownloaded);
         }
 
-        CitiesArray.add(0, cityItem);
-        CitiesArray.add(0, cityItem);
+        else{
+            CitiesArray.add(0, greenBlankItem);
+            CitiesArray.add(0, greenNotDownloaded);
 
+        }
     }
 
 

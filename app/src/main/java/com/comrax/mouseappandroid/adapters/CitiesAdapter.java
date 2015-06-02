@@ -92,11 +92,25 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         tempValues = (CitiesModel) _listModelList.get(position);
 
 
-        if (tempValues.getId().equals("green")) {
+        if (tempValues.getId().equals("greenBlankItem")) {
+            view = inflater.inflate(R.layout.green_title, null);
+        }
+else if (tempValues.getId().equals("greenYesDownloaded")) {
+                view = inflater.inflate(R.layout.green_title, null);
+
+                TextView greenTv = (TextView)view.findViewById(R.id.greenTextView);
+                greenTv.setText("מדריכי ערים שהורדתי");
+
+            }
+
+        else if (tempValues.getId().equals("greenNotDownloaded")) {
             view = inflater.inflate(R.layout.green_title, null);
 
+            TextView greenTv = (TextView)view.findViewById(R.id.greenTextView);
+            greenTv.setText("מדריכי ערים להורדה");
+
         }
-        else if(tempValues.getId().equals("blank")){
+        else if(tempValues.getId().equals("blankCityItem")){
             view = inflater.inflate(R.layout.city_layout, null);
             holder.backgroundLayout = (RelativeLayout) view.findViewById(R.id.cityBackground);
             holder.backgroundLayout.setBackgroundColor(_resources.getColor(R.color.gray_default_background));

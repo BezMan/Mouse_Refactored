@@ -1,11 +1,12 @@
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:text="מדריכי ערים להורדה"
-        android:id="@+id/toDownloadTxt"
-        android:textSize="20dp"
+        android:text=""
+        android:id="@+id/greenTextView"
+        android:textSize="19dp"
         android:background="@color/Achbar_green"
-        android:paddingRight="10dp"
+        android:paddingRight="5dp"
         android:rotationY="180"
+        android:layout_gravity="center_vertical"
         />
