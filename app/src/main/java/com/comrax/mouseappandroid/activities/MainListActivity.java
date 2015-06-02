@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -51,12 +52,15 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     View bannerLayout;
     Button b1, b2, b3, b4;
-    ImageView image1,image2,image3,image4;
+    ImageView image1, image2, image3, image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
     DBTools dbTools = new DBTools(this);
 
     int existingCityCounter = 0;
+
+    String fileName, updateDate;
+    File sourceZipFile, destinationFolder;
 
 
     @Override
@@ -81,16 +85,16 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     }
 
-    private void addDummyViews(){
+    private void addDummyViews() {
 
         final CitiesModel cityItem = new CitiesModel();
         cityItem.setId("green");
 
-        if(existingCityCounter>0){
+        if (existingCityCounter > 0) {
 
             CitiesArray.add(existingCityCounter, cityItem);
             CitiesArray.add(existingCityCounter, cityItem);
-            if(existingCityCounter%2==1){
+            if (existingCityCounter % 2 == 1) {
                 final CitiesModel blankCityItem = new CitiesModel();
                 blankCityItem.setId("blank");
                 CitiesArray.add(existingCityCounter, blankCityItem);
@@ -114,10 +118,10 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void setBanners(JSONObject jsonObj) {
-        Button[] buttons = {b1,b2, b3, b4};
+        Button[] buttons = {b1, b2, b3, b4};
         ImageView[] images = {image1, image2, image3, image4};
         LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
-         // Getting data JSON Array nodes
+        // Getting data JSON Array nodes
         JSONArray data = null;
         try {
             data = jsonObj.getJSONArray("banners");
@@ -137,12 +141,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 BannersArray.add(bannerItem);
 
-                int buttonID = getResources().getIdentifier("banner_button"+ (i+1), "id", getPackageName());
+                int buttonID = getResources().getIdentifier("banner_button" + (i + 1), "id", getPackageName());
                 buttons[i] = (Button) bannerLayout.findViewById(buttonID);
                 buttons[i].setText(BannersArray.get(i).getText());
 
 
-                int imageID = getResources().getIdentifier("banner_image"+ (i+1), "id", getPackageName());
+                int imageID = getResources().getIdentifier("banner_image" + (i + 1), "id", getPackageName());
                 images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
                 File file = new File("/sdcard/Mouse_App/Default_master/" + BannersArray.get(i).getImageBIG());
@@ -151,8 +155,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     images[i].setImageBitmap(bitmap);
                 }
 
-                int layoutID = getResources().getIdentifier("banner_layout"+ (i+1), "id", getPackageName());
-                layouts[i]= (LinearLayout) bannerLayout.findViewById(layoutID);
+                int layoutID = getResources().getIdentifier("banner_layout" + (i + 1), "id", getPackageName());
+                layouts[i] = (LinearLayout) bannerLayout.findViewById(layoutID);
                 layouts[i].setOnClickListener(new OnBannerClick(i));
             }
 
@@ -177,9 +181,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
-
-
-        private void setCities(JSONObject jsonObj) {
+    private void setCities(JSONObject jsonObj) {
         // Getting data JSON Array nodes
         try {
             JSONArray data = jsonObj.getJSONArray("cities");
@@ -202,10 +204,9 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 //order the cities//
                 boolean cityExists = dbTools.isDataAlreadyInDB(DBConstants.CITY_TABLE_NAME, "cityId", cityItem.getId());
-                if(!cityExists ) {
+                if (!cityExists) {
                     CitiesArray.add(CitiesArray.size(), cityItem);
-                }
-                else {
+                } else {
                     CitiesArray.add(0, cityItem);
                     existingCityCounter++;
 
@@ -219,30 +220,24 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
-
-
     public void onListItemClick(int mPosition) {
         CitiesModel tempValues = CitiesArray.get(mPosition);
 
 //        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
-        for (int i=0; i< GlobalVars.initDataModelArrayList.size(); i++){
-            if(GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())){
-                new DownloadFileAsync().execute( GlobalVars.initDataModelArrayList.get(i).getFile(), GlobalVars.initDataModelArrayList.get(i).getUpdate_date() );
+
+        for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
+            if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
+                App.getInstance().setCityId(tempValues.getId());
+                new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(i).getFile(), GlobalVars.initDataModelArrayList.get(i).getUpdate_date());
                 break;
             }
         }
     }
 
 
-
-
-
-
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
-        String fileName, updateDate;
-        File sourceZipFile, destinationFolder;
 
 
         @Override
@@ -259,7 +254,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     dialog.dismiss();
                 }
             });
-                    mProgressDialog.show();
+            mProgressDialog.show();
         }
 
         @Override
@@ -276,6 +271,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
                 sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
+                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
 
@@ -295,6 +292,18 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     output.flush();
                     output.close();
                     input.close();
+                    try {
+                        HelperMethods.unzip(sourceZipFile, destinationFolder);
+                        setDBdata();
+                        mProgressDialog.dismiss();
+                        startActivity(new Intent(MainListActivity.this, MainListActivity.class));
+                        finish();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    nextActivity(destinationFolder, updateDate);
                 }
             } catch (Exception e) {
             }
@@ -309,15 +318,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         @Override
         protected void onPostExecute(String unused) {
             mProgressDialog.dismiss();
-            try {
-                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
-                HelperMethods.unzip(sourceZipFile, destinationFolder);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            loopThruJsonFiles();
-            nextActivity(destinationFolder, updateDate);
         }
 
         @Override
@@ -328,8 +328,69 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         }
     }
 
-    private void loopThruJsonFiles() {
 
+    private void setDBdata() {
+
+        JSONObject cityObject = new JSONObject();
+        File dir = new File(destinationFolder.toString());
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            try {
+                for (File child : directoryListing) {
+
+                    // loop thru json files in city directory//
+
+                    if (child.toString().contains("CityCoordinates")) {
+                        JSONObject jsonCityCoordinates = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONObject fullObject = jsonCityCoordinates.getJSONObject("cityCoordinates");
+                        cityObject.put(DBConstants.cityId, App.getInstance().getCityId());
+                        cityObject.put(DBConstants.hebrewName, fullObject.getString("name"));
+                        cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
+                        cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
+                        cityObject.put(DBConstants.centerCoordinateLon, fullObject.getString("longitude"));
+                    } else if (child.toString().contains("StopsArticle")) {
+                        JSONObject jsonStopsArticle = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.stopsArticle, jsonStopsArticle.toString());
+                    } else if (child.toString().contains("TuristArticalsList")) {
+                        JSONObject jsonTuristArticalsList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.touristArticlesList, jsonTuristArticalsList.toString());
+                    } else if (child.toString().contains("PlacesCoordinatesList")) {
+                        JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
+                    } else if (child.toString().contains("PlacesList")) {
+                        JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonPlace.getJSONArray("places");
+                        // looping through All nodes if json file:
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject item = data.getJSONObject(i);
+                            item.put(DBConstants.cityId, App.getInstance().getCityId());
+                            dbTools.insertPlaceTable(item);
+                        }
+                    } else if (child.toString().contains("ArticalsList")) {
+
+                        JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonArticle.getJSONArray("articles");
+                        // looping through All nodes if json file:
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject item = data.getJSONObject(i);
+                            item.put(DBConstants.cityId, App.getInstance().getCityId());
+                            dbTools.insertArticleTable(item);
+                        }
+                    }
+
+
+                }
+
+                //add extra important data//
+                cityObject.put(DBConstants.dateUpdated, updateDate);
+                cityObject.put(DBConstants.cityFolderPath, destinationFolder);
+
+                dbTools.insertCityTable(cityObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
@@ -339,8 +400,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);
     }
-
-
 
 
 }

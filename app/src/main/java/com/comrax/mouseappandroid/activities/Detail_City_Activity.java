@@ -21,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,81 +56,11 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         setListItems();
 
         if (!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, "cityId", cityId)) {
-            setDBdata();
+//            setDBdata();
         }
 
     }
 
-    private void setDBdata() {
-
-        JSONObject cityObject = new JSONObject();
-        File dir = new File(CITY_FOLDER_NAME);
-        File[] directoryListing = dir.listFiles();
-        if (directoryListing != null) {
-            try {
-                for (File child : directoryListing) {
-
-                    // loop thru json files in city directory//
-
-                    if (child.toString().contains("CityCoordinates")) {
-                        JSONObject jsonCityCoordinates = HelperMethods.loadJsonDataFromFile(child.toString());
-                        JSONObject fullObject = jsonCityCoordinates.getJSONObject("cityCoordinates");
-                        cityObject.put(DBConstants.cityId, cityId);
-                        cityObject.put(DBConstants.hebrewName, fullObject.getString("name"));
-                        cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
-                        cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
-                        cityObject.put(DBConstants.centerCoordinateLon, fullObject.getString("longitude"));
-                    }
-                    else if (child.toString().contains("StopsArticle")) {
-                        JSONObject jsonStopsArticle = HelperMethods.loadJsonDataFromFile(child.toString());
-                        cityObject.put(DBConstants.stopsArticle, jsonStopsArticle.toString());
-                    }
-
-                    else if (child.toString().contains("TuristArticalsList")) {
-                        JSONObject jsonTuristArticalsList = HelperMethods.loadJsonDataFromFile(child.toString());
-                        cityObject.put(DBConstants.touristArticlesList, jsonTuristArticalsList.toString());
-                    }
-
-                    else if (child.toString().contains("PlacesCoordinatesList")) {
-                        JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
-                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
-                    }
-
-                    else if (child.toString().contains("PlacesList")) {
-                        JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
-                        JSONArray data = jsonPlace.getJSONArray("places");
-                        // looping through All nodes if json file:
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, cityId);
-                            dbTools.insertPlaceTable(item);
-                        }
-                    } else if (child.toString().contains("ArticalsList")) {
-
-                        JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
-                        JSONArray data = jsonArticle.getJSONArray("articles");
-                        // looping through All nodes if json file:
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, cityId);
-                            dbTools.insertArticleTable(item);
-                        }
-                    }
-
-
-                    }
-
-                //add extra important data//
-                cityObject.put(DBConstants.dateUpdated, CITY_UPDATE_DATE);
-                cityObject.put(DBConstants.cityFolderPath, CITY_FOLDER_NAME);
-
-                dbTools.insertCityTable(cityObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
 
     private void setListItems() {

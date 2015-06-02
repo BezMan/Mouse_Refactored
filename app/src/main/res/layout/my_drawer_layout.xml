@@ -21,6 +21,7 @@
                 android:layout_width="match_parent" android:layout_height="match_parent"
                 android:id="@+id/main_grid"
                 android:numColumns="2"
+                android:rotationY="180"
                 >
             </in.srain.cube.views.GridViewWithHeaderAndFooter>
 

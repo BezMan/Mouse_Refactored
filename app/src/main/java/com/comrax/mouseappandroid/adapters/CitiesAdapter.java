@@ -118,7 +118,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
             }
 
 
-            if (position < _existingCityCounter) {
+            if (position < _existingCityCounter+2) {
                 holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "side_arrow", null, null));
             } else {
                 holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "down_arrow", null, null));
