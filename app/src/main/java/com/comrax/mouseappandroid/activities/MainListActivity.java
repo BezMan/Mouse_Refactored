@@ -177,14 +177,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 cityItem.setImage(image);
                 cityItem.setName(name);
 
-//                String s =  GlobalVars.initDataModelArrayList.get(i+1).getFile();
-//                String s2 =  s.substring(0, s.lastIndexOf('.'));
-//                String cityFolder = s2.substring(s2.lastIndexOf("/")+1, s2.length());
-//                File file = new File("/sdcard/Mouse_App/" + cityFolder);
-
+                //order the cities//
                 boolean cityExists = dbTools.isDataAlreadyInDB(DBConstants.CITY_TABLE_NAME, "cityId", cityItem.getId());
-
-                //order the cities trial//
                 if(!cityExists ) {
                     CitiesArray.add(CitiesArray.size(), cityItem);
                 }

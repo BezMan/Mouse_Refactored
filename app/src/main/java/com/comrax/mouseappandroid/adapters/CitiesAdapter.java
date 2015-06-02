@@ -76,7 +76,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
     public static class ViewHolder {
 
         public TextView nameCity;
-        public ImageView imageCity;
+        public ImageView imageCity, imageArrow;
 
     }
 
@@ -93,6 +93,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
         holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
         holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
+        holder.imageArrow = (ImageView) view.findViewById(R.id.cityImageArrow);
 
         /************  Set Model values in Holder elements ***********/
         holder.nameCity.setText(tempValues.getName());
@@ -103,6 +104,14 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
             holder.imageCity.setImageBitmap(bitmap);
         }
 
+
+        if(position < _existingCityCounter){
+            holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "side_arrow", null, null));
+        }
+        else{
+            holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "down_arrow", null, null));
+
+        }
         /******** Set Item Click Listner for LayoutInflater for each row ***********/
         view.setOnClickListener(new OnItemClickListener(position));
 

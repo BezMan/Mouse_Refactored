@@ -35,7 +35,7 @@
             android:layout_alignBottom="@+id/cityNameText"
             android:layout_below="@+id/cityImageView"
             android:padding="5dp"
-            android:src="@drawable/down_arrow" />
+            />
 
     </RelativeLayout>
 
