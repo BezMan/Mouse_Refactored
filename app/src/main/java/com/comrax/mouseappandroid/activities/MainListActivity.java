@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
+import com.comrax.mouseappandroid.database.DBConstants;
+import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
@@ -52,6 +54,10 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     ImageView image1,image2,image3,image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
+    DBTools dbTools = new DBTools(this);
+
+    int existingCityCounter = 0;
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -68,7 +74,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
         setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
 
-        citiesAdapter = new CitiesAdapter(this, CitiesArray, getResources());
+        citiesAdapter = new CitiesAdapter(this, CitiesArray, existingCityCounter, getResources());
         gridView.setAdapter(citiesAdapter);
 
     }
@@ -171,18 +177,21 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 cityItem.setImage(image);
                 cityItem.setName(name);
 
-                String s =  GlobalVars.initDataModelArrayList.get(i+1).getFile();
-                String s2 =  s.substring(0, s.lastIndexOf('.'));
-                String cityFolder = s2.substring(s2.lastIndexOf("/")+1, s2.length());
+//                String s =  GlobalVars.initDataModelArrayList.get(i+1).getFile();
+//                String s2 =  s.substring(0, s.lastIndexOf('.'));
+//                String cityFolder = s2.substring(s2.lastIndexOf("/")+1, s2.length());
+//                File file = new File("/sdcard/Mouse_App/" + cityFolder);
 
-                File file = new File("/sdcard/Mouse_App/" + cityFolder);
+                boolean cityExists = dbTools.isDataAlreadyInDB(DBConstants.CITY_TABLE_NAME, "cityId", cityItem.getId());
 
                 //order the cities trial//
-                if(!file.exists() && CitiesArray.size()>0) {
+                if(!cityExists ) {
                     CitiesArray.add(CitiesArray.size(), cityItem);
                 }
                 else {
                     CitiesArray.add(0, cityItem);
+                    existingCityCounter++;
+
                 }
             }
         } catch (JSONException e) {

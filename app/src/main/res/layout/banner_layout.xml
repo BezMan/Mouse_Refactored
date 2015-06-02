@@ -1,165 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/Gray"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
+        android:orientation="horizontal"
 
         >
 
         <LinearLayout
-            android:orientation="horizontal" android:layout_width="match_parent"
+            android:id="@+id/banner_layout1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:id="@+id/banner_layout1"
+            android:orientation="horizontal"
 
             >
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:text="1 Button"
-        android:id="@+id/banner_button1"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="6dp"
-        android:background="@color/White"
-        android:clickable="false"
-        />
-
-        <ImageView
-            android:layout_width="57dp"
-            android:layout_height="match_parent"
-            android:id="@+id/banner_image1"
-            android:background="@color/White"
-            android:layout_marginTop="6dp"
-
-            />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal" android:layout_width="match_parent"
+            <Button
+                android:id="@+id/banner_button1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
                 android:layout_weight="3"
-                android:id="@+id/banner_layout3"
+                android:background="@color/White"
+                android:clickable="false"
+                android:text="1 Button" />
 
-                >
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:text="3 Button"
-        android:id="@+id/banner_button3"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="6dp"
-        android:background="@color/White"
-        android:clickable="false"
-        />
+            <ImageView
+                android:id="@+id/banner_image1"
+                android:layout_width="57dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
+                android:background="@color/White"
 
-        <ImageView
-            android:layout_width="57dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/banner_layout3"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/banner_image3"
-            android:background="@color/White"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="6dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
 
-            />
+            >
 
-            </LinearLayout>
+            <Button
+                android:id="@+id/banner_button3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="3"
+                android:background="@color/White"
+                android:clickable="false"
+                android:text="3 Button" />
+
+            <ImageView
+                android:id="@+id/banner_image3"
+                android:layout_width="57dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:background="@color/White"
+
+                />
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
 
         >
 
 
         <LinearLayout
-            android:orientation="horizontal" android:layout_width="match_parent"
+            android:id="@+id/banner_layout2"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:id="@+id/banner_layout2"
+            android:orientation="horizontal"
 
 
             >
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="2 Button"
-            android:id="@+id/banner_button2"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="6dp"
-            android:background="@color/White"
-            android:clickable="false"
+            <Button
+                android:id="@+id/banner_button2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:background="@color/White"
+                android:clickable="false"
+                android:text="2 Button"
 
-            />
+                />
 
 
-        <ImageView
-            android:layout_width="57dp"
-            android:layout_height="match_parent"
-            android:id="@+id/banner_image2"
-            android:background="@color/White"
-            android:layout_marginTop="6dp"
+            <ImageView
+                android:id="@+id/banner_image2"
+                android:layout_width="57dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
+                android:background="@color/White"
 
-            />
+                />
 
-            </LinearLayout>
+        </LinearLayout>
 
 
         <LinearLayout
-            android:orientation="horizontal" android:layout_width="match_parent"
+            android:id="@+id/banner_layout4"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:id="@+id/banner_layout4"
-            >
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="4 Button"
-            android:id="@+id/banner_button4"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="6dp"
-            android:background="@color/White"
-            android:clickable="false"
-            />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/banner_button4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:background="@color/White"
+                android:clickable="false"
+                android:text="4 Button" />
 
 
-        <ImageView
-            android:layout_width="57dp"
-            android:layout_height="match_parent"
-            android:id="@+id/banner_image4"
-            android:background="@color/White"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="6dp"
+            <ImageView
+                android:id="@+id/banner_image4"
+                android:layout_width="57dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:background="@color/White"
 
-            />
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:text="מדריכי ערים להורדה"
-        android:id="@+id/toDownloadTxt"
-        android:textSize="20dp"
-        android:background="@color/Achbar_green"
-        android:paddingRight="10dp"
-        />
 
 
 </LinearLayout>

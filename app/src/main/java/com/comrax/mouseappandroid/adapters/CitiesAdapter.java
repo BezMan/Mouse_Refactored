@@ -32,16 +32,18 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     private Activity _activity;
     private ArrayList _listModelList;
+    private int _existingCityCounter;
     private Resources _resources;
 
 
-     /* **********  CustomAdapter Constructor ****************
-     */
-    public CitiesAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    /* **********  CustomAdapter Constructor ****************
+    */
+    public CitiesAdapter(Activity activity, ArrayList arrayList, int existingCityCounter, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
         _listModelList = arrayList;
+        _existingCityCounter = existingCityCounter;
         _resources = resLocal;
 
 
@@ -92,11 +94,10 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
         holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
 
-
         /************  Set Model values in Holder elements ***********/
         holder.nameCity.setText(tempValues.getName());
 
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Mouse_App/Default_master/" + tempValues.getImage());
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mouse_App/Default_master/" + tempValues.getImage());
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             holder.imageCity.setImageBitmap(bitmap);
@@ -104,6 +105,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
         /******** Set Item Click Listner for LayoutInflater for each row ***********/
         view.setOnClickListener(new OnItemClickListener(position));
+
 
         return view;
     }
