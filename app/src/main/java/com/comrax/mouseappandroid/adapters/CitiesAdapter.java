@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -75,6 +76,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     public static class ViewHolder {
 
+        public RelativeLayout backgroundLayout;
         public TextView nameCity;
         public ImageView imageCity, imageArrow;
 
@@ -96,6 +98,8 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
         }
         else if(tempValues.getId().equals("blank")){
             view = inflater.inflate(R.layout.city_layout, null);
+            holder.backgroundLayout = (RelativeLayout) view.findViewById(R.id.cityBackground);
+            holder.backgroundLayout.setBackgroundColor(_resources.getColor(R.color.gray_default_background));
 
         }
 

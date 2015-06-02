@@ -98,6 +98,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 final CitiesModel blankCityItem = new CitiesModel();
                 blankCityItem.setId("blank");
                 CitiesArray.add(existingCityCounter, blankCityItem);
+                CitiesArray.add(CitiesArray.size(), blankCityItem);
+                CitiesArray.add(CitiesArray.size(), blankCityItem);
             }
         }
 
