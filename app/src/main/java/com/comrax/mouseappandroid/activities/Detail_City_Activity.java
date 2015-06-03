@@ -2,6 +2,8 @@ package com.comrax.mouseappandroid.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -27,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,47 +66,60 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         List<GroupItem> items = new ArrayList<GroupItem>();
 
-        // Populate our list with groups and it's children
-        for(int i = 1; i < 100; i++) {
-            GroupItem item = new GroupItem();
+        JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
+        JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
+        int i=0, j=0, k=0, m=0;
+        try {
+            JSONArray menuArray = jsonMenuData.getJSONArray("menu");
+            JSONArray serviceMenuArray = jsonServiceMenuData.getJSONArray("serviceMenu");
 
-            item.title = "Group " + i;
+            int totalLength = 1 + menuArray.length() + 1 + 4;
+            for (; i < totalLength; i++) {
 
-            for(int j = 0; j < i; j++) {
-                ChildItem child = new ChildItem();
-                child.title = "Awesome item " + j;
-                child.hint = "Too awesome";
+                final GroupItem listItem = new GroupItem();
 
-                item.items.add(child);
+                if (i == 0 || i >= menuArray.length()+1 ) {
+                    listItem.title = (GlobalVars.detailsListTitles[k]);
+                    listItem.imagePath = (GlobalVars.detailsListImages[k]);
+                    k++;
+
+                }
+                else {  //get From Json data//
+                        JSONObject menuItem = menuArray.getJSONObject(j++);
+                        listItem.title = (menuItem.getString("name"));
+                        listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
+                }
+                items.add(listItem);
             }
 
-            items.add(item);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         adapter = new ExampleAdapter(this);
         adapter.setData(items);
-
+//
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
         listView.setAdapter(adapter);
-
-        // In order to show animations, we need to use a custom click handler
-        // for our ExpandableListView.
-        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                // We call collapseGroupWithAnimation(int) and
-                // expandGroupWithAnimation(int) to animate group
-                // expansion/collapse.
-                if (listView.isGroupExpanded(groupPosition)) {
-                    listView.collapseGroupWithAnimation(groupPosition);
-                } else {
-                    listView.expandGroupWithAnimation(groupPosition);
-                }
-                return true;
-            }
-
-        });
+//
+//        // In order to show animations, we need to use a custom click handler
+//        // for our ExpandableListView.
+//        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//
+//            @Override
+//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+//                // We call collapseGroupWithAnimation(int) and
+//                // expandGroupWithAnimation(int) to animate group
+//                // expansion/collapse.
+//                if (listView.isGroupExpanded(groupPosition)) {
+//                    listView.collapseGroupWithAnimation(groupPosition);
+//                } else {
+//                    listView.expandGroupWithAnimation(groupPosition);
+//                }
+//                return true;
+//            }
+//
+//        });
     }
 
 
@@ -234,6 +251,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private static class GroupItem {
         String title;
+        String imagePath;
         List<ChildItem> items = new ArrayList<ChildItem>();
     }
 
@@ -249,6 +267,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private static class GroupHolder {
         TextView title;
+        ImageView imageView;
     }
 
     /**
@@ -325,12 +344,18 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                 holder = new GroupHolder();
                 convertView = inflater.inflate(R.layout.city_details_item, parent, false);
                 holder.title = (TextView) convertView.findViewById(R.id.details_item_title);
+                holder.imageView = (ImageView) convertView.findViewById(R.id.details_item_image);
                 convertView.setTag(holder);
             } else {
                 holder = (GroupHolder) convertView.getTag();
             }
 
             holder.title.setText(item.title);
+            File file = new File(item.imagePath);
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                holder.imageView.setImageBitmap(bitmap);
+            }
 
             return convertView;
         }
