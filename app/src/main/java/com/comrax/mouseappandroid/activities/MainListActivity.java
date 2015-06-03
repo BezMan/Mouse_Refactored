@@ -274,7 +274,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     dialog.dismiss();
                 }
             });
-            mProgressDialog.show();
         }
 
         @Override
@@ -295,7 +294,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
-
+                    mProgressDialog.show();
                     OutputStream output = new FileOutputStream(sourceZipFile);
                     byte data[] = new byte[1024];
                     long total = 0;

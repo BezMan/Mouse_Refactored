@@ -73,22 +73,32 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private void setListItems() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<>();
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
+        JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
+        JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
+        int i=0, j=0, k=0, m=0;
         try {
-            JSONArray articlesArray = jsonData.getJSONArray("menu");
+            JSONArray menuArray = jsonMenuData.getJSONArray("menu");
+            JSONArray serviceMenuArray = jsonServiceMenuData.getJSONArray("serviceMenu");
 
-            for (int i = 0, j = 0; i < GlobalVars.detailsListTitles.length; i++) {
+            int totalLength = menuArray.length()+serviceMenuArray.length();
+            for (; i < totalLength+6; i++) {
 
                 final DetailsListModel listItem = new DetailsListModel();
 
-                if (i < 1 || i > 5) {
-                    listItem.setBtnTitle(GlobalVars.detailsListTitles[i]);
-                    listItem.setBtnImage(GlobalVars.detailsListImages[i]);
+                if (i == 0 || i==menuArray.length()+1 || i >= totalLength+2) {
+                    listItem.setBtnTitle(GlobalVars.detailsListTitles[k]);
+                    listItem.setBtnImage(GlobalVars.detailsListImages[k]);
+                    k++;
                 } else {  //get From Json data//
-                    JSONObject item = articlesArray.getJSONObject(j++);
-                    listItem.setBtnTitle(item.getString("name"));
-                    listItem.setBtnImage("/sdcard/Mouse_App/" + item.getString("icon"));
-
+                    if(i <= menuArray.length()) {
+                        JSONObject menuItem = menuArray.getJSONObject(j++);
+                        listItem.setBtnTitle(menuItem.getString("name"));
+                        listItem.setBtnImage("/sdcard/Mouse_App/" + menuItem.getString("icon"));
+                    }
+                    else{ //we are up to the serviceMenu//
+                        JSONObject serviceMenuItem = serviceMenuArray.getJSONObject(m++);
+                        listItem.setBtnTitle(serviceMenuItem.getString("name"));
+                    }
                 }
                 myDetailsArray.add(listItem);
             }

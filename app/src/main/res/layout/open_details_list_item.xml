@@ -126,9 +126,11 @@
 
 
         <ImageView
-            android:layout_height="match_parent"
+            android:layout_height="17dp"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:src="@drawable/coin_3"
+            android:layout_gravity="center_vertical"
             />
 
         <TextView
@@ -157,6 +159,7 @@
             android:numStars="5"
             android:stepSize="0.1"
             android:paddingLeft="75dp"
+            android:rating="3"
             />
 
 
