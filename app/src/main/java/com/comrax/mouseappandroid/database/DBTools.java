@@ -218,5 +218,17 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
+    public String getData(String TableName, String chosenColValue, String checkColumn, String checkVal) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql ="SELECT " +chosenColValue+ " FROM " +TableName+ " WHERE " +checkColumn+ "=" +checkVal ;
+        Cursor cursor= database.rawQuery(sql, null);
+        String res = null;
+        if (cursor.moveToFirst()) {
+            res = cursor.getString(cursor.getColumnIndex(chosenColValue));
+        }
+        return res;
+    }
+
+
 
 }

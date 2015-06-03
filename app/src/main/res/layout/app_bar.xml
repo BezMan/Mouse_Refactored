@@ -23,7 +23,7 @@
             android:textColor="@color/Black"
             android:textStyle="bold"
             android:textSize="28dp"
-            android:text="לונדוןןן"/>
+            android:text="עכבר העיר"/>
 
         <ImageButton
             android:id="@+id/image_burger"

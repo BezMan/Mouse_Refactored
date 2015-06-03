@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.DetailsListAdapter;
@@ -40,7 +41,17 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         super.onCreate(savedInstanceState);
 
         setDetailsListItems();
+        setTitle();
 
+    }
+
+    private void setTitle() {
+        String title = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId);
+        TextView titleTextView = (TextView)findViewById(R.id.title_text);
+        titleTextView.setText(title);
+
+
+//        getSupportActionBar().setTitle(title);
     }
 
 
@@ -55,9 +66,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         setListItems();
 
-        if (!dbTools.isDataAlreadyInDB(DBConstants.ARTICLE_TABLE_NAME, "cityId", cityId)) {
-//            setDBdata();
-        }
 
     }
 
