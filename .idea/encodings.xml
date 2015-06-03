@@ -2,7 +2,10 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/App.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/adapters/AnimatedExpandableListView.java" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/waze_icon.png" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/group_item.xml" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" charset="windows-1255" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

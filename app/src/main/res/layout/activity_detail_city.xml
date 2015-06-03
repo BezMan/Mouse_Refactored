@@ -18,14 +18,13 @@
             />
 
 
-        <ListView
+        <com.comrax.mouseappandroid.adapters.AnimatedExpandableListView
             android:id="@+id/details_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#00000000"
-            >
-
-        </ListView>
+            android:groupIndicator="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            />
 
 
     </LinearLayout>
