@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities.MyDrawerLayoutActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
 import com.comrax.mouseappandroid.model.DetailsListModel;
 
 import java.io.File;

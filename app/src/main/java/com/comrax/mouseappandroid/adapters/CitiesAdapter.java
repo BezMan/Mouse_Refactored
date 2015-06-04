@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities.MainListActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.MainListActivity;
 import com.comrax.mouseappandroid.model.CitiesModel;
 
 import java.io.File;

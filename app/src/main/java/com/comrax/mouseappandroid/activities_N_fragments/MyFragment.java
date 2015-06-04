@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.fragments;
+package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.activities;
+package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.adapters.AnimatedExpandableListView;
+import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
 import com.comrax.mouseappandroid.adapters.DetailsListAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
-import com.comrax.mouseappandroid.fragments.MyFragment;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.DetailsListModel;
 import com.comrax.mouseappandroid.model.GlobalVars;

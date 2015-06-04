@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.activities;
+package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -91,14 +91,13 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         greenNotDownloaded.setId("greenNotDownloaded");
 
         final CitiesModel greenYesDownloaded = new CitiesModel();
-        greenYesDownloaded .setId("greenYesDownloaded");
+        greenYesDownloaded.setId("greenYesDownloaded");
 
         final CitiesModel greenBlankItem = new CitiesModel();
-        greenBlankItem .setId("greenBlankItem");
+        greenBlankItem.setId("greenBlankItem");
 
         final CitiesModel blankCityItem = new CitiesModel();
         blankCityItem.setId("blankCityItem");
-
 
 
         if (existingCityCounter > 0) {
@@ -116,9 +115,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
             //2 greens at beginning:
             CitiesArray.add(0, greenBlankItem);
             CitiesArray.add(0, greenYesDownloaded);
-        }
-
-        else{
+        } else {
             CitiesArray.add(0, greenBlankItem);
             CitiesArray.add(0, greenNotDownloaded);
 
@@ -255,6 +252,19 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
+//    mProgressDialog.show();
+//
+//    mSavingDialog = new ProgressDialog(MainListActivity.this);
+//    mSavingDialog.setMessage("שומר כתבות..");
+//    mSavingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//    mSavingDialog.setCancelable(true);
+//    mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//            DownloadFileAsync.this.cancel(true);
+//            dialog.dismiss();
+//        }
+//    });
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
@@ -274,6 +284,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     dialog.dismiss();
                 }
             });
+            mProgressDialog.show();
+
         }
 
         @Override
@@ -294,7 +306,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
-                    mProgressDialog.show();
                     OutputStream output = new FileOutputStream(sourceZipFile);
                     byte data[] = new byte[1024];
                     long total = 0;
@@ -304,8 +315,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         publishProgress("" + (int) ((total * 100) / lenghtOfFile));
                         output.write(data, 0, count);
 
-                        if (isCancelled())
-                            break;
+                        if (isCancelled()) {
+                            output.flush();
+                            output.close();
+                            input.close();
+                            return null;
+                        }
                     }
 
                     output.flush();
@@ -343,6 +358,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         protected void onCancelled(String s) {
 //            delete downloaded zip file on cancel:
             new File("/sdcard/Mouse_App/" + fileName).delete();
+            new File("/sdcard/Mouse_App/" + destinationFolder).delete();
 
         }
     }

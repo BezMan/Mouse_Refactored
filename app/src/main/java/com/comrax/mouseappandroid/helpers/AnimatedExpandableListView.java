@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-package com.comrax.mouseappandroid.adapters;
+package com.comrax.mouseappandroid.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

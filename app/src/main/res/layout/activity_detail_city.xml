@@ -18,7 +18,7 @@
             />
 
 
-        <com.comrax.mouseappandroid.adapters.AnimatedExpandableListView
+        <com.comrax.mouseappandroid.helpers.AnimatedExpandableListView
             android:id="@+id/details_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

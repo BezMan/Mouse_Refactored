@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.activities;
+package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

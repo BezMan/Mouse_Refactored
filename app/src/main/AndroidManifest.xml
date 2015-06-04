@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities_N_fragments.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainListActivity"
+            android:name=".activities_N_fragments.MainListActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".activities.Detail_City_Activity"
+            android:name=".activities_N_fragments.Detail_City_Activity"
             android:label="@string/title_activity_detail__city_" >
         </activity>
     </application>

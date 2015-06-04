@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities.Detail_City_Activity;
-import com.comrax.mouseappandroid.activities.MainListActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.Detail_City_Activity;
+import com.comrax.mouseappandroid.activities_N_fragments.MainListActivity;
 
 import java.util.ArrayList;
 
