@@ -113,7 +113,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
         else if(tempValues.getId().equals("blankCityItem")){
             view = inflater.inflate(R.layout.city_layout, null);
             holder.backgroundLayout = (RelativeLayout) view.findViewById(R.id.cityBackground);
-            holder.backgroundLayout.setBackgroundColor(_resources.getColor(R.color.gray_default_background));
+            holder.backgroundLayout.setBackgroundColor(_resources.getColor(R.color.Achbar_gray_default_background));
 
         }
 

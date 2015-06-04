@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -256,12 +257,13 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private static class ChildItem {
         String title;
-        String hint;
+//        String hint;
     }
 
     private static class ChildHolder {
         TextView title;
-        TextView hint;
+        LinearLayout itemLayout;
+        ImageView arrowIcon, imageViewBackground;
     }
 
     private static class GroupHolder {
@@ -301,16 +303,24 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             ChildItem item = getChild(groupPosition, childPosition);
             if (convertView == null) {
                 holder = new ChildHolder();
-                convertView = inflater.inflate(R.layout.list_item, parent, false);
-                holder.title = (TextView) convertView.findViewById(R.id.textTitle);
-                holder.hint = (TextView) convertView.findViewById(R.id.textHint);
+                convertView = inflater.inflate(R.layout.city_details_item, parent, false);
+
+                holder.title = (TextView) convertView.findViewById(R.id.details_item_title);
+                holder.itemLayout = (LinearLayout) convertView.findViewById(R.id.details_item_layout);
+                holder.imageViewBackground = (ImageView) convertView.findViewById(R.id.details_item_image);
+                holder.arrowIcon = (ImageView) convertView.findViewById(R.id.details_item_arrow);
+
                 convertView.setTag(holder);
             } else {
                 holder = (ChildHolder) convertView.getTag();
             }
 
             holder.title.setText(item.title);
-            holder.hint.setText(item.hint);
+            holder.itemLayout.setBackgroundColor(getResources().getColor(R.color.Achbar_gray_light_background));
+            holder.imageViewBackground.setBackgroundColor(getResources().getColor(R.color.Achbar_trial));
+            holder.arrowIcon.setImageResource(getResources().getColor(R.color.Achbar_gray_light_background));
+
+
 
             return convertView;
         }

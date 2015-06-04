@@ -2,7 +2,10 @@
 
     <color name="Achbar_green">#96c61a</color>
     <color name="Achbar_gray">#353333</color>
-    <color name="gray_default_background">#ffeeeeee</color>
+    <color name="Achbar_gray_default_background">#ffeeeeee</color>
+    <color name="Achbar_trial">#F5F5F5</color>
+    <color name="Achbar_gray_light_background">#DDDBDB</color>
+
 
 
     <color name="White">#FFFFFF</color>
