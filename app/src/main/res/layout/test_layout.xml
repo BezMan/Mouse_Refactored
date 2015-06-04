@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sliding_drawer_root">
+
+    <your.app.MultipleOrientationSlidingDrawer
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        custom:handle="@+id/handle_c"
+        custom:content="@+id/content_c"
+        custom:orientation="top">
+
+        <RelativeLayout
+            android:id="@id/handle_c"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#333333">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Handle Text"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="4dp"
+                />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@id/content_c"
+            android:background="#555555">
+
+            <ListView
+                android:id="@+id/listview_credits"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+    </your.app.MultipleOrientationSlidingDrawer>
+
+</FrameLayout>
