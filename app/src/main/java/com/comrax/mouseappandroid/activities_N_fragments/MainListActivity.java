@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -243,37 +244,43 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
-                App.getInstance().setCityId(tempValues.getId());
-                new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(i).getFile(), GlobalVars.initDataModelArrayList.get(i).getUpdate_date());
-                break;
+                //check if exists already:
+
+                String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
+                String updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
+                fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+
+                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
+                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+
+                //only continue if non-existant.
+                if (!sourceZipFile.exists()) {
+
+
+                    App.getInstance().setCityId(tempValues.getId());
+                    new DownloadFileAsync().execute(filePath, updateDate);
+                    break;
+                }
+                else{
+                    nextActivity(destinationFolder, updateDate);
+
+                }
             }
         }
 
     }
 
 
-//    mProgressDialog.show();
-//
-//    mSavingDialog = new ProgressDialog(MainListActivity.this);
-//    mSavingDialog.setMessage("שומר כתבות..");
-//    mSavingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//    mSavingDialog.setCancelable(true);
-//    mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-//        @Override
-//        public void onClick(DialogInterface dialog, int which) {
-//            DownloadFileAsync.this.cancel(true);
-//            dialog.dismiss();
-//        }
-//    });
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
-
+        private boolean checkStatus;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(MainListActivity.this);
+            mProgressDialog = new ProgressDialog(MainListActivity.this, R.style.full_screen_dialog);
+            mProgressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             mProgressDialog.setMessage("Downloading file..");
             mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             mProgressDialog.setCancelable(true);
@@ -291,8 +298,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         @Override
         protected String doInBackground(String... initData) {//filepath + date//
             int count;
-            fileName = initData[0].substring(initData[0].lastIndexOf("/") + 1);
-            updateDate = initData[1];
             try {
 
                 URL url = new URL(initData[0]);
@@ -301,11 +306,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
-                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
-
-                //only continue if non-existant.
-                if (!sourceZipFile.exists()) {
                     OutputStream output = new FileOutputStream(sourceZipFile);
                     byte data[] = new byte[1024];
                     long total = 0;
@@ -326,19 +326,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     output.flush();
                     output.close();
                     input.close();
-                    try {
-                        HelperMethods.unzip(sourceZipFile, destinationFolder);
-                        setDBdata();
-                        mProgressDialog.dismiss();
-                        startActivity(new Intent(MainListActivity.this, MainListActivity.class));
-                        finish();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
-                } else {
-                    nextActivity(destinationFolder, updateDate);
-                }
             } catch (Exception e) {
             }
             return null;
@@ -351,7 +339,67 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         @Override
         protected void onPostExecute(String unused) {
-            mProgressDialog.dismiss();
+                mProgressDialog.dismiss();
+                new SavingFilesAsync().execute();
+
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+//            delete downloaded zip file on cancel:
+            new File("/sdcard/Mouse_App/" + fileName).delete();
+            new File("/sdcard/Mouse_App/" + destinationFolder).delete();
+
+        }
+    }
+
+
+    class SavingFilesAsync extends AsyncTask<String, String, String> {
+
+        private ProgressDialog mSavingDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            mSavingDialog = new ProgressDialog(MainListActivity.this, R.style.full_screen_dialog);
+            mSavingDialog.setMessage("Saving city data..");
+            mSavingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mSavingDialog.setCancelable(true);
+            mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SavingFilesAsync.this.cancel(true);
+                    dialog.dismiss();
+                }
+            });
+            mSavingDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... initData) {//filepath + date//
+                    try {
+                        HelperMethods.unzip(sourceZipFile, destinationFolder);
+                        setDBdata();
+                        mSavingDialog.dismiss();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+            return null;
+
+        }
+
+        protected void onProgressUpdate(String... progress) {
+            mSavingDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String unused) {
+            mSavingDialog.dismiss();
+            startActivity(new Intent(MainListActivity.this, MainListActivity.class));
+            finish();
         }
 
         @Override
