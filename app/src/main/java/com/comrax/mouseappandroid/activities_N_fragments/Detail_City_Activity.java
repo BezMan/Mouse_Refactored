@@ -134,6 +134,14 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             }
 
         });
+
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                onSubItemClick(childPosition);
+                return false;
+            }
+        });
     }
 
 
