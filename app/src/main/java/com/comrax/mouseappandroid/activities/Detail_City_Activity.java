@@ -59,16 +59,13 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
 
-
-
-
-    private void setExpandableList(){
+    private void setExpandableList() {
 
         List<GroupItem> items = new ArrayList<GroupItem>();
 
         JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
         JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
-        int i=0, j=0, k=0, m=0;
+        int i = 0, j = 0, k = 0, m = 0;
         try {
             JSONArray menuArray = jsonMenuData.getJSONArray("menu");
             JSONArray serviceMenuArray = jsonServiceMenuData.getJSONArray("serviceMenu");
@@ -76,18 +73,27 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             int totalLength = 1 + menuArray.length() + 1 + 4;
             for (; i < totalLength; i++) {
 
-                final GroupItem listItem = new GroupItem();
+                GroupItem listItem = new GroupItem();
 
-                if (i == 0 || i >= menuArray.length()+1 ) {
+                if (i == 0 || i >= menuArray.length() + 1) {
                     listItem.title = (GlobalVars.detailsListTitles[k]);
                     listItem.imagePath = (GlobalVars.detailsListImages[k]);
                     k++;
 
-                }
-                else {  //get From Json data//
-                        JSONObject menuItem = menuArray.getJSONObject(j++);
-                        listItem.title = (menuItem.getString("name"));
-                        listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
+                    if (i == menuArray.length() + 1) {
+
+                        for (; j < serviceMenuArray.length(); j++) {
+                            JSONObject serviceMenuItem = serviceMenuArray.getJSONObject(j);
+                            ChildItem child = new ChildItem();
+                            child.title = (serviceMenuItem.getString("name"));
+
+                            listItem.items.add(child);
+                        }
+                    }
+                } else {  //get From Json data//
+                    JSONObject menuItem = menuArray.getJSONObject(m++);
+                    listItem.title = (menuItem.getString("name"));
+                    listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
                 }
                 items.add(listItem);
             }
@@ -102,30 +108,30 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
         listView.setAdapter(adapter);
 //
-//        // In order to show animations, we need to use a custom click handler
-//        // for our ExpandableListView.
-//        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//
-//            @Override
-//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//                // We call collapseGroupWithAnimation(int) and
-//                // expandGroupWithAnimation(int) to animate group
-//                // expansion/collapse.
-//                if (listView.isGroupExpanded(groupPosition)) {
-//                    listView.collapseGroupWithAnimation(groupPosition);
-//                } else {
-//                    listView.expandGroupWithAnimation(groupPosition);
-//                }
-//                return true;
-//            }
-//
-//        });
+        // In order to show animations, we need to use a custom click handler
+        // for our ExpandableListView.
+        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                // We call collapseGroupWithAnimation(int) and
+                // expandGroupWithAnimation(int) to animate group
+                // expansion/collapse.
+                if (listView.isGroupExpanded(groupPosition)) {
+                    listView.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    listView.expandGroupWithAnimation(groupPosition);
+                }
+                return true;
+            }
+
+        });
     }
 
 
     private void setTitle() {
         String title = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId);
-        TextView titleTextView = (TextView)findViewById(R.id.title_text);
+        TextView titleTextView = (TextView) findViewById(R.id.title_text);
         titleTextView.setText(title);
 
 
@@ -149,32 +155,30 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
 
-
     private void setListItems() {
         ArrayList<DetailsListModel> myDetailsArray = new ArrayList<>();
         JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
         JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
-        int i=0, j=0, k=0, m=0;
+        int i = 0, j = 0, k = 0, m = 0;
         try {
             JSONArray menuArray = jsonMenuData.getJSONArray("menu");
             JSONArray serviceMenuArray = jsonServiceMenuData.getJSONArray("serviceMenu");
 
-            int totalLength = menuArray.length()+serviceMenuArray.length();
-            for (; i < totalLength+6; i++) {
+            int totalLength = menuArray.length() + serviceMenuArray.length();
+            for (; i < totalLength + 6; i++) {
 
                 final DetailsListModel listItem = new DetailsListModel();
 
-                if (i == 0 || i==menuArray.length()+1 || i >= totalLength+2) {
+                if (i == 0 || i == menuArray.length() + 1 || i >= totalLength + 2) {
                     listItem.setBtnTitle(GlobalVars.detailsListTitles[k]);
                     listItem.setBtnImage(GlobalVars.detailsListImages[k]);
                     k++;
                 } else {  //get From Json data//
-                    if(i <= menuArray.length()) {
+                    if (i <= menuArray.length()) {
                         JSONObject menuItem = menuArray.getJSONObject(j++);
                         listItem.setBtnTitle(menuItem.getString("name"));
                         listItem.setBtnImage("/sdcard/Mouse_App/" + menuItem.getString("icon"));
-                    }
-                    else{ //we are up to the serviceMenu//
+                    } else { //we are up to the serviceMenu//
                         JSONObject serviceMenuItem = serviceMenuArray.getJSONObject(m++);
                         listItem.setBtnTitle(serviceMenuItem.getString("name"));
                     }
@@ -242,11 +246,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         }
 
     }
-
-
-
-
-
 
 
     private static class GroupItem {
@@ -371,9 +370,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         }
 
     }
-
-
-
 
 
 }
