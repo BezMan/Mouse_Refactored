@@ -9,14 +9,16 @@
     <ImageView
         android:id="@+id/pager_image"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="250dp"
+        android:scaleType="fitXY"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="300dp"
         android:layout_height="170dp"
         android:orientation="vertical"
         android:layout_alignRight="@+id/pager_image"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
 >
 
 
@@ -24,19 +26,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/Black"
-            android:alpha="0.5">
+            android:alpha="0.4">
         </View>
 
     <TextView
         android:id="@+id/pager_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/White"
         android:textSize="21dp"
         android:text="מסעדות זולות"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         android:textStyle="bold"
 
@@ -51,6 +52,7 @@
         android:textColor="@color/White"
         android:layout_marginTop="14dp"
         android:layout_marginRight="10dp"
+        android:text="קצת כיתוב"
 
         />
     </RelativeLayout>
