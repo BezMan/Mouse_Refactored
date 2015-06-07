@@ -16,6 +16,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -44,6 +45,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     ViewPager pager;
     View pagerLayout;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_detail_city;
@@ -119,9 +121,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 //
 
 
-
-
-
         // In order to show animations, we need to use a custom click handler
         // for our ExpandableListView.
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -139,7 +138,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                     }
                 } else {
                     //will set up the switch-case//
-                    onListItemClick(groupPosition);
+                    onParentItemClick(groupPosition);
 
                 }
                 return true;
@@ -150,14 +149,52 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                onSubItemClick(childPosition);
+                onInfoChildItemClick(childPosition);
                 return false;
             }
         });
     }
 
 
+    //on city details list item clicked:
+    public void onParentItemClick(int mPosition) {
+        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
 
+        if (mPosition == 0) {                           //pos 0
+
+        }
+
+        else if (mPosition == infoItemPosition - 1) {   //pos 5
+
+        }
+
+        else if (mPosition == infoItemPosition + 1) {   //pos 7
+
+        }
+
+        else if (mPosition == infoItemPosition + 2) {   //pos 8
+
+        }
+
+        else if (mPosition == infoItemPosition + 3) {   //pos 9
+
+        }
+
+        else if (mPosition == infoItemPosition + 4) {   //pos 10
+
+        }
+
+        else {                                         //pos 1-4
+            Intent intent = new Intent(this, Open_Details_header_N_list_Activity.class);
+            startActivity(intent);
+
+        }
+    }
+
+
+    public void onInfoChildItemClick(int mPosition) {
+        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
+    }
 
 
     private void setTitle() {
@@ -179,7 +216,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         setExpandableList();
 
     }
-
 
 
     private void addPagerData(JSONObject jsonData) {
@@ -304,7 +340,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             holder.itemLayout.setBackgroundColor(getResources().getColor(R.color.Achbar_gray_light_background));
             holder.imageViewBackground.setBackgroundColor(getResources().getColor(R.color.Achbar_trial));
             holder.arrowIcon.setImageResource(getResources().getColor(R.color.Achbar_gray_light_background));
-
 
 
             return convertView;

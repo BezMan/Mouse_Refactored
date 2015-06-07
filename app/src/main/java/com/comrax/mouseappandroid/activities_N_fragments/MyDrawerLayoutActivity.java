@@ -200,15 +200,4 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
-    //on city details list item clicked:
-    public void onListItemClick(int mPosition) {
-        Toast.makeText(getApplicationContext(), ""+mPosition, Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void onSubItemClick(int mPosition) {
-        Toast.makeText(getApplicationContext(), ""+mPosition, Toast.LENGTH_SHORT).show();
-    }
 }
