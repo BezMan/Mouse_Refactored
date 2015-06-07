@@ -42,6 +42,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private AnimatedExpandableListView listView;
     private ExampleAdapter adapter;
 
+    ViewPager pager;
+    View pagerLayout;
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_detail_city;
@@ -51,9 +53,20 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
+
+        pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
+
+        listView.addHeaderView(pagerLayout);
+
+
         setDetailsListItems();
         setTitle();
 
+        listView.setAdapter(adapter);
     }
 
 
@@ -104,8 +117,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         adapter = new ExampleAdapter(this);
         adapter.setData(items);
 //
-        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
-        listView.setAdapter(adapter);
+
 
 
 
@@ -173,7 +185,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private void addPagerData(JSONObject jsonData) {
         List<Fragment> fragments = getFragmentsFromJson(jsonData);
         pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
-        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+
         pager.setAdapter(pageAdapter);
     }
 
