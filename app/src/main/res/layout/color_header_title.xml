@@ -4,11 +4,11 @@
         android:layout_height="45dp"
         android:text="טקסט"
         android:id="@+id/header_title"
-        android:textSize="25dp"
+        android:textSize="24dp"
         android:textStyle="bold"
         android:textColor="@color/White"
         android:background="@color/MediumPurple"
         android:paddingRight="55dp"
-        android:paddingTop="8dp"
+        android:paddingTop="7dp"
         android:layout_gravity="top"
         />

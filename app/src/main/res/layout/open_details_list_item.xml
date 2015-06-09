@@ -27,6 +27,7 @@
             >
 
         <TextView
+            android:id="@+id/open_details_item_title_A"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             style="@android:style/TextAppearance.Large"
@@ -35,6 +36,7 @@
             />
 
             <TextView
+                android:id="@+id/open_details_item_title_B"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@android:style/TextAppearance.Large"
@@ -43,6 +45,7 @@
                 />
 
             <TextView
+                android:id="@+id/open_details_item_title_C"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 style="@android:style/TextAppearance.Large"
@@ -86,6 +89,7 @@
 
 
         <TextView
+            android:id="@+id/open_details_item_Distance"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -106,6 +110,7 @@
 
 
         <TextView
+            android:id="@+id/open_details_item_address"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -126,6 +131,7 @@
 
 
         <ImageView
+            android:id="@+id/open_details_item_price_image"
             android:layout_height="17dp"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -134,6 +140,7 @@
             />
 
         <TextView
+            android:id="@+id/open_details_item_price_text"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -153,7 +160,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="4"
-            android:id="@+id/ratingBar"
+            android:id="@+id/open_details_item_ratingBar"
             style="?android:attr/ratingBarStyleIndicator"
             android:isIndicator="true"
             android:numStars="5"

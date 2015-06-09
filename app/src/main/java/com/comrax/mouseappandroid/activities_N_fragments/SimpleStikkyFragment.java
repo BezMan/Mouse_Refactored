@@ -6,11 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.adapters.CustomAdapter;
+import com.comrax.mouseappandroid.model.ListModel;
+
+import java.util.ArrayList;
 
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
@@ -18,6 +22,10 @@ public class SimpleStikkyFragment extends Fragment {
 
     private ListView mListView;
     private Button btn;
+
+    CustomAdapter adapter;
+    public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
+
 
     public SimpleStikkyFragment() {
         // Required empty public constructor
@@ -36,14 +44,14 @@ public class SimpleStikkyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) view.findViewById(R.id.listview);
-//        btn = (Button)view.findViewById(R.id.button);
+        btn = (Button)view.findViewById(R.id.button);
 
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity().getApplicationContext(), "great", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity().getApplicationContext(), "great", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -63,12 +71,15 @@ public class SimpleStikkyFragment extends Fragment {
 
     private void populateListView() {
 
-        String[] elements = new String[500];
-        for (int i = 0; i < elements.length; i++) {
-            elements[i] = "row " + i;
-        }
+//        String[] elements = new String[500];
+//        for (int i = 0; i < elements.length; i++) {
+//            elements[i] = "row " + i;
+//        }
+//
+//        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
-        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        adapter = new CustomAdapter(getActivity(), customListViewValuesArr, getResources());
+        mListView.setAdapter(adapter);
 
     }
 
