@@ -10,5 +10,5 @@
         android:background="@color/MediumPurple"
         android:paddingRight="55dp"
         android:paddingTop="8dp"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="top"
         />

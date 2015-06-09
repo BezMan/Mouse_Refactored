@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 
@@ -37,14 +36,14 @@ public class SimpleStikkyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) view.findViewById(R.id.listview);
-        btn = (Button)view.findViewById(R.id.button);
+//        btn = (Button)view.findViewById(R.id.button);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "great", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity().getApplicationContext(), "great", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 

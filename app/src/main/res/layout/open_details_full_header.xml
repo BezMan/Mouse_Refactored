@@ -10,13 +10,15 @@
 
         <include layout="@layout/app_bar" />
 
+        <include layout="@layout/color_header_title" />
+
         <FrameLayout
             android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
+  />
 
     <RelativeLayout
         android:layout_width="306dp"
