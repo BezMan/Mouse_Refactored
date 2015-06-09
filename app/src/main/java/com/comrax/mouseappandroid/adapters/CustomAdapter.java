@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -64,11 +65,8 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     public static class ViewHolder {
 
-        public TextView titleA, titleB, titleC;
-
-//        public Button saveDateBtn, favoritesBtn;
-//        public View line1, line2, line3, backColor;
-//        public ImageView imageCal, imageStar, imageArrow;
+        public TextView titleA, titleB, titleC, distance, address, textPrice;
+        public ImageView imagePrice;
 
     }
 
@@ -87,19 +85,19 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.titleB = (TextView) view.findViewById(R.id.open_details_item_title_B);
         holder.titleC = (TextView) view.findViewById(R.id.open_details_item_title_C);
 
+        holder.distance = (TextView) view.findViewById(R.id.open_details_item_Distance);
+        holder.address = (TextView) view.findViewById(R.id.open_details_item_address);
+        holder.textPrice = (TextView) view.findViewById(R.id.open_details_item_price_text);
+        holder.imagePrice = (ImageView) view.findViewById(R.id.open_details_item_price_image);
+
+
+
         /************  Set Model values in Holder elements ***********/
+
         holder.titleA.setText(tempValues.getTitleA());
         holder.titleB.setText(tempValues.getTitleB());
         holder.titleC.setText(tempValues.getTitleC());
 
-//        String myColor = GlobalVars.ColorCodes[modPosition];
-
-//        holder.line1.setBackgroundColor(Color.parseColor(myColor));
-//        holder.line2.setBackgroundColor(Color.parseColor(myColor));
-//        holder.line3.setBackgroundColor(Color.parseColor(myColor));
-//
-//        holder.backColor.setBackgroundColor(Color.parseColor(myColor));
-//
 //        holder.imageCal.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempCal, null, null));
 //        holder.imageStar.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempStar, null, null));
 //        holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempArrow, null, null));

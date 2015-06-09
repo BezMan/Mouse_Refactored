@@ -83,12 +83,21 @@ public class SimpleStikkyFragment extends Fragment {
 //        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
 
+
+//        String s = null;
+//        try {
+//            s = URLDecoder.decode(" �����", "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//
+//
         for (int i = 0; i<10; i++) {
             ListModel lm = new ListModel();
 
-            lm.setTitleA(String.valueOf(i));
-            lm.setTitleB(String.valueOf(i));
-            lm.setTitleC(String.valueOf(i));
+            lm.setTitleA("כותרת א' " + i);
+            lm.setTitleB("כותבת ב' " + i);
+            lm.setTitleC("כותרת ג' " + i);
 //        lm.setRawDateStart(field_dates.getString("value"));
 //        lm.setRawDateEnd(field_dates.getString("value2"));
 //
