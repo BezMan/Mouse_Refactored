@@ -10,62 +10,13 @@
 
         <include layout="@layout/app_bar" />
 
-        <include layout="@layout/color_header_title" />
-
-    <include layout="@layout/viewpager_fragment_layout" />
-
-    <TabHost
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tabHost"
-        >
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ></TabWidget>
+    </LinearLayout>
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <LinearLayout
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
-            </FrameLayout>
-        </LinearLayout>
-    </TabHost>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
-
-
-</LinearLayout>
 
     <RelativeLayout
         android:layout_width="306dp"
