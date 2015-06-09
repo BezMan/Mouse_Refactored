@@ -43,7 +43,7 @@ public class SimpleStikkyFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mListView = (ListView) view.findViewById(R.id.listview);
+        mListView = (ListView) getActivity().findViewById(R.id.listview);
         btn = (Button)view.findViewById(R.id.button);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +67,10 @@ public class SimpleStikkyFragment extends Fragment {
 
         populateListView();
 
+        adapter = new CustomAdapter(getActivity(), customListViewValuesArr);
+        mListView.setAdapter(adapter);
+
+
     }
 
     private void populateListView() {
@@ -78,8 +82,26 @@ public class SimpleStikkyFragment extends Fragment {
 //
 //        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
-        adapter = new CustomAdapter(getActivity(), customListViewValuesArr, getResources());
-        mListView.setAdapter(adapter);
+
+        for (int i = 0; i<10; i++) {
+            ListModel lm = new ListModel();
+
+            lm.setTitleA(String.valueOf(i));
+            lm.setTitleB(String.valueOf(i));
+            lm.setTitleC(String.valueOf(i));
+//        lm.setRawDateStart(field_dates.getString("value"));
+//        lm.setRawDateEnd(field_dates.getString("value2"));
+//
+//        lm.setDate(DateConverter.formatConferenceDetailsDate(field_dates.getString("value"), field_dates.getString("value2")));
+//        lm.setCountry(field_country.getString("iso3"));
+//        lm.setImageLarge(field_image.getString("uri"));
+//        lm.setImageSmall(field_banner.getString("uri"));
+//        lm.setNid(data.getString("nid"));
+
+            customListViewValuesArr.add(lm);
+        }
+
+//        mListView.setAdapter(new CustomAdapter(getActivity(), customListViewValuesArr));
 
     }
 

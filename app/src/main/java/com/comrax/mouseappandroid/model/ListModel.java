@@ -4,100 +4,59 @@ package com.comrax.mouseappandroid.model;
  * Created by betzalel on 30/03/2015.
  */
 public class ListModel {
-    private  String Title="";
-    private  String Date="";
-    private  String StartDate="";
-    private  String EndDate="";
-    private  String Country="";
+    private  String TitleA="";
+    private  String TitleB="";
+    private  String TitleC="";
+    private  String Distance="";
+    private  String Address="";
+    private  String Price="";
 
-    private  String ImageLarge="";
-    private  String ImageSmall="";
-    private  String Nid="";
-
-
-    /*********** Set Methods ******************/
-    public void setTitle(String Title) { this.Title = Title; }
-
-    public void setDate(String Date)
-    {
-        this.Date = Date;
+    public String getTitleA() {
+        return TitleA;
     }
 
-    public void setCountry(String Country)
-    {
-        this.Country = Country;
+    public void setTitleA(String titleA) {
+        TitleA = titleA;
     }
 
-    public void setImageLarge(String ImageLarge)
-    {
-        this.ImageLarge= ImageLarge;
+    public String getTitleB() {
+        return TitleB;
     }
 
-    public void setImageSmall(String ImageSmall)
-    {
-        this.ImageSmall = ImageSmall;
+    public void setTitleB(String titleB) {
+        TitleB = titleB;
     }
 
-    public void setNid(String Nid)
-    {
-        this.Nid = Nid;
+    public String getTitleC() {
+        return TitleC;
     }
 
-
-    public void setRawDateStart(String StartDate)
-    {
-        this.StartDate = StartDate;
+    public void setTitleC(String titleC) {
+        TitleC = titleC;
     }
 
-    public void setRawDateEnd(String EndDate)
-    {
-        this.EndDate = EndDate;
+    public String getDistance() {
+        return Distance;
     }
 
-
-
-    /*********** Get Methods ****************/
-    public String getTitle()
-    {
-        return this.Title;
+    public void setDistance(String distance) {
+        Distance = distance;
     }
 
-    public String getDate()
-    {
-        return this.Date;
+    public String getAddress() {
+        return Address;
     }
 
-    public String getCountry()
-    {
-        return this.Country;
+    public void setAddress(String address) {
+        Address = address;
     }
 
-    public String getImageLarge()
-    {
-        return this.ImageLarge;
+    public String getPrice() {
+        return Price;
     }
 
-    public String getImageSmall()
-    {
-        return this.ImageSmall;
+    public void setPrice(String price) {
+        Price = price;
     }
-
-    public String getNid()
-    {
-        return this.Nid;
-    }
-
-
-    public String getStartDate()
-    {
-        return this.StartDate;
-    }
-
-    public String getEndDate()
-    {
-        return this.EndDate;
-    }
-
-
 }
 
