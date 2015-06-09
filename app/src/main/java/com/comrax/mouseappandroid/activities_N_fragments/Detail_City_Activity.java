@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
@@ -55,6 +56,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
 
         LayoutInflater layoutInflater = LayoutInflater.from(this);
@@ -66,6 +68,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 
         setDetailsListItems();
+        App.getInstance().setCityId(cityId);
+
         setTitle();
 
         listView.setAdapter(adapter);

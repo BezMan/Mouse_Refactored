@@ -1,6 +1,7 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,8 +11,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
+import com.comrax.mouseappandroid.database.DBConstants;
+import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.model.ListModel;
 
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ public class SimpleStikkyFragment extends Fragment {
 
     CustomAdapter adapter;
     public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
+
 
 
     public SimpleStikkyFragment() {
@@ -44,7 +49,7 @@ public class SimpleStikkyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) getActivity().findViewById(R.id.listview);
-        btn = (Button)view.findViewById(R.id.button);
+        btn = (Button) view.findViewById(R.id.button);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +65,9 @@ public class SimpleStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(R.id.header, (ViewGroup) getView())
+                .setHeader(R.id.header, (ViewGroup) getView())
                 .minHeightHeader(100)
-            .build();
+                .build();
 
 
         populateListView();
@@ -75,42 +80,25 @@ public class SimpleStikkyFragment extends Fragment {
 
     private void populateListView() {
 
-//        String[] elements = new String[500];
-//        for (int i = 0; i < elements.length; i++) {
-//            elements[i] = "row " + i;
-//        }
-//
-//        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        String cityId = App.getInstance().getCityId();
+        Cursor cursor = new DBTools(getActivity()).getCurrentCityPlacesTable(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId);
+
+            for (int i = 0; i < cursor.getCount(); cursor.moveToNext(), i++) {
+                ListModel lm = new ListModel();
+
+                lm.setTitleA(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                lm.setTitleB(cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+                lm.setTitleC(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+
+//                lm.setDistance(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+//                lm.setTitleC(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+//                lm.setTitleC(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
 
 
+                customListViewValuesArr.add(lm);
 
-//        String s = null;
-//        try {
-//            s = URLDecoder.decode(" �����", "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-        for (int i = 0; i<10; i++) {
-            ListModel lm = new ListModel();
+            }
 
-            lm.setTitleA("כותרת א' " + i);
-            lm.setTitleB("כותבת ב' " + i);
-            lm.setTitleC("כותרת ג' " + i);
-//        lm.setRawDateStart(field_dates.getString("value"));
-//        lm.setRawDateEnd(field_dates.getString("value2"));
-//
-//        lm.setDate(DateConverter.formatConferenceDetailsDate(field_dates.getString("value"), field_dates.getString("value2")));
-//        lm.setCountry(field_country.getString("iso3"));
-//        lm.setImageLarge(field_image.getString("uri"));
-//        lm.setImageSmall(field_banner.getString("uri"));
-//        lm.setNid(data.getString("nid"));
-
-            customListViewValuesArr.add(lm);
-        }
-
-//        mListView.setAdapter(new CustomAdapter(getActivity(), customListViewValuesArr));
 
     }
 

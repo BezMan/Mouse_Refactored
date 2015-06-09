@@ -35,6 +35,8 @@
             android:textStyle="bold"
             android:textSize="18dp"
             android:paddingRight="3dp"
+            android:layout_gravity="right|end"
+            android:gravity="right|end"
             />
 
             <TextView

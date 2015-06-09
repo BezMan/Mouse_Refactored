@@ -256,8 +256,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
 
-
-                    App.getInstance().setCityId(tempValues.getId());
                     new DownloadFileAsync().execute(filePath, updateDate);
                     break;
                 }

@@ -229,6 +229,31 @@ public class DBTools extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getCurrentCityPlacesTable(String TableName, String checkColumn, String checkVal) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql ="SELECT * FROM " +TableName+ " WHERE " +checkColumn+ "=" +checkVal ;
+        Cursor cursor= database.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+//
+//    Cursor cursor = this.getSqlChildRelationship(Parent_id);
+//    if (cursor.getCount() > 0) {
+//        cursor.moveToFirst();
+//        for (int i = 0; i < cursor.getCount(); i++) {
+//            if (!searchSpecificNode(cursor.getInt(0), child_id, results)) {
+//                results.remove(results.size() - 1);
+//            } else {
+//                i = cursor.getCount();
+//                res = true;
+//            }
+//            cursor.moveToNext();
+//
+//        }
+//
+//    }
 
 
 }

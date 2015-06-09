@@ -27,7 +27,6 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
     private Activity _activity;
     private ArrayList _listModelList;
 
-
     /**
      * **********  CustomAdapter Constructor ****************
      */
@@ -93,6 +92,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
 
 
         /************  Set Model values in Holder elements ***********/
+
 
         holder.titleA.setText(tempValues.getTitleA());
         holder.titleB.setText(tempValues.getTitleB());
