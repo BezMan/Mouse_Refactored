@@ -429,29 +429,29 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
                         cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
                         cityObject.put(DBConstants.centerCoordinateLon, fullObject.getString("longitude"));
-                    } else if (child.toString().contains("StopsArticle")) {
+                    }
+                    else if (child.toString().contains("StopsArticle")) {
                         JSONObject jsonStopsArticle = HelperMethods.loadJsonDataFromFile(child.toString());
                         cityObject.put(DBConstants.stopsArticle, jsonStopsArticle.toString());
-                    } else if (child.toString().contains("TuristArticalsList")) {
+                    }
+                    else if (child.toString().contains("TuristArticalsList")) {
                         JSONObject jsonTuristArticalsList = HelperMethods.loadJsonDataFromFile(child.toString());
                         cityObject.put(DBConstants.touristArticlesList, jsonTuristArticalsList.toString());
-                    } else if (child.toString().contains("PlacesCoordinatesList")) {
-                        JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
-                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
-                    } else if (child.toString().contains("PlacesList")) {
+                    }
+                    else if (child.toString().contains("PlacesList")) {
                         JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonPlace.getJSONArray("places");
-                        // looping through All nodes if json file:
+                        // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
                             item.put(DBConstants.cityId, App.getInstance().getCityId());
                             dbTools.insertPlaceTable(item);
                         }
-                    } else if (child.toString().contains("ArticalsList")) {
-
+                    }
+                    else if (child.toString().contains("ArticalsList")) {
                         JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonArticle.getJSONArray("articles");
-                        // looping through All nodes if json file:
+                        // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
                             item.put(DBConstants.cityId, App.getInstance().getCityId());
@@ -460,6 +460,23 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     }
 
 
+                }
+
+                for (File child : directoryListing) {
+                    if (child.toString().contains("PlacesCoordinatesList")) {
+                    JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
+//                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
+                            JSONArray data = jsonPlacesCoordinatesList.getJSONArray("cityPlcesCoordinates");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject item = data.getJSONObject(i);
+
+                            String boneId = child.toString();
+                            boneId = boneId.substring(boneId.lastIndexOf("/")+1);
+                            boneId = boneId.substring(5, 9);
+
+                            dbTools.addDataToTable(DBConstants.PLACE_TABLE_NAME, item, boneId);
+                        }
+                    }
                 }
 
                 //add extra important data//

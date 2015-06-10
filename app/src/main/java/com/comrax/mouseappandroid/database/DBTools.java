@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class DBTools extends SQLiteOpenHelper {
 
 
-    public DBTools(Context applicationContext){
+    public DBTools(Context applicationContext) {
         super(applicationContext, DBConstants.DATABASE_NAME, null, DBConstants.DATABASE_VERSION);
 
     }
@@ -25,13 +25,13 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_ARTICLE_TABLE = "CREATE TABLE "
                 + DBConstants.ARTICLE_TABLE_NAME + " ("
-                + DBConstants.boneId + " INTEGER, "
-                + DBConstants.cityId + " INTEGER, "
+                + DBConstants.boneId + " TEXT, "
+                + DBConstants.cityId + " TEXT, "
                 + DBConstants.imagePath + " TEXT, "
-                + DBConstants.menuItemId + " INTEGER, "
+                + DBConstants.menuItemId + " TEXT, "
                 + DBConstants.name + " TEXT, "
-                + DBConstants.nsId + " INTEGER, "
-                + DBConstants.objId + " INTEGER, "
+                + DBConstants.nsId + " TEXT, "
+                + DBConstants.objId + " TEXT, "
                 + DBConstants.rating + " TEXT, "
                 + DBConstants.ratingCount + " TEXT, "
                 + DBConstants.responses + " TEXT, "
@@ -42,11 +42,13 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
+                + DBConstants.centerCoordinateLat + " TEXT, "
+                + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.price + " INTEGER, "
-                + DBConstants.boneId + " INTEGER, "
-                + DBConstants.cityId + " INTEGER, "
-                + DBConstants.nsId + " INTEGER, "
-                + DBConstants.objId + " INTEGER, "
+                + DBConstants.boneId + " TEXT, "
+                + DBConstants.cityId + " TEXT, "
+                + DBConstants.nsId + " TEXT, "
+                + DBConstants.objId + " TEXT, "
                 + DBConstants.address + " TEXT, "
                 + DBConstants.description + " TEXT, "
                 + DBConstants.fullDescriptionBody + " TEXT, "
@@ -63,15 +65,14 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_CITY_TABLE = "CREATE TABLE "
                 + DBConstants.CITY_TABLE_NAME + " ("
-                + DBConstants.centerCoordinateLat + " REAL, "
-                + DBConstants.centerCoordinateLon + " REAL, "
+                + DBConstants.centerCoordinateLat + " TEXT, "
+                + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.cityFolderPath + " TEXT, "
                 + DBConstants.dateUpdated + " TEXT, "
-                + DBConstants.cityId + " INTEGER, "
+                + DBConstants.cityId + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.stopsArticle + " TEXT, "
-                + DBConstants.placesCoordinatesList + " TEXT, "
                 + DBConstants.touristArticlesList + " TEXT "
                 + ");";
 
@@ -79,9 +80,9 @@ public class DBTools extends SQLiteOpenHelper {
         String CREATE_PLACE_FAVORITE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_FAVORITE_TABLE_NAME + " ("
                 + DBConstants.address + " TEXT, "
-                + DBConstants.categoryId + " INTEGER, "
+                + DBConstants.categoryId + " TEXT, "
                 + DBConstants.description + " TEXT, "
-                + DBConstants.index + " INTEGER, "
+                + DBConstants.index + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.price + " INTEGER, "
@@ -113,8 +114,7 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-
-    public void insertCityTable(JSONObject item){
+    public void insertCityTable(JSONObject item) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -128,7 +128,6 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.stopsArticle, item.getString(DBConstants.stopsArticle));
             values.put(DBConstants.dateUpdated, item.getString(DBConstants.dateUpdated));
             values.put(DBConstants.cityFolderPath, item.getString(DBConstants.cityFolderPath));
-            values.put(DBConstants.placesCoordinatesList, item.getString(DBConstants.placesCoordinatesList));
             values.put(DBConstants.touristArticlesList, item.getString(DBConstants.touristArticlesList));
 
         } catch (JSONException e) {
@@ -140,7 +139,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
-    public void insertArticleTable(JSONObject item){
+    public void insertArticleTable(JSONObject item) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -173,7 +172,7 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public void insertPlaceTable(JSONObject item){
+    public void insertPlaceTable(JSONObject item) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -208,20 +207,38 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql ="SELECT "+colName+" FROM "+TableName+" WHERE " +colName+ "=" +rowValue;
-        Cursor cursor= database.rawQuery(sql,null);
+        String sql = "SELECT " + colName + " FROM " + TableName + " WHERE " + colName + "=" + rowValue;
+        Cursor cursor = database.rawQuery(sql, null);
 
-        return cursor.getCount()>0;
+        return cursor.getCount() > 0;
+    }
+
+
+    public void addDataToTable(String TableName, JSONObject item, String boneId) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try {
+
+            ContentValues newValues = new ContentValues();
+            newValues.put(DBConstants.centerCoordinateLat, item.getString(DBConstants.centerCoordinateLat));
+            newValues.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
+            String condition = DBConstants.objId + "=" + item.getString(DBConstants.objId) +" & "+ DBConstants.boneId +"="+ boneId;
+            database.update(TableName, newValues, condition, null);
+
+            database.close();
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
     public String getData(String TableName, String chosenColValue, String checkColumn, String checkVal) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql ="SELECT " +chosenColValue+ " FROM " +TableName+ " WHERE " +checkColumn+ "=" +checkVal ;
-        Cursor cursor= database.rawQuery(sql, null);
+        String sql = "SELECT " + chosenColValue + " FROM " + TableName + " WHERE " + checkColumn + "=" + checkVal;
+        Cursor cursor = database.rawQuery(sql, null);
         String res = null;
         if (cursor.moveToFirst()) {
             res = cursor.getString(cursor.getColumnIndex(chosenColValue));
@@ -231,29 +248,13 @@ public class DBTools extends SQLiteOpenHelper {
 
     public Cursor getCurrentCityPlacesTable(String TableName, String checkColumn, String checkVal) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql ="SELECT * FROM " +TableName+ " WHERE " +checkColumn+ "=" +checkVal ;
-        Cursor cursor= database.rawQuery(sql, null);
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn + "=" + checkVal;
+        Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
 
         return cursor;
     }
 
-//
-//    Cursor cursor = this.getSqlChildRelationship(Parent_id);
-//    if (cursor.getCount() > 0) {
-//        cursor.moveToFirst();
-//        for (int i = 0; i < cursor.getCount(); i++) {
-//            if (!searchSpecificNode(cursor.getInt(0), child_id, results)) {
-//                results.remove(results.size() - 1);
-//            } else {
-//                i = cursor.getCount();
-//                res = true;
-//            }
-//            cursor.moveToNext();
-//
-//        }
-//
-//    }
 
 
 }
