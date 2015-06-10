@@ -244,10 +244,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
-                //check if exists already:
+                //save clicked cityId:
+                App.getInstance().setCityId(tempValues.getId());
 
                 String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
-                String updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
+                updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
                 sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
@@ -272,7 +273,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
-        private boolean checkStatus;
 
         @Override
         protected void onPreExecute() {
