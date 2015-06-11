@@ -153,6 +153,7 @@ public class SimpleStikkyFragment extends Fragment {
 
                 lm.setDistance(results[0]);
             //my lon and lat are 0//
+                /////////
 
                 customListViewValuesArr.add(lm);
 
