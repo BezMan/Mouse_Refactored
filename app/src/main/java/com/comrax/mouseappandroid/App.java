@@ -8,6 +8,7 @@ import android.content.res.Configuration;
  */
 public class App extends Application {
     private String _cityId;
+    private String _boneId;
     private static App _instance;
 
     private App() {
@@ -38,6 +39,15 @@ public class App extends Application {
 
     public String getCityId() {
         return _cityId;
+    }
+
+
+    public void setBoneId(String boneId) {
+        _boneId = boneId;
+    }
+
+    public String getBoneId() {
+        return _boneId;
     }
 
 

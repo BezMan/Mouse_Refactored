@@ -4,12 +4,21 @@ package com.comrax.mouseappandroid.model;
  * Created by betzalel on 30/03/2015.
  */
 public class ListModel {
-    private  String TitleA="";
-    private  String TitleB="";
-    private  String TitleC="";
-    private  String Distance="";
-    private  String Address="";
-    private  String Price="";
+    private  String TitleA="", TitleB="", TitleC="", Address="";
+    private  int Price;
+    private  float Rating;
+
+    public float getDistance() {
+        return Distance;
+    }
+
+    public void setDistance(float distance) {
+        Distance = distance;
+    }
+
+    private float Distance;
+    private double Longitude, Latitude;
+
 
     public String getTitleA() {
         return TitleA;
@@ -35,14 +44,6 @@ public class ListModel {
         TitleC = titleC;
     }
 
-    public String getDistance() {
-        return Distance;
-    }
-
-    public void setDistance(String distance) {
-        Distance = distance;
-    }
-
     public String getAddress() {
         return Address;
     }
@@ -51,12 +52,37 @@ public class ListModel {
         Address = address;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return Price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         Price = price;
+    }
+
+    public float getRating() {
+        return Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
+    }
+
+
+    public double getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        Longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        Latitude = latitude;
     }
 }
 

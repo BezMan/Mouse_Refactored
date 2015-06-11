@@ -51,7 +51,7 @@ public class DBConstants {
             userComments = "responses",
             categoryId = "categoryId",
             phone = "phone",
-            price = "areaRange";
+            price = "priceDegree";
 
 
 }

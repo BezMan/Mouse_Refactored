@@ -36,7 +36,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/White"
         android:textSize="21dp"
-        android:text="מסעדות זולות"
+        android:text="קצת כיתוב"
         android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         android:textStyle="bold"

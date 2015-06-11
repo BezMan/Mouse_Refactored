@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="300dp">
+    android:layout_height="330dp">
 
 
-    <include layout="@layout/viewpager_fragment_layout" />
+    <include layout="@layout/viewpager_fragment_layout"
+        android:id="@+id/viewpagerLayout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_below="@+id/viewpagerLayout"
+        android:background="@color/White"
+
+
+        >
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
         android:text="New Button"
         android:id="@+id/button"
-        android:layout_gravity="center_horizontal|bottom" />
 
-</FrameLayout>
+        />
+
+    <TextView
+        android:id="@+id/txtResultsCount"
+        android:layout_height="60px"
+        android:layout_width="match_parent"
+        android:text="התקבלו"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:textColor="@color/Black"
+        />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/Black"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

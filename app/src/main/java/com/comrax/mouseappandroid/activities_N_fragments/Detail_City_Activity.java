@@ -47,6 +47,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     ViewPager pager;
     View pagerLayout;
 
+    List<GroupItem> items;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_detail_city;
@@ -78,7 +80,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private void setExpandableList() {
 
-        List<GroupItem> items = new ArrayList<GroupItem>();
+        items = new ArrayList<GroupItem>();
 
         JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
         JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
@@ -108,10 +110,12 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                             listItem.items.add(child);
                         }
                     }
-                } else {  //get From Json data//
+                }
+                else {  //get From Json data//
                     JSONObject menuItem = menuArray.getJSONObject(m++);
                     listItem.title = (menuItem.getString("name"));
                     listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
+                    listItem.boneId = (menuItem.getString("boneId"));
                 }
                 items.add(listItem);
             }
@@ -190,6 +194,10 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list_Activity.class);
+            App.getInstance().setBoneId(items.get(mPosition).boneId);
+
+            String title = items.get(mPosition).title;
+            intent.putExtra("title", title );
             startActivity(intent);
 
         }
@@ -277,6 +285,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private static class GroupItem {
         String title;
         String imagePath;
+        String boneId;
         List<ChildItem> items = new ArrayList<ChildItem>();
     }
 

@@ -2,11 +2,13 @@ package com.comrax.mouseappandroid.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -26,15 +28,17 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     private Activity _activity;
     private ArrayList _listModelList;
+    private Resources _resources;
 
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public CustomAdapter(Activity activity, ArrayList arrayList) {
+    public CustomAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
         _listModelList = arrayList;
+        _resources = resLocal;
 
         /***********  Layout inflator to call external xml layout () **********************/
         inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,6 +70,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
 
         public TextView titleA, titleB, titleC, distance, address, textPrice;
         public ImageView imagePrice;
+        public RatingBar ratingBar;
 
     }
 
@@ -88,6 +93,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.address = (TextView) view.findViewById(R.id.open_details_item_address);
         holder.textPrice = (TextView) view.findViewById(R.id.open_details_item_price_text);
         holder.imagePrice = (ImageView) view.findViewById(R.id.open_details_item_price_image);
+        holder.ratingBar = (RatingBar) view.findViewById(R.id.open_details_item_ratingBar);
 
 
 
@@ -97,10 +103,17 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.titleA.setText(tempValues.getTitleA());
         holder.titleB.setText(tempValues.getTitleB());
         holder.titleC.setText(tempValues.getTitleC());
+        holder.address.setText(tempValues.getAddress());
+        holder.ratingBar.setRating(tempValues.getRating() / 20);
 
-//        holder.imageCal.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempCal, null, null));
-//        holder.imageStar.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempStar, null, null));
-//        holder.imageArrow.setImageResource(_resources.getIdentifier("com.comrax.janssenconfinder:drawable/" + tempArrow, null, null));
+        String coinNum = String.valueOf(tempValues.getPrice());
+        holder.textPrice.setText(getHebrewTextPrice(coinNum));
+        if(coinNum == "0") coinNum = "1";
+        holder.imagePrice.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + "coin_" + coinNum, null, null));
+
+
+        holder.distance.setText(String.valueOf(tempValues.getDistance()));
+
 
 //        holder.saveDateBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -128,6 +141,21 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
 
 
         return view;
+    }
+
+
+
+    private String getHebrewTextPrice(String coinNum) {
+        String hebString= "זול";
+        switch (coinNum){
+            case "2":
+                hebString= "בינוני";
+                break;
+            case "3":
+                hebString= "יקר";
+                break;
+        }
+        return hebString;
     }
 
 
