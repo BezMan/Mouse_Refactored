@@ -223,7 +223,7 @@ public class DBTools extends SQLiteOpenHelper {
             ContentValues newValues = new ContentValues();
             newValues.put(DBConstants.centerCoordinateLat, item.getString(DBConstants.centerCoordinateLat));
             newValues.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
-            String condition = DBConstants.objId + "=" + item.getString(DBConstants.objId) +" & "+ DBConstants.boneId +"="+ boneId;
+            String condition = DBConstants.objId + "=" + item.getString(DBConstants.objId) +" AND "+ DBConstants.boneId +"="+ boneId;
             database.update(TableName, newValues, condition, null);
 
             database.close();
