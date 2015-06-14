@@ -23,11 +23,57 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="8px"
         android:text="New Button"
         android:id="@+id/button"
 
         />
+
+        <RadioGroup
+            android:id="@+id/myRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center" />
+
+            <RadioButton
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_selector"
+                android:button="@null"
+                android:gravity="center" />
+
+            <RadioButton
+                android:id="@+id/btn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_selector"
+                android:button="@null"
+                android:gravity="center" />
+
+            <RadioButton
+                android:id="@+id/btn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_selector"
+                android:button="@null"
+                android:gravity="center" />
+        </RadioGroup>
 
     <TextView
         android:id="@+id/txtResultsCount"

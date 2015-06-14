@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,10 @@ public class SimpleStikkyFragment extends Fragment {
 
     CustomAdapter adapter;
     public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
+
+    private RadioGroup radioGroup;
+    private RadioButton sound, vibration, silent;
+
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -79,6 +85,25 @@ public class SimpleStikkyFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        radioGroup = (RadioGroup) getActivity().findViewById(R.id.myRadioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // find which radio button is selected
+                if(checkedId == R.id.btn1) {
+                    Toast.makeText(getActivity().getApplicationContext(), "choice: Silent",
+                            Toast.LENGTH_SHORT).show();
+                } else if(checkedId == R.id.btn2) {
+                    Toast.makeText(getActivity().getApplicationContext(), "choice: Sound",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "choice: Vibration",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
 
         resultsTxtView = (TextView)getActivity().findViewById(R.id.txtResultsCount);
 
