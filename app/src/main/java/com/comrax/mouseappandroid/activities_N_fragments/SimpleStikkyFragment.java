@@ -108,14 +108,6 @@ public class SimpleStikkyFragment extends Fragment {
         resultsTxtView = (TextView)getActivity().findViewById(R.id.txtResultsCount);
 
         mListView = (ListView) getActivity().findViewById(R.id.listview);
-        btn = (Button) view.findViewById(R.id.button);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "great", Toast.LENGTH_SHORT).show();
-            }
-        });
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000,
