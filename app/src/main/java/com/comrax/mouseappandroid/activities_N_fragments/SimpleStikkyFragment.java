@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -37,7 +36,6 @@ import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 public class SimpleStikkyFragment extends Fragment {
 
     private ListView mListView;
-    private Button btn;
     TextView resultsTxtView;
 
 //    LocationManager mLocationManager;
@@ -52,7 +50,7 @@ public class SimpleStikkyFragment extends Fragment {
     ViewPager pager;
     MyPageAdapter pageAdapter;
 
-
+    public static String CITY_FOLDER_NAME = "/sdcard/Mouse_App/London_master_1146";
 
 //    private final LocationListener mLocationListener = new LocationListener() {
 //        @Override
@@ -118,7 +116,7 @@ public class SimpleStikkyFragment extends Fragment {
 
         pager = (ViewPager) getActivity().findViewById(R.id.viewpager);
 
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/London_master_1146" + "/" + "1146" + "_mainPageArticles.json");
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + "1146" + "_mainPageArticles.json");
 
         addPagerData(jsonData);
 
@@ -158,7 +156,7 @@ public class SimpleStikkyFragment extends Fragment {
                 String description = item.getString("description");
                 String image = item.getString("image");
 
-                String folderName = "CITY_FOLDER_NAME";
+                String folderName = CITY_FOLDER_NAME;
 
                 fList.add(MyFragment.newInstance(folderName, title, description, image));
             }
