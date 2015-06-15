@@ -8,6 +8,17 @@ public class ListModel {
     private  int Price;
     private  float Rating;
 
+    private String ObjId;
+
+
+    public String getObjId() {
+        return ObjId;
+    }
+
+    public void setObjId(String objId) {
+        ObjId = objId;
+    }
+
     public float getDistance() {
         return Distance;
     }

@@ -7,6 +7,7 @@
 
 
     <LinearLayout
+        android:id="@+id/clickable_titles_layout"
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="85dp"
         android:layout_margin="1dp"

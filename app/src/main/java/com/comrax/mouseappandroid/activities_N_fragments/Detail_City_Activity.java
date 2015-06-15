@@ -193,7 +193,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         }
 
         else {                                         //pos 1-4
-            Intent intent = new Intent(this, Open_Details_header_N_list_Activity.class);
+            Intent intent = new Intent(this, Open_Details_header_N_list.class);
             App.getInstance().setBoneId(items.get(mPosition).boneId);
 
             String title = items.get(mPosition).title;
@@ -261,7 +261,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
 
-    class MyPageAdapter extends FragmentPagerAdapter {
+    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener{
         private List<Fragment> fragments;
 
         public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
@@ -279,6 +279,10 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             return this.fragments.size();
         }
 
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
 

@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.activities_N_fragments.Open_Details_header_N_list;
 import com.comrax.mouseappandroid.model.ListModel;
 
 import java.util.ArrayList;
@@ -68,9 +70,11 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      */
     public static class ViewHolder {
 
+        public LinearLayout clickableLayout;
         public TextView titleA, titleB, titleC, distance, address, textPrice;
         public ImageView imagePrice;
         public RatingBar ratingBar;
+        public String objId;
 
     }
 
@@ -84,6 +88,8 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         tempValues = (ListModel) _listModelList.get(position);
 
         view = inflater.inflate(R.layout.open_details_list_item, null);
+
+        holder.clickableLayout = (LinearLayout) view.findViewById(R.id.clickable_titles_layout);
 
         holder.titleA = (TextView) view.findViewById(R.id.open_details_item_title_A);
         holder.titleB = (TextView) view.findViewById(R.id.open_details_item_title_B);
@@ -100,6 +106,8 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         /************  Set Model values in Holder elements ***********/
 
 
+        holder.objId = tempValues.getObjId();
+
         holder.titleA.setText(tempValues.getTitleA());
         holder.titleB.setText(tempValues.getTitleB());
         holder.titleC.setText(tempValues.getTitleC());
@@ -115,15 +123,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.distance.setText(String.valueOf(tempValues.getDistance()));
 
 
-//        holder.saveDateBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.v("save clicked ", "" + position);
-//                ConfListActivity sct = (ConfListActivity) _activity;
-//                sct.addCalendarEvent(position);
-
-//            }
-//        });
+        holder.clickableLayout.setOnClickListener(new OnItemClickListener(holder.objId));
 //
 //        holder.favoritesBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -163,18 +163,16 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      * ****** Called when Item click in ListView ***********
      */
     private class OnItemClickListener implements View.OnClickListener {
-        private int mPosition;
-        private int mColorPos;
+        private String mobjId;
 
-        OnItemClickListener(int position, int colorPos) {
-            mPosition = position;
-            mColorPos = colorPos;
+        OnItemClickListener(String objId) {
+            mobjId = objId;
         }
 
         @Override
         public void onClick(View arg0) {
-//            ConfListActivity cla = (ConfListActivity) _activity;
-//            cla.onListItemClick(mPosition, mColorPos);
+            Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
+            myActivity.onListItemClick(mobjId);
         }
     }
 

@@ -1,9 +1,9 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -11,7 +11,7 @@ import com.comrax.mouseappandroid.R;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list_Activity extends MyDrawerLayoutActivity{
+public class Open_Details_header_N_list extends MyDrawerLayoutActivity{
 
     String title;
     TextView tvTitle;
@@ -49,6 +49,18 @@ public class Open_Details_header_N_list_Activity extends MyDrawerLayoutActivity{
     @Override
     protected int getLayoutResourceId() {
         return R.layout.open_details_full_header;
+
     }
+
+
+    public void onListItemClick(String objId){
+//        startActivity();
+        Log.wtf("myClick", " " + objId);
+
+//        loadFragment();
+    }
+
 }
+
+
 

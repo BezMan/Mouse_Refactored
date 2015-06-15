@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 
@@ -57,8 +58,22 @@ public class MyFragment extends Fragment {
             imageText.setImageBitmap(bitmap);
         }
 
+        v.setOnClickListener(new OnPagerItemClicked(title));
 
         return v;
     }
 
+
+    private class OnPagerItemClicked implements View.OnClickListener {
+        String mTitle;
+
+        public OnPagerItemClicked(String title) {
+            mTitle=title;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity().getApplicationContext(), ""+mTitle, Toast.LENGTH_SHORT ).show();
+        }
+    }
 }

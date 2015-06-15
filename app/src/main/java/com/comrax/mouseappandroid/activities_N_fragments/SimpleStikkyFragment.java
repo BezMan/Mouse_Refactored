@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -42,7 +41,6 @@ public class SimpleStikkyFragment extends Fragment {
     public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
 
     private RadioGroup radioGroup;
-    private RadioButton sound, vibration, silent;
 
 
     private final LocationListener mLocationListener = new LocationListener() {
@@ -176,6 +174,7 @@ public class SimpleStikkyFragment extends Fragment {
 
             lm.setRating(cursor.getFloat(cursor.getColumnIndex(DBConstants.rating)));
 
+            lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 //                lm.setLatitude();
 //                lm.setLongitude();
 
