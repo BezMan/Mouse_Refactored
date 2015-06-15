@@ -7,15 +7,39 @@
     android:layout_height="330dp">
 
 
-    <include layout="@layout/viewpager_fragment_layout"
-        android:id="@+id/viewpagerLayout"/>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/titles"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            app:pageColor="@android:color/darker_gray"
+            app:fillColor="@android:color/white"
+            android:layout_alignBottom="@+id/viewpager"
+            android:padding="10dp"
+            />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150px"
         android:layout_gravity="bottom"
         android:orientation="vertical"
-        android:layout_below="@+id/viewpagerLayout"
+        android:layout_below="@+id/viewpager"
         android:background="@color/White"
 
 
@@ -122,5 +146,7 @@
             android:background="@color/Black"
             />
     </LinearLayout>
+
+</RelativeLayout>
 
 </RelativeLayout>

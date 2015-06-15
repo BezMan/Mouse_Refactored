@@ -1,13 +1,13 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 
-import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +21,16 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
+import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.ListModel;
+import com.viewpagerindicator.CirclePageIndicator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
@@ -33,7 +40,7 @@ public class SimpleStikkyFragment extends Fragment {
     private Button btn;
     TextView resultsTxtView;
 
-    LocationManager mLocationManager;
+//    LocationManager mLocationManager;
 
     double lon, lat;
 
@@ -42,29 +49,33 @@ public class SimpleStikkyFragment extends Fragment {
 
     private RadioGroup radioGroup;
 
+    ViewPager pager;
+    MyPageAdapter pageAdapter;
 
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(final Location location) {
-            lat = location.getLatitude();
-            lon = location.getLongitude();
-        }
 
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
 
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    };
+//    private final LocationListener mLocationListener = new LocationListener() {
+//        @Override
+//        public void onLocationChanged(final Location location) {
+//            lat = location.getLatitude();
+//            lon = location.getLongitude();
+//        }
+//
+//        @Override
+//        public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//        }
+//
+//        @Override
+//        public void onProviderEnabled(String provider) {
+//
+//        }
+//
+//        @Override
+//        public void onProviderDisabled(String provider) {
+//
+//        }
+//    };
 
 
     public SimpleStikkyFragment() {
@@ -104,13 +115,89 @@ public class SimpleStikkyFragment extends Fragment {
         resultsTxtView = (TextView) getActivity().findViewById(R.id.txtResultsCount);
 
         mListView = (ListView) getActivity().findViewById(R.id.listview);
-        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000,
-                100, mLocationListener);
+        pager = (ViewPager) getActivity().findViewById(R.id.viewpager);
 
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/London_master_1146" + "/" + "1146" + "_mainPageArticles.json");
+
+        addPagerData(jsonData);
+
+
+
+
+//        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//
+//        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000,
+//                100, mLocationListener);
 
     }
+
+
+
+    private void addPagerData(JSONObject jsonData) {
+        List<Fragment> fragments = getFragmentsFromJson(jsonData);
+        pageAdapter = new MyPageAdapter(getFragmentManager(), fragments);
+
+        pager.setAdapter(pageAdapter);
+
+        //Bind the title indicator to the adapter
+        CirclePageIndicator indicator = (CirclePageIndicator)getActivity().findViewById(R.id.titles);
+        indicator.setViewPager(pager);
+    }
+
+
+    private List<Fragment> getFragmentsFromJson(JSONObject jsonData) {
+        List<Fragment> fList = new ArrayList<>();
+        try {
+            JSONArray articlesArray = jsonData.getJSONArray("articles");
+
+            //lets add items thru loop
+            for (int i = 0; i < articlesArray.length(); i++) {
+                JSONObject item = articlesArray.getJSONObject(i);
+                String title = item.getString("name");
+                String description = item.getString("description");
+                String image = item.getString("image");
+
+                String folderName = "CITY_FOLDER_NAME";
+
+                fList.add(MyFragment.newInstance(folderName, title, description, image));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return fList;
+    }
+
+
+    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener{
+        private List<Fragment> fragments;
+
+        public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
+            super(fm);
+            this.fragments = fragments;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return this.fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return this.fragments.size();
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+
+
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
