@@ -9,6 +9,8 @@ import android.content.res.Configuration;
 public class App extends Application {
     private String _cityId;
     private String _boneId;
+    private String _cityFolderName;
+
     private static App _instance;
 
     private App() {
@@ -33,22 +35,30 @@ public class App extends Application {
     }
 
 
-    public void setCityId(String cityId) {
+    public void set_cityId(String cityId) {
         _cityId = cityId;
     }
 
-    public String getCityId() {
+    public String get_cityId() {
         return _cityId;
     }
 
 
-    public void setBoneId(String boneId) {
+    public void set_boneId(String boneId) {
         _boneId = boneId;
     }
 
-    public String getBoneId() {
+    public String get_boneId() {
         return _boneId;
     }
 
+
+    public String get_cityFolderName() {
+        return _cityFolderName;
+    }
+
+    public void set_cityFolderName(String _cityFolderName) {
+        this._cityFolderName = _cityFolderName;
+    }
 
 }

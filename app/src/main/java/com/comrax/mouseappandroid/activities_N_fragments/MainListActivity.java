@@ -240,12 +240,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     public void onListItemClick(int mPosition) {
         CitiesModel tempValues = CitiesArray.get(mPosition);
 
-//        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.getBoneId(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.get_boneId(), Toast.LENGTH_LONG).show();
 
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
                 //save clicked cityId:
-                App.getInstance().setCityId(tempValues.getId());
+                App.getInstance().set_cityId(tempValues.getId());
 
                 String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
@@ -424,7 +424,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     if (child.toString().contains("CityCoordinates")) {
                         JSONObject jsonCityCoordinates = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONObject fullObject = jsonCityCoordinates.getJSONObject("cityCoordinates");
-                        cityObject.put(DBConstants.cityId, App.getInstance().getCityId());
+                        cityObject.put(DBConstants.cityId, App.getInstance().get_cityId());
                         cityObject.put(DBConstants.hebrewName, fullObject.getString("name"));
                         cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
                         cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
@@ -444,7 +444,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, App.getInstance().getCityId());
+                            item.put(DBConstants.cityId, App.getInstance().get_cityId());
                             dbTools.insertPlaceTable(item);
                         }
                     }
@@ -454,7 +454,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, App.getInstance().getCityId());
+                            item.put(DBConstants.cityId, App.getInstance().get_cityId());
                             dbTools.insertArticleTable(item);
                         }
                     }

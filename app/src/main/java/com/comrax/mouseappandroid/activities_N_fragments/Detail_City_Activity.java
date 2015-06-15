@@ -71,7 +71,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 
         setDetailsListItems();
-        App.getInstance().setCityId(cityId);
+        App.getInstance().set_cityId(cityId);
 
         setTitle();
 
@@ -195,7 +195,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);
-            App.getInstance().setBoneId(items.get(mPosition).boneId);
+            App.getInstance().set_boneId(items.get(mPosition).boneId);
 
             String title = items.get(mPosition).title;
             intent.putExtra("title", title );
@@ -220,6 +220,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
         CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
+        App.getInstance().set_cityFolderName(CITY_FOLDER_NAME);
         CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
         cityId = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_mainPageArticles.json");

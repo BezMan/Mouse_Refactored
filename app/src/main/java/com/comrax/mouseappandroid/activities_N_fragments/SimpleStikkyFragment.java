@@ -50,7 +50,7 @@ public class SimpleStikkyFragment extends Fragment {
     ViewPager pager;
     MyPageAdapter pageAdapter;
 
-    public static String CITY_FOLDER_NAME = "/sdcard/Mouse_App/London_master_1146";
+    public static String BASE_FOLDER = "/sdcard/Mouse_App/";
 
 //    private final LocationListener mLocationListener = new LocationListener() {
 //        @Override
@@ -116,7 +116,8 @@ public class SimpleStikkyFragment extends Fragment {
 
         pager = (ViewPager) getActivity().findViewById(R.id.viewpager);
 
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + "1146" + "_mainPageArticles.json");
+        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
         addPagerData(jsonData);
 
@@ -152,13 +153,19 @@ public class SimpleStikkyFragment extends Fragment {
             //lets add items thru loop
             for (int i = 0; i < articlesArray.length(); i++) {
                 JSONObject item = articlesArray.getJSONObject(i);
-                String title = item.getString("name");
-                String description = item.getString("description");
+
+                String title = item.getString("title");
+                String boneId = item.getString("boneId");
+                String nsId = item.getString("nsId");
+                String url = item.getString("url");
                 String image = item.getString("image");
 
-                String folderName = CITY_FOLDER_NAME;
+                JSONObject urlContent = item.getJSONObject("urlContent");
 
-                fList.add(MyFragment.newInstance(folderName, title, description, image));
+
+                String folderName = App.getInstance().get_cityFolderName();
+
+                fList.add(MyFragment.newInstance(folderName, title, "description", image));
             }
 
         } catch (JSONException e) {
@@ -240,8 +247,8 @@ public class SimpleStikkyFragment extends Fragment {
 
     private void populateListView() {
 
-        String cityId = App.getInstance().getCityId();
-        String boneId = App.getInstance().getBoneId();
+        String cityId = App.getInstance().get_cityId();
+        String boneId = App.getInstance().get_boneId();
         Cursor cursor = new DBTools(getActivity()).getCurrentCityPlacesTable(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
 
         resultsTxtView.setText("התקבלו " + cursor.getCount() + " תוצאות");
