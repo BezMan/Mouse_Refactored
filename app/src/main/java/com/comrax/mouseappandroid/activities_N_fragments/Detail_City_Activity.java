@@ -25,6 +25,7 @@ import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
 import com.comrax.mouseappandroid.model.GlobalVars;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -235,6 +236,10 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
 
         pager.setAdapter(pageAdapter);
+
+        //Bind the title indicator to the adapter
+        CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.titles);
+        indicator.setViewPager(pager);
     }
 
 

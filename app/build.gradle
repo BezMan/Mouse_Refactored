@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'in.srain.cube:grid-view-with-header-footer:1.0.11'
     compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
+
 }
