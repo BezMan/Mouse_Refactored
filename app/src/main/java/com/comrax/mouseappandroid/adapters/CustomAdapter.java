@@ -164,13 +164,15 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      * ****** Called when Item click in ListView ***********
      */
     private class OnItemClickListener implements View.OnClickListener {
-
+        String mObjId;
         OnItemClickListener(String objId) {
-            App.getInstance().set_objId(objId);
+            mObjId = objId;
         }
 
         @Override
         public void onClick(View arg0) {
+            App.getInstance().set_objId(mObjId);
+
             Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
             myActivity.onListItemClick();
         }

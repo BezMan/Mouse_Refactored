@@ -33,7 +33,11 @@ public class PlaceFragment extends Fragment {
 //        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
 //        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
-        Toast.makeText(getActivity().getApplicationContext(), "asfdgh", Toast.LENGTH_SHORT).show();
+        Bundle bundle = this.getArguments();
+        String fullDescription = bundle.getString("fullDescription", null);
+
+        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
+
     }
 
 

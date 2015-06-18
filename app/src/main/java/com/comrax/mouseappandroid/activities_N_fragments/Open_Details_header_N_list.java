@@ -17,7 +17,6 @@ import com.comrax.mouseappandroid.database.DBTools;
  */
 public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
-    String title;
     TextView tvTitle;
 
     Cursor cursor;
@@ -26,14 +25,13 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        title = App.getInstance().get_boneIdTitle();
 
         if (savedInstanceState == null) {
             loadFragment(new SimpleStikkyFragment(), "simpleTag");
         }
 
         tvTitle = (TextView) findViewById(R.id.header_title);
-        tvTitle.setText(title);
+        tvTitle.setText(App.getInstance().get_boneIdTitle());
 
 
     }
@@ -58,12 +56,20 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     public void onListItemClick() {
 //        startActivity();
-        Log.wtf("myClick", " " + App.getInstance().get_objId() + " " + App.getInstance().get_boneId() + " " + App.getInstance().get_cityId());
+        App myData = App.getInstance();
+        Log.wtf("myClick", " " + myData.get_objId() + " " + myData.get_boneId() + " " + myData.get_cityId());
 
-        App mydata = App.getInstance();
-        cursor = new DBTools(this).getPlaceItem(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, mydata.get_cityId(), DBConstants.boneId, mydata.get_boneId(), DBConstants.objId, mydata.get_objId());
+        cursor = new DBTools(this).getPlaceItem(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myData.get_cityId(), DBConstants.boneId, myData.get_boneId(), DBConstants.objId, myData.get_objId());
 
-        loadFragment(new PlaceFragment(), "placeTag");
+        Bundle bundle = new Bundle();
+//        bundle.putString("title", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+//        bundle.putString("hebTitle", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+        bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
+
+        Fragment placeFragment = new PlaceFragment();
+
+        placeFragment.setArguments(bundle);
+        loadFragment(placeFragment, "placeTag");
     }
 
 
