@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 
@@ -34,9 +34,36 @@ public class PlaceFragment extends Fragment {
 //        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
         Bundle bundle = this.getArguments();
-        String fullDescription = bundle.getString("fullDescription", null);
+        String title = bundle.getString("title", null);
+        String hebTitle = bundle.getString("hebTitle", null);
+//        String fullDescription = new StringBuilder().append("<html><head><style>").append("body{font-family: arial;font-size:17px;direction:rtl;background:none;}").append("</style>\ <script type='text/javascript'>\ function onLoad() {window.location.href = 'ready://' + document.body.offsetHeight;}\ </script>\ </head><body onload='onLoad()'>").toString();
+        String address = bundle.getString("address", null);
 
-        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
+
+
+        bundle.getString("fullDescription", null);
+//
+//        try {
+//            JSONObject jsonObject = new JSONObject(fullDescription);
+//            String txt = jsonObject.get
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        TextView titleView = (TextView)getActivity().findViewById(R.id.detailed_place_english_title);
+        titleView.setText(title);
+
+        TextView hebTitleView = (TextView)getActivity().findViewById(R.id.detailed_place_hebrew_title);
+        hebTitleView.setText(hebTitle);
+
+        TextView addressView = (TextView)getActivity().findViewById(R.id.detailed_place_address);
+        addressView.setText(address);
+
+//        TextView mainDetailedText = (TextView)getActivity().findViewById(R.id.detailed_place_main_text);
+//        mainDetailedText.setText(Html.fromHtml(fullDescription));
+
+
+//        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
 
     }
 

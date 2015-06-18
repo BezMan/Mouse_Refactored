@@ -62,9 +62,10 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
         cursor = new DBTools(this).getPlaceItem(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myData.get_cityId(), DBConstants.boneId, myData.get_boneId(), DBConstants.objId, myData.get_objId());
 
         Bundle bundle = new Bundle();
-//        bundle.putString("title", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-//        bundle.putString("hebTitle", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+        bundle.putString("title", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+        bundle.putString("hebTitle", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
         bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
+        bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
 
         Fragment placeFragment = new PlaceFragment();
 
