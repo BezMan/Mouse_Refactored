@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.Open_Details_header_N_list;
 import com.comrax.mouseappandroid.model.ListModel;
@@ -163,16 +164,15 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      * ****** Called when Item click in ListView ***********
      */
     private class OnItemClickListener implements View.OnClickListener {
-        private String mobjId;
 
         OnItemClickListener(String objId) {
-            mobjId = objId;
+            App.getInstance().set_objId(objId);
         }
 
         @Override
         public void onClick(View arg0) {
             Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
-            myActivity.onListItemClick(mobjId);
+            myActivity.onListItemClick();
         }
     }
 

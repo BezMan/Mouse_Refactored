@@ -255,6 +255,15 @@ public class DBTools extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getPlaceItem(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2, String checkColumn3, String checkVal3) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "=" + checkVal2 +" AND "+ checkColumn3+ "=" + checkVal3;
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
 
 
 }

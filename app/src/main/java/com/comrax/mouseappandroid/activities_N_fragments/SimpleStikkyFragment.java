@@ -50,7 +50,7 @@ public class SimpleStikkyFragment extends Fragment {
     ViewPager pager;
     MyPageAdapter pageAdapter;
 
-    public static String BASE_FOLDER = "/sdcard/Mouse_App/";
+//    public static String BASE_FOLDER = "/sdcard/Mouse_App/";
 
 //    private final LocationListener mLocationListener = new LocationListener() {
 //        @Override

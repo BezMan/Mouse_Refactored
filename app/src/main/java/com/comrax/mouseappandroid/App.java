@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 public class App extends Application {
     private String _cityId;
     private String _boneId;
+    private String _objId;
     private String _cityFolderName;
 
     private static App _instance;
@@ -53,10 +54,20 @@ public class App extends Application {
     }
 
 
+    public String get_objId() {
+        return _objId;
+    }
+
+    public void set_objId(String objId) {
+        _objId = objId;
+    }
+
+
     public String get_cityFolderName() {
         return _cityFolderName;
     }
 
     public void set_cityFolderName(String cityFolderName) {_cityFolderName = cityFolderName; }
+
 
 }

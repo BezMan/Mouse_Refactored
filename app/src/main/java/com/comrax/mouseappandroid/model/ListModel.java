@@ -4,11 +4,16 @@ package com.comrax.mouseappandroid.model;
  * Created by betzalel on 30/03/2015.
  */
 public class ListModel {
-    private  String TitleA="", TitleB="", TitleC="", Address="";
+    private  String TitleA="";
+    private String TitleB="";
+    private String TitleC="";
+    private String Address="";
     private  int Price;
     private  float Rating;
-
     private String ObjId;
+
+    private String FullDescriptionBody="";
+    private String Phone="";
 
 
     public String getObjId() {
@@ -95,5 +100,25 @@ public class ListModel {
     public void setLatitude(double latitude) {
         Latitude = latitude;
     }
+
+
+    public String getFullDescriptionBody() {
+        return FullDescriptionBody;
+    }
+
+    public void setFullDescriptionBody(String fullDescriptionBody) {
+        FullDescriptionBody = fullDescriptionBody;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+
+
 }
 
