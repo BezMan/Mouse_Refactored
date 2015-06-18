@@ -151,7 +151,7 @@ public class SimpleStikkyFragment extends Fragment {
             JSONArray articlesArray = jsonData.getJSONArray("articles");
 
             //lets add items thru loop
-            for (int i = 0; i < articlesArray.length(); i++) {
+            for (int i = 0; i < 5; i++) {   //we want only 5 first articles//
                 JSONObject item = articlesArray.getJSONObject(i);
 
                 String title = item.getString("title");
@@ -165,7 +165,7 @@ public class SimpleStikkyFragment extends Fragment {
 
                 String folderName = App.getInstance().get_cityFolderName();
 
-                fList.add(MyFragment.newInstance(folderName, title, "description", image));
+                fList.add(MyFragment.newInstance(folderName, title, "", image));
             }
 
         } catch (JSONException e) {
@@ -210,7 +210,7 @@ public class SimpleStikkyFragment extends Fragment {
 
         StikkyHeaderBuilder.stickTo(mListView)
                 .setHeader(R.id.header, (ViewGroup) getView())
-                .minHeightHeader(160)
+                .minHeightHeader(180)
                 .build();
 
 
@@ -224,6 +224,10 @@ public class SimpleStikkyFragment extends Fragment {
 
 
     private void screenListView(int price) {
+
+        int index = mListView.getFirstVisiblePosition();
+        View v = mListView.getChildAt(0);
+        int top = (v == null) ? 0 : (v.getTop() - mListView.getPaddingTop());
 
         if (price == 0) {
 
@@ -242,6 +246,9 @@ public class SimpleStikkyFragment extends Fragment {
             adapter = new CustomAdapter(getActivity(), screenedListViewValuesArr, getResources());
             mListView.setAdapter(adapter);
         }
+
+        mListView.setSelectionFromTop(index, top);
+
     }
 
 

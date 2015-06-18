@@ -4,7 +4,7 @@
     android:id="@+id/header"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="330dp">
+    android:layout_height="600px">
 
 
 
@@ -20,7 +20,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="420px"
             />
 
         <com.viewpagerindicator.CirclePageIndicator

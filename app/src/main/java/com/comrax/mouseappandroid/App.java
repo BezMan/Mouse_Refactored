@@ -57,8 +57,6 @@ public class App extends Application {
         return _cityFolderName;
     }
 
-    public void set_cityFolderName(String _cityFolderName) {
-        this._cityFolderName = _cityFolderName;
-    }
+    public void set_cityFolderName(String cityFolderName) {_cityFolderName = cityFolderName; }
 
 }
