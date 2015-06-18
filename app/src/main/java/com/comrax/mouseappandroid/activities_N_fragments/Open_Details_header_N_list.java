@@ -26,8 +26,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        title = intent.getStringExtra("title");
+        title = App.getInstance().get_boneIdTitle();
 
         if (savedInstanceState == null) {
             loadFragment(new SimpleStikkyFragment(), "simpleTag");
@@ -70,6 +69,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     @Override
     public void onBackPressed() {
+        //returning from place fragment restarts this activity, because viewPager layout needs to restart.
         Fragment myFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
         if (myFragment != null && myFragment.isVisible()) {
             startActivity(new Intent(this, getClass()));

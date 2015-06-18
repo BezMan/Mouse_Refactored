@@ -11,6 +11,7 @@ public class App extends Application {
     private String _boneId;
     private String _objId;
     private String _cityFolderName;
+    private String _boneIdTitle;
 
     private static App _instance;
 
@@ -70,4 +71,11 @@ public class App extends Application {
     public void set_cityFolderName(String cityFolderName) {_cityFolderName = cityFolderName; }
 
 
+    public String get_boneIdTitle() {
+        return _boneIdTitle;
+    }
+
+    public void set_boneIdTitle(String boneIdTitle) {
+        _boneIdTitle = boneIdTitle;
+    }
 }

@@ -196,9 +196,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);
             App.getInstance().set_boneId(items.get(mPosition).boneId);
-
-            String title = items.get(mPosition).title;
-            intent.putExtra("title", title );
+            App.getInstance().set_boneIdTitle(items.get(mPosition).title);
             startActivity(intent);
 
         }
