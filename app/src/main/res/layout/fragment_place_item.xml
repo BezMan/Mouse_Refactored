@@ -129,13 +129,29 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/White" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/White"
+
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/phone_icon"/>
             <TextView
-                android:id="@+id/textView9"
-                android:background="@color/White"
+                android:id="@+id/detailed_place_phone_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="15dp"
+                />
+
+        </LinearLayout>
 
             <TextView
                 android:id="@+id/textView7"
@@ -148,7 +164,7 @@
                 android:textColor="@color/White" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/detailed_place_activity_hours"
                 android:background="@color/White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,15 +182,33 @@
                 android:textColor="@color/White" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/detailed_place_public_transportation"
                 android:background="@color/White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Gray"
+            android:paddingRight="10dp"
+            android:text="תגובות גולשים"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/White" />
 
-            <Button
+        <TextView
+            android:id="@+id/detailed_place_responses"
+            android:background="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+        <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
