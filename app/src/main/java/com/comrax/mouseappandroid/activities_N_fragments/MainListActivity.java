@@ -48,7 +48,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     GridViewWithHeaderAndFooter gridView;
     public ArrayList<CitiesModel> CitiesArray = new ArrayList<>();
-    public ArrayList<BannersModel> BannersArray = new ArrayList<>();
+    public static ArrayList<BannersModel> BannersArray = new ArrayList<>();
     CitiesAdapter citiesAdapter;
 
     View bannerLayout;
