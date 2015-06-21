@@ -56,9 +56,11 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.name + " TEXT, "
                 + DBConstants.rating + " INTEGER, "
                 + DBConstants.ratingCount + " INTEGER, "
-                + DBConstants.phone + " TEXT, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.urlString + " TEXT, "
+                + DBConstants.phone + " TEXT, "
+                + DBConstants.activityHours + " TEXT, "
+                + DBConstants.publicTransportation + " TEXT, "
                 + DBConstants.userComments + " TEXT "
                 + ");";
 
@@ -195,6 +197,8 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
             values.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
             values.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
+            values.put(DBConstants.activityHours, jsonUrlContentFullPlace.getString(DBConstants.activityHours));
+            values.put(DBConstants.publicTransportation, jsonUrlContentFullPlace.getString(DBConstants.publicTransportation));
             values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
 
         } catch (JSONException e) {

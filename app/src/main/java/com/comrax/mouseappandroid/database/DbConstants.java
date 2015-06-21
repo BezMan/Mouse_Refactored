@@ -30,15 +30,9 @@ public class DBConstants {
             centerCoordinateLat = "latitude",
             centerCoordinateLon = "longitude",
             cityFolderPath = "cityFolderPath",
-            coordinates = "coordinates",
-            placesCoordinatesList = "placesCoordinatesList",
             dateUpdated = "dateUpdated",
             image = "image",
-            imageName = "imageName",
             index = "myIndex",
-            mainArticles = "mainArticles",
-            menu = "menu",
-            serviceMenu = "serviceMenu",
             stopsArticle = "stopsArticle",
             touristArticlesList = "touristArticlesList",
             address = "address",
@@ -51,7 +45,10 @@ public class DBConstants {
             userComments = "responses",
             categoryId = "categoryId",
             phone = "phone",
-            price = "priceDegree";
+            price = "priceDegree",
+            activityHours = "activityHours",
+            publicTransportation = "publicTransportation"
+        ;
 
 
 }
