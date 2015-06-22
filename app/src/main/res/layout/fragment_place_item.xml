@@ -12,7 +12,8 @@
         <ImageView
             android:id="@+id/detailed_place_head_imageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"/>
 
         <Button
             android:id="@+id/detailed_place_prefs_button"
@@ -427,10 +428,10 @@
         <ImageView
             android:id="@+id/footer_item_ad"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
-            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
 
 
             />
