@@ -90,9 +90,20 @@ public class PlaceFragment extends Fragment {
         setServiceItems();
 //        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
 
+        setFooterAd();
     }
 
+    private void setFooterAd() {
+        ImageView imageButton = (ImageView)getActivity().findViewById(R.id.footer_item_ad);
+        int rand = (int) (Math.random()*10 + 1);
 
+        File file = new File("/sdcard/Mouse_App/Default_master/Images/MenuIcons/" + "320x50_" + rand + ".jpg");
+        if (file.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageButton.setImageBitmap(bitmap);
+        }
+
+    }
 
 
     private void setServiceItems(){

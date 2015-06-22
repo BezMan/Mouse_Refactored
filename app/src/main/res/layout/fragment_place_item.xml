@@ -257,7 +257,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="5"
-                    android:text="מילים בעברית"
+                    android:text="א"
                     android:textColor="@color/Black"
                     android:textSize="19dp"
 
@@ -304,7 +304,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
                     android:layout_weight="5"
-                    android:text="מילים בעברית"
+                    android:text="ב"
                     android:textColor="@color/Black"
                     android:textSize="19dp"
 
@@ -351,7 +351,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
                     android:layout_weight="5"
-                    android:text="מילים בעברית"
+                    android:text="ג"
                     android:textColor="@color/Black"
                     android:textSize="19dp"
 
@@ -397,7 +397,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
                     android:layout_weight="5"
-                    android:text="מילים בעברית"
+                    android:text="ד"
                     android:textColor="@color/Black"
                     android:textSize="19dp"
 
@@ -414,9 +414,16 @@
 
         </LinearLayout>
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/footer_item_ad"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="55dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+
+
+            />
 
     </LinearLayout>
 
