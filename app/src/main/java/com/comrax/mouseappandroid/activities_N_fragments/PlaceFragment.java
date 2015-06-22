@@ -23,6 +23,8 @@ import java.io.File;
 
 public class PlaceFragment extends Fragment {
 
+    Bundle bundle;
+
     Button b1, b2, b3, b4;
     ImageView image1, image2, image3, image4;
     LinearLayout layout1, layout2, layout3, layout4;
@@ -48,7 +50,7 @@ public class PlaceFragment extends Fragment {
 //        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
 //        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
 
         String imagePath = bundle.getString("image", null);
 
@@ -103,14 +105,65 @@ public class PlaceFragment extends Fragment {
 
 
         setServiceItems();
-//        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
 
         setFooterAd();
 
-        setGrayExtras();
+        setGraysWithExtras();
     }
 
-    private void setGrayExtras() {
+
+
+    private void setGraysWithExtras() {
+        String phone = bundle.getString("phone", null);
+        String activityHours = bundle.getString("activityHours", null);
+        String publicTransportation = bundle.getString("publicTransportation", null);
+        String responses = bundle.getString("responses", null);
+
+        TextView phoneTitle = (TextView)getActivity().findViewById(R.id.detailed_place_phone_title);
+        TextView activityHoursTitle = (TextView)getActivity().findViewById(R.id.detailed_place_activity_hours_title);
+        TextView publicTransportationTitle = (TextView)getActivity().findViewById(R.id.detailed_place_public_transportation_title);
+        TextView responsesTitle = (TextView)getActivity().findViewById(R.id.detailed_place_responses_title);
+
+        LinearLayout phoneLayout = (LinearLayout)getActivity().findViewById(R.id.detailed_place_phone_layout);
+
+        TextView phoneView = (TextView)getActivity().findViewById(R.id.detailed_place_phone_num);
+        TextView activityHoursView = (TextView)getActivity().findViewById(R.id.detailed_place_activity_hours);
+        TextView publicTransportationView = (TextView)getActivity().findViewById(R.id.detailed_place_public_transportation);
+        TextView responsesView = (TextView)getActivity().findViewById(R.id.detailed_place_responses);
+
+
+
+        if(!phone.equals("")){
+            phoneTitle.setVisibility(View.VISIBLE);
+            phoneLayout.setVisibility(View.VISIBLE);
+            phoneView.setText(phone);
+
+        }
+
+        if(!activityHours.equals("")){
+            activityHoursTitle.setVisibility(View.VISIBLE);
+            activityHoursView.setVisibility(View.VISIBLE);
+            activityHoursView.setText(activityHours);
+
+        }
+
+        if(!publicTransportation.equals("")){
+            publicTransportationTitle.setVisibility(View.VISIBLE);
+            publicTransportationView.setVisibility(View.VISIBLE);
+            publicTransportationView.setText(publicTransportation);
+
+        }
+
+        if(!responses.equals("[]")){
+            responsesTitle.setVisibility(View.VISIBLE);
+            responsesView.setVisibility(View.VISIBLE);
+            responsesView.setText(responses);
+
+        }
+
+
+
+
 
     }
 

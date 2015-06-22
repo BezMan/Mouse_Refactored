@@ -12,49 +12,45 @@
         <ImageView
             android:id="@+id/detailed_place_head_imageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            />
+            android:layout_height="250dp" />
 
         <Button
             android:id="@+id/detailed_place_prefs_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@color/Gray"
             android:text="הוסף למועדפים"
             android:textColor="@color/White"
-            android:textSize="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            />
+            android:textSize="18dp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:orientation="vertical"
-            android:background="@color/White">
+            android:background="@color/White"
+            android:orientation="vertical">
 
 
             <TextView
                 android:id="@+id/detailed_place_hebrew_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="מלל א"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_margin="3dp"
-                />
+                android:text="מלל א"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/detailed_place_english_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="מלל ב"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginRight="3dp"
-                />
+                android:text="מלל ב"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,121 +98,135 @@
         </LinearLayout>
 
         <TextView
-                android:id="@+id/detailed_place_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-            android:background="@color/White"
+            android:id="@+id/detailed_place_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="10dp"/>
+            android:background="@color/White"
+            android:padding="10dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:orientation="vertical"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
 
 
-    <TextView
-                android:id="@+id/textView6"
+            <TextView
+                android:id="@+id/detailed_place_phone_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/Gray"
                 android:paddingRight="10dp"
                 android:text="טלפון"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/White" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/White"
-
-            >
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/phone_icon"/>
-            <TextView
-                android:id="@+id/detailed_place_phone_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="15dp"
+                android:textColor="@color/White"
+                android:visibility="gone"
                 />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/detailed_place_phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/phone_icon" />
+
+                <TextView
+                    android:id="@+id/detailed_place_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/detailed_place_activity_hours_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/Gray"
                 android:paddingRight="10dp"
                 android:text="שעות פעילות"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/White" />
+                android:textColor="@color/White"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/detailed_place_activity_hours"
-                android:background="@color/White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/White"
                 android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone"
+                />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/detailed_place_public_transportation_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/Gray"
                 android:paddingRight="10dp"
                 android:text="תחבורה ציבורית"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/White" />
+                android:textColor="@color/White"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/detailed_place_public_transportation"
-                android:background="@color/White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/White"
                 android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone"
+                />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/Gray"
-            android:paddingRight="10dp"
-            android:text="תגובות גולשים"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/White" />
+            <TextView
+                android:id="@+id/detailed_place_responses_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Gray"
+                android:paddingRight="10dp"
+                android:text="תגובות גולשים"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/White"
+                android:visibility="gone"
+                />
 
-        <TextView
-            android:id="@+id/detailed_place_responses"
-            android:background="@color/White"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/detailed_place_responses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone"
+                />
 
 
-        <Button
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 android:background="@color/Achbar_green"
                 android:text="יש לכם מה להגיד? הוסיפו תגובה"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp"/>
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="match_parent"
@@ -227,7 +237,7 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
-    </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -254,8 +264,8 @@
                     android:id="@+id/footer_item_title_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="5"
                     android:text="א"
                     android:textColor="@color/Black"
@@ -267,9 +277,8 @@
                     android:id="@+id/footer_item_image_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_margin="1dp"
-                    />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -300,9 +309,9 @@
                     android:id="@+id/footer_item_title_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="5"
                     android:text="ב"
                     android:textColor="@color/Black"
@@ -314,9 +323,8 @@
                     android:id="@+id/footer_item_image_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_margin="1dp"
-                    />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -347,9 +355,9 @@
                     android:id="@+id/footer_item_title_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="5"
                     android:text="ג"
                     android:textColor="@color/Black"
@@ -361,8 +369,8 @@
                     android:id="@+id/footer_item_image_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="1dp"/>
+                    android:layout_margin="1dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -393,9 +401,9 @@
                     android:id="@+id/footer_item_title_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="8dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="5"
                     android:text="ד"
                     android:textColor="@color/Black"
@@ -407,8 +415,8 @@
                     android:id="@+id/footer_item_image_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="1dp"/>
+                    android:layout_margin="1dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -418,8 +426,8 @@
             android:id="@+id/footer_item_ad"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             android:scaleType="fitXY"
 
 
