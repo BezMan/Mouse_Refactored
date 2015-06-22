@@ -50,37 +50,36 @@ public class PlaceFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
-//        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
-
         bundle = this.getArguments();
 
-        String imagePath = bundle.getString("image", null);
+        setUpperData();
 
+        setGraysWithExtras();
+
+        setServiceItems();
+
+        setFooterAd();
+
+    }
+
+
+    private void setUpperData() {
+        String imagePath = bundle.getString("image", null);
         String title = bundle.getString("title", null);
         String hebTitle = bundle.getString("hebTitle", null);
+        String description = bundle.getString("fullDescription", null);
+        String address = bundle.getString("address", null);
 
         String fullDescription = new StringBuilder().append("<![CDATA[")
                 .append("<html><head><style>")
                 .append("body{font-family:arial;font-size:17px;direction:rtl;background:none;}")
                 .append("</style></head><body>")
-                .append(bundle.getString("fullDescription", null))
+                .append(description)
                 .append("</body></html>")
                 .append("]]>")
                 .toString();
 
-        String address = bundle.getString("address", null);
 
-
-
-//        bundle.getString("fullDescription", null);
-//
-//        try {
-//            JSONObject jsonObject = new JSONObject(fullDescription);
-//            String txt = jsonObject.get
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         ImageView headImageView = (ImageView)getActivity().findViewById(R.id.detailed_place_head_imageView);
 
@@ -111,15 +110,9 @@ public class PlaceFragment extends Fragment {
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating() , Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
             }
         });
-
-        setServiceItems();
-
-        setFooterAd();
-
-        setGraysWithExtras();
     }
 
 
@@ -171,12 +164,8 @@ public class PlaceFragment extends Fragment {
             responsesView.setText(responses);
 
         }
-
-
-
-
-
     }
+
 
     private void setFooterAd() {
         ImageView imageButton = (ImageView)getActivity().findViewById(R.id.footer_item_ad);
