@@ -48,7 +48,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     GridViewWithHeaderAndFooter gridView;
     public ArrayList<CitiesModel> CitiesArray = new ArrayList<>();
-    public static ArrayList<BannersModel> BannersArray = new ArrayList<>();
+    public static ArrayList<BannersModel> BannersArray;
     CitiesAdapter citiesAdapter;
 
     View bannerLayout;
@@ -139,6 +139,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         ImageView[] images = {image1, image2, image3, image4};
         LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
         // Getting data JSON Array nodes
+        BannersArray = new ArrayList<>();
         JSONArray data = null;
         try {
             data = jsonObj.getJSONArray("banners");

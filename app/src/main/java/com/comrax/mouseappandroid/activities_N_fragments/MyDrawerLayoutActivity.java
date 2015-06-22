@@ -134,19 +134,22 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
     public void onNavDrawerItemClick(int mPosition) {
-        DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
-        Toast.makeText(this, "" + tempValues.getBtnImage() + " \n" + mPosition + " \n", Toast.LENGTH_LONG).show();
+//        DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
+//        Toast.makeText(this, "" + tempValues.getBtnImage() + " \n" + mPosition + " \n", Toast.LENGTH_LONG).show();
 
-//        Intent detailsIntent = new Intent(this, ConfListActivity.class);
-//        detailsIntent.putExtra("NavSelect", mPosition);
-//        detailsIntent.putExtra("NavTitle", tempValues.getBtnTitle());
+        Intent cityIntent = new Intent(this, MainListActivity.class);
+        cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(cityIntent);
+
+
+//        cityIntent.putExtra("NavSelect", mPosition);
+//        cityIntent.putExtra("NavTitle", tempValues.getBtnTitle());
 
 //        if (mPosition == 0) {
 //            search();
 //        } else if (mPosition == 1) {
 //            showFavorites();
 ////        } else if (mPosition >= 2 && mPosition <= 6) {
-////            startActivity(detailsIntent);
 //        } else if (mPosition == 7) {
 //            contactUs();
 //        } else if (mPosition == 8) {
