@@ -38,7 +38,6 @@ public class DBConstants {
             address = "address",
             description = "description",
             fullDescriptionBody = "fullDescriptionBody",
-            fullPlace = "urlContent",
             hebrewName = "hebrewName",
             type = "type",
             urlString = "url",

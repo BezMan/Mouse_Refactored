@@ -66,6 +66,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
         bundle.putString("hebTitle", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
         bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
         bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+        bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
 
         Fragment placeFragment = new PlaceFragment();
 

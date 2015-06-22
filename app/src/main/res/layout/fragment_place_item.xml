@@ -10,13 +10,13 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/detailed_place_head_imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sanen" />
+            android:layout_height="250dp"
+            />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/detailed_place_prefs_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/Gray"

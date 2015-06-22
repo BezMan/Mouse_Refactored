@@ -58,6 +58,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.urlString + " TEXT, "
+                + DBConstants.image + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.activityHours + " TEXT, "
                 + DBConstants.publicTransportation + " TEXT, "
@@ -193,10 +194,11 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.rating, item.getString(DBConstants.rating));
             values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
 
-            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.fullPlace);
+            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.urlContent);
             values.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
             values.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
             values.put(DBConstants.price, jsonUrlContentFullPlace.getString(DBConstants.price));
+            values.put(DBConstants.image, jsonUrlContentFullPlace.getString(DBConstants.image));
             values.put(DBConstants.activityHours, jsonUrlContentFullPlace.getString(DBConstants.activityHours));
             values.put(DBConstants.publicTransportation, jsonUrlContentFullPlace.getString(DBConstants.publicTransportation));
             values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 
 import java.io.File;
@@ -48,8 +49,12 @@ public class PlaceFragment extends Fragment {
 //        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
         Bundle bundle = this.getArguments();
+
+        String imagePath = bundle.getString("image", null);
+
         String title = bundle.getString("title", null);
         String hebTitle = bundle.getString("hebTitle", null);
+
         String fullDescription = new StringBuilder().append("<![CDATA[")
                 .append("<html><head><style>")
                 .append("body{font-family:arial;font-size:17px;direction:rtl;background:none;}")
@@ -58,6 +63,7 @@ public class PlaceFragment extends Fragment {
                 .append("</body></html>")
                 .append("]]>")
                 .toString();
+
         String address = bundle.getString("address", null);
 
 
@@ -70,6 +76,15 @@ public class PlaceFragment extends Fragment {
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
+
+        ImageView headImageView = (ImageView)getActivity().findViewById(R.id.detailed_place_head_imageView);
+
+
+        File file = new File(App.getInstance().get_cityFolderName() + "/" + imagePath);
+        if (file.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            headImageView.setImageBitmap(bitmap);
+        }
 
         TextView titleView = (TextView)getActivity().findViewById(R.id.detailed_place_english_title);
         titleView.setText(title);
@@ -91,6 +106,12 @@ public class PlaceFragment extends Fragment {
 //        Toast.makeText(getActivity().getApplicationContext(), fullDescription, Toast.LENGTH_LONG).show();
 
         setFooterAd();
+
+        setGrayExtras();
+    }
+
+    private void setGrayExtras() {
+
     }
 
     private void setFooterAd() {
