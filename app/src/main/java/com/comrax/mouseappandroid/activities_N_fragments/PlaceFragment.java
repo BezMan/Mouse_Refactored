@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
@@ -29,6 +31,7 @@ public class PlaceFragment extends Fragment {
     ImageView image1, image2, image3, image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
+    RatingBar rating;
 
 
     public PlaceFragment() {
@@ -103,6 +106,14 @@ public class PlaceFragment extends Fragment {
 
         mainDetailedText.setText(Html.fromHtml(html2));
 
+
+        rating=(RatingBar)getActivity().findViewById(R.id.open_details_item_ratingBar);
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating() , Toast.LENGTH_LONG).show();
+            }
+        });
 
         setServiceItems();
 
@@ -211,6 +222,9 @@ public class PlaceFragment extends Fragment {
 
 
     }
+
+
+
 
     private class OnBannerClick implements View.OnClickListener {
         private int mPosition;
