@@ -1,10 +1,8 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.widget.TextView;
@@ -86,24 +84,6 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        //close drawer if opened:
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
-        Fragment myFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
-
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawers();
-        }
-            //returning from place fragment restarts this activity, because viewPager layout needs to restart.
-        else if (myFragment != null && myFragment.isVisible()) {
-            startActivity(new Intent(this, getClass()));
-            finish();
-        }
-        else {
-            super.onBackPressed();
-        }
-    }
 }
 
 
