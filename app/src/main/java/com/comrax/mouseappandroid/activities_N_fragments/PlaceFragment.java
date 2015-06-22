@@ -235,15 +235,9 @@ public class PlaceFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        populateDetails();
 
     }
 
 
-
-
-    private void populateDetails() {
-
-    }
 
 }
