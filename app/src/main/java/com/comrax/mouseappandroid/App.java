@@ -12,7 +12,7 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
-    private String MyFragTag;
+    private boolean MyFragVal=false;
 
     private static App _instance;
 
@@ -80,12 +80,12 @@ public class App extends Application {
         _boneIdTitle = boneIdTitle;
     }
 
-    public String getMyFragTag() {
-        return MyFragTag;
+    public boolean isMyFragVal() {
+        return MyFragVal;
     }
 
-    public void setMyFragTag(String myFragTag) {
-        MyFragTag = myFragTag;
+    public void setMyFragVal(boolean myFragVal) {
+        MyFragVal = myFragVal;
     }
 
 }

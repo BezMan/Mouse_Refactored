@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.model.CustomGlobalNavDrawerAdapter;
 import com.comrax.mouseappandroid.model.DrawerModel;
@@ -191,21 +192,24 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     public void loadFragment(final Fragment fragment, String fragTag) {
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(fragTag);
 
-    if(staticPageFragment == null || !staticPageFragment.isVisible()) {
+    if(!App.getInstance().isMyFragVal() ) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
+//                .addToBackStack(fragTag)
                 .commit();
+        App.getInstance().setMyFragVal(true);
     }
-        else if (staticPageFragment != null && staticPageFragment.isVisible()){
+        else {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_container, fragment, fragTag)
 //                .addToBackStack(fragTag)
                 .commit();
 
-    }
+        }
+
+
     }
 
 //    searchOnClick
@@ -221,7 +225,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
         Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
-        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag("staticPageTag");
+        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(PAGE_TAG);
 
         //close drawer if opened:
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -244,6 +248,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         }
         else {
             super.onBackPressed();
+            App.getInstance().setMyFragVal(false);
         }
     }
 }
