@@ -39,11 +39,22 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.below_bone_title_container, fragment, fragTag)
+                .add(R.id.below_bone_title_container, fragment, fragTag)
 //                .addToBackStack(fragment.getClass().getName())
                 .commit();
 
     }
+
+    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.below_bone_title_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                .commit();
+
+    }
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -75,7 +86,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
         Fragment placeFragment = new PlaceFragment();
 
         placeFragment.setArguments(bundle);
-        loadFragment(placeFragment, "placeTag");
+        loadFragmentWithBackStack(placeFragment, "placeTag");
     }
 
 

@@ -31,6 +31,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     public ArrayList<DrawerModel> customDrawerItemsArr = new ArrayList<>();
 
+    String PAGE_TAG;
 
     protected abstract int getLayoutResourceId();
 
@@ -179,21 +180,32 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         bundle.putString("data", jsonObject.toString());
         bundle.putString("barTitle", barTitle);
 
-        Fragment placeFragment = new StaticPageFragment();
+        Fragment staticPageFragment = new StaticPageFragment();
 
-        placeFragment.setArguments(bundle);
-        loadFragment(placeFragment, "staticPageTag");
+        staticPageFragment.setArguments(bundle);
+        PAGE_TAG = "staticPageTag"+barTitle;
+        loadFragment(staticPageFragment, PAGE_TAG);
 
     }
 
     public void loadFragment(final Fragment fragment, String fragTag) {
+        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(fragTag);
 
+    if(staticPageFragment == null || !staticPageFragment.isVisible()) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.layout_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                .commit();
+    }
+        else if (staticPageFragment != null && staticPageFragment.isVisible()){
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragment.getClass().getName())
+//                .addToBackStack(fragTag)
                 .commit();
 
+    }
     }
 
 //    searchOnClick
@@ -207,18 +219,30 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        //close drawer if opened:
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
-        Fragment myFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
+        Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
+        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag("staticPageTag");
 
+        //close drawer if opened:
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
         }
         //returning from place fragment restarts this activity, because viewPager layout needs to restart.
-        else if (myFragment != null && myFragment.isVisible()) {
+        else if (placeFragment != null && placeFragment.isVisible()) {
             startActivity(new Intent(this, getClass()));
             finish();
-        } else {
+        }
+
+        //might be useless...
+        else if (staticPageFragment != null && staticPageFragment.isVisible()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(staticPageFragment)
+//                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
+
+        }
+        else {
             super.onBackPressed();
         }
     }

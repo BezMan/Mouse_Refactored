@@ -12,6 +12,7 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
+    private String MyFragTag;
 
     private static App _instance;
 
@@ -78,4 +79,13 @@ public class App extends Application {
     public void set_boneIdTitle(String boneIdTitle) {
         _boneIdTitle = boneIdTitle;
     }
+
+    public String getMyFragTag() {
+        return MyFragTag;
+    }
+
+    public void setMyFragTag(String myFragTag) {
+        MyFragTag = myFragTag;
+    }
+
 }
