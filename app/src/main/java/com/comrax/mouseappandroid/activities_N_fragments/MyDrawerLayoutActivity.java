@@ -134,75 +134,41 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
     public void onNavDrawerItemClick(int mPosition) {
-//        DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
+        DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
 //        Toast.makeText(this, "" + tempValues.getBtnImage() + " \n" + mPosition + " \n", Toast.LENGTH_LONG).show();
-
 
         if (mPosition == 0) {
             Intent cityIntent = new Intent(this, MainListActivity.class);
             cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(cityIntent);
 
-        } else if (mPosition == 1) {
-        } else if (mPosition == 2) {
-        } else if (mPosition == 3) {
-        } else if (mPosition == 4) {
+        }
+        else if (mPosition == 1) {
+        }
+        else if (mPosition == 2) {
+        }
+        else if (mPosition == 3) {
+        }
+        else {
             for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
-                JSONObject jsonObject = null;
                 try {
-                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
-
-                    if (jsonObject.getString("id").equals("3")) {
-                        nextActivity(jsonObject);
+                    JSONObject jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
+                    if ( (mPosition == 4 &&  jsonObject.getString("id").equals("3")) ||  (mPosition == 5 &&  jsonObject.getString("id").equals("2")) ||  (mPosition == 6 &&  jsonObject.getString("id").equals("1")) )  {
+                        nextActivity(jsonObject, tempValues.getBtnTitle());
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        } else if (mPosition == 5) {
-            for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
-
-                    if (jsonObject.getString("id").equals("2")) {
-                        nextActivity(jsonObject);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else if (mPosition == 6) {
-            for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
-
-                    if (jsonObject.getString("id").equals("1")) {
-                        nextActivity(jsonObject);
-                    }
-                } catch (JSONException e) {
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
-//
-//        //finish any list activity (2-6), which isn't the initial list
-////        Intent selectionIntent = getIntent();
-////        int selectPos = selectionIntent.getIntExtra("NavSelect", -1);
-////        if (selectPos != -1)
-////            finish();
-//
-//        mDrawerLayout.closeDrawers();
-//
-//
-//    }
-
+        mDrawerLayout.closeDrawers();
     }
 
-    private void nextActivity(JSONObject jsonObject) {
+    private void nextActivity(JSONObject jsonObject, String barTitle) {
         Intent staticPageIntent = new Intent(this, StaticPageActivity.class);
         staticPageIntent.putExtra("data", jsonObject.toString());
+        staticPageIntent.putExtra("barTitle", barTitle);
         startActivity(staticPageIntent);
 
     }
