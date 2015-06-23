@@ -18,6 +18,9 @@ import com.comrax.mouseappandroid.model.CustomGlobalNavDrawerAdapter;
 import com.comrax.mouseappandroid.model.DrawerModel;
 import com.comrax.mouseappandroid.model.GlobalVars;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -44,7 +47,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         setNavDrawerData();
 
 
-
     }
 
     private void setClickableIcons() {
@@ -65,7 +67,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     public void setNavDrawerData() {
@@ -124,7 +125,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
 
-
     private void openCloseNavDrawer() {
         if (!mDrawerLayout.isDrawerOpen(GravityCompat.END))
             mDrawerLayout.openDrawer(GravityCompat.START);
@@ -137,26 +137,55 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 //        DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
 //        Toast.makeText(this, "" + tempValues.getBtnImage() + " \n" + mPosition + " \n", Toast.LENGTH_LONG).show();
 
-        Intent cityIntent = new Intent(this, MainListActivity.class);
-        cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(cityIntent);
 
+        if (mPosition == 0) {
+            Intent cityIntent = new Intent(this, MainListActivity.class);
+            cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(cityIntent);
 
-//        cityIntent.putExtra("NavSelect", mPosition);
-//        cityIntent.putExtra("NavTitle", tempValues.getBtnTitle());
+        } else if (mPosition == 1) {
+        } else if (mPosition == 2) {
+        } else if (mPosition == 3) {
+        } else if (mPosition == 4) {
+            for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
 
-//        if (mPosition == 0) {
-//            search();
-//        } else if (mPosition == 1) {
-//            showFavorites();
-////        } else if (mPosition >= 2 && mPosition <= 6) {
-//        } else if (mPosition == 7) {
-//            contactUs();
-//        } else if (mPosition == 8) {
-//            _getHelpData();
-//        } else if (mPosition == 9) {
-//            logout();
-//        }
+                    if (jsonObject.getString("id").equals("3")) {
+                        nextActivity(jsonObject);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (mPosition == 5) {
+            for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
+
+                    if (jsonObject.getString("id").equals("2")) {
+                        nextActivity(jsonObject);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (mPosition == 6) {
+            for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
+
+                    if (jsonObject.getString("id").equals("1")) {
+                        nextActivity(jsonObject);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 //
 //        //finish any list activity (2-6), which isn't the initial list
 ////        Intent selectionIntent = getIntent();
@@ -168,29 +197,20 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 //
 //
 //    }
-//
-//
-//    private void search() {
-//    }
-//
-//    private void showFavorites() {
-//    }
-//
-//    private void contactUs() {
-//    }
-//
-//    private void _getHelpData() {
-//    }
-//
-//    private void logout() {
-//    }
+
+    }
+
+    private void nextActivity(JSONObject jsonObject) {
+        Intent staticPageIntent = new Intent(this, StaticPageActivity.class);
+        staticPageIntent.putExtra("data", jsonObject.toString());
+        startActivity(staticPageIntent);
 
     }
 
 
 //    searchOnClick
 
-    public void searchOnClick(View view){
+    public void searchOnClick(View view) {
         Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_SHORT).show();
 
     }
@@ -210,8 +230,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         else if (myFragment != null && myFragment.isVisible()) {
             startActivity(new Intent(this, getClass()));
             finish();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }

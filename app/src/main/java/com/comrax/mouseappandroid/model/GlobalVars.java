@@ -1,5 +1,7 @@
 package com.comrax.mouseappandroid.model;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 /**
@@ -17,4 +19,6 @@ public class GlobalVars {
 
 
     public static ArrayList<InitDataModel> initDataModelArrayList;
+
+    public static JSONArray staticPagesArray;
 }

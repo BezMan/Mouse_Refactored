@@ -44,23 +44,6 @@ public class HelperMethods {
     }
 
 
-    public static String loadStringFromJsonFile(String FILENAME) {
-        File yourFile = new File(FILENAME);
-        String jsonStr = null;
-        try {
-            FileInputStream stream = new FileInputStream(yourFile);
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            jsonStr = Charset.defaultCharset().decode(bb).toString();
-            stream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return jsonStr;
-    }
-
 
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
         ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)));

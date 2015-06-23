@@ -1,11 +1,8 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -20,11 +17,7 @@ import com.comrax.mouseappandroid.database.DBTools;
 public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     TextView tvTitle;
-
     Cursor cursor;
-
-    private DrawerLayout mDrawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,6 +35,10 @@
             android:name=".activities_N_fragments.Open_Details_header_N_list"
             android:label="@string/title_activity_detail_city" >
         </activity>
+        <activity
+            android:name=".activities_N_fragments.StaticPageActivity"
+            android:label="@string/title_activity_detail_city" >
+        </activity>
     </application>
 
 </manifest>

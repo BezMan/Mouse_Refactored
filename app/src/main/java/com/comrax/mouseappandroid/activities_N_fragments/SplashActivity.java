@@ -91,12 +91,12 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             //Do anything with response..
-            setInitCitiesData(result);
+            saveInitCitiesData(result);
         }
     }
 
 
-    public void setInitCitiesData(String result) {
+    public void saveInitCitiesData(String result) {
 
         try {
             JSONObject jsonObject = new JSONObject(result);

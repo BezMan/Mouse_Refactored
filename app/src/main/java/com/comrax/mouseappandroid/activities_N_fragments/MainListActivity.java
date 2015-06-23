@@ -76,6 +76,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
         initVarsAndHeaders();
 
+        saveStaticPages(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/staticPages.json"));
+
         setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
         setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
 
@@ -85,6 +87,19 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         gridView.setAdapter(citiesAdapter);
 
     }
+
+
+    private void saveStaticPages(JSONObject jsonObject) {
+        try {
+            GlobalVars.staticPagesArray = jsonObject.getJSONArray("pages");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     private void addDummyViews() {
 
