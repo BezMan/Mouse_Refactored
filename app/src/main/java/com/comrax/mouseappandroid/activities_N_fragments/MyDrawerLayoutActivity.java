@@ -155,6 +155,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                     JSONObject jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
                     if ( (mPosition == 4 &&  jsonObject.getString("id").equals("3")) ||  (mPosition == 5 &&  jsonObject.getString("id").equals("2")) ||  (mPosition == 6 &&  jsonObject.getString("id").equals("1")) )  {
                         nextActivity(jsonObject, tempValues.getBtnTitle());
+                        break;
                     }
                 }
                 catch (JSONException e) {
@@ -166,13 +167,34 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
     private void nextActivity(JSONObject jsonObject, String barTitle) {
-        Intent staticPageIntent = new Intent(this, StaticPageActivity.class);
-        staticPageIntent.putExtra("data", jsonObject.toString());
-        staticPageIntent.putExtra("barTitle", barTitle);
-        startActivity(staticPageIntent);
+//        Intent staticPageIntent = new Intent(this, StaticPageActivity.class);
+//        staticPageIntent.putExtra("data", jsonObject.toString());
+//        staticPageIntent.putExtra("barTitle", barTitle);
+//        startActivity(staticPageIntent);
+//        if(this instanceof StaticPageActivity){
+//            finish();
+//        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("data", jsonObject.toString());
+        bundle.putString("barTitle", barTitle);
+
+        Fragment placeFragment = new StaticPageFragment();
+
+        placeFragment.setArguments(bundle);
+        loadFragment(placeFragment, "staticPageTag");
 
     }
 
+    public void loadFragment(final Fragment fragment, String fragTag) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, fragment, fragTag)
+//                .addToBackStack(fragment.getClass().getName())
+                .commit();
+
+    }
 
 //    searchOnClick
 

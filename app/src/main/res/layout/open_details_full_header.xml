@@ -13,7 +13,7 @@
         <include layout="@layout/color_header_title" />
 
         <FrameLayout
-            android:id="@+id/layout_container"
+            android:id="@+id/below_bone_title_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

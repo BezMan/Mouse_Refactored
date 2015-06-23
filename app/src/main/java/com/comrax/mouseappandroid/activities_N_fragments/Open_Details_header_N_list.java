@@ -39,7 +39,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
+                .replace(R.id.below_bone_title_container, fragment, fragTag)
 //                .addToBackStack(fragment.getClass().getName())
                 .commit();
 
