@@ -144,23 +144,18 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(cityIntent);
 
-        }
-        else if (mPosition == 1) {
-        }
-        else if (mPosition == 2) {
-        }
-        else if (mPosition == 3) {
-        }
-        else {
+        } else if (mPosition == 1) {
+        } else if (mPosition == 2) {
+        } else if (mPosition == 3) {
+        } else {
             for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
                 try {
                     JSONObject jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
-                    if ( (mPosition == 4 &&  jsonObject.getString("id").equals("3")) ||  (mPosition == 5 &&  jsonObject.getString("id").equals("2")) ||  (mPosition == 6 &&  jsonObject.getString("id").equals("1")) )  {
+                    if ((mPosition == 4 && jsonObject.getString("id").equals("3")) || (mPosition == 5 && jsonObject.getString("id").equals("2")) || (mPosition == 6 && jsonObject.getString("id").equals("1"))) {
                         nextActivity(jsonObject, tempValues.getBtnTitle());
                         break;
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -192,31 +187,28 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     public void loadFragment(final Fragment fragment, String fragTag) {
 
 
-        if(!App.getInstance().isInStaticPage()  && App.getInstance().isInFragActivity()){
+        if (!App.getInstance().isInStaticPage() && App.getInstance().isInFragActivity()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.below_bone_title_container, fragment, fragTag)
-                .addToBackStack(fragTag)
+                    .addToBackStack(fragTag)
                     .commit();
 
-        }
-        else if(!App.getInstance().isInStaticPage()){
+        } else if (!App.getInstance().isInStaticPage()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
+                    .addToBackStack(fragTag)
                     .commit();
 
-        }
-        else if(App.getInstance().isInFragActivity()){  //inside static page:
+        } else if (App.getInstance().isInFragActivity()) {  //inside static page:
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.below_bone_title_container, fragment, fragTag)
 //                .addToBackStack(fragTag)
                     .commit();
 
-        }
-        else{   //inside static page && not inside fragment:
+        } else {   //inside static page && not inside fragment:
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
@@ -225,9 +217,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
         }
 
-        if(fragTag.equals(PAGE_TAG))
+        if (fragTag.equals(PAGE_TAG))
             App.getInstance().setInStaticPage(true);
-
 
 
     }
@@ -267,12 +258,13 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 //
 //        }
         else {
-//                        getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .remove(staticPageFragment)
-////                    .addToBackStack(fragment.getClass().getName())
-//                    .commit();
-
+            if (staticPageFragment != null && staticPageFragment.isVisible()) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(staticPageFragment)
+//                    .addToBackStack(fragment.getClass().getName())
+                        .commit();
+            }
             App.getInstance().setInStaticPage(false);
             App.getInstance().setInFragActivity(false);
 

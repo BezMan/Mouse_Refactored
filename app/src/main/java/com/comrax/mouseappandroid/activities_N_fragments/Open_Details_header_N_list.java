@@ -24,8 +24,6 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-App.getInstance().setInFragActivity(true);
-
         initLoadFragment(new SimpleStikkyFragment(), "ListTag");
 
 
@@ -35,10 +33,18 @@ App.getInstance().setInFragActivity(true);
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().setInFragActivity(true);
+    }
+
+
+
     private void initLoadFragment(final Fragment fragment, String fragTag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.below_bone_title_container, fragment, fragTag)
+                .replace(R.id.below_bone_title_container, fragment, fragTag)
 //                .addToBackStack(fragTag)
                 .commit();
 
