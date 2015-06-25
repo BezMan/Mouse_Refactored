@@ -13,6 +13,7 @@ public class App extends Application {
     private String _cityFolderName;
     private String _boneIdTitle;
     private boolean MyFragVal=false;
+    private boolean InFragActivity=false;
 
     private static App _instance;
 
@@ -80,12 +81,22 @@ public class App extends Application {
         _boneIdTitle = boneIdTitle;
     }
 
-    public boolean isMyFragVal() {
+    public boolean isInStaticPage() {
         return MyFragVal;
     }
 
-    public void setMyFragVal(boolean myFragVal) {
+    public void setInStaticPage(boolean myFragVal) {
         MyFragVal = myFragVal;
     }
+
+
+    public boolean isInFragActivity() {
+        return InFragActivity;
+    }
+
+    public void setInFragActivity(boolean inFragActivity) {
+        InFragActivity = inFragActivity;
+    }
+
 
 }

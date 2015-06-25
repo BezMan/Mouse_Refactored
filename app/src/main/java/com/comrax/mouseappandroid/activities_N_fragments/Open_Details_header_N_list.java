@@ -19,14 +19,15 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     TextView tvTitle;
     Cursor cursor;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+App.getInstance().setInFragActivity(true);
 
-        if (savedInstanceState == null) {
-            loadFragment(new SimpleStikkyFragment(), "simpleTag");
-        }
+        initLoadFragment(new SimpleStikkyFragment(), "ListTag");
+
 
         tvTitle = (TextView) findViewById(R.id.header_title);
         tvTitle.setText(App.getInstance().get_boneIdTitle());
@@ -34,22 +35,31 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     }
 
-
-    public void loadFragment(final Fragment fragment, String fragTag) {
-
+    private void initLoadFragment(final Fragment fragment, String fragTag) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.below_bone_title_container, fragment, fragTag)
-//                .addToBackStack(fragment.getClass().getName())
+//                .addToBackStack(fragTag)
                 .commit();
 
     }
+
+
+//    public void loadFragment(final Fragment fragment, String fragTag) {
+//
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.below_bone_title_container, fragment, fragTag)
+////                .addToBackStack(fragment.getClass().getName())
+//                .commit();
+//
+//    }
 
     public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.below_bone_title_container, fragment, fragTag)
+                .replace(R.id.below_bone_title_container, fragment, fragTag)
                 .addToBackStack(fragTag)
                 .commit();
 
@@ -88,6 +98,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
         placeFragment.setArguments(bundle);
         loadFragmentWithBackStack(placeFragment, "placeTag");
     }
+
 
 
 }

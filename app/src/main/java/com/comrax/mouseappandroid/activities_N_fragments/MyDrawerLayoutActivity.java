@@ -184,30 +184,50 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         Fragment staticPageFragment = new StaticPageFragment();
 
         staticPageFragment.setArguments(bundle);
-        PAGE_TAG = "staticPageTag"+barTitle;
+        PAGE_TAG = "staticPageTag";
         loadFragment(staticPageFragment, PAGE_TAG);
 
     }
 
     public void loadFragment(final Fragment fragment, String fragTag) {
-        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(fragTag);
 
-    if(!App.getInstance().isMyFragVal() ) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
-                .commit();
-        App.getInstance().setMyFragVal(true);
-    }
-        else {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
-                .commit();
+
+        if(!App.getInstance().isInStaticPage()  && App.getInstance().isInFragActivity()){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.below_bone_title_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                    .commit();
 
         }
+        else if(!App.getInstance().isInStaticPage()){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layout_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                    .commit();
+
+        }
+        else if(App.getInstance().isInFragActivity()){  //inside static page:
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.below_bone_title_container, fragment, fragTag)
+//                .addToBackStack(fragTag)
+                    .commit();
+
+        }
+        else{   //inside static page && not inside fragment:
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layout_container, fragment, fragTag)
+//                .addToBackStack(fragTag)
+                    .commit();
+
+        }
+
+        if(fragTag.equals(PAGE_TAG))
+            App.getInstance().setInStaticPage(true);
+
 
 
     }
@@ -238,17 +258,26 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         }
 
         //might be useless...
-        else if (staticPageFragment != null && staticPageFragment.isVisible()) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(staticPageFragment)
-//                    .addToBackStack(fragment.getClass().getName())
-                    .commit();
-
-        }
+//        else if (staticPageFragment != null && staticPageFragment.isVisible()) {
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .remove(staticPageFragment)
+////                    .addToBackStack(fragment.getClass().getName())
+//                    .commit();
+//
+//        }
         else {
+//                        getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .remove(staticPageFragment)
+////                    .addToBackStack(fragment.getClass().getName())
+//                    .commit();
+
+            App.getInstance().setInStaticPage(false);
+            App.getInstance().setInFragActivity(false);
+
             super.onBackPressed();
-            App.getInstance().setMyFragVal(false);
+
         }
     }
 }
