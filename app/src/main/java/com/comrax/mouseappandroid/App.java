@@ -12,6 +12,9 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
+
+    private String AppBarTitle;
+
     private boolean MyFragVal=false;
     private boolean InFragActivity=false;
 
@@ -97,6 +100,15 @@ public class App extends Application {
     public void setInFragActivity(boolean inFragActivity) {
         InFragActivity = inFragActivity;
     }
+
+    public String getAppBarTitle() {
+        return AppBarTitle;
+    }
+
+    public void setAppBarTitle(String appBarTitle) {
+        AppBarTitle = appBarTitle;
+    }
+
 
 
 }

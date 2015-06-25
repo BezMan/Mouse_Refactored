@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -177,19 +178,9 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         }
 
-        else if (mPosition == infoItemPosition + 1) {   //pos 7
-
-        }
-
-        else if (mPosition == infoItemPosition + 2) {   //pos 8
-
-        }
-
-        else if (mPosition == infoItemPosition + 3) {   //pos 9
-
-        }
-
-        else if (mPosition == infoItemPosition + 4) {   //pos 10
+        else if (mPosition > infoItemPosition) {   //pos 7
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainListActivity.BannersArray.get(mPosition-infoItemPosition-1).getUrlAndroid()));
+            startActivity(browserIntent);
 
         }
 

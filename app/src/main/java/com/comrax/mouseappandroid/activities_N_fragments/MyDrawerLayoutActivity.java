@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.App;
@@ -139,6 +140,11 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
 //        Toast.makeText(this, "" + tempValues.getBtnImage() + " \n" + mPosition + " \n", Toast.LENGTH_LONG).show();
 
+
+        TextView barTitleTextView = (TextView) findViewById(R.id.title_text);
+        App.getInstance().setAppBarTitle(barTitleTextView.getText().toString());
+
+
         if (mPosition == 0) {
             Intent cityIntent = new Intent(this, MainListActivity.class);
             cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -265,6 +271,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 //                    .addToBackStack(fragment.getClass().getName())
                         .commit();
             }
+
+            TextView barTitleTextView = (TextView)findViewById(R.id.title_text);
+            barTitleTextView.setText(App.getInstance().getAppBarTitle());
+
             App.getInstance().setInStaticPage(false);
             App.getInstance().setInFragActivity(false);
 
