@@ -151,6 +151,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             startActivity(cityIntent);
 
         } else if (mPosition == 1) {
+            startActivity(new Intent(this, MainActivity.class));
+
         } else if (mPosition == 2) {
         } else if (mPosition == 3) {
         } else {
