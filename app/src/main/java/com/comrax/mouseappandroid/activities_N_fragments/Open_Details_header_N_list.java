@@ -24,6 +24,11 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initLoadFragment(new SimpleStikkyFragment(), "ListTag");
+
+
+        tvTitle = (TextView) findViewById(R.id.header_title);
+        tvTitle.setText(App.getInstance().get_boneIdTitle());
 
 
     }
@@ -31,13 +36,6 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        initLoadFragment(new SimpleStikkyFragment(), "ListTag");
-
-
-        tvTitle = (TextView) findViewById(R.id.header_title);
-        tvTitle.setText(App.getInstance().get_boneIdTitle());
-
         App.getInstance().setInFragActivity(true);
     }
 

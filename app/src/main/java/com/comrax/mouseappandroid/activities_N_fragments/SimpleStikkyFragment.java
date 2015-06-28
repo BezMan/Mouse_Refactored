@@ -43,7 +43,7 @@ public class SimpleStikkyFragment extends Fragment {
     double lon, lat;
 
     CustomAdapter adapter;
-    public ArrayList<ListModel> customListViewValuesArr = new ArrayList<>();
+    public ArrayList<ListModel> customListViewValuesArr;
 
     private RadioGroup radioGroup;
 
@@ -92,6 +92,8 @@ public class SimpleStikkyFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        customListViewValuesArr = new ArrayList<>();
+
         radioGroup = (RadioGroup) getActivity().findViewById(R.id.myRadioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -135,7 +137,7 @@ public class SimpleStikkyFragment extends Fragment {
 
     private void addPagerData(JSONObject jsonData) {
         List<Fragment> fragments = getFragmentsFromJson(jsonData);
-        pageAdapter = new MyPageAdapter(getFragmentManager(), fragments);
+        pageAdapter = new MyPageAdapter(getChildFragmentManager(), fragments);
 
         pager.setAdapter(pageAdapter);
 
