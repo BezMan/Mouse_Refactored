@@ -89,6 +89,14 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.getInstance().setInFragActivity(false);
+    }
+
+
     private void saveStaticPages(JSONObject jsonObject) {
         try {
             GlobalVars.staticPagesArray = jsonObject.getJSONArray("pages");

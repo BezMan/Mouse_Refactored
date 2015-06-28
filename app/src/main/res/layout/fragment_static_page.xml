@@ -4,6 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/below_bone_title_container"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <!--you can put your existing views of your current xml here, so yes your entire xml is now inside this FrameLayout -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,5 +31,7 @@
             android:text="mainTxt"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
+
+    </FrameLayout>
 
 </ScrollView>
