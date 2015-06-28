@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -193,7 +194,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
     public void loadFragment(final Fragment fragment, String fragTag) {
-
+        Log.wtf("", String.format("%b",App.getInstance().isInFragActivity()));
 
         if (!App.getInstance().isInStaticPage() && App.getInstance().isInFragActivity()) {
             getSupportFragmentManager()
@@ -278,7 +279,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             barTitleTextView.setText(App.getInstance().getAppBarTitle());
 
             App.getInstance().setInStaticPage(false);
-            App.getInstance().setInFragActivity(false);
+            //App.getInstance().setInFragActivity(false);
 
             super.onBackPressed();
 
