@@ -81,15 +81,6 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        App.getInstance().setInFragActivity(false);
-    }
-
-
-
-
     private void setExpandableList() {
 
         items = new ArrayList<GroupItem>();

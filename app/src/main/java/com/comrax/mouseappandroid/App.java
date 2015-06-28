@@ -93,14 +93,6 @@ public class App extends Application {
     }
 
 
-    public boolean isInFragActivity() {
-        return InFragActivity;
-    }
-
-    public void setInFragActivity(boolean inFragActivity) {
-        InFragActivity = inFragActivity;
-    }
-
     public String getAppBarTitle() {
         return AppBarTitle;
     }

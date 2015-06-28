@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -194,30 +193,15 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     }
 
     public void loadFragment(final Fragment fragment, String fragTag) {
-        Log.wtf("", String.format("%b",App.getInstance().isInFragActivity()));
 
-        if (!App.getInstance().isInStaticPage() && App.getInstance().isInFragActivity()) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.below_bone_title_container, fragment, fragTag)
-                    .addToBackStack(fragTag)
-                    .commit();
-
-        } else if (!App.getInstance().isInStaticPage()) {
+        if (!App.getInstance().isInStaticPage()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
                     .addToBackStack(fragTag)
                     .commit();
 
-        } else if (App.getInstance().isInFragActivity()) {  //inside static page:
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.below_bone_title_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
-                    .commit();
-
-        } else {   //inside static page && not inside fragment:
+        } else {   //inside static page :
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)

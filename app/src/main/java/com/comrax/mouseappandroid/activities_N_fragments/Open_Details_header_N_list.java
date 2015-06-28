@@ -33,38 +33,23 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        App.getInstance().setInFragActivity(true);
-    }
 
 
     private void initLoadFragment(final Fragment fragment, String fragTag) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.below_bone_title_container, fragment, fragTag)
+                .replace(R.id.layout_container, fragment, fragTag)
 //                .addToBackStack(fragTag)
                 .commit();
 
     }
 
 
-//    public void loadFragment(final Fragment fragment, String fragTag) {
-//
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.below_bone_title_container, fragment, fragTag)
-////                .addToBackStack(fragment.getClass().getName())
-//                .commit();
-//
-//    }
-
     public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.below_bone_title_container, fragment, fragTag)
+                .replace(R.id.layout_container, fragment, fragTag)
                 .addToBackStack(fragTag)
                 .commit();
 
