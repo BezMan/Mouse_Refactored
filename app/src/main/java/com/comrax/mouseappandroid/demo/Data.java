@@ -59,15 +59,27 @@ public class Data {
 				new Composer("Frederick the Great", "1712�1786"),
 				new Composer("John Stanley", "1712�1786"),
 				new Composer("Luise Adelgunda Gottsched", "1713�1762"),
-				new Composer("Johann Ludwig Krebs", "1713�1780"),
-				new Composer("Carl Philipp Emanuel Bach", "1714�1788"),
-				new Composer("Christoph Willibald Gluck", "1714�1787"),
-				new Composer("Gottfried August Homilius", "1714�1785"),
+
 			},
 			{
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
 				new Composer("Ludwig van Beethoven", "1770-1827"),
 				new Composer("Fernando Sor", "1778-1839"),
 				new Composer("Johann Strauss I", "1804-1849"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("Johann Ludwig Krebs", "1713�1780"),
+					new Composer("Carl Philipp Emanuel Bach", "1714�1788"),
+					new Composer("Christoph Willibald Gluck", "1714�1787"),
+					new Composer("Gottfried August Homilius", "1714�1785"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+					new Composer("טקסט ראשי", "טקסט משני"),
+
+
 			},
 		};
 		return new Pair<String, List<Composer>>(titles[index], Arrays.asList(composerss[index]));
