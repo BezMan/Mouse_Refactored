@@ -32,8 +32,8 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.name + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId + " TEXT, "
-                + DBConstants.rating + " TEXT, "
-                + DBConstants.ratingCount + " TEXT, "
+                + DBConstants.rating + " REAL, "
+                + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.responses + " TEXT, "
                 + DBConstants.title + " TEXT, "
                 + DBConstants.url + " TEXT, "
@@ -54,7 +54,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.fullDescriptionBody + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
                 + DBConstants.name + " TEXT, "
-                + DBConstants.rating + " INTEGER, "
+                + DBConstants.rating + " REAL, "
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.urlString + " TEXT, "
@@ -80,23 +80,33 @@ public class DBTools extends SQLiteOpenHelper {
                 + ");";
 
 
-        String CREATE_PLACE_FAVORITE_TABLE = "CREATE TABLE "
-                + DBConstants.PLACE_FAVORITE_TABLE_NAME + " ("
-                + DBConstants.address + " TEXT, "
-                + DBConstants.categoryId + " TEXT, "
-                + DBConstants.description + " TEXT, "
-                + DBConstants.index + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + DBConstants.name + " TEXT, "
-                + DBConstants.phone + " TEXT, "
-                + DBConstants.price + " INTEGER, "
-                + DBConstants.rating + " INTEGER, "
+        String CREATE_FAVORITE_TABLE = "CREATE TABLE "
+                + DBConstants.FAVORITE_TABLE_NAME + " ("
+
+                + DBConstants.cityId + " TEXT, "
+                + DBConstants.boneId + " TEXT, "
+                + DBConstants.objId+ " TEXT, "
+                + DBConstants.categoryName + " TEXT, "
+
+                + DBConstants.title + " TEXT, "
                 + DBConstants.type + " TEXT, "
-                + DBConstants.urlString + " TEXT "
+                + DBConstants.name + " TEXT, "
+                + DBConstants.hebrewName + " TEXT, "
+
+                + DBConstants.rating + " REAL, "
+                + DBConstants.description + " TEXT, "
+                + DBConstants.address + " TEXT, "
+                + DBConstants.phone + " TEXT, "
+                + DBConstants.activityHours + " TEXT, "
+                + DBConstants.publicTransportation + " TEXT, "
+                + DBConstants.responses + " TEXT, "
+
+                + DBConstants.imagePath + " TEXT "
                 + ");";
 
         try {
             db.execSQL(CREATE_CITY_TABLE);
-            db.execSQL(CREATE_PLACE_FAVORITE_TABLE);
+            db.execSQL(CREATE_FAVORITE_TABLE);
             db.execSQL(CREATE_PLACE_TABLE);
             db.execSQL(CREATE_ARTICLE_TABLE);
 
@@ -111,7 +121,7 @@ public class DBTools extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBConstants.ARTICLE_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBConstants.CITY_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DBConstants.PLACE_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBConstants.PLACE_FAVORITE_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DBConstants.FAVORITE_TABLE_NAME);
 
         onCreate(db);
     }

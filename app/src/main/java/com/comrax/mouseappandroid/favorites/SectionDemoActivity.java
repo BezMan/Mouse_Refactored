@@ -1,5 +1,6 @@
 package com.comrax.mouseappandroid.favorites;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AmazingAdapter;
 import com.comrax.mouseappandroid.helpers.AmazingListView;
@@ -41,7 +44,6 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
     class SectionComposerAdapter extends AmazingAdapter {
         List<Pair<String, List<FavoritesModel>>> all = getAllData();
-//        Cursor cursor = dbTools.getFavorites(DBConstants.PLACE_FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.boneId, App.getInstance().get_boneId());
 
 
         @Override
@@ -88,18 +90,18 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
         //like getView of adapter//
         @Override
         public View getAmazingView(int position, View convertView, ViewGroup parent) {
-            View res = convertView;
-            if (res == null)
-                res = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
+            View view = convertView;
+            if (view == null)
+                view = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
 
-            TextView lName = (TextView) res.findViewById(R.id.lName);
-            TextView lYear = (TextView) res.findViewById(R.id.lYear);
+            TextView titleTxtView = (TextView) view.findViewById(R.id.favorite_title);
+            TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
 
             FavoritesModel favoritesModel = getItem(position);
-            lName.setText(favoritesModel.name);
-            lYear.setText(favoritesModel.year);
+            titleTxtView.setText(favoritesModel.title);
+            typeTxtView.setText(favoritesModel.type);
 
-            return res;
+            return view;
         }
 
         @Override
@@ -148,27 +150,28 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
     }
 
 
-    public static List<Pair<String, List<FavoritesModel>>> getAllData() {
-        List<Pair<String, List<FavoritesModel>>> res = new ArrayList<Pair<String, List<FavoritesModel>>>();
+    public List<Pair<String, List<FavoritesModel>>> getAllData() {
+        List<Pair<String, List<FavoritesModel>>> pairList = new ArrayList<Pair<String, List<FavoritesModel>>>();
 
         for (int i = 0; i < 5; i++) {
-            res.add(getOneSection(i));
+            pairList.add(getOneSection(i));
         }
-        return res;
+        return pairList;
     }
 
 
-    public static Pair<String, List<FavoritesModel>> getOneSection(int index) {
+    public Pair<String, List<FavoritesModel>> getOneSection(int index) {
 //		String[] titles = {"מלונות", "קניות", "מסעדות וחיי לילה", "אטרקציות", "כתבות"};
         String[] titles = new String[GlobalVars.detailMenuItems.size()];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
-//        Cursor cursor = new DBTools(null).getFavorites(DBConstants.PLACE_FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.boneId, App.getInstance().get_boneId() );
-        FavoritesModel[][] composerses = {
+        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.categoryName, titles[index]  );
+//need column for bone name//
+        FavoritesModel[][] allItems = {
                 {
-                        new FavoritesModel("Thomas Tallis", "1510-1585"),
-                        new FavoritesModel("Josquin Des Prez", "1440-1521"),
-                        new FavoritesModel("Pierre de La Rue", "1460-1518"),
+                        new FavoritesModel(cursor),
+//                        new FavoritesModel("Josquin Des Prez", "1440-1521"),
+//                        new FavoritesModel("Pierre de La Rue", "1460-1518"),
                 },
                 {
                         new FavoritesModel("Johann Sebastian Bach", "1685-1750"),
@@ -211,7 +214,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
                 },
         };
-        return new Pair<String, List<FavoritesModel>>(titles[index], Arrays.asList(composerses[index]));
+        return new Pair<String, List<FavoritesModel>>(titles[index], Arrays.asList(allItems[index]));
     }
 
 }

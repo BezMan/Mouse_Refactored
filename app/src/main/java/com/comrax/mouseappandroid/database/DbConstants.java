@@ -11,7 +11,7 @@ public class DBConstants {
             ARTICLE_TABLE_NAME = "article",
             CITY_TABLE_NAME = "city",
             PLACE_TABLE_NAME = "place",
-            PLACE_FAVORITE_TABLE_NAME = "favorites",
+            FAVORITE_TABLE_NAME = "favorites",
 
     boneId = "boneId",
             cityId = "cityId",
@@ -42,7 +42,7 @@ public class DBConstants {
             type = "type",
             urlString = "url",
             userComments = "responses",
-            categoryId = "categoryId",
+            categoryName = "categoryName",
             phone = "phone",
             price = "priceDegree",
             activityHours = "activityHours",

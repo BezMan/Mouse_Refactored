@@ -39,7 +39,7 @@ import java.util.List;
 public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     MyPageAdapter pageAdapter;
-    public String CITY_FOLDER_NAME, CITY_UPDATE_DATE, cityId;
+    public String CITY_FOLDER_PATH, CITY_UPDATE_DATE, cityId;
     int infoItemPosition;
     DBTools dbTools = new DBTools(this);
 
@@ -87,8 +87,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
         items = new ArrayList<GroupItem>();
 
-        JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_menu.json");
-        JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_serviceMenu.json");
+        JSONObject jsonMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_PATH + "/" + cityId + "_menu.json");
+        JSONObject jsonServiceMenuData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_PATH + "/" + cityId + "_serviceMenu.json");
         int i = 0, j = 0, k = 0, m = 0;
         try {
             JSONArray menuArray = jsonMenuData.getJSONArray("menu");
@@ -214,11 +214,11 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
     private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
-        CITY_FOLDER_NAME = dataFileIntent.getStringExtra("cityFolderName");
-        App.getInstance().set_cityFolderName(CITY_FOLDER_NAME);
+        CITY_FOLDER_PATH = dataFileIntent.getStringExtra("cityFolderName");
+        App.getInstance().set_cityFolderName(CITY_FOLDER_PATH);
         CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
-        cityId = CITY_FOLDER_NAME.substring(CITY_FOLDER_NAME.length() - 4, CITY_FOLDER_NAME.length());
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_NAME + "/" + cityId + "_mainPageArticles.json");
+        cityId = CITY_FOLDER_PATH.substring(CITY_FOLDER_PATH.length() - 4, CITY_FOLDER_PATH.length());
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_PATH + "/" + cityId + "_mainPageArticles.json");
 
         addPagerData(jsonData);
 
@@ -250,7 +250,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                 String title = item.getString("name");
                 String description = item.getString("description");
                 String image = item.getString("image");
-                String folderName = CITY_FOLDER_NAME;
+                String folderName = CITY_FOLDER_PATH;
 
                 fList.add(MyFragment.newInstance(folderName, title, description, image));
             }
