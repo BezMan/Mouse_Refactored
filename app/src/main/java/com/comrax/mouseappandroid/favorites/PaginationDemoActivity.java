@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.demo;
+package com.comrax.mouseappandroid.favorites;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -22,10 +22,10 @@ public class PaginationDemoActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pagination_demo);
+		setContentView(R.layout.favorites_activity_pagination_demo);
 		
 		lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
-		lsComposer.setLoadingView(getLayoutInflater().inflate(R.layout.loading_view, null));
+		lsComposer.setLoadingView(getLayoutInflater().inflate(R.layout.favorites_loading_view, null));
 		lsComposer.setAdapter(adapter = new PaginationComposerAdapter());
 		
 		adapter.notifyMayHaveMorePages();
@@ -38,8 +38,8 @@ public class PaginationDemoActivity extends Activity {
 	}
 	
 	class PaginationComposerAdapter extends AmazingAdapter {
-		List<Composer> list = Data.getRows(1).second;
-		private AsyncTask<Integer, Void, Pair<Boolean, List<Composer>>> backgroundTask;
+		List<FavoritesModel> list = Data.getRows(1).second;
+		private AsyncTask<Integer, Void, Pair<Boolean, List<FavoritesModel>>> backgroundTask;
 
 		public void reset() {
 			if (backgroundTask != null) backgroundTask.cancel(false);
@@ -54,7 +54,7 @@ public class PaginationDemoActivity extends Activity {
 		}
 
 		@Override
-		public Composer getItem(int position) {
+		public FavoritesModel getItem(int position) {
 			return list.get(position);
 		}
 
@@ -71,16 +71,16 @@ public class PaginationDemoActivity extends Activity {
 				backgroundTask.cancel(false);
 			}
 			
-			backgroundTask = new AsyncTask<Integer, Void, Pair<Boolean, List<Composer>>>() {
+			backgroundTask = new AsyncTask<Integer, Void, Pair<Boolean, List<FavoritesModel>>>() {
 				@Override
-				protected Pair<Boolean, List<Composer>> doInBackground(Integer... params) {
+				protected Pair<Boolean, List<FavoritesModel>> doInBackground(Integer... params) {
 					int page = params[0];
 					
 					return Data.getRows(page);
 				}
 				
 				@Override
-				protected void onPostExecute(Pair<Boolean, List<Composer>> result) {
+				protected void onPostExecute(Pair<Boolean, List<FavoritesModel>> result) {
 					if (isCancelled()) return; 
 					
 					list.addAll(result.second);
@@ -104,7 +104,7 @@ public class PaginationDemoActivity extends Activity {
 		@Override
 		public View getAmazingView(int position, View convertView, ViewGroup parent) {
 			View res = convertView;
-			if (res == null) res = getLayoutInflater().inflate(R.layout.item_composer, null);
+			if (res == null) res = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
 			
 			// we don't have headers, so hide it
 			res.findViewById(R.id.header).setVisibility(View.GONE);
@@ -112,9 +112,9 @@ public class PaginationDemoActivity extends Activity {
 			TextView lName = (TextView) res.findViewById(R.id.lName);
 			TextView lYear = (TextView) res.findViewById(R.id.lYear);
 			
-			Composer composer = getItem(position);
-			lName.setText(composer.name);
-			lYear.setText(composer.year);
+			FavoritesModel favoritesModel = getItem(position);
+			lName.setText(favoritesModel.name);
+			lYear.setText(favoritesModel.year);
 			
 			return res;
 		}

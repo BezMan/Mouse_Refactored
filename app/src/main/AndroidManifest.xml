@@ -41,17 +41,17 @@
         </activity>
 
         <activity
-            android:name=".demo.AmazingMainActivity"
+            android:name=".favorites.FavoritesMainActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
 
         <activity
-            android:name=".demo.SectionDemoActivity"
+            android:name=".favorites.SectionDemoActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
 
         <activity
-            android:name=".demo.PaginationDemoActivity"
+            android:name=".favorites.PaginationDemoActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
 

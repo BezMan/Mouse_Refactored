@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.demo;
+package com.comrax.mouseappandroid.favorites;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,11 +7,11 @@ import android.view.View;
 
 import com.comrax.mouseappandroid.R;
 
-public class AmazingMainActivity extends Activity {
+public class FavoritesMainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.amazing_activity_main);
+		setContentView(R.layout.favorites_activity_main);
 	}
 	
 	public void bDemo1_click(View v) {

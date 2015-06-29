@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.App;
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.demo.AmazingMainActivity;
+import com.comrax.mouseappandroid.favorites.SectionDemoActivity;
 import com.comrax.mouseappandroid.model.CustomGlobalNavDrawerAdapter;
 import com.comrax.mouseappandroid.model.DrawerModel;
 import com.comrax.mouseappandroid.model.GlobalVars;
@@ -152,7 +152,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             startActivity(cityIntent);
 
         } else if (mPosition == 1) {
-            startActivity(new Intent(this, AmazingMainActivity.class));
+            startActivity(new Intent(this, SectionDemoActivity.class));
 
         } else if (mPosition == 2) {
         } else if (mPosition == 3) {

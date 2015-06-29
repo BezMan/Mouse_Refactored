@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/item_composer_header"
+        layout="@layout/favorites_item_composer_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
