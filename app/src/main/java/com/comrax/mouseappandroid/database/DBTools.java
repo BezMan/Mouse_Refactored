@@ -223,6 +223,45 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
+    public void insertFavorite(JSONObject item) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        try {
+            values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
+            values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
+            values.put(DBConstants.objId, item.getString(DBConstants.objId));
+            values.put(DBConstants.categoryName, item.getString(DBConstants.categoryName));
+
+//            values.put(DBConstants.description, item.getString(DBConstants.description));
+//            values.put(DBConstants.address, item.getString(DBConstants.address));
+//            values.put(DBConstants.phone, item.getString(DBConstants.phone));
+//            values.put(DBConstants.type, item.getString(DBConstants.type));
+//            values.put(DBConstants.rating, item.getString(DBConstants.rating));
+//            values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
+//
+//            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.urlContent);
+//            values.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
+//            values.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
+//
+//            values.put(DBConstants.image, jsonUrlContentFullPlace.getString(DBConstants.image));
+//            values.put(DBConstants.activityHours, jsonUrlContentFullPlace.getString(DBConstants.activityHours));
+//            values.put(DBConstants.publicTransportation, jsonUrlContentFullPlace.getString(DBConstants.publicTransportation));
+//            values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+        database.close();
+
+    }
+
+
+
+
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
         String sql = "SELECT " + colName + " FROM " + TableName + " WHERE " + colName + "=" + rowValue;

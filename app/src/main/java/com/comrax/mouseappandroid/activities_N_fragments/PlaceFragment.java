@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.database.DBConstants;
+import com.comrax.mouseappandroid.database.DBTools;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -33,6 +38,7 @@ public class PlaceFragment extends Fragment {
 
     RatingBar rating;
 
+    DBTools dbTools;
 
     public PlaceFragment() {
         // Required empty public constructor
@@ -50,6 +56,7 @@ public class PlaceFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        dbTools = new DBTools(getActivity());
         bundle = this.getArguments();
 
         setUpperData();
@@ -65,10 +72,12 @@ public class PlaceFragment extends Fragment {
 
     private void setUpperData() {
         String imagePath = bundle.getString("image", null);
-        String title = bundle.getString("title", null);
-        String hebTitle = bundle.getString("hebTitle", null);
+        final String name = bundle.getString("name", null);
+        final String hebName = bundle.getString("hebName", null);
         String description = bundle.getString("fullDescription", null);
         String address = bundle.getString("address", null);
+
+        final String type = bundle.getString("type", null);
 
         String fullDescription = new StringBuilder().append("<![CDATA[")
                 .append("<html><head><style>")
@@ -91,10 +100,10 @@ public class PlaceFragment extends Fragment {
         }
 
         TextView titleView = (TextView)getActivity().findViewById(R.id.detailed_place_english_title);
-        titleView.setText(title);
+        titleView.setText(name);
 
         TextView hebTitleView = (TextView)getActivity().findViewById(R.id.detailed_place_hebrew_title);
-        hebTitleView.setText(hebTitle);
+        hebTitleView.setText(hebName);
 
         TextView addressView = (TextView)getActivity().findViewById(R.id.detailed_place_address);
         addressView.setText(address);
@@ -111,6 +120,30 @@ public class PlaceFragment extends Fragment {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        Button favoritesBtn = (Button)getActivity().findViewById(R.id.detailed_place_prefs_button);
+        favoritesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put(DBConstants.cityId, App.getInstance().get_cityId());
+                    jsonObject.put(DBConstants.boneId, App.getInstance().get_boneId());
+                    jsonObject.put(DBConstants.objId, App.getInstance().get_objId());
+                    jsonObject.put(DBConstants.categoryName, App.getInstance().get_boneIdTitle());
+
+//                    jsonObject.put(DBConstants.name, name);
+//                    jsonObject.put(DBConstants.hebrewName, hebName);
+//                    jsonObject.put(DBConstants.type, type);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                dbTools.insertFavorite(jsonObject);
             }
         });
     }
