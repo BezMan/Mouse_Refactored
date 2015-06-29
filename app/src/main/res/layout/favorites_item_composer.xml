@@ -13,7 +13,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="6dp">
+        android:padding="10dp"
+        >
 
 
         <ImageView
@@ -32,7 +33,7 @@
                 android:id="@+id/lName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Full Name"
+                android:text="שם"
                 android:textAppearance="@android:style/TextAppearance.Large"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -42,7 +43,7 @@
                 android:id="@+id/lYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1500-1600"
+                android:text="סוג"
                 android:textColor="#000"
                 android:layout_marginTop="3dp"
                 />

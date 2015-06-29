@@ -24,7 +24,7 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
-import com.comrax.mouseappandroid.helpers.HelperMethods;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -60,6 +60,8 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        GlobalVars.detailMenuItems = new ArrayList<>();
+        GlobalVars.detailMenuItems.add("כתבות");
 
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
 
@@ -119,6 +121,9 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
                     listItem.title = (menuItem.getString("name"));
                     listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
                     listItem.boneId = (menuItem.getString("boneId"));
+
+                    GlobalVars.detailMenuItems.add(listItem.title);
+
                 }
                 items.add(listItem);
             }

@@ -20,7 +20,7 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
-import com.comrax.mouseappandroid.helpers.HelperMethods;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
 import com.comrax.mouseappandroid.app.GlobalVars;

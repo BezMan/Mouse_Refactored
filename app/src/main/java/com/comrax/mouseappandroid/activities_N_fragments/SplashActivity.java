@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.helpers.HelperMethods;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.model.InitDataModel;
 

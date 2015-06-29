@@ -12,11 +12,8 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
-
+    private boolean StaticFragVal =false;
     private String AppBarTitle;
-
-    private boolean MyFragVal=false;
-    private boolean InFragActivity=false;
 
     private static App _instance;
 
@@ -84,12 +81,13 @@ public class App extends Application {
         _boneIdTitle = boneIdTitle;
     }
 
+
     public boolean isInStaticPage() {
-        return MyFragVal;
+        return StaticFragVal;
     }
 
-    public void setInStaticPage(boolean myFragVal) {
-        MyFragVal = myFragVal;
+    public void setInStaticPage(boolean staticFragVal) {
+        StaticFragVal = staticFragVal;
     }
 
 

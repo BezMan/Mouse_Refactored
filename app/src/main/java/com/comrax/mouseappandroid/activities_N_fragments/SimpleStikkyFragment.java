@@ -20,7 +20,7 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
-import com.comrax.mouseappandroid.helpers.HelperMethods;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.model.ListModel;
 import com.viewpagerindicator.CirclePageIndicator;
 

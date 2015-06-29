@@ -272,4 +272,17 @@ public class DBTools extends SQLiteOpenHelper {
 
 
 
+
+
+    public Cursor getFavorites(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "=" + checkVal2 ;
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+
+
 }

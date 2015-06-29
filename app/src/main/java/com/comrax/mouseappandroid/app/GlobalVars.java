@@ -22,5 +22,7 @@ public class GlobalVars {
 
     public static ArrayList<InitDataModel> initDataModelArrayList;
 
+    public static ArrayList<String> detailMenuItems;
+
     public static JSONArray staticPagesArray;
 }

@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.helpers;
+package com.comrax.mouseappandroid.app;
 
 import org.json.JSONException;
 import org.json.JSONObject;
