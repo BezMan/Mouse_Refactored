@@ -14,6 +14,7 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.Detail_City_Activity;
 import com.comrax.mouseappandroid.activities_N_fragments.MainListActivity;
 import com.comrax.mouseappandroid.activities_N_fragments.Open_Details_header_N_list;
+import com.comrax.mouseappandroid.favorites.SectionDemoActivity;
 
 import java.util.ArrayList;
 
@@ -121,8 +122,8 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
             ((Detail_City_Activity) _activity).onNavDrawerItemClick(mPosition);
         else if(_activity instanceof Open_Details_header_N_list)
             ((Open_Details_header_N_list) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof FavoritesListActivity)
-//            ((FavoritesListActivity) _activity).onNavDrawerItemClick(mPosition);
+        else if(_activity instanceof SectionDemoActivity)
+            ((SectionDemoActivity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof SearchActivity)
 //            ((SearchActivity) _activity).onNavDrawerItemClick(mPosition);
 //        else if(_activity instanceof SearchExtendedActivity)

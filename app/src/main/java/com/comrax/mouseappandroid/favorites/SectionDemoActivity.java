@@ -1,6 +1,5 @@
 package com.comrax.mouseappandroid.favorites;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -9,21 +8,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
 import com.comrax.mouseappandroid.helpers.AmazingAdapter;
 import com.comrax.mouseappandroid.helpers.AmazingListView;
 
 import java.util.List;
 
 
-public class SectionDemoActivity extends Activity {
+public class SectionDemoActivity extends MyDrawerLayoutActivity {
 	AmazingListView lsComposer;
 	SectionComposerAdapter adapter;
-	
+
+	@Override
+	protected int getLayoutResourceId() {
+		return R.layout.favorites_activity_section_demo;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.favorites_activity_section_demo);
-		
+
 		lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
 		lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
 		lsComposer.setAdapter(adapter = new SectionComposerAdapter());
