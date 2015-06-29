@@ -77,6 +77,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 			}
 		}
 
+        //like getView of adapter//
 		@Override
 		public View getAmazingView(int position, View convertView, ViewGroup parent) {
 			View res = convertView;
@@ -96,8 +97,8 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 		public void configurePinnedHeader(View header, int position, int alpha) {
 			TextView lSectionHeader = (TextView)header;
 			lSectionHeader.setText(getSections()[getSectionForPosition(position)]);
-			lSectionHeader.setBackgroundColor(alpha << 24 | (0xbbffbb));
-			lSectionHeader.setTextColor(alpha << 24 | (0x000000));
+//			lSectionHeader.setBackgroundColor(alpha << 24 | (0xbbffbb));
+//			lSectionHeader.setTextColor(alpha << 24 | (0x222222));
 		}
 
 		@Override

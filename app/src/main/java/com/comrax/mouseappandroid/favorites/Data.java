@@ -1,42 +1,44 @@
 package com.comrax.mouseappandroid.favorites;
 
-import android.os.*;
-import android.util.*;
+import android.util.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Data {
+
 	public static final String TAG = Data.class.getSimpleName();
-	
+
+
 	public static List<Pair<String, List<FavoritesModel>>> getAllData() {
 		List<Pair<String, List<FavoritesModel>>> res = new ArrayList<Pair<String, List<FavoritesModel>>>();
 		
 		for (int i = 0; i < 4; i++) {
 			res.add(getOneSection(i));
 		}
-		
 		return res;
 	}
 	
-	public static List<FavoritesModel> getFlattenedData() {
-		 List<FavoritesModel> res = new ArrayList<FavoritesModel>();
-		 
-		 for (int i = 0; i < 4; i++) {
-			 res.addAll(getOneSection(i).second);
-		 }
-		 
-		 return res;
-	}
-	
-	public static Pair<Boolean, List<FavoritesModel>> getRows(int page) {
-		List<FavoritesModel> flattenedData = getFlattenedData();
-		if (page == 1) {
-			return new Pair<Boolean, List<FavoritesModel>>(true, flattenedData.subList(0, 5));
-		} else {
-			SystemClock.sleep(2000); // simulate loading
-			return new Pair<Boolean, List<FavoritesModel>>(page * 5 < flattenedData.size(), flattenedData.subList((page - 1) * 5, Math.min(page * 5, flattenedData.size())));
-		}
-	}
+//	public static List<FavoritesModel> getFlattenedData() {
+//		 List<FavoritesModel> res = new ArrayList<FavoritesModel>();
+//
+//		 for (int i = 0; i < 4; i++) {
+//			 res.addAll(getOneSection(i).second);
+//		 }
+//
+//		 return res;
+//	}
+//
+//	public static Pair<Boolean, List<FavoritesModel>> getRows(int page) {
+//		List<FavoritesModel> flattenedData = getFlattenedData();
+//		if (page == 1) {
+//			return new Pair<Boolean, List<FavoritesModel>>(true, flattenedData.subList(0, 5));
+//		} else {
+//			SystemClock.sleep(2000); // simulate loading
+//			return new Pair<Boolean, List<FavoritesModel>>(page * 5 < flattenedData.size(), flattenedData.subList((page - 1) * 5, Math.min(page * 5, flattenedData.size())));
+//		}
+//	}
 	
 	public static Pair<String, List<FavoritesModel>> getOneSection(int index) {
 		String[] titles = {"Renaissance", "Baroque", "Classical", "Romantic"};

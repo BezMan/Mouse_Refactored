@@ -33,14 +33,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
-                android:textColor="#000"
-                android:textStyle="bold" />
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/lYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1500-1600" />
+                android:text="1500-1600"
+                android:textColor="#000"
+                android:layout_marginTop="3dp"
+                />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

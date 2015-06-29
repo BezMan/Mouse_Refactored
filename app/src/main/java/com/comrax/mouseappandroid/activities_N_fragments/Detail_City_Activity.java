@@ -19,13 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
 import com.comrax.mouseappandroid.helpers.HelperMethods;
-import com.comrax.mouseappandroid.model.GlobalVars;
+import com.comrax.mouseappandroid.app.GlobalVars;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;

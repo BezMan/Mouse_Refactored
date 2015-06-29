@@ -5,5 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/Achbar_gray_light_background"
     android:padding="6dp"
-    android:text="Header"
-    android:textColor="#000"/>
+    android:text="כותרת"
+    android:textAppearance="@android:style/TextAppearance.Large"
+    android:textSize="17dp"
+    />

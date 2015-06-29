@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.Open_Details_header_N_list;
 import com.comrax.mouseappandroid.model.ListModel;

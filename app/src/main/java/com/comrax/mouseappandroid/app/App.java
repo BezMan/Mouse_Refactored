@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid;
+package com.comrax.mouseappandroid.app;
 
 import android.app.Application;
 import android.content.res.Configuration;

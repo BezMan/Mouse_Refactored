@@ -14,12 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.favorites.SectionDemoActivity;
-import com.comrax.mouseappandroid.model.CustomGlobalNavDrawerAdapter;
+import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
 import com.comrax.mouseappandroid.model.DrawerModel;
-import com.comrax.mouseappandroid.model.GlobalVars;
+import com.comrax.mouseappandroid.app.GlobalVars;
 
 import org.json.JSONException;
 import org.json.JSONObject;

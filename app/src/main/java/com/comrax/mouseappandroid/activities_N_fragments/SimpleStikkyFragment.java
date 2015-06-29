@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;

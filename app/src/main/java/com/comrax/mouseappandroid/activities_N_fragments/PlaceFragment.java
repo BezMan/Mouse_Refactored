@@ -18,7 +18,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 
 import java.io.File;

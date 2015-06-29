@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.comrax.mouseappandroid.App;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;

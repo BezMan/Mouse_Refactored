@@ -1,4 +1,6 @@
-package com.comrax.mouseappandroid.model;
+package com.comrax.mouseappandroid.app;
+
+import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.json.JSONArray;
 
