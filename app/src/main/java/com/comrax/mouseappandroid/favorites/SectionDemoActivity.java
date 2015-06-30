@@ -226,7 +226,6 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             else if (v instanceof ImageView) {//item delete btn:
 //                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
                 int num = dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
-                Toast.makeText(getApplicationContext(), ""+num, Toast.LENGTH_SHORT).show();
 
                 adapter = new SectionComposerAdapter(true);
                 lsComposer.setAdapter(adapter);

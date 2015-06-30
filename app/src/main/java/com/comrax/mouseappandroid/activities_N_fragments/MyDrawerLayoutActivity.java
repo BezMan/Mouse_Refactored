@@ -237,10 +237,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawers();
         }
         //returning from place fragment restarts this activity, because viewPager layout needs to restart.
-        else if (placeFragment != null && placeFragment.isVisible()) {
-            startActivity(new Intent(this, getClass()));
-            finish();
-        }
+//        else if (placeFragment != null && placeFragment.isVisible()) {
+//            startActivity(new Intent(this, getClass()));
+//            finish();
+//        }
 
         //might be useless...
 //        else if (staticPageFragment != null && staticPageFragment.isVisible()) {
