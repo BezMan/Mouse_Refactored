@@ -5,10 +5,21 @@ import android.database.Cursor;
 import com.comrax.mouseappandroid.database.DBConstants;
 
 public class FavoritesModel {
-	public static final String TAG = FavoritesModel.class.getSimpleName();
-	
+//	public static final String TAG = FavoritesModel.class.getSimpleName();
+
+    public boolean Editable;
 	public String name;
 	public String type;
+
+
+    public boolean isEditable() {
+        return Editable;
+    }
+
+    public void setEditable(boolean editable) {
+        Editable = editable;
+    }
+
 
 	public String getType() {
 		return type;

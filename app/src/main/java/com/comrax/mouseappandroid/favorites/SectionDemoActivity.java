@@ -27,9 +27,10 @@ import java.util.List;
 
 public class SectionDemoActivity extends MyDrawerLayoutActivity {
     AmazingListView lsComposer;
-    SectionComposerAdapter adapter;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
+
+    TextView editPage;
 
     @Override
     protected int getLayoutResourceId() {
@@ -42,7 +43,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
         lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
         lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
-        lsComposer.setAdapter(adapter = new SectionComposerAdapter());
+        lsComposer.setAdapter(new SectionComposerAdapter());
     }
 
     class SectionComposerAdapter extends AmazingAdapter {
@@ -97,7 +98,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             if (view == null)
                 view = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
 
-            TextView editPage = (TextView)findViewById(R.id.favorites_edit_page);
+            editPage = (TextView)findViewById(R.id.favorites_edit_page);
 
             TextView nameTxtView = (TextView) view.findViewById(R.id.favorite_name);
             TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
@@ -211,7 +212,14 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
             }
             else{// edit page:
-                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
+                if(editPage.getText().equals("עריכה")){
+                    editPage.setText("סיים");
+                }
+                else{
+                    editPage.setText("עריכה");
+
+                }
 
             }
         }
