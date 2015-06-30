@@ -29,6 +29,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
+    SectionComposerAdapter adapter;
 
     TextView editPage;
 
@@ -43,11 +44,17 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
         lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
         lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
-        lsComposer.setAdapter(new SectionComposerAdapter());
+        adapter = new SectionComposerAdapter(false);
+        lsComposer.setAdapter(adapter);
     }
 
     class SectionComposerAdapter extends AmazingAdapter {
+        boolean mEditable;
         List<Pair<String, List<FavoritesModel>>> all = getAllData();
+
+        public SectionComposerAdapter(boolean editable) {
+            mEditable = editable;
+        }
 
 
         @Override
@@ -97,23 +104,30 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             View view = convertView;
             if (view == null)
                 view = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
-
-            editPage = (TextView)findViewById(R.id.favorites_edit_page);
-
-            TextView nameTxtView = (TextView) view.findViewById(R.id.favorite_name);
-            TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
-
-            LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.favorite_main_layout);
-            ImageView deleteBtn = (ImageView) view.findViewById(R.id.favorite_delete_image);
-
             FavoritesModel favoritesModel = getItem(position);
 
-            if(favoritesModel != null) {
+            if (favoritesModel != null) {
+
+                editPage = (TextView) findViewById(R.id.favorites_edit_page);
+
+                TextView nameTxtView = (TextView) view.findViewById(R.id.favorite_name);
+                TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
+
+                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.favorite_main_layout);
+
+                if (mEditable) {
+                    ImageView deleteBtn = (ImageView) view.findViewById(R.id.favorite_delete_image);
+                    deleteBtn.setVisibility(View.VISIBLE);
+                    deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+
+                }
+                else {
+                    mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                }
+
                 nameTxtView.setText(favoritesModel.name);
                 typeTxtView.setText(favoritesModel.type);
 
-                mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
-                deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
                 editPage.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
             }
 
@@ -186,7 +200,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
         allItems[index] = new FavoritesModel[cursor.getCount()];
 
-        for (int j = 0;  j < cursor.getCount();  j++ , cursor.moveToNext()) {
+        for (int j = 0; j < cursor.getCount(); j++, cursor.moveToNext()) {
 
             allItems[index][j] = new FavoritesModel(cursor);
         }
@@ -196,28 +210,41 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
 
     private class FavoritesLayoutClickListener implements View.OnClickListener {
-        FavoritesModel mfavoritesModel;
+        FavoritesModel mFavoritesModel;
+
         public FavoritesLayoutClickListener(FavoritesModel favoritesModel) {
-            mfavoritesModel = favoritesModel;
+            mFavoritesModel = favoritesModel;
         }
 
         @Override
         public void onClick(View v) {
 
-            if(v instanceof LinearLayout) {
-                Toast.makeText(getApplicationContext(), mfavoritesModel.getName() + "\n" + mfavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+            if (v instanceof LinearLayout) {
+                Toast.makeText(getApplicationContext(), mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
             }
-            else if (v instanceof ImageView){//item delete btn:
-                Toast.makeText(getApplicationContext(), "delete \n" + mfavoritesModel.getName() + "\n" + mfavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+
+            else if (v instanceof ImageView) {//item delete btn:
+//                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+                int num = dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
+                Toast.makeText(getApplicationContext(), ""+num, Toast.LENGTH_SHORT).show();
+
+                adapter = new SectionComposerAdapter(true);
+                lsComposer.setAdapter(adapter);
 
             }
-            else{// edit page:
+            else {// edit btn clicked:
 //                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
-                if(editPage.getText().equals("עריכה")){
+                if (editPage.getText().equals("עריכה")) {//start editing//
                     editPage.setText("סיים");
-                }
-                else{
+                    adapter = new SectionComposerAdapter(true);
+                    lsComposer.setAdapter(adapter);
+
+
+                } else {    //end editing//
                     editPage.setText("עריכה");
+                    adapter = new SectionComposerAdapter(false);
+                    lsComposer.setAdapter(adapter);
+
 
                 }
 

@@ -324,5 +324,17 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
+//    public void deleteRow(String TableName, String checkColumn1, String checkVal1) {
+//        SQLiteDatabase database = this.getWritableDatabase();
+//        String sql = "DELETE FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 ;
+//        database.rawQuery(sql, null);
+//    }
+
+    public int deleteRow(String TableName, String KEY_NAME, String VALUE) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        return database.delete(TableName, KEY_NAME + "='" + VALUE + "'", null);
+
+    }
+
 
 }
