@@ -233,22 +233,17 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
             values.put(DBConstants.categoryName, item.getString(DBConstants.categoryName));
+            values.put(DBConstants.type, item.getString(DBConstants.type));
+            values.put(DBConstants.name, item.getString(DBConstants.name));
+            values.put(DBConstants.hebrewName, item.getString(DBConstants.hebrewName));
+            values.put(DBConstants.description, item.getString(DBConstants.description));
+            values.put(DBConstants.address, item.getString(DBConstants.address));
+            values.put(DBConstants.phone, item.getString(DBConstants.phone));
+            values.put(DBConstants.activityHours, item.getString(DBConstants.activityHours));
+            values.put(DBConstants.publicTransportation, item.getString(DBConstants.publicTransportation));
+            values.put(DBConstants.responses, item.getString(DBConstants.responses));
+            values.put(DBConstants.image, item.getString(DBConstants.image));
 
-//            values.put(DBConstants.description, item.getString(DBConstants.description));
-//            values.put(DBConstants.address, item.getString(DBConstants.address));
-//            values.put(DBConstants.phone, item.getString(DBConstants.phone));
-//            values.put(DBConstants.type, item.getString(DBConstants.type));
-//            values.put(DBConstants.rating, item.getString(DBConstants.rating));
-//            values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
-//
-//            JSONObject jsonUrlContentFullPlace = item.getJSONObject(DBConstants.urlContent);
-//            values.put(DBConstants.fullDescriptionBody, jsonUrlContentFullPlace.getString(DBConstants.description));
-//            values.put(DBConstants.hebrewName, jsonUrlContentFullPlace.getString(DBConstants.hebrewName));
-//
-//            values.put(DBConstants.image, jsonUrlContentFullPlace.getString(DBConstants.image));
-//            values.put(DBConstants.activityHours, jsonUrlContentFullPlace.getString(DBConstants.activityHours));
-//            values.put(DBConstants.publicTransportation, jsonUrlContentFullPlace.getString(DBConstants.publicTransportation));
-//            values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
 
         } catch (JSONException e) {
             e.printStackTrace();

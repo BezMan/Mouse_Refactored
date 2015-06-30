@@ -30,6 +30,10 @@ import java.io.File;
 
 public class PlaceFragment extends Fragment {
 
+
+    String imagePath, name, hebName, description, address, type,
+            phone, activityHours, publicTransportation, responses;
+
     Bundle bundle;
 
     Button b1, b2, b3, b4;
@@ -71,13 +75,16 @@ public class PlaceFragment extends Fragment {
 
 
     private void setUpperData() {
-        String imagePath = bundle.getString("image", null);
-        final String name = bundle.getString("name", null);
-        final String hebName = bundle.getString("hebName", null);
-        String description = bundle.getString("fullDescription", null);
-        String address = bundle.getString("address", null);
-
-        final String type = bundle.getString("type", null);
+        imagePath = bundle.getString("image", null);
+        name = bundle.getString("name", null);
+        hebName = bundle.getString("hebName", null);
+        description = bundle.getString("fullDescription", null);
+        address = bundle.getString("address", null);
+        type = bundle.getString("type", null);
+        phone = bundle.getString("phone", null);
+        activityHours = bundle.getString("activityHours", null);
+        publicTransportation = bundle.getString("publicTransportation", null);
+        responses = bundle.getString("responses", null);
 
         String fullDescription = new StringBuilder().append("<![CDATA[")
                 .append("<html><head><style>")
@@ -87,7 +94,6 @@ public class PlaceFragment extends Fragment {
                 .append("</body></html>")
                 .append("]]>")
                 .toString();
-
 
 
         ImageView headImageView = (ImageView)getActivity().findViewById(R.id.detailed_place_head_imageView);
@@ -134,11 +140,16 @@ public class PlaceFragment extends Fragment {
                     jsonObject.put(DBConstants.boneId, App.getInstance().get_boneId());
                     jsonObject.put(DBConstants.objId, App.getInstance().get_objId());
                     jsonObject.put(DBConstants.categoryName, App.getInstance().get_boneIdTitle());
-
-//                    jsonObject.put(DBConstants.name, name);
-//                    jsonObject.put(DBConstants.hebrewName, hebName);
-//                    jsonObject.put(DBConstants.type, type);
-
+                    jsonObject.put(DBConstants.type, type);
+                    jsonObject.put(DBConstants.name, name);
+                    jsonObject.put(DBConstants.hebrewName, hebName);
+                    jsonObject.put(DBConstants.description, description);
+                    jsonObject.put(DBConstants.address, address);
+                    jsonObject.put(DBConstants.phone, phone);
+                    jsonObject.put(DBConstants.activityHours, activityHours);
+                    jsonObject.put(DBConstants.publicTransportation, publicTransportation);
+                    jsonObject.put(DBConstants.responses, responses);
+                    jsonObject.put(DBConstants.image, imagePath);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -151,10 +162,6 @@ public class PlaceFragment extends Fragment {
 
 
     private void setGraysWithExtras() {
-        String phone = bundle.getString("phone", null);
-        String activityHours = bundle.getString("activityHours", null);
-        String publicTransportation = bundle.getString("publicTransportation", null);
-        String responses = bundle.getString("responses", null);
 
         TextView phoneTitle = (TextView)getActivity().findViewById(R.id.detailed_place_phone_title);
         TextView activityHoursTitle = (TextView)getActivity().findViewById(R.id.detailed_place_activity_hours_title);
