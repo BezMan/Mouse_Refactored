@@ -87,13 +87,9 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.boneId + " TEXT, "
                 + DBConstants.objId+ " TEXT, "
                 + DBConstants.categoryName + " TEXT, "
-
-                + DBConstants.title + " TEXT, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
-
-                + DBConstants.rating + " REAL, "
                 + DBConstants.description + " TEXT, "
                 + DBConstants.address + " TEXT, "
                 + DBConstants.phone + " TEXT, "
@@ -320,7 +316,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public Cursor getFavorites(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "=" + checkVal2 ;
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "= '" + checkVal2 + "' ";
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
 

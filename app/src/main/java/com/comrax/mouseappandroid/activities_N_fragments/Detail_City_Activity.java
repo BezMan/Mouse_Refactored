@@ -61,7 +61,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         super.onCreate(savedInstanceState);
 
         GlobalVars.detailMenuItems = new ArrayList<>();
-        GlobalVars.detailMenuItems.add("כתבות");
+//        GlobalVars.detailMenuItems.add("כתבות");
 
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
 

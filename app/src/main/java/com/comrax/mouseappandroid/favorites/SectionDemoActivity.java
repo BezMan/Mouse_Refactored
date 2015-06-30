@@ -25,7 +25,7 @@ import java.util.List;
 public class SectionDemoActivity extends MyDrawerLayoutActivity {
     AmazingListView lsComposer;
     SectionComposerAdapter adapter;
-
+    FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
 
     @Override
@@ -94,12 +94,15 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             if (view == null)
                 view = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
 
-            TextView titleTxtView = (TextView) view.findViewById(R.id.favorite_title);
+            TextView nameTxtView = (TextView) view.findViewById(R.id.favorite_name);
             TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
 
             FavoritesModel favoritesModel = getItem(position);
-            titleTxtView.setText(favoritesModel.title);
-            typeTxtView.setText(favoritesModel.type);
+            if(favoritesModel != null) {
+                nameTxtView.setText(favoritesModel.name);
+                typeTxtView.setText(favoritesModel.type);
+            }
+
 
             return view;
         }
@@ -153,7 +156,7 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
     public List<Pair<String, List<FavoritesModel>>> getAllData() {
         List<Pair<String, List<FavoritesModel>>> pairList = new ArrayList<Pair<String, List<FavoritesModel>>>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             pairList.add(getOneSection(i));
         }
         return pairList;
@@ -165,31 +168,16 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
         String[] titles = new String[GlobalVars.detailMenuItems.size()];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
-        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.categoryName, titles[index]  );
-//need column for bone name//
-        FavoritesModel[][] allItems = {
-                {
-                        new FavoritesModel(cursor),
+        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.categoryName, titles[index]);
 
-                },
-                {
-                        new FavoritesModel(cursor),
+        allItems[index] = new FavoritesModel[cursor.getCount()];
 
-                },
-                {
-                        new FavoritesModel(cursor),
+        for (int j = 0;  j < cursor.getCount();  j++ , cursor.moveToNext()) {
 
-                },
-                {
-                        new FavoritesModel(cursor),
-
-                },
-                {
-                        new FavoritesModel(cursor),
-
-                },
-        };
+            allItems[index][j] = new FavoritesModel(cursor);
+        }
         return new Pair<String, List<FavoritesModel>>(titles[index], Arrays.asList(allItems[index]));
+
     }
 
 }
