@@ -18,13 +18,14 @@
 
 
         <ImageView
-            android:id="@+id/delete"
+            android:id="@+id/favorite_delete_image"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="6dp"
             android:src="@drawable/delete" />
 
         <LinearLayout
+            android:id="@+id/favorite_main_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -37,6 +38,7 @@
                 android:textAppearance="@android:style/TextAppearance.Large"
                 android:textSize="17dp"
                 android:textStyle="bold"
+                android:gravity="right"
                 />
 
             <TextView

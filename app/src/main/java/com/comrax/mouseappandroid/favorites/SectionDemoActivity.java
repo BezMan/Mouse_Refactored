@@ -6,7 +6,10 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
@@ -94,13 +97,23 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             if (view == null)
                 view = getLayoutInflater().inflate(R.layout.favorites_item_composer, null);
 
+            TextView editPage = (TextView)findViewById(R.id.favorites_edit_page);
+
             TextView nameTxtView = (TextView) view.findViewById(R.id.favorite_name);
             TextView typeTxtView = (TextView) view.findViewById(R.id.favorite_type);
 
+            LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.favorite_main_layout);
+            ImageView deleteBtn = (ImageView) view.findViewById(R.id.favorite_delete_image);
+
             FavoritesModel favoritesModel = getItem(position);
+
             if(favoritesModel != null) {
                 nameTxtView.setText(favoritesModel.name);
                 typeTxtView.setText(favoritesModel.type);
+
+                mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                editPage.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
             }
 
 
@@ -180,4 +193,27 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
     }
 
+
+    private class FavoritesLayoutClickListener implements View.OnClickListener {
+        FavoritesModel mfavoritesModel;
+        public FavoritesLayoutClickListener(FavoritesModel favoritesModel) {
+            mfavoritesModel = favoritesModel;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            if(v instanceof LinearLayout) {
+                Toast.makeText(getApplicationContext(), mfavoritesModel.getName() + "\n" + mfavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+            }
+            else if (v instanceof ImageView){//item delete btn:
+                Toast.makeText(getApplicationContext(), "delete \n" + mfavoritesModel.getName() + "\n" + mfavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+
+            }
+            else{// edit page:
+                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
 }
