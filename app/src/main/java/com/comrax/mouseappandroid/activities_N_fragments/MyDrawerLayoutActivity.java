@@ -152,7 +152,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             startActivity(cityIntent);
 
         } else if (mPosition == 1) {
-            startActivity(new Intent(this, SectionDemoActivity.class));
+            Intent intent = new Intent(this, SectionDemoActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+
 
         } else if (mPosition == 2) {
         } else if (mPosition == 3) {
@@ -229,30 +232,16 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
-        Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
+//        Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(PAGE_TAG);
 
         //close drawer if opened:
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
         }
-        //returning from place fragment restarts this activity, because viewPager layout needs to restart.
-//        else if (placeFragment != null && placeFragment.isVisible()) {
-//            startActivity(new Intent(this, getClass()));
-//            finish();
-//        }
 
-        //might be useless...
-//        else if (staticPageFragment != null && staticPageFragment.isVisible()) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .remove(staticPageFragment)
-////                    .addToBackStack(fragment.getClass().getName())
-//                    .commit();
-//
-//        }
         else {
-            if (staticPageFragment != null && staticPageFragment.isVisible()) {
+            if (staticPageFragment != null && staticPageFragment.isVisible()) { //if in static page:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .remove(staticPageFragment)
@@ -262,9 +251,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
             TextView barTitleTextView = (TextView)findViewById(R.id.title_text);
             barTitleTextView.setText(App.getInstance().getAppBarTitle());
-
             App.getInstance().setInStaticPage(false);
-            //App.getInstance().setInFragActivity(false);
 
             super.onBackPressed();
 

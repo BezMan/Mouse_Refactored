@@ -139,11 +139,12 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.cityFolderPath, item.getString(DBConstants.cityFolderPath));
             values.put(DBConstants.touristArticlesList, item.getString(DBConstants.touristArticlesList));
 
+            database.insert(DBConstants.CITY_TABLE_NAME, null, values);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        database.insert(DBConstants.CITY_TABLE_NAME, null, values);
         database.close();
 
     }
@@ -171,11 +172,12 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.content, urlContent.getString(DBConstants.content));
             values.put(DBConstants.responses, urlContent.getString(DBConstants.responses));
 
+            database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
         database.close();
 
     }
@@ -209,11 +211,12 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.publicTransportation, jsonUrlContentFullPlace.getString(DBConstants.publicTransportation));
             values.put(DBConstants.userComments, jsonUrlContentFullPlace.getString(DBConstants.userComments));
 
+            database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        database.insert(DBConstants.PLACE_TABLE_NAME, null, values);
         database.close();
 
     }
@@ -225,6 +228,11 @@ public class DBTools extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         try {
+
+        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + item.getString(DBConstants.name) +"' AND "+ DBConstants.image +"='"+ item.getString(DBConstants.image) + "'";
+        Cursor cursor = database.rawQuery(sql, null);
+
+        if(cursor.getCount() == 0){
             values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
@@ -240,13 +248,16 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.responses, item.getString(DBConstants.responses));
             values.put(DBConstants.image, item.getString(DBConstants.image));
 
+            database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+        }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
         database.close();
+
+
 
     }
 
@@ -272,11 +283,11 @@ public class DBTools extends SQLiteOpenHelper {
             String condition = DBConstants.objId + "=" + item.getString(DBConstants.objId) +" AND "+ DBConstants.boneId +"="+ boneId;
             database.update(TableName, newValues, condition, null);
 
-            database.close();
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
+        database.close();
 
     }
 
