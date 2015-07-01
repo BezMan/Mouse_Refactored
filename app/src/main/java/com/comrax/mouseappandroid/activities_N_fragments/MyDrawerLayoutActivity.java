@@ -34,7 +34,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     public ArrayList<DrawerModel> customDrawerItemsArr = new ArrayList<>();
 
-    String PAGE_TAG;
+    private static final String STATIC_PAGE_TAG = "staticPageTag";
 
     protected abstract int getLayoutResourceId();
 
@@ -152,16 +152,30 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             startActivity(cityIntent);
 
         } else if (mPosition == 1) {
-            Intent intent = new Intent(this, SectionDemoActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
 
+
+            Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
+
+            //if frag open, just close it...
+            if (this instanceof SectionDemoActivity && staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(staticPageFragment)
+//                    .addToBackStack(fragment.getClass().getName())
+                        .commit();
+            }
+            else {
+                Intent intent = new Intent(this, SectionDemoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
 
         } else if (mPosition == 2) {
         } else if (mPosition == 3) {
         } else {
             for (int i = 0; i < GlobalVars.staticPagesArray.length(); i++) {
                 try {
+
                     JSONObject jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
                     if ((mPosition == 4 && jsonObject.getString("id").equals("3")) || (mPosition == 5 && jsonObject.getString("id").equals("2")) || (mPosition == 6 && jsonObject.getString("id").equals("1"))) {
                         nextActivity(jsonObject, tempValues.getBtnTitle());
@@ -191,32 +205,29 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         Fragment staticPageFragment = new StaticPageFragment();
 
         staticPageFragment.setArguments(bundle);
-        PAGE_TAG = "staticPageTag";
-        loadFragment(staticPageFragment, PAGE_TAG);
+        loadFragment(staticPageFragment, STATIC_PAGE_TAG);
 
     }
 
     public void loadFragment(final Fragment fragment, String fragTag) {
 
-        if (!App.getInstance().isInStaticPage()) {
+        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
+
+        if (staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
-                    .addToBackStack(fragTag)
+//                    .addToBackStack(fragTag)
                     .commit();
 
         } else {   //inside static page :
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
+                .addToBackStack(fragTag)
                     .commit();
 
         }
-
-        if (fragTag.equals(PAGE_TAG))
-            App.getInstance().setInStaticPage(true);
-
 
     }
 
@@ -233,7 +244,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
 //        Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
-        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(PAGE_TAG);
+        Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
 
         //close drawer if opened:
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -241,7 +252,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         }
 
         else {
-            if (staticPageFragment != null && staticPageFragment.isVisible()) { //if in static page:
+            if (staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .remove(staticPageFragment)
@@ -251,7 +262,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
             TextView barTitleTextView = (TextView)findViewById(R.id.title_text);
             barTitleTextView.setText(App.getInstance().getAppBarTitle());
-            App.getInstance().setInStaticPage(false);
 
             super.onBackPressed();
 

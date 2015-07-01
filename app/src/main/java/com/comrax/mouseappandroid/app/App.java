@@ -82,15 +82,6 @@ public class App extends Application {
     }
 
 
-    public boolean isInStaticPage() {
-        return StaticFragVal;
-    }
-
-    public void setInStaticPage(boolean staticFragVal) {
-        StaticFragVal = staticFragVal;
-    }
-
-
     public String getAppBarTitle() {
         return AppBarTitle;
     }
