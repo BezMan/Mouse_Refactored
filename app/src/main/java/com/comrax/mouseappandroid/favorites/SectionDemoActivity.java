@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.favorites;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.PlaceFragment;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -125,8 +127,8 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
                     mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
                 }
 
-                nameTxtView.setText(favoritesModel.name);
-                typeTxtView.setText(favoritesModel.type);
+                nameTxtView.setText(favoritesModel.getName());
+                typeTxtView.setText(favoritesModel.getType());
 
                 editPage.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
             }
@@ -221,11 +223,33 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
 
             if (v instanceof LinearLayout) {
                 Toast.makeText(getApplicationContext(), mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+                Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString("hebName", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+                bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.description)));
+                bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+                bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
+
+                bundle.putString("phone", cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
+                bundle.putString("activityHours", cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
+                bundle.putString("publicTransportation", cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
+                bundle.putString("responses", cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+
+                bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+
+
+                Fragment placeFragment = new PlaceFragment();
+
+                placeFragment.setArguments(bundle);
+                loadFragmentWithBackStack(placeFragment, "placeTag");
+
             }
 
             else if (v instanceof ImageView) {//item delete btn:
 //                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
-                int num = dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
+                dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
 
                 adapter = new SectionComposerAdapter(true);
                 lsComposer.setAdapter(adapter);
@@ -250,4 +274,14 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
             }
         }
     }
+    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                .commit();
+
+    }
+
 }

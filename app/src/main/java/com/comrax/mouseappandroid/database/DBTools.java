@@ -292,16 +292,25 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public String getData(String TableName, String chosenColValue, String checkColumn, String checkVal) {
+    public String getData(String TableName, String ColumnReturned, String checkColumn, String checkVal) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT " + chosenColValue + " FROM " + TableName + " WHERE " + checkColumn + "=" + checkVal;
+        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn + "=" + checkVal;
         Cursor cursor = database.rawQuery(sql, null);
         String res = null;
         if (cursor.moveToFirst()) {
-            res = cursor.getString(cursor.getColumnIndex(chosenColValue));
+            res = cursor.getString(cursor.getColumnIndex(ColumnReturned));
         }
         return res;
     }
+
+    public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "='" + checkVal1 + "' AND " + checkColumn2 + "='" + checkVal2 + "'" ;
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+
 
     public Cursor getCurrentCityPlacesTable(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
