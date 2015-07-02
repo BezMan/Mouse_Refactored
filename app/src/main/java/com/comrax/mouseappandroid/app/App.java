@@ -13,7 +13,7 @@ public class App extends Application {
     private String _cityFolderName;
     private String _boneIdTitle;
     private boolean StaticFragVal =false;
-    private String AppBarTitle;
+    private String CityName;
 
     private static App _instance;
 
@@ -82,12 +82,12 @@ public class App extends Application {
     }
 
 
-    public String getAppBarTitle() {
-        return AppBarTitle;
+    public String getCityName() {
+        return CityName;
     }
 
-    public void setAppBarTitle(String appBarTitle) {
-        AppBarTitle = appBarTitle;
+    public void setCityName(String cityName) {
+        CityName = cityName;
     }
 
 

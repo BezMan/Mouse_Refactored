@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.favorites.SectionDemoActivity;
 import com.comrax.mouseappandroid.model.DrawerModel;
@@ -35,11 +34,13 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     public ArrayList<DrawerModel> customDrawerItemsArr = new ArrayList<>();
+    protected String mTitle;
+    protected TextView appBarTextView;
 
     private static final String STATIC_PAGE_TAG = "staticPageTag";
 
     protected abstract int getLayoutResourceId();
-
+    protected abstract String setAppBarTextView();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         setNavDrawerData();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String str = setAppBarTextView();
+        appBarTextView = (TextView) findViewById(R.id.title_text);
+        appBarTextView.setText(str);
     }
 
     private void setClickableIcons() {
@@ -104,14 +113,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setTitle("Navigation!");
+//                getSupportActionBar().setAppBarTextView("Navigation!");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 
             }
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-//                getSupportActionBar().setTitle("regular");
+//                getSupportActionBar().setAppBarTextView("regular");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -141,8 +150,8 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
 
     public void onNavDrawerItemClick(int mPosition) {
-        TextView barTitleTextView = (TextView) findViewById(R.id.title_text);
-        App.getInstance().setAppBarTitle(barTitleTextView.getText().toString());
+//        TextView barTitleTextView = (TextView) findViewById(R.id.title_text);
+//        App.getInstance().setCityName(barTitleTextView.getText().toString());
 
 
         if (mPosition == 0) {
@@ -207,7 +216,6 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
     private void rateApp() {
     }
-
 
     private void openStaticPage(int mPosition) {
         DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
@@ -286,8 +294,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                         .commit();
             }
 
-            TextView barTitleTextView = (TextView)findViewById(R.id.title_text);
-            barTitleTextView.setText(App.getInstance().getAppBarTitle());
+
 
             super.onBackPressed();
 

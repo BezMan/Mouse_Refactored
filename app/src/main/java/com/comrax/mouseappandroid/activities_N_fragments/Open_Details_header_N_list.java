@@ -6,15 +6,15 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
+public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements SimpleStikkyFragment.SimpleFragmentDelegate{
 
     TextView tvTitle;
     Cursor cursor;
@@ -24,7 +24,9 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initLoadFragment(new SimpleStikkyFragment(), "ListTag");
+        SimpleStikkyFragment fragment = new SimpleStikkyFragment();
+        fragment.delegate = this;
+        initLoadFragment(fragment, "ListTag");
 
 
         tvTitle = (TextView) findViewById(R.id.header_title);
@@ -36,6 +38,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
 
     private void initLoadFragment(final Fragment fragment, String fragTag) {
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_container, fragment, fragTag)
@@ -47,11 +50,14 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
 
     public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
 
+        getSupportFragmentManager().popBackStack(fragTag, getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_container, fragment, fragTag)
                 .addToBackStack(fragTag)
                 .commit();
+
 
     }
 
@@ -60,6 +66,11 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     protected int getLayoutResourceId() {
         return R.layout.open_details_full_header;
 
+    }
+
+    @Override
+    protected String setAppBarTextView() {
+        return "zxcv";
     }
 
 
@@ -92,7 +103,11 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity {
     }
 
 
-
+    @Override
+    public void onResumeAction() {
+        //change your title
+        setAppBarTextView();
+    }
 }
 
 

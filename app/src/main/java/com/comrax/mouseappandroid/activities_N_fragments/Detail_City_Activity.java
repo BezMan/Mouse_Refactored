@@ -19,13 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
-import com.comrax.mouseappandroid.app.HelperMethods;
-import com.comrax.mouseappandroid.app.GlobalVars;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
@@ -57,26 +57,26 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
     @Override
+    protected String setAppBarTextView() {
+        return  App.getInstance().getCityName();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         GlobalVars.detailMenuItems = new ArrayList<>();
 //        GlobalVars.detailMenuItems.add("כתבות");
-
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
-
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
-
         pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
-
         listView.addHeaderView(pagerLayout);
 
 
         setDetailsListItems();
-        App.getInstance().set_cityId(cityId);
 
-        setTitle();
+        App.getInstance().setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
 
         listView.setAdapter(adapter);
     }
@@ -205,19 +205,17 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
 
-    private void setTitle() {
-        String title = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId);
-        TextView titleTextView = (TextView) findViewById(R.id.title_text);
-        titleTextView.setText(title);
-    }
-
 
     private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
+//        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
+
         CITY_FOLDER_PATH = dataFileIntent.getStringExtra("cityFolderName");
         App.getInstance().set_cityFolderName(CITY_FOLDER_PATH);
-        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
+
         cityId = CITY_FOLDER_PATH.substring(CITY_FOLDER_PATH.length() - 4, CITY_FOLDER_PATH.length());
+        App.getInstance().set_cityId(cityId);
+
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_PATH + "/" + cityId + "_mainPageArticles.json");
 
         addPagerData(jsonData);
@@ -237,6 +235,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.titles);
         indicator.setViewPager(pager);
     }
+
 
 
     private List<Fragment> getFragmentsFromJson(JSONObject jsonData) {
@@ -336,6 +335,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
             return childPosition;
         }
 
+
         @Override
         public View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             ChildHolder holder;
@@ -362,6 +362,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
 
             return convertView;
         }
+
 
         @Override
         public int getRealChildrenCount(int groupPosition) {

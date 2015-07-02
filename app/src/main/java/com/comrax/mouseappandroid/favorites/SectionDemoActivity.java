@@ -41,6 +41,11 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
     }
 
     @Override
+    protected String setAppBarTextView() {
+        return "aaaaa";
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

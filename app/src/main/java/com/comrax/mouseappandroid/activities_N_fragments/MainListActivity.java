@@ -14,16 +14,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
+import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
-import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
-import com.comrax.mouseappandroid.app.GlobalVars;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +33,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -67,6 +67,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     @Override
     protected int getLayoutResourceId() {
         return R.layout.my_drawer_layout;
+    }
+
+    @Override
+    protected String setAppBarTextView() {
+            return "mouse";
     }
 
 
@@ -257,8 +262,6 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     public void onListItemClick(int mPosition) {
         CitiesModel tempValues = CitiesArray.get(mPosition);
 
-//        Toast.makeText(this, tempValues.getName() + " \n" + tempValues.getId() + " \n" + tempValues.getImage() + " \n" + tempValues.get_boneId(), Toast.LENGTH_LONG).show();
-
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
                 //save clicked cityId:
@@ -271,7 +274,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
                 destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
-                //only continue if non-existant.
+                //only download if non-existant.
                 if (!sourceZipFile.exists()) {
 
                     new DownloadFileAsync().execute(filePath, updateDate);
@@ -343,6 +346,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                     input.close();
 
             } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
+                onCancelled();
             }
             return null;
 
@@ -360,10 +365,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         }
 
         @Override
-        protected void onCancelled(String s) {
+        protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             new File("/sdcard/Mouse_App/" + fileName).delete();
             new File("/sdcard/Mouse_App/" + destinationFolder).delete();
+            mProgressDialog.dismiss();
 
         }
     }
@@ -398,12 +404,11 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                         setDBdata();
                         mSavingDialog.dismiss();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
+                        onCancelled();
                     }
-
             return null;
-
         }
 
         protected void onProgressUpdate(String... progress) {
@@ -418,10 +423,12 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         }
 
         @Override
-        protected void onCancelled(String s) {
+        protected void onCancelled() {
 //            delete downloaded zip file on cancel:
+            mSavingDialog.show();
             new File("/sdcard/Mouse_App/" + fileName).delete();
             new File("/sdcard/Mouse_App/" + destinationFolder).delete();
+            mSavingDialog.dismiss();
 
         }
     }
@@ -475,10 +482,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                             dbTools.insertArticleTable(item);
                         }
                     }
-
-
                 }
-
+                //on purpose after the whole first file loop, adding to the table data//
                 for (File child : directoryListing) {
                     if (child.toString().contains("PlacesCoordinatesList")) {
                     JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
@@ -503,6 +508,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
                 dbTools.insertCityTable(cityObject);
             } catch (JSONException e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "error with setDBdata", Toast.LENGTH_LONG).show();
+
             }
 
         }
@@ -512,7 +519,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     private void nextActivity(File file, String updateDate) {
         Intent cityFolderNameIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
         cityFolderNameIntent.putExtra("cityFolderName", file.toString());
-        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
+//        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);
     }
 

@@ -6,16 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -79,10 +79,8 @@ public class SplashActivity extends Activity {
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
                 }
-            } catch (ClientProtocolException e) {
-                //TODO Handle problems..
-            } catch (IOException e) {
-                //TODO Handle problems..
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
             }
             return responseString;
         }
@@ -191,6 +189,8 @@ public class SplashActivity extends Activity {
                 }
 
             } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
+                onCancelled();
             }
             return null;
 
@@ -202,17 +202,18 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPostExecute(String unused) {
-            mProgressDialog.dismiss();
             try {
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
+                mProgressDialog.dismiss();
+                nextActivity();
+
             } catch (IOException e) {
-                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error unzipping file", Toast.LENGTH_LONG).show();
             }
-            nextActivity();
         }
 
         @Override
-        protected void onCancelled(String s) {
+        protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             new File("/sdcard/Mouse_App/" + fileName).delete();
 
