@@ -14,9 +14,9 @@ import com.comrax.mouseappandroid.database.DBTools;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements SimpleStikkyFragment.SimpleFragmentDelegate {
+public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements MyBaseFragment.MyFragmentDelegate {
 
-    TextView tvTitle;
+    TextView boneTitle;
     Cursor cursor;
 
 
@@ -29,8 +29,8 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity implement
         initLoadFragment(fragment, "ListTag");
 
 
-        tvTitle = (TextView) findViewById(R.id.header_title);
-        tvTitle.setText(App.getInstance().get_boneIdTitle());
+        boneTitle = (TextView) findViewById(R.id.bone_title);
+        boneTitle.setText(App.getInstance().get_boneIdTitle());
 
 
     }

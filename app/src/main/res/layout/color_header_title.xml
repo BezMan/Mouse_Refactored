@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="טקסט"
-        android:id="@+id/header_title"
+        android:id="@+id/bone_title"
         android:textSize="24dp"
         android:textStyle="bold"
         android:textColor="@color/White"

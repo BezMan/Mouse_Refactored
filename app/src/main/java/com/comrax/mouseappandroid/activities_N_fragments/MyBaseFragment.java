@@ -7,13 +7,13 @@ import android.support.v4.app.Fragment;
  */
 public class MyBaseFragment extends Fragment {
 
-    protected SimpleFragmentDelegate delegate;
+    protected MyFragmentDelegate delegate;
 
-    public void setDelegate(SimpleFragmentDelegate delegate) {
+    public void setDelegate(MyFragmentDelegate delegate) {
         this.delegate = delegate;
     }
 
-    public interface SimpleFragmentDelegate {
+    public interface MyFragmentDelegate {
         void onResumeAction();
     }
 

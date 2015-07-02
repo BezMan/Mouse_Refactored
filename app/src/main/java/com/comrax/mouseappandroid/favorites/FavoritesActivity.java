@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class SectionDemoActivity extends MyDrawerLayoutActivity {
+public class FavoritesActivity extends MyDrawerLayoutActivity {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
@@ -288,5 +288,8 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
                 .commit();
 
     }
+
+
+
 
 }

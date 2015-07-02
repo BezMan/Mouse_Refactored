@@ -71,7 +71,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
     @Override
     protected String getTextForAppBar() {
-            return "עכבר העיר";
+            return "עכבר עולם";
     }
 
 
@@ -79,6 +79,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        App.getInstance().setCityName("עכבר עולם");
         initVarsAndHeaders();
 
         saveStaticPages(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/staticPages.json"));

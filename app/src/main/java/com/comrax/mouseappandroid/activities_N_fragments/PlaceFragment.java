@@ -270,13 +270,4 @@ public class PlaceFragment extends MyBaseFragment {
 
 
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
-
-
 }

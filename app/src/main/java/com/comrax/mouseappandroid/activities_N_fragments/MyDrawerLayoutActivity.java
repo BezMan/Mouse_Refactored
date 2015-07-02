@@ -18,8 +18,9 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
-import com.comrax.mouseappandroid.favorites.SectionDemoActivity;
+import com.comrax.mouseappandroid.favorites.FavoritesActivity;
 import com.comrax.mouseappandroid.model.DrawerModel;
 
 import org.json.JSONException;
@@ -62,6 +63,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         String str = getTextForAppBar();
         setupTextView(str);
     }
+
     protected void setupTextView(String text) {
         appBarTextView = (TextView) findViewById(R.id.title_text);
         appBarTextView.setText(text);
@@ -73,8 +75,10 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         imageButtonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "info Clicked!",
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "info Clicked!",
+//                        Toast.LENGTH_LONG).show();
+                openStaticPage(4);
+
             }
         });
 
@@ -157,6 +161,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 //        TextView barTitleTextView = (TextView) findViewById(R.id.title_text);
 //        App.getInstance().setCityName(barTitleTextView.getText().toString());
 
+//        setupTextView(mPosition);
 
         if (mPosition == 0) {
             allCities();
@@ -191,15 +196,18 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
 
         //if frag open, just close it...
-        if (this instanceof SectionDemoActivity && staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
+        if (this instanceof FavoritesActivity && staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
             getSupportFragmentManager()
                     .beginTransaction()
                     .remove(staticPageFragment)
 //                    .addToBackStack(fragment.getClass().getName())
                     .commit();
+
+            //TODO: change hardcoded!!!
+            setupTextView("המועדפים שלי");
         }
         else {
-            Intent intent = new Intent(this, SectionDemoActivity.class);
+            Intent intent = new Intent(this, FavoritesActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
@@ -229,6 +237,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                 JSONObject jsonObject = GlobalVars.staticPagesArray.getJSONObject(i);
                 if ((mPosition == 4 && jsonObject.getString("id").equals("3")) || (mPosition == 5 && jsonObject.getString("id").equals("2")) || (mPosition == 6 && jsonObject.getString("id").equals("1"))) {
 
+
                     Bundle bundle = new Bundle();
                     bundle.putString("data", jsonObject.toString());
                     bundle.putString("barTitle", tempValues.getBtnTitle());
@@ -244,7 +253,18 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
             }
         }}
 
-
+//    private void setupTextView(int mPosition) {
+//        switch (mPosition){
+//            case 2:
+//                setupTextView("המועדפים שלי");
+//            case 4:
+//                setupTextView("עזרה");
+//            case 5:
+//                setupTextView("תקנון");
+//            case 6:
+//                setupTextView("אודות");
+//        }
+//    }
 
 
     public void loadFragment(final Fragment fragment, String fragTag) {
@@ -296,6 +316,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
                         .remove(staticPageFragment)
 //                    .addToBackStack(fragment.getClass().getName())
                         .commit();
+
+                if(this instanceof FavoritesActivity)
+                    setupTextView("המועדפים שלי");
+//                else if(this instanceof Detail_City_Activity)
+//                    setupTextView(App.getInstance().getCityName());
+                else
+//                if(this instanceof MainListActivity)
+                    setupTextView(App.getInstance().getCityName());
             }
 
 
