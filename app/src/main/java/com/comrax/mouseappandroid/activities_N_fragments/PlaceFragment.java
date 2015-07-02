@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-public class PlaceFragment extends Fragment {
+public class PlaceFragment extends MyBaseFragment {
 
 
     String imagePath, name, hebName, description, address, type,

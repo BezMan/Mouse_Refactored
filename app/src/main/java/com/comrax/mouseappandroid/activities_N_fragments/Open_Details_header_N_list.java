@@ -14,7 +14,7 @@ import com.comrax.mouseappandroid.database.DBTools;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements SimpleStikkyFragment.SimpleFragmentDelegate{
+public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements SimpleStikkyFragment.SimpleFragmentDelegate {
 
     TextView tvTitle;
     Cursor cursor;
@@ -25,7 +25,7 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity implement
         super.onCreate(savedInstanceState);
 
         SimpleStikkyFragment fragment = new SimpleStikkyFragment();
-        fragment.delegate = this;
+        fragment.setDelegate(this);
         initLoadFragment(fragment, "ListTag");
 
 
@@ -69,8 +69,8 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity implement
     }
 
     @Override
-    protected String setAppBarTextView() {
-        return "zxcv";
+    protected String getTextForAppBar() {
+        return  App.getInstance().getCityName();
     }
 
 
@@ -96,7 +96,8 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity implement
         bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
 
 
-        Fragment placeFragment = new PlaceFragment();
+        PlaceFragment placeFragment = new PlaceFragment();
+        placeFragment.setDelegate(this);
 
         placeFragment.setArguments(bundle);
         loadFragmentWithBackStack(placeFragment, "placeTag");
@@ -106,7 +107,8 @@ public class Open_Details_header_N_list extends MyDrawerLayoutActivity implement
     @Override
     public void onResumeAction() {
         //change your title
-        setAppBarTextView();
+        String str = getTextForAppBar();
+        setupTextView(str);
     }
 }
 

@@ -18,7 +18,19 @@ public class StaticPageFragment extends Fragment {
     Bundle bundle;
     TextView title, mainTxt;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bundle = this.getArguments();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+            TextView barTitleTextView = (TextView) getActivity().findViewById(R.id.title_text);
+            barTitleTextView.setText(bundle.getString("barTitle", null));
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,10 +45,7 @@ public class StaticPageFragment extends Fragment {
 
         title = (TextView)getActivity().findViewById(R.id.static_page_title);
         mainTxt = (TextView)getActivity().findViewById(R.id.static_page_main_text);
-        bundle = this.getArguments();
 
-        TextView barTitleTextView = (TextView) getActivity().findViewById(R.id.title_text);
-        barTitleTextView.setText(bundle.getString("barTitle", null));
         try {
             JSONObject jsonObject = new JSONObject(bundle.getString("data", null));
             title.setText(jsonObject.getString("Title"));

@@ -40,7 +40,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     private static final String STATIC_PAGE_TAG = "staticPageTag";
 
     protected abstract int getLayoutResourceId();
-    protected abstract String setAppBarTextView();
+    protected abstract String getTextForAppBar();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +59,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String str = setAppBarTextView();
-        appBarTextView = (TextView) findViewById(R.id.title_text);
-        appBarTextView.setText(str);
+        String str = getTextForAppBar();
+        setupTextView(str);
     }
+    protected void setupTextView(String text) {
+        appBarTextView = (TextView) findViewById(R.id.title_text);
+        appBarTextView.setText(text);
+    }
+
 
     private void setClickableIcons() {
         ImageButton imageButtonInfo = (ImageButton) findViewById(R.id.image_info);
@@ -113,14 +117,14 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setAppBarTextView("Navigation!");
+//                getSupportActionBar().getTextForAppBar("Navigation!");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 
             }
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-//                getSupportActionBar().setAppBarTextView("regular");
+//                getSupportActionBar().getTextForAppBar("regular");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };

@@ -41,8 +41,8 @@ public class SectionDemoActivity extends MyDrawerLayoutActivity {
     }
 
     @Override
-    protected String setAppBarTextView() {
-        return "aaaaa";
+    protected String getTextForAppBar() {
+        return "המועדפים שלי";
     }
 
     @Override

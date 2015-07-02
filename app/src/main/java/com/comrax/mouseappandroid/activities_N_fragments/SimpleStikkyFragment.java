@@ -33,11 +33,11 @@ import java.util.List;
 
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
-public class SimpleStikkyFragment extends Fragment {
+public class SimpleStikkyFragment extends MyBaseFragment {
 
     private ListView mListView;
     TextView resultsTxtView;
-    public SimpleFragmentDelegate delegate;
+    //public SimpleFragmentDelegate delegate;
 
 //    LocationManager mLocationManager;
 
@@ -79,10 +79,6 @@ public class SimpleStikkyFragment extends Fragment {
 
     public SimpleStikkyFragment() {
         // Required empty public constructor
-    }
-
-    public interface SimpleFragmentDelegate {
-        void onResumeAction();
     }
 
     @Override
@@ -302,11 +298,5 @@ public class SimpleStikkyFragment extends Fragment {
         }
 
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        this.delegate.onResumeAction();
     }
 }

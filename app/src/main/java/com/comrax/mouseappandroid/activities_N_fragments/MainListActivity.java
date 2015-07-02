@@ -70,8 +70,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
     }
 
     @Override
-    protected String setAppBarTextView() {
-            return "mouse";
+    protected String getTextForAppBar() {
+            return "עכבר העיר";
     }
 
 

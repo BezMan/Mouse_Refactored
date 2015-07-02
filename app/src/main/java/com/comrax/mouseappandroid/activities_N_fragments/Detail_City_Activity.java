@@ -57,7 +57,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     }
 
     @Override
-    protected String setAppBarTextView() {
+    protected String getTextForAppBar() {
         return  App.getInstance().getCityName();
     }
 
