@@ -80,6 +80,8 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         super.onCreate(savedInstanceState);
 
         App.getInstance().setCityName("עכבר עולם");
+        App.getInstance().set_cityId("blankPage");
+        GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
         saveStaticPages(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/staticPages.json"));

@@ -31,7 +31,7 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
-    SectionComposerAdapter adapter;
+    FavoritesAdapter adapter;
 
     TextView editPage;
 
@@ -51,16 +51,17 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
 
         lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
         lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
-        adapter = new SectionComposerAdapter(false);
+        adapter = new FavoritesAdapter(false);
         lsComposer.setAdapter(adapter);
     }
 
-    class SectionComposerAdapter extends AmazingAdapter {
+    class FavoritesAdapter extends AmazingAdapter {
         boolean mEditable;
-        List<Pair<String, List<FavoritesModel>>> all = getAllData();
+        List<Pair<String, List<FavoritesModel>>> all;
 
-        public SectionComposerAdapter(boolean editable) {
+        public FavoritesAdapter(boolean editable) {
             mEditable = editable;
+            all = getAllData();
         }
 
 
@@ -70,7 +71,9 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
             for (int i = 0; i < all.size(); i++) {
                 res += all.get(i).second.size();
             }
+
             return res;
+
         }
 
         @Override
@@ -105,6 +108,7 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
             }
         }
 
+
         //like getView of adapter//
         @Override
         public View getAmazingView(int position, View convertView, ViewGroup parent) {
@@ -127,8 +131,7 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
                     deleteBtn.setVisibility(View.VISIBLE);
                     deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
 
-                }
-                else {
+                } else {
                     mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
                 }
 
@@ -200,7 +203,11 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
 
     public Pair<String, List<FavoritesModel>> getOneSection(int index) {
 //		String[] titles = {"מלונות", "קניות", "מסעדות וחיי לילה", "אטרקציות", "כתבות"};
-        String[] titles = new String[GlobalVars.detailMenuItems.size()];
+        int mySize = GlobalVars.detailMenuItems.size();
+        if (mySize <= 0) {
+            return new Pair<String, List<FavoritesModel>>("", Arrays.<FavoritesModel>asList());
+        }
+        String[] titles = new String[mySize];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
         Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.categoryName, titles[index]);
@@ -250,27 +257,24 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
                 placeFragment.setArguments(bundle);
                 loadFragmentWithBackStack(placeFragment, "placeTag");
 
-            }
-
-            else if (v instanceof ImageView) {//item delete btn:
+            } else if (v instanceof ImageView) {//item delete btn:
 //                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
                 dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
 
-                adapter = new SectionComposerAdapter(true);
+                adapter = new FavoritesAdapter(true);
                 lsComposer.setAdapter(adapter);
 
-            }
-            else {// edit btn clicked:
+            } else {// edit btn clicked:
 //                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
                 if (editPage.getText().equals("עריכה")) {//start editing//
                     editPage.setText("סיים");
-                    adapter = new SectionComposerAdapter(true);
+                    adapter = new FavoritesAdapter(true);
                     lsComposer.setAdapter(adapter);
 
 
                 } else {    //end editing//
                     editPage.setText("עריכה");
-                    adapter = new SectionComposerAdapter(false);
+                    adapter = new FavoritesAdapter(false);
                     lsComposer.setAdapter(adapter);
 
 
@@ -279,6 +283,7 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
             }
         }
     }
+
     public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
 
         getSupportFragmentManager()
@@ -288,8 +293,6 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
                 .commit();
 
     }
-
-
 
 
 }
