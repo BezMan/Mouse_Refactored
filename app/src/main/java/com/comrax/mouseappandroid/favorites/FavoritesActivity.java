@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FavoritesActivity extends MyDrawerLayoutActivity {
+public class FavoritesActivity extends MyDrawerLayoutActivity implements PlaceFragment.MyFragmentDelegate {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
@@ -53,6 +52,11 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
         lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
         adapter = new FavoritesAdapter(false);
         lsComposer.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResumeAction() {
+
     }
 
     class FavoritesAdapter extends AmazingAdapter {
@@ -234,7 +238,7 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
         public void onClick(View v) {
 
             if (v instanceof LinearLayout) {
-                Toast.makeText(getApplicationContext(), mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
                 Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
 
                 Bundle bundle = new Bundle();
@@ -252,8 +256,8 @@ public class FavoritesActivity extends MyDrawerLayoutActivity {
                 bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
 
 
-                Fragment placeFragment = new PlaceFragment();
-
+                PlaceFragment placeFragment = new PlaceFragment();
+                //placeFragment.setDelegate(FavoritesActivity.this);
                 placeFragment.setArguments(bundle);
                 loadFragmentWithBackStack(placeFragment, "placeTag");
 

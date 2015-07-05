@@ -41,7 +41,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/Achbar_green" />
+            android:background="@color/Achbar_green"
+            />
 
         <EditText android:id="@+id/inputSearch"
             android:layout_width="match_parent"

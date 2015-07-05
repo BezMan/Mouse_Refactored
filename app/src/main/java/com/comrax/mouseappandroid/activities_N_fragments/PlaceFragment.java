@@ -124,7 +124,7 @@ public class PlaceFragment extends MyBaseFragment {
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -150,10 +150,14 @@ public class PlaceFragment extends MyBaseFragment {
                     jsonObject.put(DBConstants.responses, responses);
                     jsonObject.put(DBConstants.image, imagePath);
 
+                    dbTools.insertFavorite(jsonObject);
+                    Toast.makeText(getActivity().getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity().getApplicationContext(), "נכשל, נסה שוב", Toast.LENGTH_LONG).show();
+
                 }
-                dbTools.insertFavorite(jsonObject);
             }
         });
     }

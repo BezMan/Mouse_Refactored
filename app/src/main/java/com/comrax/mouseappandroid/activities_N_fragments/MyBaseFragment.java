@@ -22,6 +22,8 @@ public class MyBaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        this.delegate.onResumeAction();
+        if(this.delegate != null) {
+            this.delegate.onResumeAction();
+        }
     }
 }
