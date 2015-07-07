@@ -1,4 +1,6 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mylist_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,15 +12,56 @@
 
         <include layout="@layout/app_bar" />
 
-        <include layout="@layout/color_header_title" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <FrameLayout
+            <include layout="@layout/color_header_title" />
+
+            <FrameLayout
             android:id="@+id/layout_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+            <com.wunderlist.slidinglayer.SlidingLayer
+                android:id="@+id/slidingLayer1"
+                android:layout_width="match_parent"
+                android:layout_height="470dp"
+                slidingLayer:stickTo="top"
+                slidingLayer:offsetDistance="50dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:layout_width="match_parent"
+                        android:layout_height="420dp"
+                        class="com.google.android.gms.maps.MapFragment"
+                        />
+
+
+                    <Button
+                        android:id="@+id/buttonToggleDrawer"
+                        android:onClick="buttonClicked"
+                        android:text="OPEN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below = "@+id/map" />
+
+                </RelativeLayout>
+
+            </com.wunderlist.slidinglayer.SlidingLayer>
+
+        </RelativeLayout>
 
     </LinearLayout>
-  />
+
 
     <RelativeLayout
         android:layout_width="306dp"
@@ -30,19 +73,19 @@
             android:layout_height="60dp"
             android:background="@color/Achbar_green" />
 
-        <EditText android:id="@+id/inputSearch"
+        <EditText
+            android:id="@+id/inputSearch"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_margin="8dp"
+            android:background="@drawable/rounded_corners_layout"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:hint="חפש"
             android:textColorHint="@color/Gray"
-            android:background="@drawable/rounded_corners_layout"
 
             />
-
 
 
         <!-- Side navigation drawer UI -->
@@ -60,8 +103,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="60dp"
             android:background="@color/White"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>
