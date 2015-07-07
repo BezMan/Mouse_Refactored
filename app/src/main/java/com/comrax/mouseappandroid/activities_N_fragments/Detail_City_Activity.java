@@ -205,6 +205,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
+                int currIndex = markers.indexOf(marker);
+                String currBoneId = markerArray.get(currIndex).getBoneId();
+                String currName = markerArray.get(currIndex).getPlaceName();
+
+
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
                             .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j] + "_blank", null, null)));
