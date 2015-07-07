@@ -231,17 +231,17 @@ public class PlaceFragment extends MyBaseFragment {
 
 
 
-        for (int i=0; i< MainListActivity.BannersArray.size(); i++){
+        for (int i=0; i< MainGridActivity.BannersArray.size(); i++){
 
                 int buttonID = getActivity().getResources().getIdentifier("footer_item_title_" + (i + 1), "id", getActivity().getPackageName());
                 textViews[i] = (TextView) getActivity().findViewById(buttonID);
-                textViews[i].setText(MainListActivity.BannersArray.get(i).getText());
+                textViews[i].setText(MainGridActivity.BannersArray.get(i).getText());
 
 
                 int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getActivity().getPackageName());
                 images[i] = (ImageView) getActivity().findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/Default_master/" + MainListActivity.BannersArray.get(i).getImageBIG());
+                File file = new File("/sdcard/Mouse_App/Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG());
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -267,7 +267,7 @@ public class PlaceFragment extends MyBaseFragment {
 
         @Override
         public void onClick(View arg0) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainListActivity.BannersArray.get(mPosition).getUrlAndroid()));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition).getUrlAndroid()));
             startActivity(browserIntent);
         }
     }

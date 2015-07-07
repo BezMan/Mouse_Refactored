@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
+public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -185,7 +185,7 @@ public abstract class MyDrawerLayoutActivity extends AppCompatActivity {
 
 
     private void allCities() {
-        Intent cityIntent = new Intent(this, MainListActivity.class);
+        Intent cityIntent = new Intent(this, MainGridActivity.class);
         cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(cityIntent);
     }

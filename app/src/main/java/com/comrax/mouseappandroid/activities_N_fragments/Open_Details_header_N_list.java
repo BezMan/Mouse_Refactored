@@ -14,7 +14,7 @@ import com.comrax.mouseappandroid.database.DBTools;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyDrawerLayoutActivity implements MyBaseFragment.MyFragmentDelegate {
+public class Open_Details_header_N_list extends MyBaseDrawerActivity implements MyBaseFragment.MyFragmentDelegate {
 
     TextView boneTitle;
     Cursor cursor;

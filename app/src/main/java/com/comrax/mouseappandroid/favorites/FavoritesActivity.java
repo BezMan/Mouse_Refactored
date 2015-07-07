@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.MyDrawerLayoutActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
 import com.comrax.mouseappandroid.activities_N_fragments.PlaceFragment;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FavoritesActivity extends MyDrawerLayoutActivity implements PlaceFragment.MyFragmentDelegate {
+public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFragment.MyFragmentDelegate {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);

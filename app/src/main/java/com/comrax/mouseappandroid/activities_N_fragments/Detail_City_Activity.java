@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,15 @@ import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.viewpagerindicator.CirclePageIndicator;
+import com.wunderlist.slidinglayer.SlidingLayer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +45,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Detail_City_Activity extends MyDrawerLayoutActivity {
+public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     MyPageAdapter pageAdapter;
     public String CITY_FOLDER_PATH, CITY_UPDATE_DATE, cityId;
@@ -50,6 +59,30 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     View pagerLayout;
 
     List<GroupItem> items;
+
+
+    private SlidingLayer mSlidingLayer;
+
+    static final LatLng HAMBURG = new LatLng(53.558, 9.927);
+
+    private GoogleMap map;
+
+
+    String[] titleArr = {"aaa","bbb","ccc","ddd"};
+    String[] icon = {"hotel","rest","shop","tour"};
+    LatLng[] coord = {new LatLng(53.5, 10) , new LatLng(53.558, 9.927) , new LatLng(53.551, 9.993) , new LatLng(53.541, 9.983)};
+
+    // before loop:
+    List<Marker> markers = new ArrayList<>();
+
+
+    public void buttonClicked(View v) {
+        if (mSlidingLayer.isOpened()) {
+            mSlidingLayer.closeLayer(true);
+        }else{
+            mSlidingLayer.openLayer(true);
+        }
+    }
 
     @Override
     protected int getLayoutResourceId() {
@@ -65,6 +98,124 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
+
+        mSlidingLayer.setOnInteractListener(new SlidingLayer.OnInteractListener() {
+            @Override
+            public void onOpen() {
+
+            }
+
+            @Override
+            public void onShowPreview() {
+
+            }
+
+            @Override
+            public void onClose() {
+                mSlidingLayer.setSlidingEnabled(true);
+
+            }
+
+            @Override
+            public void onOpened() {
+                mSlidingLayer.setSlidingEnabled(false);
+
+            }
+
+            @Override
+            public void onPreviewShowed() {
+
+            }
+
+            @Override
+            public void onClosed() {
+
+            }
+        });
+
+
+
+
+
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+
+        for (int i=0; i<4; i++){
+
+            // inside your loop:
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(coord[i])
+                    .title(titleArr[i])
+                    .icon(BitmapDescriptorFactory
+                            .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i] + "_blank", null, null))));
+
+            markers.add(marker);
+
+
+        }
+
+
+        // Move the camera instantly to hamburg with a zoom of 15.
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 10));
+
+
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                for(int i = 0; i<4; i++){
+                    if(marker.equals(markers.get(i))){
+                        marker.setIcon(BitmapDescriptorFactory
+                                .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i], null, null)));
+
+                    }
+                    else{
+                        markers.get(i).setIcon(BitmapDescriptorFactory
+                                .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i] + "_blank", null, null)));
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+
+
+        map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                // Getting view from the layout file map_info_window
+                View v = getLayoutInflater().inflate(R.layout.map_info_window, null);
+
+                // Getting reference to the TextView
+                TextView infoWindow = (TextView) v.findViewById(R.id.tv_place_name);
+
+                // Setting the title
+                infoWindow.setText(marker.getTitle());
+
+                // Returning the view containing InfoWindow contents
+                return v;
+
+            }
+        });
+
+
+
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         GlobalVars.detailMenuItems = new ArrayList<>();
 //        GlobalVars.detailMenuItems.add("כתבות");
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
@@ -79,7 +230,26 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         App.getInstance().setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
 
         listView.setAdapter(adapter);
+
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (mSlidingLayer.isOpened()) {
+                    mSlidingLayer.closeLayer(true);
+                    return true;
+                }
+
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
+    }
+
+
+
 
 
 
@@ -185,7 +355,7 @@ public class Detail_City_Activity extends MyDrawerLayoutActivity {
         }
 
         else if (mPosition > infoItemPosition) {   //pos 7
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainListActivity.BannersArray.get(mPosition-infoItemPosition-1).getUrlAndroid()));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition-infoItemPosition-1).getUrlAndroid()));
             startActivity(browserIntent);
 
         }

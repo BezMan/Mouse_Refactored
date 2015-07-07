@@ -44,7 +44,7 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
 /**
  * Created by bez on 10/05/2015.
  */
-public class MainListActivity extends MyDrawerLayoutActivity {
+public class MainGridActivity extends MyBaseDrawerActivity {
 
     GridViewWithHeaderAndFooter gridView;
     public ArrayList<CitiesModel> CitiesArray = new ArrayList<>();
@@ -300,7 +300,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(MainListActivity.this, R.style.full_screen_dialog);
+            mProgressDialog = new ProgressDialog(MainGridActivity.this, R.style.full_screen_dialog);
             mProgressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             mProgressDialog.setMessage("Downloading file..");
             mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -386,7 +386,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            mSavingDialog = new ProgressDialog(MainListActivity.this, R.style.full_screen_dialog);
+            mSavingDialog = new ProgressDialog(MainGridActivity.this, R.style.full_screen_dialog);
             mSavingDialog.setMessage("Saving city data..");
             mSavingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mSavingDialog.setCancelable(true);
@@ -421,7 +421,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
         @Override
         protected void onPostExecute(String unused) {
             mSavingDialog.dismiss();
-            startActivity(new Intent(MainListActivity.this, MainListActivity.class));
+            startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
             finish();
         }
 
@@ -520,7 +520,7 @@ public class MainListActivity extends MyDrawerLayoutActivity {
 
 
     private void nextActivity(File file, String updateDate) {
-        Intent cityFolderNameIntent = new Intent(MainListActivity.this, Detail_City_Activity.class);
+        Intent cityFolderNameIntent = new Intent(MainGridActivity.this, Detail_City_Activity.class);
         cityFolderNameIntent.putExtra("cityFolderName", file.toString());
 //        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);

@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.MainListActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.MainGridActivity;
 import com.comrax.mouseappandroid.model.CitiesModel;
 
 import java.io.File;
@@ -163,7 +163,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
 
         @Override
         public void onClick(View arg0) {
-            MainListActivity cla = (MainListActivity) _activity;
+            MainGridActivity cla = (MainGridActivity) _activity;
             cla.onListItemClick(mPosition);
         }
     }

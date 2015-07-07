@@ -223,7 +223,7 @@ public class SplashActivity extends Activity {
 
 
     private void nextActivity() {
-        startActivity(new Intent(SplashActivity.this, MainListActivity.class));
+        startActivity(new Intent(SplashActivity.this, MainGridActivity.class));
         finish();
 
     }
