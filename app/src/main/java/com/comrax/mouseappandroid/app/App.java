@@ -12,8 +12,12 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
-    private boolean StaticFragVal =false;
     private String CityName;
+
+    private String BoneHotel;
+    private String BoneRest;
+    private String BoneShop;
+    private String BoneTour;
 
     private static App _instance;
 
@@ -27,6 +31,41 @@ public class App extends Application {
         }
         return _instance;
     }
+
+
+
+    public String getBoneTour() {
+        return BoneTour;
+    }
+
+    public void setBoneTour(String boneTour) {
+        BoneTour = boneTour;
+    }
+
+    public String getBoneHotel() {
+        return BoneHotel;
+    }
+
+    public void setBoneHotel(String boneHotel) {
+        BoneHotel = boneHotel;
+    }
+
+    public String getBoneRest() {
+        return BoneRest;
+    }
+
+    public void setBoneRest(String boneRest) {
+        BoneRest = boneRest;
+    }
+
+    public String getBoneShop() {
+        return BoneShop;
+    }
+
+    public void setBoneShop(String boneShop) {
+        BoneShop = boneShop;
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

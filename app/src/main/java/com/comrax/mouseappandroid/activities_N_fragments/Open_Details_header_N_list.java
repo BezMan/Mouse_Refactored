@@ -79,7 +79,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         App myData = App.getInstance();
         Log.wtf("myClick", " " + myData.get_objId() + " " + myData.get_boneId() + " " + myData.get_cityId());
 
-        cursor = new DBTools(this).getPlaceItem(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myData.get_cityId(), DBConstants.boneId, myData.get_boneId(), DBConstants.objId, myData.get_objId());
+        cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myData.get_cityId(), DBConstants.boneId, myData.get_boneId(), DBConstants.objId, myData.get_objId());
 
         Bundle bundle = new Bundle();
         bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));

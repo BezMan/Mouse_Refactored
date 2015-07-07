@@ -303,6 +303,16 @@ public class DBTools extends SQLiteOpenHelper {
         return res;
     }
 
+
+    public Cursor getData(String TableName, String checkColumn1, String checkVal1) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "='" + checkVal1 + "'";
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+
+
     public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
         String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "='" + checkVal1 + "' AND " + checkColumn2 + "='" + checkVal2 + "'" ;
@@ -312,18 +322,10 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getCurrentCityPlacesTable(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
-        SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "=" + checkVal2;
-        Cursor cursor = database.rawQuery(sql, null);
-        cursor.moveToFirst();
 
-        return cursor;
-    }
-
-    public Cursor getPlaceItem(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2, String checkColumn3, String checkVal3) {
+    public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2, String checkColumn3, String checkVal3) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 +" AND "+ checkColumn2+ "=" + checkVal2 +" AND "+ checkColumn3+ "=" + checkVal3;
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "='" + checkVal1 +"' AND "+ checkColumn2+ "='" + checkVal2 +"' AND "+ checkColumn3+ "='" + checkVal3 + "'";
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
 
@@ -343,12 +345,6 @@ public class DBTools extends SQLiteOpenHelper {
         return cursor;
     }
 
-
-//    public void deleteRow(String TableName, String checkColumn1, String checkVal1) {
-//        SQLiteDatabase database = this.getWritableDatabase();
-//        String sql = "DELETE FROM " + TableName + " WHERE " + checkColumn1 + "=" + checkVal1 ;
-//        database.rawQuery(sql, null);
-//    }
 
     public int deleteRow(String TableName, String KEY_NAME, String VALUE) {
         SQLiteDatabase database = this.getWritableDatabase();

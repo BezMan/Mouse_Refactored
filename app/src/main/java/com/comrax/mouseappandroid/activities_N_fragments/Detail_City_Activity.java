@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
+import com.comrax.mouseappandroid.model.MapMarkerModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -63,18 +65,20 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private SlidingLayer mSlidingLayer;
 
-    static final LatLng HAMBURG = new LatLng(53.558, 9.927);
+    private App myInstance = App.getInstance();
 
     private GoogleMap map;
 
+    private ArrayList<MapMarkerModel> markerArray;
 
-    String[] titleArr = {"aaa","bbb","ccc","ddd"};
     String[] icon = {"hotel","rest","shop","tour"};
-    LatLng[] coord = {new LatLng(53.5, 10) , new LatLng(53.558, 9.927) , new LatLng(53.551, 9.993) , new LatLng(53.541, 9.983)};
+    private int j;
 
     // before loop:
     List<Marker> markers = new ArrayList<>();
 
+    Marker currentMarker;
+    String myMarkerId;
 
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -91,97 +95,127 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     @Override
     protected String getTextForAppBar() {
-        return  App.getInstance().getCityName();
+        return  myInstance.getCityName();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 
         mSlidingLayer.setOnInteractListener(new SlidingLayer.OnInteractListener() {
             @Override
             public void onOpen() {
-
             }
 
             @Override
             public void onShowPreview() {
-
             }
 
             @Override
             public void onClose() {
                 mSlidingLayer.setSlidingEnabled(true);
-
             }
 
             @Override
             public void onOpened() {
                 mSlidingLayer.setSlidingEnabled(false);
-
             }
 
             @Override
             public void onPreviewShowed() {
-
             }
 
             @Override
             public void onClosed() {
-
             }
         });
 
+        GlobalVars.detailMenuItems = new ArrayList<>();
+//        GlobalVars.detailMenuItems.add("כתבות");
+        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
+        pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
+        listView.addHeaderView(pagerLayout);
+
+
+        setDetailsListItems();
+
+        myInstance.setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
+
+        listView.setAdapter(adapter);
+
+
+        setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
 
 
 
+    }
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+    private void setupMapData(Cursor cursor) {
 
-
-        for (int i=0; i<4; i++){
-
-            // inside your loop:
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .position(coord[i])
-                    .title(titleArr[i])
-                    .icon(BitmapDescriptorFactory
-                            .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i] + "_blank", null, null))));
-
-            markers.add(marker);
-
-
-        }
-
+        String lat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, cityId);
+        String lon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, cityId);
+        LatLng zoomCamera = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
 
         // Move the camera instantly to hamburg with a zoom of 15.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 10));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 
+        markerArray = new ArrayList<>();
+
+        for (int i=0; i<cursor.getCount(); cursor.moveToNext(), i++) {
+            final MapMarkerModel mapItem = new MapMarkerModel();
+            mapItem.setBoneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+            mapItem.setPlaceName(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            mapItem.setLatitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat)));
+            mapItem.setLongitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon)));
+
+            if (!mapItem.getLatitude().equals("")) {
+
+                // inside your loop:
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(new LatLng(Double.parseDouble(mapItem.getLatitude()), Double.parseDouble(mapItem.getLongitude())))
+                        .title(mapItem.getPlaceName()));
+
+                if (mapItem.getBoneId().equals(myInstance.getBoneHotel())) j = 0;
+                else if (mapItem.getBoneId().equals(myInstance.getBoneRest())) j = 1;
+                else if (mapItem.getBoneId().equals(myInstance.getBoneShop())) j = 2;
+                else j = 3;
+
+                marker.setIcon((BitmapDescriptorFactory
+                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j] + "_blank", null, null))));
+
+                markers.add(marker);
+                markerArray.add(mapItem);
+
+            }
+
+            else{
+                Toast.makeText(getApplicationContext(), ""+mapItem.getLatitude(), Toast.LENGTH_LONG).show();
+            }
+        }
 
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                for(int i = 0; i<4; i++){
-                    if(marker.equals(markers.get(i))){
-                        marker.setIcon(BitmapDescriptorFactory
-                                .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i], null, null)));
-
-                    }
-                    else{
-                        markers.get(i).setIcon(BitmapDescriptorFactory
-                                .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[i] + "_blank", null, null)));
-
-                    }
+                if (currentMarker != null) {
+                    currentMarker.setIcon(BitmapDescriptorFactory
+                            .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j] + "_blank", null, null)));
                 }
+                currentMarker = marker;
+                marker.setIcon(BitmapDescriptorFactory
+                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j], null, null)));
 
                 return false;
             }
         });
-
 
 
         map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -208,30 +242,14 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         });
 
 
-
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        GlobalVars.detailMenuItems = new ArrayList<>();
-//        GlobalVars.detailMenuItems.add("כתבות");
-        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
-        pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
-        listView.addHeaderView(pagerLayout);
-
-
-        setDetailsListItems();
-
-        App.getInstance().setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
-
-        listView.setAdapter(adapter);
-
     }
+
 
 
     @Override
@@ -287,13 +305,30 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                     }
                 }
                 else {  //get From Json data//
-                    JSONObject menuItem = menuArray.getJSONObject(m++);
+                    JSONObject menuItem = menuArray.getJSONObject(m);
+                    String boneId = menuItem.getString("boneId");
+                    switch (m){
+                        case 0:
+                            myInstance.setBoneHotel(boneId);
+                            break;
+                        case 1:
+                            myInstance.setBoneShop(boneId);
+                            break;
+                        case 2:
+                            myInstance.setBoneRest(boneId);
+                            break;
+                        case 3:
+                            myInstance.setBoneTour(boneId);
+                            break;
+                    }
+
+
                     listItem.title = (menuItem.getString("name"));
                     listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
-                    listItem.boneId = (menuItem.getString("boneId"));
+                    listItem.boneId = (boneId);
 
                     GlobalVars.detailMenuItems.add(listItem.title);
-
+                    m++;
                 }
                 items.add(listItem);
             }
@@ -362,8 +397,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
         else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);
-            App.getInstance().set_boneId(items.get(mPosition).boneId);
-            App.getInstance().set_boneIdTitle(items.get(mPosition).title);
+            myInstance.set_boneId(items.get(mPosition).boneId);
+            myInstance.set_boneIdTitle(items.get(mPosition).title);
             startActivity(intent);
 
         }
@@ -381,10 +416,10 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 //        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
 
         CITY_FOLDER_PATH = dataFileIntent.getStringExtra("cityFolderName");
-        App.getInstance().set_cityFolderName(CITY_FOLDER_PATH);
+        myInstance.set_cityFolderName(CITY_FOLDER_PATH);
 
         cityId = CITY_FOLDER_PATH.substring(CITY_FOLDER_PATH.length() - 4, CITY_FOLDER_PATH.length());
-        App.getInstance().set_cityId(cityId);
+        myInstance.set_cityId(cityId);
 
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(CITY_FOLDER_PATH + "/" + cityId + "_mainPageArticles.json");
 

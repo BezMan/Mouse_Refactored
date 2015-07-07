@@ -258,7 +258,7 @@ public class SimpleStikkyFragment extends MyBaseFragment {
 
         String cityId = App.getInstance().get_cityId();
         String boneId = App.getInstance().get_boneId();
-        Cursor cursor = new DBTools(getActivity()).getCurrentCityPlacesTable(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
+        Cursor cursor = new DBTools(getActivity()).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
 
         resultsTxtView.setText("התקבלו " + cursor.getCount() + " תוצאות");
 
