@@ -27,11 +27,11 @@
 
         <ImageButton
             android:id="@+id/image_burger"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="8dp"
+            android:padding="9dp"
             android:src="@drawable/burger"
             android:scaleType="fitXY"
             android:background="@color/Achbar_green"
@@ -46,6 +46,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="8dp"
+            android:layout_marginRight="9dp"
             android:src="@drawable/icon_info"
             android:scaleType="fitXY"
             android:background="@color/Achbar_green"

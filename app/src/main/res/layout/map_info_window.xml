@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corners_layout"
+    >
 
     <TextView
         android:id="@+id/tv_place_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/coin_1"/>
+        android:drawableRight="@drawable/icon_info"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
 
 
 </LinearLayout>

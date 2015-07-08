@@ -60,13 +60,23 @@
                     />
 
 
+                <View
+                    android:id="@+id/blackLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="@color/Black"
+                    android:layout_below = "@+id/map"
+                    >
+
+                </View>
                 <Button
                     android:id="@+id/buttonToggleDrawer"
                     android:onClick="buttonClicked"
-                    android:text="OPEN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below = "@+id/map" />
+                    android:layout_width="92dp"
+                    android:layout_height="40dp"
+                    android:layout_below = "@+id/blackLine"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/map_btn"/>
 
             </RelativeLayout>
 
