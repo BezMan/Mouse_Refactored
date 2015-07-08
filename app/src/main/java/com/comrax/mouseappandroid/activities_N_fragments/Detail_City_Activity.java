@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -242,10 +244,51 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+                Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString("hebName", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+                bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.description)));
+                bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+                bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
+
+                bundle.putString("phone", cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
+                bundle.putString("activityHours", cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
+                bundle.putString("publicTransportation", cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
+                bundle.putString("responses", cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+
+                bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+
+
+                PlaceFragment placeFragment = new PlaceFragment();
+                //placeFragment.setDelegate(FavoritesActivity.this);
+                placeFragment.setArguments(bundle);
+                loadFragmentWithBackStack(placeFragment, "placeTag");
+
+                closeSlidingMapPanel();
             }
         });
     }
+
+    private void closeSlidingMapPanel() {
+        if (mSlidingLayer.isOpened()) {
+            mSlidingLayer.closeLayer(true);
+        }
+    }
+
+
+    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, fragment, fragTag)
+                .addToBackStack(fragTag)
+                .commit();
+
+    }
+
 
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
@@ -620,5 +663,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     }
 
-
+    @Nullable
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
 }
