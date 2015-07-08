@@ -12,16 +12,18 @@
 
         <include layout="@layout/app_bar" />
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/color_header_title" />
+            <include layout="@layout/color_bone_title" />
 
             <FrameLayout
             android:id="@+id/layout_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+                android:layout_below="@+id/bone_title">
 
         </FrameLayout>
 
