@@ -222,22 +222,19 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             @Override
             public View getInfoWindow(Marker marker) {
                 // Getting view from the layout file map_info_window
-                View v = getLayoutInflater().inflate(R.layout.map_info_layout, null);
+                View v = getLayoutInflater().inflate(R.layout.map_info_window, null);
+
+                // Setting the title
+                TextView infoWindow = (TextView) v.findViewById(R.id.tv_place_name);
+                infoWindow.setText(marker.getTitle() + "   ");
+
+                // Returning the view containing InfoWindow contents
                 return v;
             }
 
             @Override
             public View getInfoContents(Marker marker) {
-
                 return null;
-//                // Getting reference to the TextView
-//                TextView infoWindow = (TextView) v.findViewById(R.id.tv_place_name);
-//
-//                // Setting the title
-//                infoWindow.setText(marker.getTitle() + "\t");
-//
-//                // Returning the view containing InfoWindow contents
-
             }
         });
 
