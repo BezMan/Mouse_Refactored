@@ -62,7 +62,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     List<GroupItem> items;
 
-
     private SlidingLayer mSlidingLayer;
 
     private App myInstance = App.getInstance();
@@ -71,8 +70,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private ArrayList<MapMarkerModel> markerArray;
 
-    String[] icon = {"hotel","rest","shop","tour"};
-    private int j;
+    String[] icon = {"hotel", "rest", "shop", "tour"};
 
     // before loop:
     List<Marker> markers = new ArrayList<>();
@@ -83,7 +81,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
             mSlidingLayer.closeLayer(true);
-        }else{
+        } else {
             mSlidingLayer.openLayer(true);
         }
     }
@@ -95,7 +93,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     @Override
     protected String getTextForAppBar() {
-        return  myInstance.getCityName();
+        return myInstance.getCityName();
     }
 
 
@@ -103,7 +101,35 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        GlobalVars.detailMenuItems = new ArrayList<>();
+//        GlobalVars.detailMenuItems.add("כתבות");
+        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
+        pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
+        listView.addHeaderView(pagerLayout);
+
+
+        setDetailsListItems();
+
+        myInstance.setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
+
+        listView.setAdapter(adapter);
+
+        setupInitCityMap();
+    }
+
+
+    private void setupInitCityMap() {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+        // Move the camera instantly to current city with a zoom of 10.
+        String cityLat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, cityId);
+        String cityLon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, cityId);
+        LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 
@@ -124,6 +150,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             @Override
             public void onOpened() {
                 mSlidingLayer.setSlidingEnabled(false);
+                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
             }
 
             @Override
@@ -134,46 +161,16 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             public void onClosed() {
             }
         });
-
-        GlobalVars.detailMenuItems = new ArrayList<>();
-//        GlobalVars.detailMenuItems.add("כתבות");
-        listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
-        pager = (ViewPager) pagerLayout.findViewById(R.id.viewpager);
-        listView.addHeaderView(pagerLayout);
-
-
-        setDetailsListItems();
-
-        myInstance.setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
-
-        listView.setAdapter(adapter);
-
-
-        setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
-
-
-
     }
 
+
     private void setupMapData(Cursor cursor) {
-
-        // Move the camera instantly to current city with a zoom of 10.
-        String lat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, cityId);
-        String lon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, cityId);
-        LatLng zoomCamera = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
-
         markerArray = new ArrayList<>();
 
-        for (int i=0; i<cursor.getCount(); cursor.moveToNext(), i++) {
+        for (int i = 0; i < cursor.getCount(); cursor.moveToNext(), i++) {
             final MapMarkerModel mapItem = new MapMarkerModel();
             mapItem.setBoneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
             mapItem.setPlaceName(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-//            mapItem.setLatitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat)));
-//            mapItem.setLongitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon)));
-
 
             String itemLatitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
             String itemLongitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
@@ -185,22 +182,15 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                         .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
-                if (mapItem.getBoneId().equals(myInstance.getBoneHotel())) j = 0;
-                else if (mapItem.getBoneId().equals(myInstance.getBoneRest())) j = 1;
-                else if (mapItem.getBoneId().equals(myInstance.getBoneShop())) j = 2;
-                else j = 3;
+                String currentIcon = getIconByBoneId(mapItem.getBoneId());
 
                 marker.setIcon((BitmapDescriptorFactory
-                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j] + "_blank", null, null))));
+                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon + "_blank", null, null))));
 
                 markers.add(marker);
                 markerArray.add(mapItem);
-
             }
 
-            else{
-                Toast.makeText(getApplicationContext(), ""+mapItem.getLatitude(), Toast.LENGTH_LONG).show();
-            }
         }
 
 
@@ -210,7 +200,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
                 int currIndex = markers.indexOf(marker);
                 String currBoneId = markerArray.get(currIndex).getBoneId();
-                String currName = markerArray.get(currIndex).getPlaceName();
+//                String currName = markerArray.get(currIndex).getPlaceName();
 
                 String currentIcon = getIconByBoneId(currBoneId);
 
@@ -261,16 +251,13 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
     private String getIconByBoneId(String boneId) {
-        if (boneId.equals(myInstance.getBoneHotel())){
+        if (boneId.equals(myInstance.getBoneHotel())) {
             return icon[0];
-        }
-        else if(boneId.equals(myInstance.getBoneRest())){
+        } else if (boneId.equals(myInstance.getBoneRest())) {
             return icon[1];
-        }
-        else if(boneId.equals(myInstance.getBoneShop())){
+        } else if (boneId.equals(myInstance.getBoneShop())) {
             return icon[2];
-        }
-        else {
+        } else {
             return icon[3];
         }
     }
@@ -289,10 +276,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 return super.onKeyDown(keyCode, event);
         }
     }
-
-
-
-
 
 
     private void setExpandableList() {
@@ -327,11 +310,10 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                             listItem.items.add(child);
                         }
                     }
-                }
-                else {  //get From Json data//
+                } else {  //get From Json data//
                     JSONObject menuItem = menuArray.getJSONObject(m);
                     String boneId = menuItem.getString("boneId");
-                    switch (m){
+                    switch (m) {
                         case 0:
                             myInstance.setBoneHotel(boneId);
                             break;
@@ -407,19 +389,13 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
         if (mPosition == 0) {                           //pos 0
 
-        }
+        } else if (mPosition == infoItemPosition - 1) {   //pos 5
 
-        else if (mPosition == infoItemPosition - 1) {   //pos 5
-
-        }
-
-        else if (mPosition > infoItemPosition) {   //pos 7
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition-infoItemPosition-1).getUrlAndroid()));
+        } else if (mPosition > infoItemPosition) {   //pos 7
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition - infoItemPosition - 1).getUrlAndroid()));
             startActivity(browserIntent);
 
-        }
-
-        else {                                         //pos 1-4
+        } else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);
             myInstance.set_boneId(items.get(mPosition).boneId);
             myInstance.set_boneIdTitle(items.get(mPosition).title);
@@ -432,7 +408,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     public void onInfoChildItemClick(int mPosition) {
         Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
     }
-
 
 
     private void setDetailsListItems() {
@@ -461,10 +436,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         pager.setAdapter(pageAdapter);
 
         //Bind the title indicator to the adapter
-        CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.titles);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.titles);
         indicator.setViewPager(pager);
     }
-
 
 
     private List<Fragment> getFragmentsFromJson(JSONObject jsonData) {
@@ -490,7 +464,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
 
-    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener{
+    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener {
         private List<Fragment> fragments;
 
         public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {

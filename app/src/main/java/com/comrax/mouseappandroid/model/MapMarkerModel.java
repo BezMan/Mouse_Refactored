@@ -7,8 +7,6 @@ public class MapMarkerModel {
 
     private String placeName;
     private String boneId;
-    private String longitude;
-    private String latitude;
 
     public String getPlaceName() {
         return placeName;
@@ -16,22 +14,6 @@ public class MapMarkerModel {
 
     public void setPlaceName(String placeName) {
         this.placeName = placeName;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
     }
 
     public String getBoneId() {
