@@ -78,7 +78,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     List<Marker> markers = new ArrayList<>();
 
     Marker currentMarker;
-    String myMarkerId;
+    String prevIcon;
 
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -159,11 +159,10 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private void setupMapData(Cursor cursor) {
 
+        // Move the camera instantly to current city with a zoom of 10.
         String lat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, cityId);
         String lon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, cityId);
         LatLng zoomCamera = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
-
-        // Move the camera instantly to hamburg with a zoom of 15.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 
         markerArray = new ArrayList<>();
@@ -172,14 +171,18 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             final MapMarkerModel mapItem = new MapMarkerModel();
             mapItem.setBoneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
             mapItem.setPlaceName(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-            mapItem.setLatitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat)));
-            mapItem.setLongitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon)));
+//            mapItem.setLatitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat)));
+//            mapItem.setLongitude(cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon)));
 
-            if (!mapItem.getLatitude().equals("")) {
+
+            String itemLatitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
+            String itemLongitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
+
+            if (!itemLatitude.equals("")) {//latitude not empty val//
 
                 // inside your loop:
                 Marker marker = map.addMarker(new MarkerOptions()
-                        .position(new LatLng(Double.parseDouble(mapItem.getLatitude()), Double.parseDouble(mapItem.getLongitude())))
+                        .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
                 if (mapItem.getBoneId().equals(myInstance.getBoneHotel())) j = 0;
@@ -209,14 +212,16 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 String currBoneId = markerArray.get(currIndex).getBoneId();
                 String currName = markerArray.get(currIndex).getPlaceName();
 
+                String currentIcon = getIconByBoneId(currBoneId);
 
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
-                            .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j] + "_blank", null, null)));
+                            .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + prevIcon + "_blank", null, null)));
                 }
                 currentMarker = marker;
+                prevIcon = currentIcon;
                 marker.setIcon(BitmapDescriptorFactory
-                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + icon[j], null, null)));
+                        .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon, null, null)));
 
                 return false;
             }
@@ -255,6 +260,20 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         });
     }
 
+    private String getIconByBoneId(String boneId) {
+        if (boneId.equals(myInstance.getBoneHotel())){
+            return icon[0];
+        }
+        else if(boneId.equals(myInstance.getBoneRest())){
+            return icon[1];
+        }
+        else if(boneId.equals(myInstance.getBoneShop())){
+            return icon[2];
+        }
+        else {
+            return icon[3];
+        }
+    }
 
 
     @Override
