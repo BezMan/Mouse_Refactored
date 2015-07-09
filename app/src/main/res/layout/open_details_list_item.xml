@@ -140,7 +140,7 @@
             android:layout_width="0dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:src="@drawable/coin_3" />
 
         <TextView
@@ -149,7 +149,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:paddingRight="3dp"
             android:text="מחיר"
             android:textSize="18dp" />

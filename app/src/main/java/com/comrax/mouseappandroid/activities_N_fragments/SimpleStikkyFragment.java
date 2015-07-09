@@ -212,7 +212,7 @@ public class SimpleStikkyFragment extends MyBaseFragment {
 
         StikkyHeaderBuilder.stickTo(mListView)
                 .setHeader(R.id.header, (ViewGroup) getView())
-                .minHeightHeader(90)
+                .minHeightHeader(160)
                 .build();
 
 
