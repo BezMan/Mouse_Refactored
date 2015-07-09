@@ -428,6 +428,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             myInstance.set_boneId(items.get(mPosition).boneId);
             String title = items.get(mPosition).title;
             myInstance.set_boneIdTitle(title);
+            myInstance.setBoneCategoryName(mPosition-1);
             startActivity(intent);
 
         }

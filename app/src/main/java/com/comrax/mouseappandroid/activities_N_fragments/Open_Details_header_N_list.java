@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class Open_Details_header_N_list extends MyBaseDrawerActivity implements MyBaseFragment.MyFragmentDelegate {
 
-    TextView boneTitle;
+    TextView boneText;
     Cursor cursor;
 
     int infoItemPosition;
@@ -38,6 +38,13 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     private SlidingLayer mSlidingLayer;
 
     private App myInstance = App.getInstance();
+
+
+
+    public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A,0xFF94C306};
+
+
+
 
     private GoogleMap map;
 
@@ -67,13 +74,20 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         fragment.setDelegate(this);
         initLoadFragment(fragment, "ListTag");
 
-
-        boneTitle = (TextView) findViewById(R.id.bone_title);
-        boneTitle.setText(myInstance.get_boneIdTitle());
-
-
+        setBoneTitleAndColor();
 
         setupInitCityMap();
+    }
+
+
+
+    private void setBoneTitleAndColor() {
+        boneText = (TextView) findViewById(R.id.bone_title);
+        String boneTitle = myInstance.get_boneIdTitle();
+        boneText.setText(boneTitle);
+        int pos = myInstance.getBoneCategoryName();
+        boneText.setBackgroundColor(boneColors[pos]);
+//        boneText.setBackgroundColor(Color.GREEN);
     }
 
 

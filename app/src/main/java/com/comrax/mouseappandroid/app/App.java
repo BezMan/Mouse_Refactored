@@ -12,6 +12,8 @@ public class App extends Application {
     private String _objId;
     private String _cityFolderName;
     private String _boneIdTitle;
+    private int BoneCategoryName;
+
     private String CityName;
 
     private String BoneHotel;
@@ -33,6 +35,13 @@ public class App extends Application {
     }
 
 
+    public int getBoneCategoryName() {
+        return BoneCategoryName;
+    }
+
+    public void setBoneCategoryName(int boneCategoryName) {
+        BoneCategoryName = boneCategoryName;
+    }
 
     public String getBoneTour() {
         return BoneTour;
