@@ -214,7 +214,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFrag
         String[] titles = new String[mySize];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
-        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.categoryName, titles[index]);
+        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.boneCategoryName, titles[index]);
 
         allItems[index] = new FavoritesModel[cursor.getCount()];
 
@@ -242,19 +242,8 @@ public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFrag
                 Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
 
                 Bundle bundle = new Bundle();
-                bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-                bundle.putString("hebName", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-                bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.description)));
-                bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-                bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
-
-                bundle.putString("phone", cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-                bundle.putString("activityHours", cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-                bundle.putString("publicTransportation", cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-                bundle.putString("responses", cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-
-                bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-
+                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 PlaceFragment placeFragment = new PlaceFragment();
                 //placeFragment.setDelegate(FavoritesActivity.this);

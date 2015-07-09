@@ -82,19 +82,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myData.get_cityId(), DBConstants.boneId, myData.get_boneId(), DBConstants.objId, myData.get_objId());
 
         Bundle bundle = new Bundle();
-        bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-        bundle.putString("hebName", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-        bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
-        bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-        bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
-
-        bundle.putString("phone", cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-        bundle.putString("activityHours", cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-        bundle.putString("publicTransportation", cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-        bundle.putString("responses", cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-
-        bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-
+        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
         PlaceFragment placeFragment = new PlaceFragment();
         placeFragment.setDelegate(this);

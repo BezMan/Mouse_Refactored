@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -63,6 +64,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     String fileName, updateDate;
     File sourceZipFile, destinationFolder;
 
+    ArrayList<Pair<String, String>> boneId_boneName = new ArrayList<>();
 
     @Override
     protected int getLayoutResourceId() {
@@ -485,12 +487,29 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                             dbTools.insertArticleTable(item);
                         }
                     }
+
+
+
                 }
                 //on purpose after the whole first file loop, adding to the table data//
                 for (File child : directoryListing) {
-                    if (child.toString().contains("PlacesCoordinatesList")) {
+
+                    if (child.toString().contains("_menu")) {
+                        JSONObject jsonMenuList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonMenuList.getJSONArray("menu");
+                        for (int i = 0; i < data.length() - 1; i++) {
+                            JSONObject item = data.getJSONObject(i);
+
+                            boneId_boneName.add(new Pair<>(item.getString("boneId"), item.getString("name")));
+
+                        }
+                    }
+                }
+
+                            for (File child : directoryListing) {
+
+                                if (child.toString().contains("PlacesCoordinatesList")) {
                     JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
-//                        cityObject.put(DBConstants.placesCoordinatesList, jsonPlacesCoordinatesList.toString());
                             JSONArray data = jsonPlacesCoordinatesList.getJSONArray("cityPlcesCoordinates");
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
@@ -499,9 +518,18 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                             boneId = boneId.substring(boneId.lastIndexOf("/")+1);
                             boneId = boneId.substring(5, 9);
 
+
+                            for(int j = 0; j<boneId_boneName.size(); j++){
+                                if(boneId.equals(boneId_boneName.get(j).first)){
+                                    item.put(DBConstants.boneCategoryName, boneId_boneName.get(j).second);
+                                }
+                            }
+
+
                             dbTools.addDataToTable(DBConstants.PLACE_TABLE_NAME, item, boneId);
                         }
                     }
+
                 }
 
                 //add extra important data//

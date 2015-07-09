@@ -249,18 +249,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-                bundle.putString("hebName", cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-                bundle.putString("fullDescription", cursor.getString(cursor.getColumnIndex(DBConstants.description)));
-                bundle.putString("address", cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-                bundle.putString("image", cursor.getString(cursor.getColumnIndex(DBConstants.image)));
-
-                bundle.putString("phone", cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-                bundle.putString("activityHours", cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-                bundle.putString("publicTransportation", cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-                bundle.putString("responses", cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-
-                bundle.putString("type", cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-
 
                 PlaceFragment placeFragment = new PlaceFragment();
                 //placeFragment.setDelegate(FavoritesActivity.this);

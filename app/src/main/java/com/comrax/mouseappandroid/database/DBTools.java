@@ -46,6 +46,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.price + " INTEGER, "
                 + DBConstants.boneId + " TEXT, "
+                + DBConstants.boneCategoryName + " TEXT, "
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId + " TEXT, "
@@ -85,8 +86,8 @@ public class DBTools extends SQLiteOpenHelper {
 
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.boneId + " TEXT, "
+                + DBConstants.boneCategoryName + " TEXT, "
                 + DBConstants.objId+ " TEXT, "
-                + DBConstants.categoryName + " TEXT, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
@@ -222,43 +223,34 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public void insertFavorite(JSONObject item) {
+    public void insertFavorite(Cursor cursor) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        try {
+        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + cursor.getString(cursor.getColumnIndex(DBConstants.name)) +"' AND "+ DBConstants.cityId +"='"+ cursor.getString(cursor.getColumnIndex(DBConstants.cityId)) + "'";
+        Cursor checkCursor = database.rawQuery(sql, null);
 
-        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + item.getString(DBConstants.name) +"' AND "+ DBConstants.image +"='"+ item.getString(DBConstants.image) + "'";
-        Cursor cursor = database.rawQuery(sql, null);
-
-        if(cursor.getCount() == 0){
-            values.put(DBConstants.cityId, item.getString(DBConstants.cityId));
-            values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-            values.put(DBConstants.objId, item.getString(DBConstants.objId));
-            values.put(DBConstants.categoryName, item.getString(DBConstants.categoryName));
-            values.put(DBConstants.type, item.getString(DBConstants.type));
-            values.put(DBConstants.name, item.getString(DBConstants.name));
-            values.put(DBConstants.hebrewName, item.getString(DBConstants.hebrewName));
-            values.put(DBConstants.description, item.getString(DBConstants.description));
-            values.put(DBConstants.address, item.getString(DBConstants.address));
-            values.put(DBConstants.phone, item.getString(DBConstants.phone));
-            values.put(DBConstants.activityHours, item.getString(DBConstants.activityHours));
-            values.put(DBConstants.publicTransportation, item.getString(DBConstants.publicTransportation));
-            values.put(DBConstants.responses, item.getString(DBConstants.responses));
-            values.put(DBConstants.image, item.getString(DBConstants.image));
+        if(checkCursor.getCount() == 0){
+            values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
+            values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+            values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+            values.put(DBConstants.boneCategoryName, cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+            values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+            values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+            values.put(DBConstants.description, cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
+            values.put(DBConstants.address, cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+            values.put(DBConstants.phone, cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
+            values.put(DBConstants.activityHours, cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
+            values.put(DBConstants.publicTransportation, cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
+            values.put(DBConstants.responses, cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+            values.put(DBConstants.image, cursor.getString(cursor.getColumnIndex(DBConstants.image)));
 
             database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
         }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         database.close();
-
-
-
     }
 
 
@@ -280,6 +272,7 @@ public class DBTools extends SQLiteOpenHelper {
             ContentValues newValues = new ContentValues();
             newValues.put(DBConstants.centerCoordinateLat, item.getString(DBConstants.centerCoordinateLat));
             newValues.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
+            newValues.put(DBConstants.boneCategoryName, item.getString(DBConstants.boneCategoryName));
             String condition = DBConstants.objId + "=" + item.getString(DBConstants.objId) +" AND "+ DBConstants.boneId +"="+ boneId;
             database.update(TableName, newValues, condition, null);
 

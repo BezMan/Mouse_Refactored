@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,9 +23,6 @@ import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 
 public class PlaceFragment extends MyBaseFragment {
@@ -42,6 +40,7 @@ public class PlaceFragment extends MyBaseFragment {
     RatingBar rating;
 
     DBTools dbTools;
+    Cursor cursor;
 
     public PlaceFragment() {
         // Required empty public constructor
@@ -61,6 +60,7 @@ public class PlaceFragment extends MyBaseFragment {
 
         dbTools = new DBTools(getActivity());
         bundle = this.getArguments();
+        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, bundle.getString(DBConstants.name, null), DBConstants.objId, bundle.getString(DBConstants.objId, null));
 
         setUpperData();
 
@@ -74,16 +74,16 @@ public class PlaceFragment extends MyBaseFragment {
 
 
     private void setUpperData() {
-        imagePath = bundle.getString("image", null);
-        name = bundle.getString("name", null);
-        hebName = bundle.getString("hebName", null);
-        description = bundle.getString("fullDescription", null);
-        address = bundle.getString("address", null);
-        type = bundle.getString("type", null);
-        phone = bundle.getString("phone", null);
-        activityHours = bundle.getString("activityHours", null);
-        publicTransportation = bundle.getString("publicTransportation", null);
-        responses = bundle.getString("responses", null);
+        imagePath = cursor.getString(cursor.getColumnIndex(DBConstants.image));
+        name = cursor.getString(cursor.getColumnIndex(DBConstants.name));
+        hebName = cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName));
+        description = cursor.getString(cursor.getColumnIndex(DBConstants.description));
+        address = cursor.getString(cursor.getColumnIndex(DBConstants.address));
+        type = cursor.getString(cursor.getColumnIndex(DBConstants.type));
+        phone = cursor.getString(cursor.getColumnIndex(DBConstants.phone));
+        activityHours = cursor.getString(cursor.getColumnIndex(DBConstants.activityHours));
+        publicTransportation = cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation));
+        responses = cursor.getString(cursor.getColumnIndex(DBConstants.responses));
 
         String fullDescription = new StringBuilder().append("<![CDATA[")
                 .append("<html><head><style>")
@@ -95,7 +95,7 @@ public class PlaceFragment extends MyBaseFragment {
                 .toString();
 
 
-        ImageView headImageView = (ImageView)getActivity().findViewById(R.id.detailed_place_head_imageView);
+        ImageView headImageView = (ImageView) getActivity().findViewById(R.id.detailed_place_head_imageView);
 
 
         File file = new File(App.getInstance().get_cityFolderName() + "/" + imagePath);
@@ -104,23 +104,23 @@ public class PlaceFragment extends MyBaseFragment {
             headImageView.setImageBitmap(bitmap);
         }
 
-        TextView titleView = (TextView)getActivity().findViewById(R.id.detailed_place_english_title);
+        TextView titleView = (TextView) getActivity().findViewById(R.id.detailed_place_english_title);
         titleView.setText(name);
 
-        TextView hebTitleView = (TextView)getActivity().findViewById(R.id.detailed_place_hebrew_title);
+        TextView hebTitleView = (TextView) getActivity().findViewById(R.id.detailed_place_hebrew_title);
         hebTitleView.setText(hebName);
 
-        TextView addressView = (TextView)getActivity().findViewById(R.id.detailed_place_address);
+        TextView addressView = (TextView) getActivity().findViewById(R.id.detailed_place_address);
         addressView.setText(address);
 
-        TextView mainDetailedText = (TextView)getActivity().findViewById(R.id.detailed_place_main_text);
+        TextView mainDetailedText = (TextView) getActivity().findViewById(R.id.detailed_place_main_text);
         String html = Html.fromHtml(fullDescription).toString();
         String html2 = Html.fromHtml(html).toString();
 
         mainDetailedText.setText(Html.fromHtml(html2));
 
 
-        rating=(RatingBar)getActivity().findViewById(R.id.open_details_item_ratingBar);
+        rating = (RatingBar) getActivity().findViewById(R.id.open_details_item_ratingBar);
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -129,79 +129,56 @@ public class PlaceFragment extends MyBaseFragment {
         });
 
 
-        Button favoritesBtn = (Button)getActivity().findViewById(R.id.detailed_place_prefs_button);
+        Button favoritesBtn = (Button) getActivity().findViewById(R.id.detailed_place_prefs_button);
         favoritesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put(DBConstants.cityId, App.getInstance().get_cityId());
-                    jsonObject.put(DBConstants.boneId, App.getInstance().get_boneId());
-                    jsonObject.put(DBConstants.objId, App.getInstance().get_objId());
-                    jsonObject.put(DBConstants.categoryName, App.getInstance().get_boneIdTitle());
-                    jsonObject.put(DBConstants.type, type);
-                    jsonObject.put(DBConstants.name, name);
-                    jsonObject.put(DBConstants.hebrewName, hebName);
-                    jsonObject.put(DBConstants.description, description);
-                    jsonObject.put(DBConstants.address, address);
-                    jsonObject.put(DBConstants.phone, phone);
-                    jsonObject.put(DBConstants.activityHours, activityHours);
-                    jsonObject.put(DBConstants.publicTransportation, publicTransportation);
-                    jsonObject.put(DBConstants.responses, responses);
-                    jsonObject.put(DBConstants.image, imagePath);
+                dbTools.insertFavorite(cursor);
+                Toast.makeText(getActivity().getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
 
-                    dbTools.insertFavorite(jsonObject);
-                    Toast.makeText(getActivity().getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity().getApplicationContext(), "נכשל, נסה שוב", Toast.LENGTH_LONG).show();
-
-                }
             }
+
         });
     }
 
 
-
     private void setGraysWithExtras() {
 
-        TextView phoneTitle = (TextView)getActivity().findViewById(R.id.detailed_place_phone_title);
-        TextView activityHoursTitle = (TextView)getActivity().findViewById(R.id.detailed_place_activity_hours_title);
-        TextView publicTransportationTitle = (TextView)getActivity().findViewById(R.id.detailed_place_public_transportation_title);
-        TextView responsesTitle = (TextView)getActivity().findViewById(R.id.detailed_place_responses_title);
+        TextView phoneTitle = (TextView) getActivity().findViewById(R.id.detailed_place_phone_title);
+        TextView activityHoursTitle = (TextView) getActivity().findViewById(R.id.detailed_place_activity_hours_title);
+        TextView publicTransportationTitle = (TextView) getActivity().findViewById(R.id.detailed_place_public_transportation_title);
+        TextView responsesTitle = (TextView) getActivity().findViewById(R.id.detailed_place_responses_title);
 
-        LinearLayout phoneLayout = (LinearLayout)getActivity().findViewById(R.id.detailed_place_phone_layout);
+        LinearLayout phoneLayout = (LinearLayout) getActivity().findViewById(R.id.detailed_place_phone_layout);
 
-        TextView phoneView = (TextView)getActivity().findViewById(R.id.detailed_place_phone_num);
-        TextView activityHoursView = (TextView)getActivity().findViewById(R.id.detailed_place_activity_hours);
-        TextView publicTransportationView = (TextView)getActivity().findViewById(R.id.detailed_place_public_transportation);
-        TextView responsesView = (TextView)getActivity().findViewById(R.id.detailed_place_responses);
+        TextView phoneView = (TextView) getActivity().findViewById(R.id.detailed_place_phone_num);
+        TextView activityHoursView = (TextView) getActivity().findViewById(R.id.detailed_place_activity_hours);
+        TextView publicTransportationView = (TextView) getActivity().findViewById(R.id.detailed_place_public_transportation);
+        TextView responsesView = (TextView) getActivity().findViewById(R.id.detailed_place_responses);
 
 
-
-        if(!phone.equals("")){
+        if (!phone.equals("")) {
             phoneTitle.setVisibility(View.VISIBLE);
             phoneLayout.setVisibility(View.VISIBLE);
             phoneView.setText(phone);
 
         }
 
-        if(!activityHours.equals("")){
+        if (!activityHours.equals("")) {
             activityHoursTitle.setVisibility(View.VISIBLE);
             activityHoursView.setVisibility(View.VISIBLE);
             activityHoursView.setText(activityHours);
 
         }
 
-        if(!publicTransportation.equals("")){
+        if (!publicTransportation.equals("")) {
             publicTransportationTitle.setVisibility(View.VISIBLE);
             publicTransportationView.setVisibility(View.VISIBLE);
             publicTransportationView.setText(publicTransportation);
 
         }
 
-        if(!responses.equals("[]")){
+        if (!responses.equals("[]")) {
             responsesTitle.setVisibility(View.VISIBLE);
             responsesView.setVisibility(View.VISIBLE);
             responsesView.setText(responses);
@@ -211,8 +188,8 @@ public class PlaceFragment extends MyBaseFragment {
 
 
     private void setFooterAd() {
-        ImageView imageButton = (ImageView)getActivity().findViewById(R.id.footer_item_ad);
-        int rand = (int) (Math.random()*10 + 1);
+        ImageView imageButton = (ImageView) getActivity().findViewById(R.id.footer_item_ad);
+        int rand = (int) (Math.random() * 10 + 1);
 
         File file = new File("/sdcard/Mouse_App/Default_master/Images/MenuIcons/" + "320x50_" + rand + ".jpg");
         if (file.exists()) {
@@ -223,39 +200,36 @@ public class PlaceFragment extends MyBaseFragment {
     }
 
 
-    private void setServiceItems(){
+    private void setServiceItems() {
 
         TextView[] textViews = {b1, b2, b3, b4};
         ImageView[] images = {image1, image2, image3, image4};
         LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
 
 
+        for (int i = 0; i < MainGridActivity.BannersArray.size(); i++) {
 
-        for (int i=0; i< MainGridActivity.BannersArray.size(); i++){
-
-                int buttonID = getActivity().getResources().getIdentifier("footer_item_title_" + (i + 1), "id", getActivity().getPackageName());
-                textViews[i] = (TextView) getActivity().findViewById(buttonID);
-                textViews[i].setText(MainGridActivity.BannersArray.get(i).getText());
+            int buttonID = getActivity().getResources().getIdentifier("footer_item_title_" + (i + 1), "id", getActivity().getPackageName());
+            textViews[i] = (TextView) getActivity().findViewById(buttonID);
+            textViews[i].setText(MainGridActivity.BannersArray.get(i).getText());
 
 
-                int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getActivity().getPackageName());
-                images[i] = (ImageView) getActivity().findViewById(imageID);
+            int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getActivity().getPackageName());
+            images[i] = (ImageView) getActivity().findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG());
-                if (file.exists()) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    images[i].setImageBitmap(bitmap);
-                }
-
-                int layoutID = getResources().getIdentifier("footer_item_layout_" + (i + 1), "id", getActivity().getPackageName());
-                layouts[i] = (LinearLayout) getActivity().findViewById(layoutID);
-                layouts[i].setOnClickListener(new OnBannerClick(i));
+            File file = new File("/sdcard/Mouse_App/Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG());
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                images[i].setImageBitmap(bitmap);
             }
+
+            int layoutID = getResources().getIdentifier("footer_item_layout_" + (i + 1), "id", getActivity().getPackageName());
+            layouts[i] = (LinearLayout) getActivity().findViewById(layoutID);
+            layouts[i].setOnClickListener(new OnBannerClick(i));
+        }
 
 
     }
-
-
 
 
     private class OnBannerClick implements View.OnClickListener {
@@ -271,7 +245,6 @@ public class PlaceFragment extends MyBaseFragment {
             startActivity(browserIntent);
         }
     }
-
 
 
 }
