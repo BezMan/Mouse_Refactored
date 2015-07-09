@@ -1,152 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="600px">
+    android:layout_height="510px"
+    android:orientation="vertical">
 
 
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="bottom"
 
         >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="420px"
-            />
+            android:layout_height="420px" />
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/titles"
-            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            app:pageColor="@android:color/darker_gray"
-            app:fillColor="@android:color/white"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/viewpager"
             android:padding="10dp"
-            />
+            app:fillColor="@android:color/white"
+            app:pageColor="@android:color/darker_gray" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150px"
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        android:layout_below="@+id/viewpager"
-        android:background="@color/White"
-
-
-        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager"
+            android:layout_gravity="bottom"
+            android:background="@color/White"
+            android:orientation="vertical"
 
-        <RadioGroup
-            android:id="@+id/myRadioGroup"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
+
             >
 
-            <RadioButton
-                android:id="@+id/btn1"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp"
-                android:background="@drawable/btn_selector"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="הכל"
-                android:textColor="@color/White"
-                android:textSize="19dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/btn2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp"
-                android:background="@drawable/btn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="יקר"
-                android:textColor="@color/White"
-                android:textSize="19dp"
-                />
+                <RadioGroup
+                    android:id="@+id/myRadioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/btn3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp"
-                android:background="@drawable/btn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="בינוני"
-                android:textColor="@color/White"
-                android:textSize="19dp"
-                />
+                    <RadioButton
+                        android:id="@+id/btn1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_selector"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="הכל"
+                        android:textColor="@color/White"
+                        android:textSize="19dp" />
 
-            <RadioButton
-                android:id="@+id/btn4"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp"
-                android:background="@drawable/btn_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="זול"
-                android:textColor="@color/White"
-                android:textSize="19dp"
+                    <RadioButton
+                        android:id="@+id/btn2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="יקר"
+                        android:textColor="@color/White"
+                        android:textSize="19dp" />
 
-                />
-        </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/btn3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="בינוני"
+                        android:textColor="@color/White"
+                        android:textSize="19dp" />
+
+                    <RadioButton
+                        android:id="@+id/btn4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="זול"
+                        android:textColor="@color/White"
+                        android:textSize="19dp"
+
+                        />
+                </RadioGroup>
 
 
-          <ImageView
-              android:layout_width="0dp"
-              android:layout_weight="1.8"
-              android:layout_height="match_parent"
-              android:src="@drawable/sanen2"
-              android:background="@color/Achbar_dark_gray"
-              android:clickable="false"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.8"
+                    android:background="@color/Achbar_dark_gray"
+                    android:clickable="false"
+                    android:src="@drawable/sanen2" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtResultsCount"
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp"
+                android:text="התקבלו"
+                android:textColor="@color/Black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/Black" />
         </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtResultsCount"
-        android:layout_height="60px"
-        android:layout_width="match_parent"
-        android:text="התקבלו"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:paddingRight="10dp"
-        android:textColor="@color/Black"
-        />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/Black"
-            />
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

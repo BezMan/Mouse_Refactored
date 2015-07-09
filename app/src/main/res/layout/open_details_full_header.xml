@@ -11,27 +11,39 @@
 
         <include layout="@layout/app_bar" />
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <include layout="@layout/color_bone_title" />
 
-            <FrameLayout
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/layout_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_below="@+id/bone_title">
 
+
+
+                <com.comrax.mouseappandroid.helpers.AnimatedExpandableListView
+                    android:id="@+id/details_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:groupIndicator="@android:color/transparent"
+                    android:divider="@android:color/transparent"
+                    />
+
             </FrameLayout>
+
 
             <com.wunderlist.slidinglayer.SlidingLayer
                 android:id="@+id/slidingLayer1"
                 android:layout_width="match_parent"
                 android:layout_height="470dp"
+                slidingLayer:stickTo="top"
                 slidingLayer:offsetDistance="50dp"
-                slidingLayer:stickTo="top">
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,24 +52,36 @@
 
                     <fragment
                         android:id="@+id/map"
-                        class="com.google.android.gms.maps.MapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="420dp" />
+                        android:layout_height="420dp"
+                        class="com.google.android.gms.maps.MapFragment"
+                        />
 
 
+                    <View
+                        android:id="@+id/blackLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="5px"
+                        android:background="@color/Black"
+                        android:layout_below = "@+id/map"
+                        >
+
+                    </View>
                     <Button
                         android:id="@+id/buttonToggleDrawer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/map"
                         android:onClick="buttonClicked"
-                        android:text="OPEN" />
+                        android:layout_width="92dp"
+                        android:layout_height="40dp"
+                        android:layout_below = "@+id/blackLine"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_btn"/>
 
                 </RelativeLayout>
 
             </com.wunderlist.slidinglayer.SlidingLayer>
 
         </RelativeLayout>
+
 
     </LinearLayout>
 

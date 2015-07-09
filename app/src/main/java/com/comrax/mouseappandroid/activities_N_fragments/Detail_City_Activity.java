@@ -74,7 +74,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     String[] icon = {"hotel", "rest", "shop", "tour"};
 
-    // before loop:
     List<Marker> markers = new ArrayList<>();
 
     Marker currentMarker;
@@ -127,8 +126,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Move the camera instantly to current city with a zoom of 10.
-        String cityLat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, cityId);
-        String cityLon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, cityId);
+        String cityLat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
+        String cityLon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
         LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 
@@ -420,14 +419,15 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
         } else if (mPosition == infoItemPosition - 1) {   //pos 5
 
-        } else if (mPosition > infoItemPosition) {   //pos 7
+        } else if (mPosition > infoItemPosition) {   //pos 7-10
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition - infoItemPosition - 1).getUrlAndroid()));
             startActivity(browserIntent);
 
         } else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);
             myInstance.set_boneId(items.get(mPosition).boneId);
-            myInstance.set_boneIdTitle(items.get(mPosition).title);
+            String title = items.get(mPosition).title;
+            myInstance.set_boneIdTitle(title);
             startActivity(intent);
 
         }

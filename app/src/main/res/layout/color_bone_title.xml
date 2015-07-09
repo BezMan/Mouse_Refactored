@@ -1,7 +1,7 @@
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="90px"
         android:text="טקסט"
         android:id="@+id/bone_title"
         android:textSize="24dp"
