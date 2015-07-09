@@ -248,7 +248,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
                 Bundle bundle = new Bundle();
-                bundle.putString("name", cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 PlaceFragment placeFragment = new PlaceFragment();
                 //placeFragment.setDelegate(FavoritesActivity.this);
