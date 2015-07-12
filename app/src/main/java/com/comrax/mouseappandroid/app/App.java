@@ -10,6 +10,7 @@ public class App extends Application {
     private String _cityId;
     private String _boneId;
     private String _objId;
+    private String _nsId;
     private String _cityFolderName;
     private String _boneIdTitle;
     private int BoneCategoryName;
@@ -34,6 +35,13 @@ public class App extends Application {
         return _instance;
     }
 
+    public String get_nsId() {
+        return _nsId;
+    }
+
+    public void set_nsId(String _nsId) {
+        this._nsId = _nsId;
+    }
 
     public int getBoneCategoryName() {
         return BoneCategoryName;

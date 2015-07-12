@@ -11,10 +11,19 @@ public class ListModel {
     private  int Price;
     private  float Rating;
     private String ObjId;
+    private String NsId;
+
 
     private String FullDescriptionBody="";
     private String Phone="";
 
+    public String getNsId() {
+        return NsId;
+    }
+
+    public void setNsId(String nsId) {
+        NsId = nsId;
+    }
 
     public String getObjId() {
         return ObjId;

@@ -3,6 +3,7 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -39,12 +40,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     private App myInstance = App.getInstance();
 
-
-
-    public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A,0xFF94C306};
-
-
-
+    public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
 
     private GoogleMap map;
 
@@ -80,14 +76,12 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
-
     private void setBoneTitleAndColor() {
         boneText = (TextView) findViewById(R.id.bone_title);
         String boneTitle = myInstance.get_boneIdTitle();
         boneText.setText(boneTitle);
         int pos = myInstance.getBoneCategoryName();
         boneText.setBackgroundColor(boneColors[pos]);
-//        boneText.setBackgroundColor(Color.GREEN);
     }
 
 
@@ -236,8 +230,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
-
-
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
             return icon[0];
@@ -264,8 +256,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 return super.onKeyDown(keyCode, event);
         }
     }
-
-
 
 
     private void initLoadFragment(final Fragment fragment, String fragTag) {
@@ -301,11 +291,18 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     @Override
     protected String getTextForAppBar() {
-        return  myInstance.getCityName();
+        return myInstance.getCityName();
     }
 
 
     public void onListItemClick() {
+
+        Log.wtf("item id's: ", "city: " + App.getInstance().get_cityId() +
+                        ", bone: " + App.getInstance().get_boneId() +
+                        ", obj: " + App.getInstance().get_objId() +
+                        ", nsId: " + App.getInstance().get_nsId()
+                );
+
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
         Bundle bundle = new Bundle();

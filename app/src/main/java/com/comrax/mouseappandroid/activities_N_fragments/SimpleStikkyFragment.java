@@ -276,6 +276,11 @@ public class SimpleStikkyFragment extends MyBaseFragment {
             lm.setRating(cursor.getFloat(cursor.getColumnIndex(DBConstants.rating)));
 
             lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+            lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+            lm.setNsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+
 //                lm.setLatitude();
 //                lm.setLongitude();
 

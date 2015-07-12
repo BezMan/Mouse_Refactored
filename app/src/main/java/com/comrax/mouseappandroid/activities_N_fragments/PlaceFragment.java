@@ -22,11 +22,15 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
+import com.comrax.mouseappandroid.http.RequestTask;
+import com.comrax.mouseappandroid.http.RequestTaskDelegate;
 
 import java.io.File;
 
-public class PlaceFragment extends MyBaseFragment {
+public class PlaceFragment extends MyBaseFragment implements RequestTaskDelegate {
 
+    int myRating;
+    TextView dareg;
 
     String imagePath, name, hebName, description, address, type,
             phone, activityHours, publicTransportation, responses;
@@ -125,9 +129,18 @@ public class PlaceFragment extends MyBaseFragment {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 //                Toast.makeText(getActivity().getApplicationContext(), "rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
+                myRating = (int) ratingBar.getRating();
             }
         });
 
+
+//        dareg= (TextView)getActivity().findViewById(R.id.open_details_item_dareg_textBtn);
+//        dareg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                daregClicked();
+//            }
+//        });
 
         Button favoritesBtn = (Button) getActivity().findViewById(R.id.detailed_place_prefs_button);
         favoritesBtn.setOnClickListener(new View.OnClickListener() {
@@ -151,11 +164,22 @@ public class PlaceFragment extends MyBaseFragment {
 
         LinearLayout phoneLayout = (LinearLayout) getActivity().findViewById(R.id.detailed_place_phone_layout);
 
-        TextView phoneView = (TextView) getActivity().findViewById(R.id.detailed_place_phone_num);
+
+        final TextView phoneView = (TextView) getActivity().findViewById(R.id.detailed_place_phone_num);
         TextView activityHoursView = (TextView) getActivity().findViewById(R.id.detailed_place_activity_hours);
         TextView publicTransportationView = (TextView) getActivity().findViewById(R.id.detailed_place_public_transportation);
         TextView responsesView = (TextView) getActivity().findViewById(R.id.detailed_place_responses);
 
+
+//        phoneLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent callIntent = new Intent(Intent.ACTION_CALL);
+//                callIntent.setData(Uri.parse("tel:+" + phoneView.getText().toString().trim()));
+//                startActivity(callIntent);
+//            }
+//        });
+//
 
         if (!phone.equals("")) {
             phoneTitle.setVisibility(View.VISIBLE);
@@ -231,6 +255,17 @@ public class PlaceFragment extends MyBaseFragment {
 
     }
 
+    @Override
+    public void onTaskPOSTCompleted(String result, RequestTask task) {
+
+    }
+
+    @Override
+    public void onTaskGETCompleted(String result, RequestTask task) {
+        dareg.setVisibility(View.GONE);
+
+    }
+
 
     private class OnBannerClick implements View.OnClickListener {
         private int mPosition;
@@ -247,4 +282,16 @@ public class PlaceFragment extends MyBaseFragment {
     }
 
 
+//    public void daregClicked(){
+//    String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
+//            "&rate=%d" +
+//            "&boneId=%s" +
+//            "&nsId=%s" +
+//            "&objId=%s",
+//            myRating, App.getInstance().get_boneId() , App.getInstance().get_nsId(), App.getInstance().get_objId()
+//            ) ;
+//    new RequestTaskGet(this).execute(url, null);
+//        //onGet, change the DAREG btn look.
+//
+//    }
 }

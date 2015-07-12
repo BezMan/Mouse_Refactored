@@ -75,7 +75,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         public TextView titleA, titleB, titleC, distance, address, textPrice;
         public ImageView imagePrice;
         public RatingBar ratingBar;
-        public String objId;
+        public String objId, nsId;
 
     }
 
@@ -108,6 +108,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
 
 
         holder.objId = tempValues.getObjId();
+        holder.nsId = tempValues.getNsId();
 
         holder.titleA.setText(tempValues.getTitleA());
         holder.titleB.setText(tempValues.getTitleB());
@@ -124,7 +125,7 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
         holder.distance.setText(String.valueOf(tempValues.getDistance()));
 
 
-        holder.clickableLayout.setOnClickListener(new OnItemClickListener(holder.objId));
+        holder.clickableLayout.setOnClickListener(new OnItemClickListener(holder.objId, holder.nsId));
 //
 //        holder.favoritesBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -164,14 +165,17 @@ public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener
      * ****** Called when Item click in ListView ***********
      */
     private class OnItemClickListener implements View.OnClickListener {
-        String mObjId;
-        OnItemClickListener(String objId) {
+        String mObjId, mNsId;
+
+        OnItemClickListener(String objId, String nsId) {
             mObjId = objId;
+            mNsId = nsId;
         }
 
         @Override
         public void onClick(View arg0) {
             App.getInstance().set_objId(mObjId);
+            App.getInstance().set_nsId(mNsId);
 
             Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
             myActivity.onListItemClick();

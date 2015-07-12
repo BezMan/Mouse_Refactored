@@ -61,14 +61,13 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/open_details_item_dareg_textBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="@string/dareg"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-
                     />
 
                 <LinearLayout
@@ -137,6 +136,7 @@
                 android:background="@color/White"
                 android:orientation="horizontal"
                 android:visibility="gone"
+                android:clickable="true"
                 >
 
                 <ImageView
