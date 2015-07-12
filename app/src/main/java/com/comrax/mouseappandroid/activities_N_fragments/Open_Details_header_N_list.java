@@ -1,17 +1,27 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.database.Cursor;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.adapters.CustomAdapter;
 import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
+import com.comrax.mouseappandroid.model.ListModel;
 import com.comrax.mouseappandroid.model.MapMarkerModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,10 +30,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.viewpagerindicator.CirclePageIndicator;
 import com.wunderlist.slidinglayer.SlidingLayer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
 /**
  * Created by bez on 07/06/2015.
@@ -32,26 +49,31 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     TextView boneText;
     Cursor cursor;
-
-    int infoItemPosition;
     DBTools dbTools = new DBTools(this);
-
     private SlidingLayer mSlidingLayer;
-
     private App myInstance = App.getInstance();
-
     public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
-
     private GoogleMap map;
-
     private ArrayList<MapMarkerModel> markerArray;
-
     String[] icon = {"hotel", "rest", "shop", "tour"};
-
     List<Marker> markers = new ArrayList<>();
-
     Marker currentMarker;
     String prevIcon;
+    private ListView mListView;
+    TextView resultsTxtView;
+
+    double lon, lat;
+
+    CustomAdapter adapter;
+    public ArrayList<ListModel> customListViewValuesArr;
+
+    private RadioGroup radioGroup;
+
+    ViewPager pager;
+    MyPageAdapter pageAdapter;
+
+
+
 
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -66,14 +88,213 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SimpleStikkyFragment fragment = new SimpleStikkyFragment();
-        fragment.setDelegate(this);
-        initLoadFragment(fragment, "ListTag");
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.layout_container);
+
+        resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
+        mListView = (ListView) findViewById(R.id.listview);
+        pager = (ViewPager) findViewById(R.id.viewpager);
+
+//        SimpleStikkyFragment fragment = new SimpleStikkyFragment();
+//        fragment.setDelegate(this);
+//        initLoadFragment(fragment, "ListTag");
 
         setBoneTitleAndColor();
 
         setupInitCityMap();
+
+
+
+
+        customListViewValuesArr = new ArrayList<>();
+
+        radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // find which radio button is selected
+                if (checkedId == R.id.btn1) {
+                    screenListView(0);
+                } else if (checkedId == R.id.btn2) {
+                    screenListView(3);
+                } else if (checkedId == R.id.btn3) {
+                    screenListView(2);
+                } else {
+                    screenListView(1);
+                }
+            }
+
+        });
+
+
+        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
+
+        addPagerData(jsonData);
+
+
+
+
+        StikkyHeaderBuilder.stickTo(mListView)
+                .setHeader(R.id.header, frameLayout)
+                .minHeightHeader(160)
+                .build();
+
+
+        populateListView();
+
+        adapter = new CustomAdapter(this, customListViewValuesArr, getResources());
+        mListView.setAdapter(adapter);
+
+
     }
+
+
+
+    private void addPagerData(JSONObject jsonData) {
+        List<Fragment> fragments = getFragmentsFromJson(jsonData);
+        pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
+
+        pager.setAdapter(pageAdapter);
+
+        //Bind the title indicator to the adapter
+        CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.titles);
+        indicator.setViewPager(pager);
+    }
+
+
+    private List<Fragment> getFragmentsFromJson(JSONObject jsonData) {
+        List<Fragment> fList = new ArrayList<>();
+        try {
+            JSONArray articlesArray = jsonData.getJSONArray("articles");
+
+            //lets add items thru loop
+            for (int i = 0; i < 5; i++) {   //we want only 5 first articles//
+                JSONObject item = articlesArray.getJSONObject(i);
+
+                String title = item.getString("title");
+                String boneId = item.getString("boneId");
+                String nsId = item.getString("nsId");
+                String url = item.getString("url");
+                String image = item.getString("image");
+
+                JSONObject urlContent = item.getJSONObject("urlContent");
+
+
+                String folderName = App.getInstance().get_cityFolderName();
+
+                fList.add(MyFragment.newInstance(folderName, title, "", image));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return fList;
+    }
+
+
+    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener{
+        private List<Fragment> fragments;
+
+        public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
+            super(fm);
+            this.fragments = fragments;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return this.fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return this.fragments.size();
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+
+
+
+
+
+
+    private void screenListView(int price) {
+
+        int index = mListView.getFirstVisiblePosition();
+        View v = mListView.getChildAt(0);
+        int top = (v == null) ? 0 : (v.getTop() - mListView.getPaddingTop());
+
+        if (price == 0) {
+
+            adapter = new CustomAdapter(this, customListViewValuesArr, getResources());
+            mListView.setAdapter(adapter);
+
+        } else {
+
+            ArrayList<ListModel> screenedListViewValuesArr = new ArrayList<>();
+
+            for (int i = 0; i < customListViewValuesArr.size(); i++) {
+                if (customListViewValuesArr.get(i).getPrice() == price) {
+                    screenedListViewValuesArr.add(customListViewValuesArr.get(i));
+                }
+            }
+            adapter = new CustomAdapter(this, screenedListViewValuesArr, getResources());
+            mListView.setAdapter(adapter);
+        }
+
+        mListView.setSelectionFromTop(index, top);
+
+    }
+
+
+    private void populateListView() {
+
+        String cityId = App.getInstance().get_cityId();
+        String boneId = App.getInstance().get_boneId();
+        Cursor cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
+
+        resultsTxtView.setText("התקבלו " + cursor.getCount() + " תוצאות");
+
+        for (int i = 0; i < cursor.getCount(); cursor.moveToNext(), i++) {
+            ListModel lm = new ListModel();
+
+            lm.setTitleA(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            lm.setTitleB(cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+            lm.setTitleC(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+
+
+            lm.setPrice(cursor.getInt(cursor.getColumnIndex(DBConstants.price)));
+            lm.setAddress(cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+
+            lm.setRating(cursor.getFloat(cursor.getColumnIndex(DBConstants.rating)));
+
+            lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+            lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+            lm.setNsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+
+
+            float[] results = new float[1];
+
+            Location.distanceBetween(lat, lon,
+                    cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLat)), cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLon)), results);
+
+            lm.setDistance(results[0]);
+            //my lon and lat are 0//
+            /////////
+
+            customListViewValuesArr.add(lm);
+
+        }
+
+
+    }
+
 
 
     private void setBoneTitleAndColor() {

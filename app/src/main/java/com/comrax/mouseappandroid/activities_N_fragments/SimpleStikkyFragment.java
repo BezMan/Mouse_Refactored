@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -210,8 +211,10 @@ public class SimpleStikkyFragment extends MyBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        FrameLayout frameLayout = (FrameLayout)getActivity().findViewById(R.id.layout_container);
+
         StikkyHeaderBuilder.stickTo(mListView)
-                .setHeader(R.id.header, (ViewGroup) getView())
+                .setHeader(R.id.header, frameLayout)
                 .minHeightHeader(160)
                 .build();
 

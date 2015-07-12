@@ -25,14 +25,12 @@
                 android:layout_below="@+id/bone_title">
 
 
-
-                <com.comrax.mouseappandroid.helpers.AnimatedExpandableListView
-                    android:id="@+id/details_list"
+                <ListView
+                    android:id="@+id/listview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:groupIndicator="@android:color/transparent"
-                    android:divider="@android:color/transparent"
-                    />
+                    android:layout_height="match_parent"/>
+
+                <include layout="@layout/simple_header"/>
 
             </FrameLayout>
 
