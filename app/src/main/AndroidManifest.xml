@@ -49,6 +49,11 @@
         </activity>
 
         <activity
+            android:name=".activities_N_fragments.PlaceActivity"
+            android:label="@string/title_activity_detail_city" >
+        </activity>
+
+        <activity
             android:name=".favorites.FavoritesActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>

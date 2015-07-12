@@ -1,5 +1,6 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     ViewPager pager;
     MyPageAdapter pageAdapter;
 
-
+    Intent placeActivity;
 
 
     public void buttonClicked(View v) {
@@ -101,6 +102,9 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         setBoneTitleAndColor();
 
         setupInitCityMap();
+
+        placeActivity = new Intent(this, PlaceActivity.class);
+
 
 
 
@@ -434,10 +438,14 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                PlaceFragment placeFragment = new PlaceFragment();
-                //placeFragment.setDelegate(FavoritesActivity.this);
-                placeFragment.setArguments(bundle);
-                loadFragmentWithBackStack(placeFragment, "placeTag");
+//                PlaceFragment placeFragment = new PlaceFragment();
+//                //placeFragment.setDelegate(FavoritesActivity.this);
+//                placeFragment.setArguments(bundle);
+//                loadFragmentWithBackStack(placeFragment, "placeTag");
+
+                placeActivity.putExtras(bundle);
+                startActivity(placeActivity);
+
 
                 closeSlidingMapPanel();
             }
@@ -530,11 +538,14 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
         bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-        PlaceFragment placeFragment = new PlaceFragment();
-        placeFragment.setDelegate(this);
+//        PlaceFragment placeFragment = new PlaceFragment();
+//        placeFragment.setDelegate(this);
+//
+//        placeFragment.setArguments(bundle);
+//        loadFragmentWithBackStack(placeFragment, "placeTag");
 
-        placeFragment.setArguments(bundle);
-        loadFragmentWithBackStack(placeFragment, "placeTag");
+        placeActivity.putExtras(bundle);
+        startActivity(placeActivity);
     }
 
 
