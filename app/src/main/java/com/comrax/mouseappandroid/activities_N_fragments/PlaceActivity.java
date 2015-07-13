@@ -51,7 +51,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.fragment_place_item;
+        return R.layout.place_full_layout;
     }
 
     @Override
