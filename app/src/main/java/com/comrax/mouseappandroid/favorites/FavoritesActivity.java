@@ -1,8 +1,8 @@
 package com.comrax.mouseappandroid.favorites;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.PlaceFragment;
+import com.comrax.mouseappandroid.activities_N_fragments.PlaceActivity;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFragment.MyFragmentDelegate {
+public class FavoritesActivity extends MyBaseDrawerActivity  {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
@@ -54,10 +54,6 @@ public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFrag
         lsComposer.setAdapter(adapter);
     }
 
-    @Override
-    public void onResumeAction() {
-
-    }
 
     class FavoritesAdapter extends AmazingAdapter {
         boolean mEditable;
@@ -245,10 +241,15 @@ public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFrag
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                PlaceFragment placeFragment = new PlaceFragment();
-                //placeFragment.setDelegate(FavoritesActivity.this);
-                placeFragment.setArguments(bundle);
-                loadFragmentWithBackStack(placeFragment, "placeTag");
+//                PlaceFragment placeFragment = new PlaceFragment();
+//                //placeFragment.setDelegate(FavoritesActivity.this);
+//                placeFragment.setArguments(bundle);
+//                loadFragmentWithBackStack(placeFragment, "placeTag");
+
+                Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
+                placeActivity.putExtras(bundle);
+                startActivity(placeActivity);
+
 
             } else if (v instanceof ImageView) {//item delete btn:
 //                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
@@ -277,15 +278,15 @@ public class FavoritesActivity extends MyBaseDrawerActivity implements PlaceFrag
         }
     }
 
-    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
-                .commit();
-
-    }
+//    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
+//
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.layout_container, fragment, fragTag)
+//                .addToBackStack(fragTag)
+//                .commit();
+//
+//    }
 
 
 }

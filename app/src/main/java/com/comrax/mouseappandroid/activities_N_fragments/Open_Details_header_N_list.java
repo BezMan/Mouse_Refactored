@@ -47,7 +47,7 @@ import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyBaseDrawerActivity implements MyBaseFragment.MyFragmentDelegate {
+public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     TextView boneText;
     Cursor cursor;
@@ -548,13 +548,13 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         startActivity(placeActivity);
     }
 
-
-    @Override
-    public void onResumeAction() {
-        //change your title
-        String str = getTextForAppBar();
-        setupTextView(str);
-    }
+//
+//    @Override
+//    public void onResumeAction() {
+//        //change your title
+//        String str = getTextForAppBar();
+//        setupTextView(str);
+//    }
 }
 
 
