@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
 import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
@@ -53,7 +54,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     DBTools dbTools = new DBTools(this);
     private SlidingLayer mSlidingLayer;
     private App myInstance = App.getInstance();
-    public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
     String[] icon = {"hotel", "rest", "shop", "tour"};
@@ -89,7 +89,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.layout_container);
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.frame_layout);
 
         resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
         mListView = (ListView) findViewById(R.id.listview);
@@ -306,7 +306,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         String boneTitle = myInstance.get_boneIdTitle();
         boneText.setText(boneTitle);
         int pos = myInstance.getBoneCategoryName();
-        boneText.setBackgroundColor(boneColors[pos]);
+        boneText.setBackgroundColor(GlobalVars.boneColors[pos]);
     }
 
 

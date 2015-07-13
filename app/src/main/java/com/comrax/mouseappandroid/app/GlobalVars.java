@@ -13,6 +13,8 @@ public class GlobalVars {
 
     public static final String IconFolder = "/sdcard/Mouse_App/Default_master/Images/MenuIcons/";
 
+    public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
+
     public static final String[] Drawer_textList = {"מדריך לערים נוספות", "המועדפים שלי", "שתף אפליקציה", "הוסף תגובה על האפליקציה", "עזרה", "תקנון", "אודות" , "", "", ""};
     public static final String[] Drawer_imageList = {"drawer0", "drawer1", "drawer2", "drawer3", "drawer4", "drawer5", "drawer6", "", "", "" };
 
