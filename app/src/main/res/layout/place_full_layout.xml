@@ -18,7 +18,7 @@
 
             <include layout="@layout/color_bone_title" />
 
-            <include layout="@layout/fragment_place_item"
+            <include layout="@layout/place_layout"
                 android:layout_below="@+id/bone_title"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"/>

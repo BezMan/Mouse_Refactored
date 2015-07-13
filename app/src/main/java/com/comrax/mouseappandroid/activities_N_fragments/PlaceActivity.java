@@ -21,6 +21,7 @@ import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.http.RequestTask;
 import com.comrax.mouseappandroid.http.RequestTaskDelegate;
+import com.comrax.mouseappandroid.http.RequestTaskGet;
 
 import java.io.File;
 
@@ -147,13 +148,13 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         });
 
 
-//        dareg= (TextView)findViewById(R.id.open_details_item_dareg_textBtn);
-//        dareg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                daregClicked();
-//            }
-//        });
+        dareg= (TextView)findViewById(R.id.open_details_item_dareg_textBtn);
+        dareg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                daregClicked();
+            }
+        });
 
         Button favoritesBtn = (Button) findViewById(R.id.detailed_place_prefs_button);
         favoritesBtn.setOnClickListener(new View.OnClickListener() {
@@ -184,15 +185,15 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         TextView responsesView = (TextView) findViewById(R.id.detailed_place_responses);
 
 
-//        phoneLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent callIntent = new Intent(Intent.ACTION_CALL);
-//                callIntent.setData(Uri.parse("tel:+" + phoneView.getText().toString().trim()));
-//                startActivity(callIntent);
-//            }
-//        });
-//
+        phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:+" + phoneView.getText().toString().trim()));
+                startActivity(callIntent);
+            }
+        });
+
 
         if (!phone.equals("")) {
             phoneTitle.setVisibility(View.VISIBLE);
@@ -295,18 +296,19 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     }
 
 
-//    public void daregClicked(){
-//    String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
-//            "&rate=%d" +
-//            "&boneId=%s" +
-//            "&nsId=%s" +
-//            "&objId=%s",
-//            myRating, myInstance.get_boneId() , myInstance.get_nsId(), myInstance.get_objId()
-//            ) ;
-//    new RequestTaskGet(this).execute(url, null);
-//        //onGet, change the DAREG btn look.
-//
-//    }
+    public void daregClicked(){
+    String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
+            "&rate=%d" +
+            "&boneId=%s" +
+            "&nsId=%s" +
+            "&objId=%s",
+            myRating, myInstance.get_boneId() , myInstance.get_nsId(), myInstance.get_objId()
+            ) ;
+        if(myRating>0)
+            new RequestTaskGet(this).execute(url, null);
+        //onGet, change the DAREG btn look.
+
+    }
 
 
 }

@@ -55,7 +55,7 @@ public class PlaceFragment extends MyBaseFragment implements RequestTaskDelegate
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_place_item, container, false);
+        return inflater.inflate(R.layout.place_layout, container, false);
     }
 
     @Override
@@ -282,16 +282,4 @@ public class PlaceFragment extends MyBaseFragment implements RequestTaskDelegate
     }
 
 
-//    public void daregClicked(){
-//    String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
-//            "&rate=%d" +
-//            "&boneId=%s" +
-//            "&nsId=%s" +
-//            "&objId=%s",
-//            myRating, App.getInstance().get_boneId() , App.getInstance().get_nsId(), App.getInstance().get_objId()
-//            ) ;
-//    new RequestTaskGet(this).execute(url, null);
-//        //onGet, change the DAREG btn look.
-//
-//    }
 }
