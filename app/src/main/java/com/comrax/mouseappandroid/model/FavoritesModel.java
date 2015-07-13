@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.favorites;
+package com.comrax.mouseappandroid.model;
 
 import android.database.Cursor;
 

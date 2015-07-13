@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--<uses-permission android:name="android.permission.CALL_PHONE" />-->
 
     <application
         android:allowBackup="true"
@@ -55,7 +55,12 @@
         </activity>
 
         <activity
-            android:name=".favorites.FavoritesActivity"
+            android:name=".activities_N_fragments.FavoritesActivity"
+            android:label="@string/title_activity_detail_city" >
+        </activity>
+
+        <activity
+            android:name=".activities_N_fragments.AddCommentActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
 

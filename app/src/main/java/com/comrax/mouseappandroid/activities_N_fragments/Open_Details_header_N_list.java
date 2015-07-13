@@ -54,7 +54,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     private SlidingLayer mSlidingLayer;
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
-    String[] icon = {"hotel", "rest", "shop", "tour"};
+    String[] icon = {"hotel", "shop", "rest", "tour"};
     List<Marker> markers = new ArrayList<>();
     Marker currentMarker;
     String prevIcon;
@@ -73,6 +73,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     Intent placeActivity;
 
+    int pos;
 
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -296,7 +297,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         boneText = (TextView) findViewById(R.id.bone_title);
         String boneTitle = myInstance.get_boneIdTitle();
         boneText.setText(boneTitle);
-        int pos = myInstance.getBoneCategoryName();
+
+        int pos = myInstance.getBonePosition();
         boneText.setBackgroundColor(GlobalVars.boneColors[pos]);
     }
 
@@ -380,7 +382,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
                 int currIndex = markers.indexOf(marker);
                 String currBoneId = markerArray.get(currIndex).getBoneId();
-//                String currName = markerArray.get(currIndex).getPlaceName();
 
                 String currentIcon = getIconByBoneId(currBoneId);
 
@@ -422,17 +423,15 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-//                Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
                 Bundle bundle = new Bundle();
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                myInstance.setBonePosition(pos);
 
-//                PlaceFragment placeFragment = new PlaceFragment();
-//                //placeFragment.setDelegate(FavoritesActivity.this);
-//                placeFragment.setArguments(bundle);
-//                loadFragmentWithBackStack(placeFragment, "placeTag");
+                Log.wtf("pos:", " " + pos);
 
                 placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
@@ -452,14 +451,15 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
-            return icon[0];
-        } else if (boneId.equals(myInstance.getBoneRest())) {
-            return icon[1];
+            pos = 0;
         } else if (boneId.equals(myInstance.getBoneShop())) {
-            return icon[2];
+            pos = 1;
+        } else if (boneId.equals(myInstance.getBoneRest())) {
+            pos = 2;
         } else {
-            return icon[3];
+            pos = 3;
         }
+        return icon[pos];
     }
 
 
@@ -478,29 +478,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-    private void initLoadFragment(final Fragment fragment, String fragTag) {
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
-                .commit();
-
-    }
-
-
-    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
-
-        getSupportFragmentManager().popBackStack(fragTag, getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
-                .commit();
-
-
-    }
 
 
     @Override

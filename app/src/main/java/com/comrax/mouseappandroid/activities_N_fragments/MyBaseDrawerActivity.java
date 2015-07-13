@@ -20,7 +20,6 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
-import com.comrax.mouseappandroid.favorites.FavoritesActivity;
 import com.comrax.mouseappandroid.model.DrawerModel;
 
 import org.json.JSONException;

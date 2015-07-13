@@ -72,21 +72,57 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         setGraysWithExtras();
 
+        set2GreenButtons();
+
         setServiceItems();
 
         setFooterAd();
     }
 
 
+
+    private void set2GreenButtons() {
+
+        Button btnComment = (Button)findViewById(R.id.detailed_place_comment_btn);
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PlaceActivity.this, AddCommentActivity.class));
+//                Toast.makeText(getApplicationContext(), "btn", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnEmailThem = (Button)findViewById(R.id.detailed_place_email_them_btn);
+        btnEmailThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "customer-mouse@mouse.co.il", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "עדכנו אותנו - אפליקציית עכבר עולם");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "שם המקום: " + "\n" + name + "\n" + hebName + "\n\n" + "שם העיר: " + myInstance.getCityName());
+                startActivity(Intent.createChooser(emailIntent, "Email עכבר העיר"));
+            }
+        });
+
+    }
+
+
     private void setBoneTitleAndColor() {
         boneTextView = (TextView) findViewById(R.id.bone_title);
 
-        String boneTitle = bundle.getString("boneTitle");
-        if (boneTitle == null) {
-            boneTitle = myInstance.get_boneIdTitle();
-        }
+//        String boneTitle = bundle.getString("boneTitle");
+//        if (boneTitle == null) {
+          String boneTitle = myInstance.get_boneIdTitle();
+//        }
         boneTextView.setText(boneTitle);
-        int pos = myInstance.getBoneCategoryName();
+
+//        for (int j = 0; j<GlobalVars.detailMenuItems.size()-1; j++){
+//            if(boneTitle.equals(GlobalVars.detailMenuItems.get(j))){
+//                boneTextView.setBackgroundColor(GlobalVars.boneColors[j]);
+//
+//            }
+//        }
+        int pos = myInstance.getBonePosition();
         boneTextView.setBackgroundColor(GlobalVars.boneColors[pos]);
     }
 
@@ -185,20 +221,21 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         TextView responsesView = (TextView) findViewById(R.id.detailed_place_responses);
 
 
-        phoneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:+" + phoneView.getText().toString().trim()));
-                startActivity(callIntent);
-            }
-        });
 
 
-        if (!phone.equals("")) {
+        if (phone.length()>8) {
             phoneTitle.setVisibility(View.VISIBLE);
             phoneLayout.setVisibility(View.VISIBLE);
             phoneView.setText(phone);
+
+            phoneLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:+" + phoneView.getText().toString().trim()));
+                    startActivity(callIntent);
+                }
+            });
 
         }
 

@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,12 +70,14 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private ArrayList<MapMarkerModel> markerArray;
 
-    String[] icon = {"hotel", "rest", "shop", "tour"};
+    String[] icon = {"hotel","shop", "rest", "tour"};
 
     List<Marker> markers = new ArrayList<>();
 
     Marker currentMarker;
     String prevIcon;
+
+    int pos;
 
     public void buttonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -198,7 +201,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
                 int currIndex = markers.indexOf(marker);
                 String currBoneId = markerArray.get(currIndex).getBoneId();
-//                String currName = markerArray.get(currIndex).getPlaceName();
 
                 String currentIcon = getIconByBoneId(currBoneId);
 
@@ -247,10 +249,17 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                PlaceFragment placeFragment = new PlaceFragment();
-                //placeFragment.setDelegate(FavoritesActivity.this);
-                placeFragment.setArguments(bundle);
-                loadFragmentWithBackStack(placeFragment, "placeTag");
+                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                myInstance.setBonePosition(pos);
+                Log.wtf("pos:", " "+pos);
+
+
+                myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+                myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+                Intent placeActivity = new Intent(Detail_City_Activity.this, PlaceActivity.class);
+                placeActivity.putExtras(bundle);
+                startActivity(placeActivity);
 
                 closeSlidingMapPanel();
             }
@@ -264,27 +273,23 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
 
-    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
-                .commit();
-
-    }
 
 
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
-            return icon[0];
-        } else if (boneId.equals(myInstance.getBoneRest())) {
-            return icon[1];
+            pos = 0;
+//            return icon[0];
         } else if (boneId.equals(myInstance.getBoneShop())) {
-            return icon[2];
+            pos = 1;
+//            return icon[1];
+        } else if (boneId.equals(myInstance.getBoneRest())) {
+            pos = 2;
+//            return icon[2];
         } else {
-            return icon[3];
+            pos = 3;
+//            return icon[3];
         }
+        return icon[pos];
     }
 
 
@@ -425,7 +430,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             myInstance.set_boneId(items.get(mPosition).boneId);
             String title = items.get(mPosition).title;
             myInstance.set_boneIdTitle(title);
-            myInstance.setBoneCategoryName(mPosition-1);
+            myInstance.setBonePosition(mPosition - 1);
             startActivity(intent);
 
         }

@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.favorites;
+package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,13 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.PlaceActivity;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AmazingAdapter;
 import com.comrax.mouseappandroid.helpers.AmazingListView;
+import com.comrax.mouseappandroid.model.FavoritesModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,12 +242,15 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
+                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                myInstance.setBonePosition(mCurrentHeaderPos);
+//                Log.wtf("pos:", " " + pos);
 
-                myInstance.setBoneCategoryName(mCurrentHeaderPos);
-
-                String headerName = GlobalVars.detailMenuItems.get(mCurrentHeaderPos);
-
-                bundle.putString("boneTitle", headerName);
+//                myInstance.setBonePosition(mCurrentHeaderPos);
+//
+//                String headerName = GlobalVars.detailMenuItems.get(mCurrentHeaderPos);
+//
+//                bundle.putString("boneTitle", headerName);
 
                 Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
                 placeActivity.putExtras(bundle);

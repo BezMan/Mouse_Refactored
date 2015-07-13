@@ -41,11 +41,11 @@ public class App extends Application {
         this._nsId = _nsId;
     }
 
-    public int getBoneCategoryName() {
+    public int getBonePosition() {
         return BoneCategoryName;
     }
 
-    public void setBoneCategoryName(int boneCategoryName) {
+    public void setBonePosition(int boneCategoryName) {
         BoneCategoryName = boneCategoryName;
     }
 

@@ -223,6 +223,7 @@
 
 
             <Button
+                android:id="@+id/detailed_place_comment_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -233,6 +234,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/detailed_place_email_them_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
