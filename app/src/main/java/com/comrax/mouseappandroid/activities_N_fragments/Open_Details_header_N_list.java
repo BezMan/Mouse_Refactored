@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomAdapter;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -53,7 +52,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     Cursor cursor;
     DBTools dbTools = new DBTools(this);
     private SlidingLayer mSlidingLayer;
-    private App myInstance = App.getInstance();
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
     String[] icon = {"hotel", "rest", "shop", "tour"};
@@ -89,15 +87,9 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.frame_layout);
-
         resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
         mListView = (ListView) findViewById(R.id.listview);
         pager = (ViewPager) findViewById(R.id.viewpager);
-
-//        SimpleStikkyFragment fragment = new SimpleStikkyFragment();
-//        fragment.setDelegate(this);
-//        initLoadFragment(fragment, "ListTag");
 
         setBoneTitleAndColor();
 
@@ -130,13 +122,12 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         });
 
 
-        String data = App.getInstance().get_cityFolderName() + "/"+ App.getInstance().get_cityId() + "_"+ App.getInstance().get_boneId()+ "_ArticalsList.json";
+        String data = myInstance.get_cityFolderName() + "/"+ myInstance.get_cityId() + "_"+ myInstance.get_boneId()+ "_ArticalsList.json";
         JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
 
         addPagerData(jsonData);
 
-
-
+        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.frame_layout);
 
         StikkyHeaderBuilder.stickTo(mListView)
                 .setHeader(R.id.header, frameLayout)
@@ -184,7 +175,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
                 JSONObject urlContent = item.getJSONObject("urlContent");
 
 
-                String folderName = App.getInstance().get_cityFolderName();
+                String folderName = myInstance.get_cityFolderName();
 
                 fList.add(MyFragment.newInstance(folderName, title, "", image));
             }
@@ -257,8 +248,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     private void populateListView() {
 
-        String cityId = App.getInstance().get_cityId();
-        String boneId = App.getInstance().get_boneId();
+        String cityId = myInstance.get_cityId();
+        String boneId = myInstance.get_boneId();
         Cursor cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
 
         resultsTxtView.setText("התקבלו " + cursor.getCount() + " תוצאות");
@@ -526,10 +517,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     public void onListItemClick() {
 
-        Log.wtf("item id's: ", "city: " + App.getInstance().get_cityId() +
-                        ", bone: " + App.getInstance().get_boneId() +
-                        ", obj: " + App.getInstance().get_objId() +
-                        ", nsId: " + App.getInstance().get_nsId()
+        Log.wtf("item id's: ", "city: " + myInstance.get_cityId() +
+                        ", bone: " + myInstance.get_boneId() +
+                        ", obj: " + myInstance.get_objId() +
+                        ", nsId: " + myInstance.get_nsId()
                 );
 
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
@@ -538,23 +529,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
         bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-//        PlaceFragment placeFragment = new PlaceFragment();
-//        placeFragment.setDelegate(this);
-//
-//        placeFragment.setArguments(bundle);
-//        loadFragmentWithBackStack(placeFragment, "placeTag");
-
         placeActivity.putExtras(bundle);
         startActivity(placeActivity);
     }
 
-//
-//    @Override
-//    public void onResumeAction() {
-//        //change your title
-//        String str = getTextForAppBar();
-//        setupTextView(str);
-//    }
 }
 
 

@@ -38,6 +38,9 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     protected String mTitle;
     protected TextView appBarTextView;
 
+    protected App myInstance = App.getInstance();
+
+
     private static final String STATIC_PAGE_TAG = "staticPageTag";
 
     protected abstract int getLayoutResourceId();

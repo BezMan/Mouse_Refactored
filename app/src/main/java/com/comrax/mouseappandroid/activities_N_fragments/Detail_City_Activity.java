@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -65,8 +64,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     List<GroupItem> items;
 
     private SlidingLayer mSlidingLayer;
-
-    private App myInstance = App.getInstance();
 
     private GoogleMap map;
 

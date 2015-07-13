@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.http.RequestTask;
@@ -30,7 +30,7 @@ import java.io.File;
 public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDelegate {
 
     int myRating;
-    TextView dareg;
+    TextView boneTextView, dareg;
 
     String imagePath, name, hebName, description, address, type,
             phone, activityHours, publicTransportation, responses;
@@ -46,9 +46,6 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     DBTools dbTools;
     Cursor cursor;
 
-
-
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.place_full_layout;
@@ -56,7 +53,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     @Override
     protected String getTextForAppBar() {
-        return App.getInstance().getCityName();
+        return myInstance.getCityName();
     }
 
 
@@ -68,6 +65,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         bundle = getIntent().getExtras();
         cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, bundle.getString(DBConstants.name, null), DBConstants.objId, bundle.getString(DBConstants.objId, null));
 
+        setBoneTitleAndColor();
+
         setUpperData();
 
         setGraysWithExtras();
@@ -76,6 +75,20 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         setFooterAd();
     }
+
+
+    private void setBoneTitleAndColor() {
+        boneTextView = (TextView) findViewById(R.id.bone_title);
+
+        String boneTitle = bundle.getString("boneTitle");
+        if (boneTitle == null) {
+            boneTitle = myInstance.get_boneIdTitle();
+        }
+        boneTextView.setText(boneTitle);
+        int pos = myInstance.getBoneCategoryName();
+        boneTextView.setBackgroundColor(GlobalVars.boneColors[pos]);
+    }
+
 
     private void setUpperData() {
         imagePath = cursor.getString(cursor.getColumnIndex(DBConstants.image));
@@ -102,7 +115,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         ImageView headImageView = (ImageView) findViewById(R.id.detailed_place_head_imageView);
 
 
-        File file = new File(App.getInstance().get_cityFolderName() + "/" + imagePath);
+        File file = new File(myInstance.get_cityFolderName() + "/" + imagePath);
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             headImageView.setImageBitmap(bitmap);
@@ -288,13 +301,12 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 //            "&boneId=%s" +
 //            "&nsId=%s" +
 //            "&objId=%s",
-//            myRating, App.getInstance().get_boneId() , App.getInstance().get_nsId(), App.getInstance().get_objId()
+//            myRating, myInstance.get_boneId() , myInstance.get_nsId(), myInstance.get_objId()
 //            ) ;
 //    new RequestTaskGet(this).execute(url, null);
 //        //onGet, change the DAREG btn look.
 //
 //    }
-
 
 
 }

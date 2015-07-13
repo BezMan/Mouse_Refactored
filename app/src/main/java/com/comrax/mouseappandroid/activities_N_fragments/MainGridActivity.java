@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -81,8 +80,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        App.getInstance().setCityName("עכבר עולם");
-        App.getInstance().set_cityId("blankPage");
+        myInstance.setCityName("עכבר עולם");
+        myInstance.set_cityId("blankPage");
         GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
@@ -270,7 +269,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
                 //save clicked cityId:
-                App.getInstance().set_cityId(tempValues.getId());
+                myInstance.set_cityId(tempValues.getId());
 
                 String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
@@ -453,7 +452,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                     if (child.toString().contains("CityCoordinates")) {
                         JSONObject jsonCityCoordinates = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONObject fullObject = jsonCityCoordinates.getJSONObject("cityCoordinates");
-                        cityObject.put(DBConstants.cityId, App.getInstance().get_cityId());
+                        cityObject.put(DBConstants.cityId, myInstance.get_cityId());
                         cityObject.put(DBConstants.hebrewName, fullObject.getString("name"));
                         cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
                         cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
@@ -473,7 +472,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                         // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, App.getInstance().get_cityId());
+                            item.put(DBConstants.cityId, myInstance.get_cityId());
                             dbTools.insertPlaceTable(item);
                         }
                     }
@@ -483,7 +482,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                         // looping through All nodes of json file:
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
-                            item.put(DBConstants.cityId, App.getInstance().get_cityId());
+                            item.put(DBConstants.cityId, myInstance.get_cityId());
                             dbTools.insertArticleTable(item);
                         }
                     }

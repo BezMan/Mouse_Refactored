@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class CustomAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
+public class CustomAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     ListModel tempValues = null;

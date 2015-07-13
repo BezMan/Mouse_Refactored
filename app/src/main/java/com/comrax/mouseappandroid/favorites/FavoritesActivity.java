@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
 import com.comrax.mouseappandroid.activities_N_fragments.PlaceActivity;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
@@ -31,8 +30,8 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
     FavoritesModel[][] allItems = new FavoritesModel[4][];
     DBTools dbTools = new DBTools(this);
     FavoritesAdapter adapter;
-
     TextView editPage;
+    int currentHeader;
 
     @Override
     protected int getLayoutResourceId() {
@@ -129,16 +128,17 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
                 if (mEditable) {
                     ImageView deleteBtn = (ImageView) view.findViewById(R.id.favorite_delete_image);
                     deleteBtn.setVisibility(View.VISIBLE);
-                    deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                    deleteBtn.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel, position));
 
                 } else {
-                    mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                    currentHeader = getSectionForPosition(position);
+                    mainLayout.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel, currentHeader));
                 }
 
                 nameTxtView.setText(favoritesModel.getName());
                 typeTxtView.setText(favoritesModel.getType());
 
-                editPage.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel));
+                editPage.setOnClickListener(new FavoritesLayoutClickListener(favoritesModel, position));
             }
 
 
@@ -210,7 +210,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
         String[] titles = new String[mySize];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
-        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, App.getInstance().get_cityId(), DBConstants.boneCategoryName, titles[index]);
+        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneCategoryName, titles[index]);
 
         allItems[index] = new FavoritesModel[cursor.getCount()];
 
@@ -225,9 +225,11 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
 
     private class FavoritesLayoutClickListener implements View.OnClickListener {
         FavoritesModel mFavoritesModel;
+        int mCurrentHeaderPos;
 
-        public FavoritesLayoutClickListener(FavoritesModel favoritesModel) {
+        public FavoritesLayoutClickListener(FavoritesModel favoritesModel, int currentHeaderPos) {
             mFavoritesModel = favoritesModel;
+            mCurrentHeaderPos = currentHeaderPos;
         }
 
         @Override
@@ -241,10 +243,12 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
                 bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-//                PlaceFragment placeFragment = new PlaceFragment();
-//                //placeFragment.setDelegate(FavoritesActivity.this);
-//                placeFragment.setArguments(bundle);
-//                loadFragmentWithBackStack(placeFragment, "placeTag");
+
+                myInstance.setBoneCategoryName(mCurrentHeaderPos);
+
+                String headerName = GlobalVars.detailMenuItems.get(mCurrentHeaderPos);
+
+                bundle.putString("boneTitle", headerName);
 
                 Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
                 placeActivity.putExtras(bundle);
@@ -278,15 +282,6 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
         }
     }
 
-//    public void loadFragmentWithBackStack(final Fragment fragment, String fragTag) {
-//
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.layout_container, fragment, fragTag)
-//                .addToBackStack(fragTag)
-//                .commit();
-//
-//    }
 
 
 }

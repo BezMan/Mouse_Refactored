@@ -1,7 +1,6 @@
 package com.comrax.mouseappandroid.app;
 
 import android.app.Application;
-import android.content.res.Configuration;
 
 /**
  * Created by bez on 12/05/2015.
@@ -14,13 +13,12 @@ public class App extends Application {
     private String _cityFolderName;
     private String _boneIdTitle;
     private int BoneCategoryName;
-
     private String CityName;
-
     private String BoneHotel;
     private String BoneRest;
     private String BoneShop;
     private String BoneTour;
+
 
     private static App _instance;
 
@@ -81,17 +79,6 @@ public class App extends Application {
 
     public void setBoneShop(String boneShop) {
         BoneShop = boneShop;
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
     }
 
 
