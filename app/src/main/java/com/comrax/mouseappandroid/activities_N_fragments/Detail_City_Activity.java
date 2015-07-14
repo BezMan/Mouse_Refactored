@@ -426,8 +426,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
         } else if (mPosition == infoItemPosition - 1) {   //pos 5
-//            Intent tiyulimIntent = new Intent(this, TiulimActivity.class);
-//            startActivity(tiyulimIntent);
+            Intent tiyulimIntent = new Intent(this, TiyulimActivity.class);
+            startActivity(tiyulimIntent);
 
 
         } else if (mPosition > infoItemPosition) {   //pos 7-10

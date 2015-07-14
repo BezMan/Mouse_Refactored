@@ -111,7 +111,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
 
         }
         else if(tempValues.getId().equals("blankCityItem")){
-            view = inflater.inflate(R.layout.city_layout, null);
+            view = inflater.inflate(R.layout.grid_city_item_layout, null);
             holder.backgroundLayout = (RelativeLayout) view.findViewById(R.id.cityBackground);
             holder.backgroundLayout.setBackgroundColor(_resources.getColor(R.color.Achbar_gray_default_background));
 
@@ -120,7 +120,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
         else {
 
 
-            view = inflater.inflate(R.layout.city_layout, null);
+            view = inflater.inflate(R.layout.grid_city_item_layout, null);
 
             holder.nameCity = (TextView) view.findViewById(R.id.cityNameText);
             holder.imageCity = (ImageView) view.findViewById(R.id.cityImageView);
