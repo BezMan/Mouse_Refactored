@@ -13,7 +13,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/http/RequestTaskPOST.java" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/model/ListModel.java" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/waze_icon.png" charset="windows-1255" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/expandable_list_layout.xml" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_simplelistview.xml" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/group_item.xml" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/simple_header.xml" charset="windows-1255" />

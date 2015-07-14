@@ -64,6 +64,11 @@
             android:label="@string/title_activity_detail_city" >
         </activity>
 
+        <activity
+            android:name=".activities_N_fragments.StopArticleActivity"
+            android:label="@string/title_activity_detail_city" >
+        </activity>
+
 
     </application>
 

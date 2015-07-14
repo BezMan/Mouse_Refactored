@@ -421,7 +421,14 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
         if (mPosition == 0) {                           //pos 0
 
+            Intent stopArticleIntent = new Intent(this, StopArticleActivity.class);
+            startActivity(stopArticleIntent);
+
+
         } else if (mPosition == infoItemPosition - 1) {   //pos 5
+//            Intent tiyulimIntent = new Intent(this, TiulimActivity.class);
+//            startActivity(tiyulimIntent);
+
 
         } else if (mPosition > infoItemPosition) {   //pos 7-10
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition - infoItemPosition - 1).getUrlAndroid()));
