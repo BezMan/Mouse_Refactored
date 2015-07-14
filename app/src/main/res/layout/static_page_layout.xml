@@ -49,49 +49,7 @@
 
     </LinearLayout>
 
+    <include layout="@layout/global_drawer_views" />
 
-    <RelativeLayout
-        android:layout_width="306dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/Achbar_green" />
-
-        <EditText android:id="@+id/inputSearch"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:hint="חפש"
-            android:textColorHint="@color/Gray"
-            android:background="@drawable/rounded_corners_layout"
-
-            />
-
-
-
-        <!-- Side navigation drawer UI -->
-        <ListView
-            android:id="@+id/myNavList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:background="@color/WhiteSmoke" />
-
-        <!-- hidden search results listView -->
-        <ListView
-            android:id="@+id/searchList"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="60dp"
-            android:background="@color/White"
-            android:visibility="gone"
-            />
-    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>
