@@ -20,9 +20,9 @@
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/layout_container"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/app_bar_layout"
                 android:orientation="vertical">
 
 
@@ -37,7 +37,7 @@
                 <com.wunderlist.slidinglayer.SlidingLayer
                     android:id="@+id/slidingLayer1"
                     android:layout_width="match_parent"
-                    android:layout_height="470dp"
+                    android:layout_height="510dp"
                     slidingLayer:offsetDistance="50dp"
                     slidingLayer:stickTo="top">
 
@@ -50,7 +50,7 @@
                             android:id="@+id/map"
                             class="com.google.android.gms.maps.MapFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="420dp" />
+                            android:layout_height="460dp" />
 
 
                         <View
@@ -69,7 +69,7 @@
                             android:layout_below="@+id/blackLine"
                             android:layout_marginLeft="10dp"
                             android:background="@drawable/map_btn"
-                            android:onClick="buttonClicked" />
+                            android:onClick="mapButtonClicked" />
 
                     </RelativeLayout>
 

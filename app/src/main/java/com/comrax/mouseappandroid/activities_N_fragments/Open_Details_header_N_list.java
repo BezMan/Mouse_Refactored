@@ -1,8 +1,10 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.adapters.CustomAdapter;
+import com.comrax.mouseappandroid.adapters.OpenDetailsCustomAdapter;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -63,7 +65,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     double lon, lat;
 
-    CustomAdapter adapter;
+    OpenDetailsCustomAdapter adapter;
     public ArrayList<ListModel> customListViewValuesArr;
 
     private RadioGroup radioGroup;
@@ -74,8 +76,9 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     Intent placeActivity;
 
     int pos;
+    boolean setMap;
 
-    public void buttonClicked(View v) {
+    public void mapButtonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
             mSlidingLayer.closeLayer(true);
         } else {
@@ -88,22 +91,43 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
-        mListView = (ListView) findViewById(R.id.listview);
-        pager = (ViewPager) findViewById(R.id.viewpager);
+        initVars();
 
         setBoneTitleAndColor();
 
         setupInitCityMap();
 
-        placeActivity = new Intent(this, PlaceActivity.class);
-
-
-
-
-
         customListViewValuesArr = new ArrayList<>();
 
+        setRadioGroupFilter();
+
+        String data = myInstance.get_cityFolderName() + "/" + myInstance.get_cityId() + "_" + myInstance.get_boneId() + "_ArticalsList.json";
+        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
+
+        addPagerData(jsonData);
+
+        setStikkyHeader();
+
+        populateListView();
+
+        adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
+        mListView.setAdapter(adapter);
+
+
+    }
+
+
+    private void setStikkyHeader() {
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frame_layout);
+
+        StikkyHeaderBuilder.stickTo(mListView)
+                .setHeader(R.id.header, frameLayout)
+                .minHeightHeader(160)
+                .build();
+    }
+
+
+    private void setRadioGroupFilter() {
         radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -123,27 +147,16 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         });
 
 
-        String data = myInstance.get_cityFolderName() + "/"+ myInstance.get_cityId() + "_"+ myInstance.get_boneId()+ "_ArticalsList.json";
-        JSONObject jsonData = HelperMethods.loadJsonDataFromFile(data);
-
-        addPagerData(jsonData);
-
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.frame_layout);
-
-        StikkyHeaderBuilder.stickTo(mListView)
-                .setHeader(R.id.header, frameLayout)
-                .minHeightHeader(160)
-                .build();
-
-
-        populateListView();
-
-        adapter = new CustomAdapter(this, customListViewValuesArr, getResources());
-        mListView.setAdapter(adapter);
-
-
     }
 
+
+    private void initVars() {
+        resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
+        mListView = (ListView) findViewById(R.id.listview);
+        pager = (ViewPager) findViewById(R.id.viewpager);
+        placeActivity = new Intent(this, PlaceActivity.class);
+
+    }
 
 
     private void addPagerData(JSONObject jsonData) {
@@ -153,7 +166,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         pager.setAdapter(pageAdapter);
 
         //Bind the title indicator to the adapter
-        CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.titles);
+        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.titles);
         indicator.setViewPager(pager);
     }
 
@@ -188,7 +201,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener{
+    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener {
         private List<Fragment> fragments;
 
         public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
@@ -213,11 +226,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-
-
-
-
-
     private void screenListView(int price) {
 
         int index = mListView.getFirstVisiblePosition();
@@ -226,7 +234,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
         if (price == 0) {
 
-            adapter = new CustomAdapter(this, customListViewValuesArr, getResources());
+            adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
             mListView.setAdapter(adapter);
 
         } else {
@@ -238,7 +246,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
                     screenedListViewValuesArr.add(customListViewValuesArr.get(i));
                 }
             }
-            adapter = new CustomAdapter(this, screenedListViewValuesArr, getResources());
+            adapter = new OpenDetailsCustomAdapter(this, screenedListViewValuesArr, getResources());
             mListView.setAdapter(adapter);
         }
 
@@ -285,7 +293,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-
     private void setBoneTitleAndColor() {
         boneText = (TextView) findViewById(R.id.bone_title);
         String boneTitle = myInstance.get_boneIdTitle();
@@ -324,7 +331,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
             @Override
             public void onOpened() {
-                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                if (!setMap) {
+                    setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                    setMap = true;
+                }
                 mSlidingLayer.setSlidingEnabled(false);
             }
 
@@ -337,8 +347,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             }
         });
     }
-
-
 
 
     private void setupMapData(Cursor cursor) {
@@ -473,8 +481,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.open_details_full_header;
@@ -487,13 +493,12 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
     }
 
 
-    public void onListItemClick() {
-
-        Log.wtf("item id's: ", "city: " + myInstance.get_cityId() +
-                        ", bone: " + myInstance.get_boneId() +
-                        ", obj: " + myInstance.get_objId() +
-                        ", nsId: " + myInstance.get_nsId()
-                );
+    public void onPlaceItemClick() {
+//        Log.wtf("item id's: ", "city: " + myInstance.get_cityId() +
+//                        ", bone: " + myInstance.get_boneId() +
+//                        ", obj: " + myInstance.get_objId() +
+//                        ", nsId: " + myInstance.get_nsId()
+//                );
 
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
@@ -504,6 +509,32 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         placeActivity.putExtras(bundle);
         startActivity(placeActivity);
     }
+
+
+
+    public void onNavigationClick() {
+
+        //tel aviv test coord:
+//        String latitude = "32.111767";
+//        String longitude = "34.801361";
+
+        cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
+
+        String latitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
+        String longitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
+
+        try {
+            String url = "geo:" + latitude + "," + longitude;
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+
+        } catch (ActivityNotFoundException ex) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+            startActivity(intent);
+        }
+
+    }
+
 
 }
 

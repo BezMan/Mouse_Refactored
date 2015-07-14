@@ -39,7 +39,7 @@
             <com.wunderlist.slidinglayer.SlidingLayer
                 android:id="@+id/slidingLayer1"
                 android:layout_width="match_parent"
-                android:layout_height="470dp"
+                android:layout_height="510dp"
                 slidingLayer:stickTo="top"
                 slidingLayer:offsetDistance="50dp"
                 >
@@ -52,7 +52,7 @@
                     <fragment
                         android:id="@+id/map"
                         android:layout_width="match_parent"
-                        android:layout_height="420dp"
+                        android:layout_height="460dp"
                         class="com.google.android.gms.maps.MapFragment"
                         />
 
@@ -68,7 +68,7 @@
                     </View>
                     <Button
                         android:id="@+id/buttonToggleDrawer"
-                        android:onClick="buttonClicked"
+                        android:onClick="mapButtonClicked"
                         android:layout_width="92dp"
                         android:layout_height="40dp"
                         android:layout_below = "@+id/blackLine"

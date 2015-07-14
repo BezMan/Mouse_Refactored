@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class CustomAdapter extends BaseAdapter {
+public class OpenDetailsCustomAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     ListModel tempValues = null;
@@ -36,7 +36,7 @@ public class CustomAdapter extends BaseAdapter {
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public CustomAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    public OpenDetailsCustomAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
@@ -71,7 +71,7 @@ public class CustomAdapter extends BaseAdapter {
      */
     public static class ViewHolder {
 
-        public LinearLayout clickableLayout;
+        public LinearLayout clickableLayout, wazeLayout;
         public TextView titleA, titleB, titleC, distance, address, textPrice;
         public ImageView imagePrice;
         public RatingBar ratingBar;
@@ -91,6 +91,7 @@ public class CustomAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.open_details_list_item, null);
 
         holder.clickableLayout = (LinearLayout) view.findViewById(R.id.clickable_titles_layout);
+        holder.wazeLayout = (LinearLayout) view.findViewById(R.id.waze_layout);
 
         holder.titleA = (TextView) view.findViewById(R.id.open_details_item_title_A);
         holder.titleB = (TextView) view.findViewById(R.id.open_details_item_title_B);
@@ -125,21 +126,10 @@ public class CustomAdapter extends BaseAdapter {
         holder.distance.setText(String.valueOf(tempValues.getDistance()));
 
 
-        holder.clickableLayout.setOnClickListener(new OnItemClickListener(holder.objId, holder.nsId));
-//
-//        holder.favoritesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.v("favorites clicked ", "" + position);
-//                ConfListActivity sct = (ConfListActivity) _activity;
-//                sct.addToFavorites(position);
+        holder.clickableLayout.setOnClickListener(new OnPlaceItemClickListener(holder.objId, holder.nsId));
 
-//            }
-//        });
+        holder.wazeLayout.setOnClickListener(new OnNavigateItemClickListener(holder.objId, holder.nsId));
 
-
-        /******** Set Item Click Listner for LayoutInflater for each row ***********/
-//        view.setOnClickListener(new OnItemClickListener(position, modPosition));
 
 
         return view;
@@ -161,13 +151,13 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
-    /**
-     * ****** Called when Item click in ListView ***********
-     */
-    private class OnItemClickListener implements View.OnClickListener {
+
+
+
+    private class OnPlaceItemClickListener implements View.OnClickListener {
         String mObjId, mNsId;
 
-        OnItemClickListener(String objId, String nsId) {
+        OnPlaceItemClickListener(String objId, String nsId) {
             mObjId = objId;
             mNsId = nsId;
         }
@@ -178,8 +168,29 @@ public class CustomAdapter extends BaseAdapter {
             App.getInstance().set_nsId(mNsId);
 
             Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
-            myActivity.onListItemClick();
+            myActivity.onPlaceItemClick();
         }
     }
 
+
+
+
+    private class OnNavigateItemClickListener implements View.OnClickListener {
+        String mObjId, mNsId;
+
+        OnNavigateItemClickListener(String objId, String nsId) {
+            mObjId = objId;
+            mNsId = nsId;
+        }
+
+        @Override
+        public void onClick(View v) {
+            App.getInstance().set_objId(mObjId);
+            App.getInstance().set_nsId(mNsId);
+
+            Open_Details_header_N_list myActivity = (Open_Details_header_N_list) _activity;
+            myActivity.onNavigationClick();
+
+        }
+    }
 }

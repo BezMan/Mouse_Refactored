@@ -78,8 +78,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     String prevIcon;
 
     int pos;
+    boolean setMap;
 
-    public void buttonClicked(View v) {
+    public void mapButtonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
             mSlidingLayer.closeLayer(true);
         } else {
@@ -150,7 +151,10 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
             @Override
             public void onOpened() {
-                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                if(!setMap) {
+                    setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                    setMap = true;
+                }
                 mSlidingLayer.setSlidingEnabled(false);
             }
 
@@ -280,16 +284,12 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
             pos = 0;
-//            return icon[0];
         } else if (boneId.equals(myInstance.getBoneShop())) {
             pos = 1;
-//            return icon[1];
         } else if (boneId.equals(myInstance.getBoneRest())) {
             pos = 2;
-//            return icon[2];
         } else {
             pos = 3;
-//            return icon[3];
         }
         return icon[pos];
     }
