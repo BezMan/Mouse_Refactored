@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -80,10 +81,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     }
 
 
-
     private void set2GreenButtons() {
 
-        Button btnComment = (Button)findViewById(R.id.detailed_place_comment_btn);
+        Button btnComment = (Button) findViewById(R.id.detailed_place_comment_btn);
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
             }
         });
 
-        Button btnEmailThem = (Button)findViewById(R.id.detailed_place_email_them_btn);
+        Button btnEmailThem = (Button) findViewById(R.id.detailed_place_email_them_btn);
         btnEmailThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,19 +109,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     private void setBoneTitleAndColor() {
         boneTextView = (TextView) findViewById(R.id.bone_title);
-
-//        String boneTitle = bundle.getString("boneTitle");
-//        if (boneTitle == null) {
-          String boneTitle = myInstance.get_boneIdTitle();
-//        }
+        String boneTitle = myInstance.get_boneIdTitle();
         boneTextView.setText(boneTitle);
 
-//        for (int j = 0; j<GlobalVars.detailMenuItems.size()-1; j++){
-//            if(boneTitle.equals(GlobalVars.detailMenuItems.get(j))){
-//                boneTextView.setBackgroundColor(GlobalVars.boneColors[j]);
-//
-//            }
-//        }
         int pos = myInstance.getBonePosition();
         boneTextView.setBackgroundColor(GlobalVars.boneColors[pos]);
     }
@@ -184,7 +174,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         });
 
 
-        dareg= (TextView)findViewById(R.id.open_details_item_dareg_textBtn);
+        dareg = (TextView) findViewById(R.id.open_details_item_dareg_textBtn);
         dareg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,9 +211,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         TextView responsesView = (TextView) findViewById(R.id.detailed_place_responses);
 
 
-
-
-        if (phone.length()>8) {
+        if (phone.length() > 8) {
             phoneTitle.setVisibility(View.VISIBLE);
             phoneLayout.setVisibility(View.VISIBLE);
             phoneView.setText(phone);
@@ -313,6 +301,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     @Override
     public void onTaskGETCompleted(String result, RequestTask task) {
+        Log.wtf("task",""+task);
         dareg.setVisibility(View.GONE);
 
     }
@@ -333,15 +322,15 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     }
 
 
-    public void daregClicked(){
-    String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
-            "&rate=%d" +
-            "&boneId=%s" +
-            "&nsId=%s" +
-            "&objId=%s",
-            myRating, myInstance.get_boneId() , myInstance.get_nsId(), myInstance.get_objId()
-            ) ;
-        if(myRating>0)
+    public void daregClicked() {
+        String url = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewRate" +
+                        "&rate=%d" +
+                        "&boneId=%s" +
+                        "&nsId=%s" +
+                        "&objId=%s",
+                myRating, myInstance.get_boneId(), myInstance.get_nsId(), myInstance.get_objId()
+        );
+        if (myRating > 0)
             new RequestTaskGet(this).execute(url, null);
         //onGet, change the DAREG btn look.
 

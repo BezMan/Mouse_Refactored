@@ -244,13 +244,6 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
 
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
                 myInstance.setBonePosition(mCurrentHeaderPos);
-//                Log.wtf("pos:", " " + pos);
-
-//                myInstance.setBonePosition(mCurrentHeaderPos);
-//
-//                String headerName = GlobalVars.detailMenuItems.get(mCurrentHeaderPos);
-//
-//                bundle.putString("boneTitle", headerName);
 
                 Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
                 placeActivity.putExtras(bundle);
@@ -258,14 +251,12 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
 
 
             } else if (v instanceof ImageView) {//item delete btn:
-//                Toast.makeText(getApplicationContext(), "delete \n" + mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
                 dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
 
                 adapter = new FavoritesAdapter(true);
                 lsComposer.setAdapter(adapter);
 
             } else {// edit btn clicked:
-//                Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
                 if (editPage.getText().equals("עריכה")) {//start editing//
                     editPage.setText("סיים");
                     adapter = new FavoritesAdapter(true);

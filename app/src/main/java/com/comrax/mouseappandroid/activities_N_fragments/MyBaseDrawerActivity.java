@@ -77,8 +77,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         imageButtonInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "info Clicked!",
-//                        Toast.LENGTH_LONG).show();
                 openStaticPage(4);
 
             }
@@ -160,10 +158,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
 
     public void onNavDrawerItemClick(int mPosition) {
-//        TextView barTitleTextView = (TextView) findViewById(R.id.title_text);
-//        App.getInstance().setCityName(barTitleTextView.getText().toString());
-
-//        setupTextView(mPosition);
 
         if (mPosition == 0) {
             allCities();
@@ -255,18 +249,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             }
         }}
 
-//    private void setupTextView(int mPosition) {
-//        switch (mPosition){
-//            case 2:
-//                setupTextView("המועדפים שלי");
-//            case 4:
-//                setupTextView("עזרה");
-//            case 5:
-//                setupTextView("תקנון");
-//            case 6:
-//                setupTextView("אודות");
-//        }
-//    }
 
 
     public void loadFragment(final Fragment fragment, String fragTag) {
@@ -303,7 +285,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mylist_drawer_layout);
-//        Fragment placeFragment = getSupportFragmentManager().findFragmentByTag("placeTag");
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
 
         //close drawer if opened:
@@ -319,13 +300,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 //                    .addToBackStack(fragment.getClass().getName())
                         .commit();
 
-                if(this instanceof FavoritesActivity)
-                    setupTextView("המועדפים שלי");
-//                else if(this instanceof Detail_City_Activity)
+//                if(this instanceof FavoritesActivity)
+//                    setupTextView("המועדפים שלי");
+//                else
 //                    setupTextView(App.getInstance().getCityName());
-                else
-//                if(this instanceof MainListActivity)
-                    setupTextView(App.getInstance().getCityName());
             }
 
 
