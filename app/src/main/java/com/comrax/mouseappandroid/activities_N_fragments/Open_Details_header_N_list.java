@@ -332,7 +332,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             @Override
             public void onOpened() {
                 mSlidingLayer.setSlidingEnabled(false);
-                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
             }
 
             @Override
@@ -344,6 +343,17 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             }
         });
     }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        // TODO Auto-generated method stub
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus)
+            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+    }
+
+
 
 
     private void setupMapData(Cursor cursor) {
