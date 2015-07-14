@@ -150,6 +150,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
             @Override
             public void onOpened() {
+                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
                 mSlidingLayer.setSlidingEnabled(false);
             }
 
@@ -163,14 +164,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         });
     }
 
-
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        // TODO Auto-generated method stub
-//        super.onWindowFocusChanged(hasFocus);
-//        if(hasFocus)
-//            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
-//    }
 
 
 
