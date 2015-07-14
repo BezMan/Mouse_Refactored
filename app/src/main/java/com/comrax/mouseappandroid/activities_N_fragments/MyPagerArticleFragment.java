@@ -18,13 +18,13 @@ import java.io.File;
 /**
  * Created by bez on 20/05/2015.
  */
-public class MyFragment extends Fragment {
+public class MyPagerArticleFragment extends Fragment {
 
     public static final String EXTRA_CITY_FOLDER_NAME = "EXTRA_CITY_FOLDER_NAME", EXTRA_TITLE = "EXTRA_TITLE", EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION", EXTRA_IMAGE = "EXTRA_IMAGE";
 
-    public static final MyFragment newInstance(String cityFolderName, String title, String description, String image)
+    public static final MyPagerArticleFragment newInstance(String cityFolderName, String title, String description, String image)
     {
-        MyFragment f = new MyFragment();
+        MyPagerArticleFragment f = new MyPagerArticleFragment();
         Bundle bdl = new Bundle(1);
         bdl.putString(EXTRA_CITY_FOLDER_NAME, cityFolderName);
         bdl.putString(EXTRA_TITLE, title);

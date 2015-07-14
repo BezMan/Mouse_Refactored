@@ -24,7 +24,7 @@
 
 
         <Button
-            android:id="@+id/image_info"
+            android:id="@+id/close_comment_activity_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -53,13 +53,17 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:background="@color/White"/>
+            android:background="@color/White"
+            android:cursorVisible="true"
+            android:padding="5dp"
+            android:textCursorDrawable="@color/Achbar_green"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="20"
+            />
 
 
         <TextView
@@ -106,13 +110,19 @@
             android:id="@+id/edit_message"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_centerInParent="true"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:background="@color/White"/>
+            android:background="@color/White"
+            android:gravity="top"
+            android:cursorVisible="true"
+            android:padding="5dp"
+            android:textCursorDrawable="@color/Achbar_green"
+            android:imeOptions="actionDone"
+            android:focusable="true"
+            android:inputType="text"
+            android:maxLength="200"
+
+            />
 
 
 
@@ -120,9 +130,9 @@
 
 
     <Button
+        android:id="@+id/send_message_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-
         android:layout_marginTop="15dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -130,7 +140,10 @@
         android:textColor="@color/White"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:background="@color/Achbar_green"/>
+        android:focusable="true"
+        android:background="@color/Achbar_green"
+        android:imeOptions="actionSend"
+        />
 
 
 

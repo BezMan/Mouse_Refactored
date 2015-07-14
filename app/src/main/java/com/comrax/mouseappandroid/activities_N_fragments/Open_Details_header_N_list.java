@@ -178,7 +178,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
                 String folderName = myInstance.get_cityFolderName();
 
-                fList.add(MyFragment.newInstance(folderName, title, "", image));
+                fList.add(MyPagerArticleFragment.newInstance(folderName, title, "", image));
             }
 
         } catch (JSONException e) {
@@ -261,17 +261,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             lm.setTitleA(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
             lm.setTitleB(cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
             lm.setTitleC(cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-
-
             lm.setPrice(cursor.getInt(cursor.getColumnIndex(DBConstants.price)));
             lm.setAddress(cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-
             lm.setRating(cursor.getFloat(cursor.getColumnIndex(DBConstants.rating)));
-
             lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
-            lm.setObjId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
             lm.setNsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
 
 
@@ -344,14 +337,14 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         });
     }
 
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        // TODO Auto-generated method stub
-        super.onWindowFocusChanged(hasFocus);
-        if(hasFocus)
-            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
-    }
+//
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        // TODO Auto-generated method stub
+//        super.onWindowFocusChanged(hasFocus);
+//        if(hasFocus)
+//            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+//    }
 
 
 

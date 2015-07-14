@@ -164,13 +164,13 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        // TODO Auto-generated method stub
-        super.onWindowFocusChanged(hasFocus);
-        if(hasFocus)
-            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        // TODO Auto-generated method stub
+//        super.onWindowFocusChanged(hasFocus);
+//        if(hasFocus)
+//            setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+//    }
 
 
 
@@ -424,7 +424,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     //on city details list item clicked:
     public void onParentItemClick(int mPosition) {
-        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
 
         if (mPosition == 0) {                           //pos 0
 
@@ -495,7 +495,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 String image = item.getString("image");
                 String folderName = CITY_FOLDER_PATH;
 
-                fList.add(MyFragment.newInstance(folderName, title, description, image));
+                fList.add(MyPagerArticleFragment.newInstance(folderName, title, description, image));
             }
 
         } catch (JSONException e) {
