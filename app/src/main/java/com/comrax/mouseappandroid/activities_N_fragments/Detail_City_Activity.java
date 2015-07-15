@@ -650,4 +650,5 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         return super.onCreateView(name, context, attrs);
     }
+
 }

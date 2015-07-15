@@ -59,10 +59,10 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             }
 
             descPhoto.setText(urlContent.getString("descPhoto"));
-
             title.setText(urlContent.getString("nameTitle"));
             dateAndCredit.setText(urlContent.getString("dateAndCredit"));
             description.setText(urlContent.getString("description"));
+
             htmlContent.setText(Html.fromHtml(Html.fromHtml(urlContent.getString("content")).toString()));
             htmlContent.setMovementMethod(LinkMovementMethod.getInstance());
 

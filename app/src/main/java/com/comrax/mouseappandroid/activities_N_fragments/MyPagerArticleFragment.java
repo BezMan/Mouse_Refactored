@@ -1,5 +1,6 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 
@@ -73,7 +73,8 @@ public class MyPagerArticleFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity().getApplicationContext(), ""+mTitle, Toast.LENGTH_SHORT ).show();
+//            Toast.makeText(getActivity().getApplicationContext(), ""+mTitle, Toast.LENGTH_SHORT ).show();
+            startActivity(new Intent(getActivity(), ArticleActivity.class));
         }
     }
 }
