@@ -11,13 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.Detail_City_Activity;
-import com.comrax.mouseappandroid.activities_N_fragments.MainGridActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.Open_Details_header_N_list;
-import com.comrax.mouseappandroid.activities_N_fragments.PlaceActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.FavoritesActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.StopArticleActivity;
-import com.comrax.mouseappandroid.activities_N_fragments.TiyulimActivity;
+import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
 import com.comrax.mouseappandroid.model.DrawerModel;
 
 import java.util.ArrayList;
@@ -120,20 +114,25 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
         @Override
         public void onClick(View arg0) {
 
-        if(_activity instanceof MainGridActivity)
-            ((MainGridActivity) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof Detail_City_Activity)
-            ((Detail_City_Activity) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof Open_Details_header_N_list)
-            ((Open_Details_header_N_list) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof FavoritesActivity)
-            ((FavoritesActivity) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof PlaceActivity)
-            ((PlaceActivity) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof StopArticleActivity)
-            ((StopArticleActivity) _activity).onNavDrawerItemClick(mPosition);
-        else if(_activity instanceof TiyulimActivity)
-            ((TiyulimActivity) _activity).onNavDrawerItemClick(mPosition);
+            if(_activity instanceof MyBaseDrawerActivity)
+                ((MyBaseDrawerActivity) _activity).onNavDrawerItemClick(mPosition);
+
+//        if(_activity instanceof MainGridActivity)
+//            ((MainGridActivity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof Detail_City_Activity)
+//            ((Detail_City_Activity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof Open_Details_header_N_list)
+//            ((Open_Details_header_N_list) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof FavoritesActivity)
+//            ((FavoritesActivity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof PlaceActivity)
+//            ((PlaceActivity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof StopArticleActivity)
+//            ((StopArticleActivity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof TiyulimActivity)
+//            ((TiyulimActivity) _activity).onNavDrawerItemClick(mPosition);
+//        else if(_activity instanceof ArticleActivity)
+//            ((ArticleActivity) _activity).onNavDrawerItemClick(mPosition);
         }
     }
 

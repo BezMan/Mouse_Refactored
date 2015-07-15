@@ -1,7 +1,7 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import com.comrax.mouseappandroid.R;
@@ -41,8 +41,6 @@ public class TiyulimActivity extends MyBaseDrawerActivity{
         listView = (ListView)findViewById(R.id.tiyulim_listView);
         try {
             JSONObject jsonObject = new JSONObject(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.touristArticlesList, DBConstants.cityId, myInstance.get_cityId()));
-//            int jLength = jsonObject.length();
-            Log.wtf("length", ""+jsonObject.length());
             JSONArray jsonArray = jsonObject.getJSONArray("articles");
 
             adapter = new TiyulimListAdapter(this, jsonArray, getResources());
@@ -55,4 +53,11 @@ public class TiyulimActivity extends MyBaseDrawerActivity{
     }
 
 
-}
+    public void onTiyulimItemClicked(JSONObject item) {
+        Intent articleIntent = new Intent(this, ArticleActivity.class);
+        articleIntent.putExtra("articleData", item.toString());
+        startActivity(articleIntent);
+    }
+
+
+    }

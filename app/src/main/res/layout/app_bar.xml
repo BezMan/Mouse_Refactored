@@ -28,7 +28,7 @@
 
         <ImageButton
             android:id="@+id/image_burger"
-            android:layout_width="50dp"
+            android:layout_width="45dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

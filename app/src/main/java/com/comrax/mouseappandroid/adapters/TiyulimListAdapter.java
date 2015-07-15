@@ -3,6 +3,8 @@ package com.comrax.mouseappandroid.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.activities_N_fragments.TiyulimActivity;
+import com.comrax.mouseappandroid.app.App;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 
 public class TiyulimListAdapter extends BaseAdapter {
@@ -78,8 +84,16 @@ public class TiyulimListAdapter extends BaseAdapter {
 
             /************  Set Model values in Holder elements ***********/
 
-//                holder.text.setText(tempValues.getBtnTitle());
-//                holder.imageView.setImageResource(_resources.getIdentifier("com.comrax.mouseappandroid:drawable/" + tempValues.getBtnImage(), null, null));
+            holder.title.setText(item.getString("nameTitle"));
+            JSONObject urlContent = item.getJSONObject("urlContent");
+
+            holder.text.setText(urlContent.getString("description"));
+
+            File file = new File(App.getInstance().get_cityFolderName() + "/" + item.getString("image"));
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                holder.imageView.setImageBitmap(bitmap);
+            }
 
             view.setOnClickListener(new OnTiyulimListItemClicked(position));
 
@@ -109,7 +123,15 @@ public class TiyulimListAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View arg0) {
+            try {
+                JSONObject item = _jsonArray.getJSONObject(mPosition);
 
+                TiyulimActivity myActivity = (TiyulimActivity) _activity;
+                myActivity.onTiyulimItemClicked(item);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
