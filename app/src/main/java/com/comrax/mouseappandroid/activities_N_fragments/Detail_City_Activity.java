@@ -338,9 +338,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                             JSONObject serviceMenuItem = serviceMenuArray.getJSONObject(j);
                             ChildItem child = new ChildItem();
                             child.title = (serviceMenuItem.getString("name"));
+                            child.htmlContent = (serviceMenuItem.getJSONObject("urlContent").getString("content"));
 
                             listItem.items.add(child);
                         }
+
                     }
                 } else {  //get From Json data//
                     JSONObject menuItem = menuArray.getJSONObject(m);
@@ -447,7 +449,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
     public void onInfoChildItemClick(int mPosition) {
-        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
+
+        ChildItem childItem =         items.get(infoItemPosition).items.get(mPosition);
+//        listItem.items.add(child);
+//        ChildItem childItem
+        Toast.makeText(getApplicationContext(), "" + childItem.title + "\n\n" + childItem.htmlContent, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -539,7 +545,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private static class ChildItem {
         String title;
-//        String hint;
+        String htmlContent;
     }
 
     private static class ChildHolder {
