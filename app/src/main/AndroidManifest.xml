@@ -79,6 +79,11 @@
             android:label="@string/title_activity_detail_city" >
         </activity>
 
+        <activity
+            android:name=".activities_N_fragments.UsefulInfoActivity"
+            android:label="@string/title_activity_detail_city" >
+        </activity>
+
 
     </application>
 

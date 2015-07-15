@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,9 +43,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         try {
             JSONObject item = new JSONObject(info);
             JSONObject urlContent = item.getJSONObject("urlContent");
-
-            Log.wtf("Article json: ", "" + item);
-
 
             ImageView topImage = (ImageView)findViewById(R.id.open_article_topImage);
             TextView descPhoto = (TextView)findViewById(R.id.open_article_descPhoto);

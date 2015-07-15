@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,7 +20,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
@@ -248,7 +245,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-//                Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
                 Bundle bundle = new Bundle();
@@ -419,7 +415,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     //on city details list item clicked:
     public void onParentItemClick(int mPosition) {
-//        Toast.makeText(getApplicationContext(), "" + mPosition, Toast.LENGTH_SHORT).show();
 
         if (mPosition == 0) {                           //pos 0
 
@@ -449,12 +444,14 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
     public void onInfoChildItemClick(int mPosition) {
+        ChildItem childItem = items.get(infoItemPosition).items.get(mPosition);
 
-        ChildItem childItem =         items.get(infoItemPosition).items.get(mPosition);
-//        listItem.items.add(child);
-//        ChildItem childItem
-        Toast.makeText(getApplicationContext(), "" + childItem.title + "\n\n" + childItem.htmlContent, Toast.LENGTH_SHORT).show();
+        Intent usefulInfoIntent = new Intent(this, UsefulInfoActivity.class);
+        usefulInfoIntent.putExtra("articleTitle", childItem.title);
+        usefulInfoIntent.putExtra("articleHtmlContent", childItem.htmlContent);
+        startActivity(usefulInfoIntent);
     }
+
 
 
     private void setDetailsListItems() {
@@ -511,29 +508,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
 
-    class MyPageAdapter extends FragmentPagerAdapter implements View.OnClickListener {
-        private List<Fragment> fragments;
 
-        public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-            super(fm);
-            this.fragments = fragments;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return this.fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return this.fragments.size();
-        }
-
-        @Override
-        public void onClick(View v) {
-
-        }
-    }
 
 
     private static class GroupItem {

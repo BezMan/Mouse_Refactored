@@ -1,0 +1,63 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mylist_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/app_bar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_container">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:background="@color/White">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:id="@+id/uesful_info_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/uesful_info_html_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="17dp"
+                        />
+
+
+                </LinearLayout>
+            </ScrollView>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <include layout="@layout/global_drawer_views" />
+
+
+</android.support.v4.widget.DrawerLayout>
