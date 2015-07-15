@@ -19,17 +19,63 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:background="@color/White">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/article_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/open_article_topImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
                         />
+
+                    <TextView
+                        android:id="@+id/open_article_descPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/Gray"
+                        />
+
+                    <TextView
+                        android:id="@+id/open_article_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/open_article_dateAndCredit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/Gray"
+                        />
+
+                    <TextView
+                        android:id="@+id/open_article_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="17dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/open_article_html_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="17dp"
+                        />
+
 
                 </LinearLayout>
             </ScrollView>
