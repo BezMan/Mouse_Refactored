@@ -41,8 +41,8 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         String info = getIntent().getStringExtra("articleData");
 
         try {
-            JSONObject item = new JSONObject(info);
-            JSONObject urlContent = item.getJSONObject("urlContent");
+            JSONObject urlContent = new JSONObject(info);
+//            JSONObject urlContent = item.getJSONObject("urlContent");
 
             ImageView topImage = (ImageView)findViewById(R.id.open_article_topImage);
             TextView descPhoto = (TextView)findViewById(R.id.open_article_descPhoto);

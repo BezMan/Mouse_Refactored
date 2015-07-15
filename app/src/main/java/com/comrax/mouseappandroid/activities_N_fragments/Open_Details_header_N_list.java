@@ -175,21 +175,11 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             JSONArray articlesArray = jsonData.getJSONArray("articles");
 
             //lets add items thru loop
-            for (int i = 0; i < 5; i++) {   //we want only 5 first articles//
+            for (int i = 0; i < 5; i++) {   //we want only 5 first arurlContent = item.getJSONObject("urlContent").toString();tem.getString("image");
                 JSONObject item = articlesArray.getJSONObject(i);
+                String urlContent = item.getJSONObject("urlContent").toString();
 
-                String title = item.getString("title");
-                String boneId = item.getString("boneId");
-                String nsId = item.getString("nsId");
-                String url = item.getString("url");
-                String image = item.getString("image");
-
-                JSONObject urlContent = item.getJSONObject("urlContent");
-
-
-                String folderName = myInstance.get_cityFolderName();
-
-                fList.add(MyPagerArticleFragment.newInstance(folderName, title, "", image));
+                fList.add(MyPagerArticleFragment.newInstance(urlContent));
             }
 
         } catch (JSONException e) {

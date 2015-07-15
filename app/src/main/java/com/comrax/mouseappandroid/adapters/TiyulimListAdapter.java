@@ -124,10 +124,11 @@ public class TiyulimListAdapter extends BaseAdapter {
         @Override
         public void onClick(View arg0) {
             try {
-                JSONObject item = _jsonArray.getJSONObject(mPosition);
+                JSONObject urlContent = _jsonArray.getJSONObject(mPosition).getJSONObject("urlContent");
+
 
                 TiyulimActivity myActivity = (TiyulimActivity) _activity;
-                myActivity.onTiyulimItemClicked(item);
+                myActivity.onTiyulimItemClicked(urlContent);
 
             } catch (JSONException e) {
                 e.printStackTrace();

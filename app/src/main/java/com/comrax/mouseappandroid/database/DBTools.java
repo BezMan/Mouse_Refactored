@@ -25,19 +25,17 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_ARTICLE_TABLE = "CREATE TABLE "
                 + DBConstants.ARTICLE_TABLE_NAME + " ("
-                + DBConstants.boneId + " TEXT, "
                 + DBConstants.cityId + " TEXT, "
-                + DBConstants.imagePath + " TEXT, "
-                + DBConstants.menuItemId + " TEXT, "
-                + DBConstants.name + " TEXT, "
+                + DBConstants.boneId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId + " TEXT, "
+                + DBConstants.menuItemId + " TEXT, "
                 + DBConstants.rating + " REAL, "
                 + DBConstants.ratingCount + " INTEGER, "
-                + DBConstants.responses + " TEXT, "
                 + DBConstants.title + " TEXT, "
-                + DBConstants.url + " TEXT, "
-                + DBConstants.content + " TEXT " + ");";
+                + DBConstants.image + " TEXT, "
+                + DBConstants.urlContent + " TEXT, "
+                + DBConstants.url + " TEXT " + ");";
 
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
@@ -163,15 +161,11 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.url, item.getString(DBConstants.url));
             values.put(DBConstants.title, item.getString(DBConstants.title));
             values.put(DBConstants.menuItemId, item.getString(DBConstants.menuItemId));
-            values.put(DBConstants.imagePath, item.getString(DBConstants.imagePath));
+            values.put(DBConstants.image, item.getString(DBConstants.image));
             values.put(DBConstants.rating, item.getString(DBConstants.rating));
             values.put(DBConstants.ratingCount, item.getString(DBConstants.ratingCount));
 
-            JSONObject urlContent = item.getJSONObject(DBConstants.urlContent);
-            values.put(DBConstants.name, urlContent.getString(DBConstants.name));
-            values.put(DBConstants.image, urlContent.getString(DBConstants.image));
-            values.put(DBConstants.content, urlContent.getString(DBConstants.content));
-            values.put(DBConstants.responses, urlContent.getString(DBConstants.responses));
+            values.put(DBConstants.urlContent, item.getString(DBConstants.urlContent));
 
             database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
 
