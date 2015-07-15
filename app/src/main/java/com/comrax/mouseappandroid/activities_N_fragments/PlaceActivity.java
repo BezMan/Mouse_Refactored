@@ -260,6 +260,14 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
             imageButton.setImageBitmap(bitmap);
         }
 
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(0).getUrlAndroid()));
+                startActivity(browserIntent);
+            }
+        });
+
     }
 
 
@@ -301,7 +309,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     @Override
     public void onTaskGETCompleted(String result, RequestTask task) {
-        Log.wtf("task",""+task);
+        Log.wtf("task", "" + task);
         dareg.setVisibility(View.GONE);
 
     }
