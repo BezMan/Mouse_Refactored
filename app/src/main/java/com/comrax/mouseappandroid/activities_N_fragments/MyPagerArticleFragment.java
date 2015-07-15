@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,24 +45,27 @@ public class MyPagerArticleFragment extends Fragment {
 
         try {
             JSONObject jsonObject = new JSONObject(getArguments().getString(EXTRA_CONTENT));
-            String title = getArguments().getString(jsonObject.getString(DBConstants.name));
+            String title = jsonObject.getString(DBConstants.name);
             TextView titleText = (TextView)v.findViewById(R.id.pager_title);
             titleText.setText(title);
 
-            String description = getArguments().getString(jsonObject.getString(DBConstants.description));
+            String description = jsonObject.getString(DBConstants.description);
             TextView descriptionText = (TextView)v.findViewById(R.id.pager_description);
             descriptionText.setText(description);
 
-            String image = getArguments().getString(jsonObject.getString(DBConstants.image));
+            String image = jsonObject.getString(DBConstants.image);
+            Log.wtf("image: ",""+ image);
             ImageView imageText = (ImageView)v.findViewById(R.id.pager_image);
 
             File file = new File(App.getInstance().get_cityFolderName() + "/" + image);
             if (file.exists()) {
+                Log.wtf("exists: ","exists");
+
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 imageText.setImageBitmap(bitmap);
             }
 
-            v.setOnClickListener(new OnPagerItemClicked(EXTRA_CONTENT));
+            v.setOnClickListener(new OnPagerItemClicked(jsonObject.toString()));
 
         } catch (JSONException e) {
             e.printStackTrace();
