@@ -35,6 +35,8 @@ public class ItemsDbAdapter {
                     KEY_DESC + "," +
                     " UNIQUE (" + KEY_ITEM +"));";
 
+
+
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
         DatabaseHelper(Context context) {
@@ -56,6 +58,8 @@ public class ItemsDbAdapter {
             onCreate(db);
         }
     }
+
+
 
     public ItemsDbAdapter(Context ctx) {
         this.mCtx = ctx;
