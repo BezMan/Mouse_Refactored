@@ -27,9 +27,10 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
-import com.comrax.mouseappandroid.adapters.ItemsDbAdapter;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.database.DBConstants;
+import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.model.DrawerModel;
 
 import org.json.JSONException;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     private AutoCompleteTextView itemDescriptionView;
-    private ItemsDbAdapter dbHelper;
+    private DBTools dbTools;
     private EditText itemView;
     private TextView descView;
 
@@ -75,8 +76,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
 
 
-        dbHelper = new ItemsDbAdapter(this);
-        dbHelper.open();
+        dbTools = new DBTools(this);
+//        dbHelper.open();
 
         itemView = (EditText) findViewById(R.id.item);
         descView = (TextView) findViewById(R.id.itemDesc);
@@ -84,36 +85,36 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
         // Create an ItemAutoTextAdapter for the Item description field,
         // and set it as the OnItemClickListener for that field.
-        ItemAutoTextAdapter adapter = this.new ItemAutoTextAdapter(dbHelper);
+        ItemAutoTextAdapter adapter = this.new ItemAutoTextAdapter(dbTools);
         itemDescriptionView.setAdapter(adapter);
         itemDescriptionView.setOnItemClickListener(adapter);
 
-        //Clean all Items
-        dbHelper.deleteAllItems();
-        //Add some Item data as a sample
-        dbHelper.createItem("206-569-761", "Display Calculator");
-        dbHelper.createItem("206-577-145", "Adjustable Shelf Storage Cab");
-        dbHelper.createItem("206-577-813", "Ink Ribbon, Sharp SH5507");
-        dbHelper.createItem("206-579-130", "Paper Clips - OIC");
-        dbHelper.createItem("206-580-886", "Partition Triple Tray");
-        dbHelper.createItem("206-580-902", "Partition Binder Rack");
-        dbHelper.createItem("206-580-894", "Partition Hanging Folder File");
-        dbHelper.createItem("206-580-111", "Partition Triple Tray - Black");
-        dbHelper.createItem("206-580-222", "Partition Triple Tray - Blue");
-        dbHelper.createItem("206-580-333", "Partition Triple Tray - Red");
-        dbHelper.createItem("206-581-111", "Partition Binder Rack - Black");
-        dbHelper.createItem("206-581-222", "Partition Binder Rack - Blue");
-        dbHelper.createItem("206-581-333", "Partition Binder Rack - Red");
-
+//        //Clean all Items
+//        dbHelper.deleteAllItems();
+//        //Add some Item data as a sample
+//        dbHelper.createItem("206-569-761", "Display Calculator");
+//        dbHelper.createItem("206-577-145", "Adjustable Shelf Storage Cab");
+//        dbHelper.createItem("206-577-813", "Ink Ribbon, Sharp SH5507");
+//        dbHelper.createItem("206-579-130", "Paper Clips - OIC");
+//        dbHelper.createItem("206-580-886", "Partition Triple Tray");
+//        dbHelper.createItem("206-580-902", "Partition Binder Rack");
+//        dbHelper.createItem("206-580-894", "Partition Hanging Folder File");
+//        dbHelper.createItem("206-580-111", "Partition Triple Tray - Black");
+//        dbHelper.createItem("206-580-222", "Partition Triple Tray - Blue");
+//        dbHelper.createItem("206-580-333", "Partition Triple Tray - Red");
+//        dbHelper.createItem("206-581-111", "Partition Binder Rack - Black");
+//        dbHelper.createItem("206-581-222", "Partition Binder Rack - Blue");
+//        dbHelper.createItem("206-581-333", "Partition Binder Rack - Red");
+//
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (dbHelper  != null) {
-            dbHelper.close();
-        }
-    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (dbHelper  != null) {
+//            dbHelper.close();
+//        }
+//    }
 
 
 
@@ -380,7 +381,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     class ItemAutoTextAdapter extends CursorAdapter
             implements android.widget.AdapterView.OnItemClickListener {
 
-        private ItemsDbAdapter mDbHelper;
+        private DBTools dbTools;
 
         /**
          * Constructor. Note that no cursor is needed when we create the
@@ -392,10 +393,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          *            The AutoCompleteDbAdapter in use by the outer class
          *            object.
          */
-        public ItemAutoTextAdapter(ItemsDbAdapter dbHelper) {
+        public ItemAutoTextAdapter(DBTools dbHelper) {
             // Call the CursorAdapter constructor with a null Cursor.
             super(MyBaseDrawerActivity.this, null);
-            mDbHelper = dbHelper;
+            dbTools = dbHelper;
         }
 
         /**
@@ -419,7 +420,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
                 return getFilterQueryProvider().runQuery(constraint);
             }
 
-            Cursor cursor = mDbHelper.fetchItemsByDesc(
+            Cursor cursor = dbTools.fetchItemsByDesc(
                     (constraint != null ? constraint.toString() : "@@@@"));
 
             return cursor;
@@ -437,7 +438,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          */
         @Override
         public String convertToString(Cursor cursor) {
-            final int columnIndex = cursor.getColumnIndexOrThrow("description");
+            final int columnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
             final String str = cursor.getString(columnIndex);
             return str;
         }
@@ -459,8 +460,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         public void bindView(View view, Context context, Cursor cursor) {
             //final String text = convertToString(cursor);
             //((TextView) view).setText(text);
-            final int itemColumnIndex = cursor.getColumnIndexOrThrow("itemNumber");
-            final int descColumnIndex = cursor.getColumnIndexOrThrow("description");
+            final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
+            final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
             TextView text1 = (TextView) view.findViewById(R.id.text1);
             text1.setText(cursor.getString(itemColumnIndex));
             TextView text2 = (TextView) view.findViewById(R.id.text2);
@@ -488,28 +489,14 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             return view;
         }
 
-        /**
-         * Called by the AutoCompleteTextView field when a choice has been made
-         * by the user.
-         *
-         * @param listView
-         *            The ListView containing the choices that were displayed to
-         *            the user.
-         * @param view
-         *            The field representing the selected choice
-         * @param position
-         *            The position of the choice within the list (0-based)
-         * @param id
-         *            The id of the row that was chosen (as provided by the _id
-         *            column in the cursor.)
-         */
+
         @Override
         public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
             // Get the cursor, positioned to the corresponding row in the result set
             Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
             // Get the Item Number from this row in the database.
-            String itemNumber = cursor.getString(cursor.getColumnIndexOrThrow("itemNumber"));
+            String itemNumber = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.id));
 
             // Update the parent class's TextView
             itemView.setText(itemNumber);

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/activities_N_fragments/MainGridActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/adapters/ItemsDbAdapter.java" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/adapters/OpenDetailsCustomAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/app/App.java" charset="windows-1255" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/comrax/mouseappandroid/helpers/AnimatedExpandableListView.java" charset="windows-1255" />

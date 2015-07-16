@@ -13,6 +13,7 @@ public class DBConstants {
             PLACE_TABLE_NAME = "place",
             FAVORITE_TABLE_NAME = "favorites",
 
+        id = "_id",
             boneId = "boneId",
             cityId = "cityId",
             imagePath = "image",

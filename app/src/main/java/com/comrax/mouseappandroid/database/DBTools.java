@@ -3,6 +3,7 @@ package com.comrax.mouseappandroid.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -14,10 +15,11 @@ import org.json.JSONObject;
 public class DBTools extends SQLiteOpenHelper {
 
 
+
     public DBTools(Context applicationContext) {
         super(applicationContext, DBConstants.DATABASE_NAME, null, DBConstants.DATABASE_VERSION);
-
     }
+
 
 
     @Override
@@ -40,6 +42,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
+                +  DBConstants.id + " integer PRIMARY KEY autoincrement, "
                 + DBConstants.centerCoordinateLat + " TEXT, "
                 + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.price + " INTEGER, "
@@ -338,6 +341,21 @@ public class DBTools extends SQLiteOpenHelper {
         return database.delete(TableName, KEY_NAME + "='" + VALUE + "'", null);
 
     }
+
+
+    public Cursor fetchItemsByDesc(String inputText) throws SQLException {
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
+                new String[]{DBConstants.id, DBConstants.name, DBConstants.hebrewName},
+                DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%'",
+                null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+
+    }
+
 
 
 }
