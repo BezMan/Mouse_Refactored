@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +25,14 @@ import java.io.File;
  */
 public class MyPagerArticleFragment extends Fragment {
 
-    public static final String EXTRA_CONTENT = "EXTRA_CONTENT";
+    public static final String EXTRA_CONTENT = "EXTRA_CONTENT", EXTRA_IMAGE = "EXTRA_IMAGE";
 
-    public static final MyPagerArticleFragment newInstance(String urlContent)
+    public static final MyPagerArticleFragment newInstance(String urlContent, String image)
     {
         MyPagerArticleFragment f = new MyPagerArticleFragment();
         Bundle bdl = new Bundle(1);
         bdl.putString(EXTRA_CONTENT, urlContent);
+        bdl.putString(EXTRA_IMAGE, image);
         f.setArguments(bdl);
         return f;
     }
@@ -53,14 +53,12 @@ public class MyPagerArticleFragment extends Fragment {
             TextView descriptionText = (TextView)v.findViewById(R.id.pager_description);
             descriptionText.setText(description);
 
-            String image = jsonObject.getString(DBConstants.image);
-            Log.wtf("image: ",""+ image);
+            String image = getArguments().getString(EXTRA_IMAGE);
+
             ImageView imageText = (ImageView)v.findViewById(R.id.pager_image);
 
             File file = new File(App.getInstance().get_cityFolderName() + "/" + image);
             if (file.exists()) {
-                Log.wtf("exists: ","exists");
-
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 imageText.setImageBitmap(bitmap);
             }

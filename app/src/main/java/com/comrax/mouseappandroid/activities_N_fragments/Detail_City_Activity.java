@@ -492,10 +492,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
             //lets add items thru loop
             for (int i = 0; i < articlesArray.length(); i++) {
-                JSONObject item = articlesArray.getJSONObject(i);
+                final JSONObject item = articlesArray.getJSONObject(i);
                 String urlContent = item.getJSONObject("urlContent").toString();
+                String image = item.getString("image").toString();
 
-                fList.add(MyPagerArticleFragment.newInstance(urlContent));
+                fList.add(MyPagerArticleFragment.newInstance(urlContent, image));
             }
 
         } catch (JSONException e) {

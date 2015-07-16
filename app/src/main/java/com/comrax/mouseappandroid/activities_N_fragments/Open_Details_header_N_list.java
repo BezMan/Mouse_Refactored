@@ -178,8 +178,9 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
             for (int i = 0; i < 5; i++) {   //we want only 5 first arurlContent = item.getJSONObject("urlContent").toString();tem.getString("image");
                 JSONObject item = articlesArray.getJSONObject(i);
                 String urlContent = item.getJSONObject("urlContent").toString();
+                String image = item.getString("image").toString();
 
-                fList.add(MyPagerArticleFragment.newInstance(urlContent));
+                fList.add(MyPagerArticleFragment.newInstance(urlContent, image));
             }
 
         } catch (JSONException e) {
