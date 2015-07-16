@@ -10,20 +10,27 @@
     >
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/search_hebText"
         style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="אב"
+        android:gravity="left"/>
 
     <TextView
-        android:id="@+id/text2"
+        android:id="@+id/search_engText"
         style="?android:attr/dropDownItemStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="ab"
+        android:textSize="14dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginBottom="2dp"
+
+        />
 
     <View
         android:layout_width="match_parent"

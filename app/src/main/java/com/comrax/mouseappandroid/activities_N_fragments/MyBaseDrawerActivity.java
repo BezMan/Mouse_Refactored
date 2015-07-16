@@ -23,7 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CustomGlobalNavDrawerAdapter;
@@ -75,7 +74,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         setNavDrawerData();
 
 
-
         dbTools = new DBTools(this);
 //        dbHelper.open();
 
@@ -89,34 +87,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         itemDescriptionView.setAdapter(adapter);
         itemDescriptionView.setOnItemClickListener(adapter);
 
-//        //Clean all Items
-//        dbHelper.deleteAllItems();
-//        //Add some Item data as a sample
-//        dbHelper.createItem("206-569-761", "Display Calculator");
-//        dbHelper.createItem("206-577-145", "Adjustable Shelf Storage Cab");
-//        dbHelper.createItem("206-577-813", "Ink Ribbon, Sharp SH5507");
-//        dbHelper.createItem("206-579-130", "Paper Clips - OIC");
-//        dbHelper.createItem("206-580-886", "Partition Triple Tray");
-//        dbHelper.createItem("206-580-902", "Partition Binder Rack");
-//        dbHelper.createItem("206-580-894", "Partition Hanging Folder File");
-//        dbHelper.createItem("206-580-111", "Partition Triple Tray - Black");
-//        dbHelper.createItem("206-580-222", "Partition Triple Tray - Blue");
-//        dbHelper.createItem("206-580-333", "Partition Triple Tray - Red");
-//        dbHelper.createItem("206-581-111", "Partition Binder Rack - Black");
-//        dbHelper.createItem("206-581-222", "Partition Binder Rack - Blue");
-//        dbHelper.createItem("206-581-333", "Partition Binder Rack - Red");
-//
     }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (dbHelper  != null) {
-//            dbHelper.close();
-//        }
-//    }
-
-
 
 
 
@@ -334,14 +305,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     }
 
-//    searchOnClick
-
-    public void searchOnClick(View view) {
-        Toast.makeText(getApplicationContext(), "search", Toast.LENGTH_SHORT).show();
-
-    }
-
-
     @Override
     public void onBackPressed() {
 
@@ -462,9 +425,9 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             //((TextView) view).setText(text);
             final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
             final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
-            TextView text1 = (TextView) view.findViewById(R.id.text1);
+            TextView text1 = (TextView) view.findViewById(R.id.search_hebText);
             text1.setText(cursor.getString(itemColumnIndex));
-            TextView text2 = (TextView) view.findViewById(R.id.text2);
+            TextView text2 = (TextView) view.findViewById(R.id.search_engText);
             text2.setText(cursor.getString(descColumnIndex));
         }
 
