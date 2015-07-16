@@ -9,8 +9,10 @@
         android:layout_height="60dp"
         android:background="@color/Achbar_green" />
 
-    <EditText
-        android:id="@+id/inputSearch"
+
+
+    <AutoCompleteTextView
+        android:id="@+id/autocomplete_desc"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -19,10 +21,27 @@
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:hint="חפש"
+        android:gravity="center"
         android:textColorHint="@color/Gray"
+        android:completionThreshold="1">
 
-        />
+        <requestFocus />
+    </AutoCompleteTextView>
 
+    <EditText
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/autocomplete_desc"
+        android:background="@color/White" />
+
+    <TextView
+        android:id="@+id/itemDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_below="@+id/item"
+        android:background="@color/White" />
 
     <!-- Side navigation drawer UI -->
     <ListView
@@ -30,14 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:background="@color/WhiteSmoke" />
+        android:background="@color/WhiteSmoke"
+        android:layout_below="@+id/itemDesc"/>
 
-    <!-- hidden search results listView -->
-    <ListView
-        android:id="@+id/searchList"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/White"
-        android:visibility="gone" />
 </RelativeLayout>
