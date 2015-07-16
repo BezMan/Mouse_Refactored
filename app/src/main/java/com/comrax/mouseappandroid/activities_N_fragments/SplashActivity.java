@@ -2,8 +2,11 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -53,11 +56,36 @@ public class SplashActivity extends Activity {
     }
 
     private void getInitialData() {
-        _request = Request.PRIMARY;
-        new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
 
+        if(isNetworkOnline()) {
+            _request = Request.PRIMARY;
+            new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "exit and connect to network", Toast.LENGTH_LONG).show();
+        }
     }
 
+
+    public boolean isNetworkOnline() {
+        boolean status=false;
+        try{
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
+                status= true;
+            }else {
+                netInfo = cm.getNetworkInfo(1);
+                if(netInfo!=null && netInfo.getState()==NetworkInfo.State.CONNECTED)
+                    status= true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return status;
+
+    }
 
     class RequestTask extends AsyncTask<String, String, String> {
 

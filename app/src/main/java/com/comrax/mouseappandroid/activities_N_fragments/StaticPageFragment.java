@@ -16,7 +16,8 @@ import org.json.JSONObject;
 public class StaticPageFragment extends Fragment {
 
     Bundle bundle;
-    TextView title, mainTxt;
+    TextView title, mainTxt, barTitleTextView;
+    String originalTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,8 @@ public class StaticPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-            TextView barTitleTextView = (TextView) getActivity().findViewById(R.id.title_text);
+        barTitleTextView = (TextView) getActivity().findViewById(R.id.title_text);
+        originalTitle = barTitleTextView.getText().toString();
             barTitleTextView.setText(bundle.getString("barTitle", null));
 
     }
@@ -58,17 +60,9 @@ public class StaticPageFragment extends Fragment {
     }
 
 
-
-
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
+    public void onStop() {
+        super.onStop();
+        barTitleTextView.setText(originalTitle);
     }
-
-
-
-
-
 }
