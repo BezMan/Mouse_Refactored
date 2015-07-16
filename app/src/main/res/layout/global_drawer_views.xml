@@ -10,29 +10,38 @@
         android:background="@color/Achbar_green" />
 
 
+    <View
+        android:id="@+id/myView"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_corners_layout"
+        ></View>
 
     <AutoCompleteTextView
         android:id="@+id/autocomplete_desc"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="51dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:background="@drawable/rounded_corners_layout"
+        android:layout_marginTop="10dp"
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:hint="חפש"
         android:gravity="center"
         android:textColorHint="@color/Gray"
-        android:completionThreshold="1">
+        android:completionThreshold="1"
+        android:theme="@style/Theme.App.Base"
+        >
 
         <requestFocus />
     </AutoCompleteTextView>
+
 
     <EditText
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/autocomplete_desc"
+        android:layout_below="@+id/myView"
         android:background="@color/White" />
 
     <TextView
@@ -50,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="@color/WhiteSmoke"
-        android:layout_below="@+id/itemDesc"/>
+        android:layout_below="@+id/myView"
+        />
 
 </RelativeLayout>

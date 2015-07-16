@@ -13,4 +13,10 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
 
+    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/Achbar_green</item>
+        <item name="colorControlActivated">@color/Achbar_green</item>
+        <item name="colorControlHighlight">@color/Achbar_green</item>
+    </style>
+
 </resources>
