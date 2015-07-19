@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -166,6 +167,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         String html2 = Html.fromHtml(html).toString();
 
         mainDetailedText.setText(Html.fromHtml(html2));
+
+        mainDetailedText.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         rating = (RatingBar) findViewById(R.id.open_details_item_ratingBar);
