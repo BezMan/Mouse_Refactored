@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.comrax.mouseappandroid.app.App;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -347,7 +349,8 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
                 new String[]{},
-                DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%'",
+                DBConstants.cityId + "=" + App.getInstance().get_cityId() + " AND (" +
+                        DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%')",
                 null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -356,6 +359,20 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
+
+
+    public Cursor defaultEmptyRow(String inputText) throws SQLException {
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
+                new String[]{DBConstants.name, DBConstants.hebrewName, DBConstants.id},
+                DBConstants.id + " = 1",
+                null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+
+    }
 
 
 }

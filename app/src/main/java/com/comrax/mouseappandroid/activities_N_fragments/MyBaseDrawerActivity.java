@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,18 +40,15 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     private AutoCompleteTextView itemDescriptionView;
     private DBTools dbTools;
-    private EditText itemView;
-    private TextView descView;
-
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     public ArrayList<DrawerModel> customDrawerItemsArr = new ArrayList<>();
-    protected String mTitle;
     protected TextView appBarTextView;
 
     protected App myInstance = App.getInstance();
+
 
 
     private static final String STATIC_PAGE_TAG = "staticPageTag";
@@ -72,12 +68,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
         setNavDrawerData();
 
-
         dbTools = new DBTools(this);
-//        dbHelper.open();
 
-        itemView = (EditText) findViewById(R.id.item);
-        descView = (TextView) findViewById(R.id.itemDesc);
         itemDescriptionView = (AutoCompleteTextView) findViewById(R.id.autocomplete_desc);
 
         // Create an ItemAutoTextAdapter for the Item description field,
@@ -385,6 +377,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             Cursor cursor = dbTools.fetchItemsByDesc(
                     (constraint != null ? constraint.toString() : "@@@@"));
 
+            if(myInstance.getCityName() == null){
+                cursor = dbTools.defaultEmptyRow((constraint != null ? constraint.toString() : "@@@@"));
+            }
+
             return cursor;
         }
 
@@ -400,7 +396,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          */
         @Override
         public String convertToString(Cursor cursor) {
-            final int columnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
+            final int columnIndex = cursor.getColumnIndexOrThrow(DBConstants.id);
             final String str = cursor.getString(columnIndex);
             return str;
         }
@@ -420,14 +416,23 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          */
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            //final String text = convertToString(cursor);
-            //((TextView) view).setText(text);
-            final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
-            final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
-            TextView text1 = (TextView) view.findViewById(R.id.search_hebText);
-            text1.setText(cursor.getString(itemColumnIndex));
-            TextView text2 = (TextView) view.findViewById(R.id.search_engText);
-            text2.setText(cursor.getString(descColumnIndex));
+            TextView text1, text2;
+            text1 = (TextView) view.findViewById(R.id.search_hebText);
+            text2 = (TextView) view.findViewById(R.id.search_engText);
+
+            if(cursor.getCount()==1){
+                text1.setText("נא לבחור מדריך");
+                text2.setText("");
+
+            }
+            else {
+
+                final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
+                final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
+                text1 = (TextView) view.findViewById(R.id.search_hebText);
+                text1.setText(cursor.getString(itemColumnIndex));
+                text2.setText(cursor.getString(descColumnIndex));
+            }
         }
 
         /**
@@ -447,35 +452,37 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             final LayoutInflater inflater = LayoutInflater.from(context);
-            final View view = inflater.inflate(R.layout.item_list,parent, false);
+            final View view = inflater.inflate(R.layout.item_list, parent, false);
             return view;
         }
 
 
         @Override
         public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
-            // Get the cursor, positioned to the corresponding row in the result set
-            Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
-            Bundle bundle = new Bundle();
-            bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-            bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+                    if(myInstance.getCityName()==null){
+                        return;
+                    }
+            else {
 
-            myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-//            myInstance.setBonePosition(pos);
 
-            Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
-            placeActivity.putExtras(bundle);
-            startActivity(placeActivity);
+                        // Get the cursor, positioned to the corresponding row in the result set
+                        Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
-            // Get the Item Number from this row in the database.
-//            String itemNumber = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.id));
+                        Bundle bundle = new Bundle();
+                        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-            // Update the parent class's TextView
-//            itemView.setText(itemNumber);
-//            descView.setText(itemDescriptionView.getText());
-//            Log.w("Quantity:", String.valueOf(descView.getText().length()));
-            itemDescriptionView.setText("");
+                        myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+
+                        Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
+                        placeActivity.putExtras(bundle);
+                        startActivity(placeActivity);
+
+                        itemDescriptionView.setText("");
+                    }
+
         }
     }
+
 }

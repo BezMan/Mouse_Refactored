@@ -40,21 +40,6 @@
     </AutoCompleteTextView>
 
 
-    <EditText
-        android:id="@+id/item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/myView"
-        android:background="@color/White" />
-
-    <TextView
-        android:id="@+id/itemDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_below="@+id/item"
-        android:background="@color/White" />
-
     <!-- Side navigation drawer UI -->
     <ListView
         android:id="@+id/myNavList"
@@ -62,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="@color/WhiteSmoke"
-        android:layout_below="@+id/myView"
         />
 
 </RelativeLayout>

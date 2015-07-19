@@ -554,4 +554,11 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myInstance.setCityName(null);
+        myInstance.set_cityId(null);
+    }
 }
