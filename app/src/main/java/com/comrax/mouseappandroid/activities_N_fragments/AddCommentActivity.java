@@ -1,26 +1,28 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.http.RequestTask;
 import com.comrax.mouseappandroid.http.RequestTaskDelegate;
+import com.comrax.mouseappandroid.http.RequestTaskPOST;
 
 /**
  * Created by bez on 13/07/2015.
  */
-public class AddCommentActivity extends Activity implements RequestTaskDelegate{
+public class AddCommentActivity extends Activity implements RequestTaskDelegate {
+
+    EditText nameEditText, messageEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,6 @@ public class AddCommentActivity extends Activity implements RequestTaskDelegate{
         });
 
 
-
         Button btnSend = (Button) findViewById(R.id.send_message_btn);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,13 +47,15 @@ public class AddCommentActivity extends Activity implements RequestTaskDelegate{
             }
         });
 
+        nameEditText = (EditText) findViewById(R.id.edit_name);
 
-        EditText editText = (EditText) findViewById(R.id.edit_message);
 
-        editText.setHorizontallyScrolling(false);
-        editText.setMaxLines(Integer.MAX_VALUE);
+        messageEditText = (EditText) findViewById(R.id.edit_message);
 
-        editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        messageEditText.setHorizontallyScrolling(false);
+        messageEditText.setMaxLines(Integer.MAX_VALUE);
+
+        messageEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
@@ -67,34 +70,33 @@ public class AddCommentActivity extends Activity implements RequestTaskDelegate{
     }
 
     private void sendMessage() {
-// custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_fav_dialog);
 
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        if (nameEditText.getText().length()<2) {
+            Toast.makeText(getApplicationContext(), "שדה 'שם' חובה", Toast.LENGTH_LONG).show();
+        }
+        else if (messageEditText.getText().length()<2) {
+            Toast.makeText(getApplicationContext(), "שדה 'הודעה' חובה", Toast.LENGTH_LONG).show();
+        }
+        else {
+            String urlString = String.format("http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewResponses&" +
+                    "boneId=%s" + "&nsId=%s" + "&objId=%s", App.getInstance().get_boneId(), App.getInstance().get_nsId(), App.getInstance().get_objId());
 
 
-        // set the custom dialog components - text, image and button
+            String postParams = String.format("{\"name\":\"%s\"" + "," + " \"message\":\"%s\"}", nameEditText.getText(), messageEditText.getText());
 
-        Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
-        // if button is clicked, close the custom dialog
-        addFavButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+            Log.wtf("urlString: ", "" + urlString);
+            Log.wtf("postParams: ", "" + postParams);
 
-        dialog.show();
+            new RequestTaskPOST(this).execute(urlString, postParams);
+
+        }
     }
 
 
     @Override
     public void onTaskPOSTCompleted(String result, RequestTask task) {
-
+        Toast.makeText(getApplicationContext(), "ההודעה נשלחה בהצלחה", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override
@@ -102,11 +104,5 @@ public class AddCommentActivity extends Activity implements RequestTaskDelegate{
 
     }
 
-//    if (_place != nil) {
-//        urlString = [NSString stringWithFormat:@"http://www.mouse.co.il/appMouseWorldServiceRequest.ashx?appName=master@mouse.co.il&method=addNewResponses&boneId=%@&nsId=%@&objId=%@", _place.boneId, _place.nsId, _place.objId];
-
-//    postParams = String.format("{\"password\":\"%s\"" + "," + " \"phone\":\"%s\"}", editTextCode.getText(), editTextPhone.getText());
-
-//    new RequestTaskPOST(this).execute(urlString, postParams);
 
 }
