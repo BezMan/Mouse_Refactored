@@ -2,33 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/White"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
+        android:text="הוסף למועדפים"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center"
         android:background="@color/White"
+        android:gravity="center"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Achbar_gray_light_background"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="הוסף"
+        android:id="@+id/add_fav_btn"
         android:layout_gravity="center"
         android:background="@color/White"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="20dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Achbar_gray_light_background"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="ביטול"
+        android:id="@+id/cancel_fav_btn"
+        android:layout_gravity="center"
+        android:background="@color/White"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="20dp"
+        android:textStyle="bold"
         />
 </LinearLayout>

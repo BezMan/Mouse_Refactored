@@ -1,5 +1,6 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,7 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -186,8 +190,41 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         favoritesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbTools.insertFavorite(cursor);
-                Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
+//                dbTools.insertFavorite(cursor);
+//                Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
+
+                // custom dialog
+                final Dialog dialog = new Dialog(PlaceActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.custom_fav_dialog);
+
+                Window window = dialog.getWindow();
+                window.setGravity(Gravity.BOTTOM);
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+                // set the custom dialog components - text, image and button
+
+                Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
+                // if button is clicked, close the custom dialog
+                addFavButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbTools.insertFavorite(cursor);
+                        Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                Button cancelFavButton = (Button) dialog.findViewById(R.id.cancel_fav_btn);
+                cancelFavButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
 
             }
 
