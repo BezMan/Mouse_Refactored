@@ -346,7 +346,7 @@ public class DBTools extends SQLiteOpenHelper {
     public Cursor fetchItemsByDesc(String inputText) throws SQLException {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
-                new String[]{DBConstants.id, DBConstants.name, DBConstants.hebrewName},
+                new String[]{},
                 DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%'",
                 null, null, null, null, null);
         if (mCursor != null) {

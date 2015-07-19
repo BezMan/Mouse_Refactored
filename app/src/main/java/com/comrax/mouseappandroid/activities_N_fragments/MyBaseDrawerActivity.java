@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -458,13 +457,24 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             // Get the cursor, positioned to the corresponding row in the result set
             Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
+            Bundle bundle = new Bundle();
+            bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
+            myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+//            myInstance.setBonePosition(pos);
+
+            Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
+            placeActivity.putExtras(bundle);
+            startActivity(placeActivity);
+
             // Get the Item Number from this row in the database.
-            String itemNumber = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.id));
+//            String itemNumber = cursor.getString(cursor.getColumnIndexOrThrow(DBConstants.id));
 
             // Update the parent class's TextView
-            itemView.setText(itemNumber);
-            descView.setText(itemDescriptionView.getText());
-            Log.w("Quantity:", String.valueOf(descView.getText().length()));
+//            itemView.setText(itemNumber);
+//            descView.setText(itemDescriptionView.getText());
+//            Log.w("Quantity:", String.valueOf(descView.getText().length()));
             itemDescriptionView.setText("");
         }
     }

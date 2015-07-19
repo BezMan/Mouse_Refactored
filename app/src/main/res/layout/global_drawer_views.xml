@@ -28,11 +28,13 @@
         android:drawableStart="@android:drawable/ic_menu_search"
         android:hint="חפש"
         android:gravity="center"
-        android:textColorHint="@color/Achbar_gray_light_background"
+        android:textColorHint="@color/Gray"
         android:completionThreshold="1"
         android:theme="@style/Theme.App.Base"
         android:paddingLeft="10dp"
-        >
+        android:paddingRight="40dp"
+        android:singleLine="true"
+        android:maxLength="15">
 
         <requestFocus />
     </AutoCompleteTextView>
