@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
 
@@ -126,7 +127,7 @@ DBTools dbTools = new DBTools(this);
         ImageView imageButton = (ImageView) findViewById(R.id.footer_item_ad);
         int rand = (int) (Math.random() * 10 + 1);
 
-        File file = new File("/sdcard/Mouse_App/Default_master/Images/MenuIcons/" + "320x50_" + rand + ".jpg");
+        File file = new File(GlobalVars.IconFolder + "320x50_" + rand + ".jpg");
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageButton.setImageBitmap(bitmap);

@@ -192,8 +192,8 @@ public class SplashActivity extends Activity {
 
                 int lengthOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
-                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.BaseFolder + fileName);    //download to here//
+                destinationFolder = new File(GlobalVars.BaseFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {
@@ -243,7 +243,7 @@ public class SplashActivity extends Activity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File("/sdcard/Mouse_App/" + fileName).delete();
+            new File(GlobalVars.BaseFolder + fileName).delete();
 
         }
 

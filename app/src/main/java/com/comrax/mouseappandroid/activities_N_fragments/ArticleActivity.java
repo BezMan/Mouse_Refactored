@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBTools;
 
 import org.json.JSONException;
@@ -153,7 +154,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         ImageView imageButton = (ImageView) findViewById(R.id.footer_item_ad);
         int rand = (int) (Math.random() * 10 + 1);
 
-        File file = new File("/sdcard/Mouse_App/Default_master/Images/MenuIcons/" + "320x50_" + rand + ".jpg");
+        File file = new File(GlobalVars.IconFolder + "320x50_" + rand + ".jpg");
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageButton.setImageBitmap(bitmap);

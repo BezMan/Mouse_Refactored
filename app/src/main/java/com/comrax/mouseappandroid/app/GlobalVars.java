@@ -11,7 +11,8 @@ import java.util.ArrayList;
  */
 public class GlobalVars {
 
-    public static final String IconFolder = "/sdcard/Mouse_App/Default_master/Images/MenuIcons/";
+    public static final String BaseFolder = "/sdcard/Mouse_App/";
+    public static final String IconFolder = BaseFolder + "Default_master/Images/MenuIcons/";
 
     public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
 

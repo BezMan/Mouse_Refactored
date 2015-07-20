@@ -275,8 +275,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                sourceZipFile = new File("/sdcard/Mouse_App/" + fileName);    //download to here//
-                destinationFolder = new File("/sdcard/Mouse_App/" + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.BaseFolder + fileName);    //download to here//
+                destinationFolder = new File(GlobalVars.BaseFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
                 //only download if non-existant.
                 if (!sourceZipFile.exists()) {
@@ -371,8 +371,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File("/sdcard/Mouse_App/" + fileName).delete();
-            new File("/sdcard/Mouse_App/" + destinationFolder).delete();
+            new File(GlobalVars.BaseFolder + fileName).delete();
+            new File(GlobalVars.BaseFolder + destinationFolder).delete();
             mProgressDialog.dismiss();
 
         }
@@ -430,8 +430,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             mSavingDialog.show();
-            new File("/sdcard/Mouse_App/" + fileName).delete();
-            new File("/sdcard/Mouse_App/" + destinationFolder).delete();
+            new File(GlobalVars.BaseFolder + fileName).delete();
+            new File(GlobalVars.BaseFolder + destinationFolder).delete();
             mSavingDialog.dismiss();
 
         }
