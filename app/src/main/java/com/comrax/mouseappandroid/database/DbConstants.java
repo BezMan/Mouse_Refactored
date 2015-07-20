@@ -1,9 +1,9 @@
 package com.comrax.mouseappandroid.database;
 
-import android.os.Environment;
+import com.comrax.mouseappandroid.app.GlobalVars;
 
 public class DBConstants {
-    public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
+    public static final String DATABASE_NAME = GlobalVars.StorageFolder + "/mouseAppData.db";
     public static final int DATABASE_VERSION = 1;
 
 

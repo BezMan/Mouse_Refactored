@@ -1,5 +1,7 @@
 package com.comrax.mouseappandroid.app;
 
+import android.os.Environment;
+
 import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.json.JSONArray;
@@ -11,8 +13,8 @@ import java.util.ArrayList;
  */
 public class GlobalVars {
 
-    public static final String BaseFolder = "/sdcard/Mouse_App/";
-    public static final String IconFolder = BaseFolder + "Default_master/Images/MenuIcons/";
+    public static final String StorageFolder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mouse_App/";
+    public static final String IconFolder = StorageFolder + "Default_master/Images/MenuIcons/";
 
     public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
 

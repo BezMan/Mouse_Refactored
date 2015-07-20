@@ -360,7 +360,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
                     listItem.title = (menuItem.getString("name"));
-                    listItem.imagePath = (GlobalVars.BaseFolder + menuItem.getString("icon"));
+                    listItem.imagePath = (GlobalVars.StorageFolder + menuItem.getString("icon"));
                     listItem.boneId = (boneId);
 
                     if(m<4)
