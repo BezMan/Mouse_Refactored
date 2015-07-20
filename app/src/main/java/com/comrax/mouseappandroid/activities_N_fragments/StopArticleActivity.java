@@ -1,6 +1,5 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,14 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -67,52 +62,52 @@ DBTools dbTools = new DBTools(this);
 
         setFooterComment();
 
-        setFooterFav();
+//        setFooterFav();
 
         setFooterAd();
 
 
     }
 
-    private void setFooterFav() {
-        Button favoritesBtn = (Button) findViewById(R.id.footer_prefs_button);
-        favoritesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // custom dialog
-                final Dialog dialog = new Dialog(StopArticleActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.custom_fav_dialog);
-
-                Window window = dialog.getWindow();
-                window.setGravity(Gravity.BOTTOM);
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-                Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
-                addFavButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        dbTools.insertPlaceFavorite(cursor);
-                        Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                    }
-                });
-
-                Button cancelFavButton = (Button) dialog.findViewById(R.id.cancel_fav_btn);
-                cancelFavButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-            }
-
-        });
-
-    }
+//    private void setFooterFav() {
+//        Button favoritesBtn = (Button) findViewById(R.id.footer_prefs_button);
+//        favoritesBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // custom dialog
+//                final Dialog dialog = new Dialog(StopArticleActivity.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setContentView(R.layout.custom_fav_dialog);
+//
+//                Window window = dialog.getWindow();
+//                window.setGravity(Gravity.BOTTOM);
+//                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//
+//                Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
+//                addFavButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                        dbTools.insertPlaceFavorite(cursor);
+//                        Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                Button cancelFavButton = (Button) dialog.findViewById(R.id.cancel_fav_btn);
+//                cancelFavButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
+//
+//            }
+//
+//        });
+//
+//    }
 
     private void setFooterComment() {
         Button btnComment = (Button) findViewById(R.id.footer_comment_btn);

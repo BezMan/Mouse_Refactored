@@ -254,29 +254,24 @@ public class DBTools extends SQLiteOpenHelper {
 
 
 
-    public void insertArticleFavorite(Cursor cursor) {
+    public void insertArticleFavorite(JSONObject jsonObject) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + cursor.getString(cursor.getColumnIndex(DBConstants.name)) +"' AND "+ DBConstants.cityId +"='"+ cursor.getString(cursor.getColumnIndex(DBConstants.cityId)) + "'";
+        String name="", cityId=App.getInstance().get_cityId();
+        try {
+             name = jsonObject.getString(DBConstants.name).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + name +"' AND "+ DBConstants.cityId +"='"+ cityId + "'";
         Cursor checkCursor = database.rawQuery(sql, null);
 
         if(checkCursor.getCount() == 0){    //not already inside Favorites Table.
-            values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
-            values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
-            values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+            values.put(DBConstants.name, name);
+            values.put(DBConstants.cityId, cityId);
             values.put(DBConstants.boneCategoryName, "כתבות");
-            values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-            values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.title)));
-//            values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-//            values.put(DBConstants.description, cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
-//            values.put(DBConstants.address, cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-//            values.put(DBConstants.phone, cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-//            values.put(DBConstants.activityHours, cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-//            values.put(DBConstants.publicTransportation, cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-//            values.put(DBConstants.responses, cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-//            values.put(DBConstants.image, cursor.getString(cursor.getColumnIndex(DBConstants.image)));
+            values.put(DBConstants.description, jsonObject.toString());
 
             database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
         }

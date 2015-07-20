@@ -102,7 +102,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
         GlobalVars.detailMenuItems = new ArrayList<>();
-//        GlobalVars.detailMenuItems.add("כתבות");
+        GlobalVars.detailMenuItems.add("כתבות");
         listView = (AnimatedExpandableListView) findViewById(R.id.details_list);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         pagerLayout = layoutInflater.inflate(R.layout.view_pager, null);
@@ -363,7 +363,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                     listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
                     listItem.boneId = (boneId);
 
-                    GlobalVars.detailMenuItems.add(listItem.title);
+                    if(m<4)
+                        GlobalVars.detailMenuItems.add(listItem.title);
                     m++;
                 }
                 items.add(listItem);

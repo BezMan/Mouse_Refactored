@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.App;
+import com.comrax.mouseappandroid.database.DBTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +32,9 @@ import java.io.File;
  */
 public class ArticleActivity extends MyBaseDrawerActivity {
 
-//    Intent articleIntent;
-
+    DBTools dbTools = new DBTools(this);
+    Cursor cursor;
+    JSONObject urlContent;
     @Override
     protected int getLayoutResourceId() {
         return R.layout.article_layout;
@@ -50,8 +53,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         String info = getIntent().getStringExtra("articleData");
 
         try {
-            JSONObject urlContent = new JSONObject(info);
-//            JSONObject urlContent = item.getJSONObject("urlContent");
+             urlContent = new JSONObject(info);
 
             ImageView topImage = (ImageView)findViewById(R.id.open_article_topImage);
             TextView descPhoto = (TextView)findViewById(R.id.open_article_descPhoto);
@@ -112,7 +114,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                 addFavButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        dbTools.insertPlaceFavorite(cursor);
+                        dbTools.insertArticleFavorite(urlContent);
                         Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }

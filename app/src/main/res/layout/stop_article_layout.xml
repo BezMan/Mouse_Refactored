@@ -34,7 +34,7 @@
                         />
 
 
-                <include layout="@layout/article_footer" />
+                <include layout="@layout/stops_article_footer" />
 
                 </LinearLayout>
 

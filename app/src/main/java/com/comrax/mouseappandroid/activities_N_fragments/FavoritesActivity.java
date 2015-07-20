@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 import com.comrax.mouseappandroid.database.DBTools;
@@ -238,8 +239,8 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
         public void onClick(View v) {
 
             if (v instanceof LinearLayout) {
-                if (mCurrentHeaderPos < 4) { //place
-                    Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
+                if (mCurrentHeaderPos > 0) { //place
+                    Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
                     Bundle bundle = new Bundle();
                     bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
                     bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
@@ -252,13 +253,13 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
                     startActivity(placeActivity);
                 }
                 else { //article
-                    Cursor cursor = dbTools.getData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.title, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
+                    Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
 
                     myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
                     myInstance.setBonePosition(mCurrentHeaderPos);
 
                     Intent articleActivity = new Intent(FavoritesActivity.this, ArticleActivity.class);
-                    articleActivity.putExtra("articleData", cursor.getString(cursor.getColumnIndex(DBConstants.urlContent)));
+                    articleActivity.putExtra("articleData", cursor.getString(cursor.getColumnIndex(DBConstants.description)));
                     startActivity(articleActivity);
 
                 }
