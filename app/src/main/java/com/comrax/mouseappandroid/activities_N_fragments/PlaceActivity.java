@@ -193,9 +193,6 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         favoritesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                dbTools.insertFavorite(cursor);
-//                Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
-
                 // custom dialog
                 final Dialog dialog = new Dialog(PlaceActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -205,11 +202,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
                 window.setGravity(Gravity.BOTTOM);
                 window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-
-                // set the custom dialog components - text, image and button
-
                 Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
-                // if button is clicked, close the custom dialog
                 addFavButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

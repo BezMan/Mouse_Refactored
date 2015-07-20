@@ -50,10 +50,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     protected App myInstance = App.getInstance();
 
 
-
     private static final String STATIC_PAGE_TAG = "staticPageTag";
 
     protected abstract int getLayoutResourceId();
+
     protected abstract String getTextForAppBar();
 
 
@@ -79,7 +79,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         itemDescriptionView.setOnItemClickListener(adapter);
 
     }
-
 
 
     @Override
@@ -201,8 +200,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     }
 
 
-
-
     private void allCities() {
         Intent cityIntent = new Intent(this, MainGridActivity.class);
         cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -210,12 +207,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     }
 
 
-
     private void openFavorites() {
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
 
         //if frag open, just close it...
-        if (this instanceof FavoritesActivity && staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
+        if (this instanceof FavoritesActivity && staticPageFragment != null && staticPageFragment.isVisible()) { //if in static page:
             getSupportFragmentManager()
                     .beginTransaction()
                     .remove(staticPageFragment)
@@ -224,8 +220,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
             //TODO: change hardcoded!!!
             setupTextView("המועדפים שלי");
-        }
-        else {
+        } else {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
@@ -247,6 +242,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     private void rateApp() {
     }
+
+
 
     private void openStaticPage(int mPosition) {
         DrawerModel tempValues = customDrawerItemsArr.get(mPosition);
@@ -270,15 +267,15 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }}
-
+        }
+    }
 
 
     public void loadFragment(final Fragment fragment, String fragTag) {
 
         Fragment staticPageFragment = getSupportFragmentManager().findFragmentByTag(STATIC_PAGE_TAG);
 
-        if (staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
+        if (staticPageFragment != null && staticPageFragment.isVisible()) { //if in static page:
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
@@ -289,12 +286,13 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
-                .addToBackStack(fragTag)
+                    .addToBackStack(fragTag)
                     .commit();
 
         }
-
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -305,10 +303,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         //close drawer if opened:
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
-        }
-
-        else {
-            if (staticPageFragment!=null && staticPageFragment.isVisible()) { //if in static page:
+        } else {
+            if (staticPageFragment != null && staticPageFragment.isVisible()) { //if in static page:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .remove(staticPageFragment)
@@ -322,14 +318,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             }
 
 
-
             super.onBackPressed();
 
         }
     }
-
-
-
 
 
     class ItemAutoTextAdapter extends CursorAdapter
@@ -343,9 +335,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          * needed for the field. (see
          * {@link ItemAutoTextAdapter#runQueryOnBackgroundThread(CharSequence)}.)
          *
-         * @param dbHelper
-         *            The AutoCompleteDbAdapter in use by the outer class
-         *            object.
+         * @param dbHelper The AutoCompleteDbAdapter in use by the outer class
+         *                 object.
          */
         public ItemAutoTextAdapter(DBTools dbHelper) {
             // Call the CursorAdapter constructor with a null Cursor.
@@ -356,17 +347,16 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         /**
          * Invoked by the AutoCompleteTextView field to get completions for the
          * current input.
-         *
+         * <p/>
          * NOTE: If this method either throws an exception or returns null, the
          * Filter class that invokes it will log an error with the traceback,
          * but otherwise ignore the problem. No choice list will be displayed.
          * Watch those error logs!
          *
-         * @param constraint
-         *            The input entered thus far. The resulting query will
-         *            search for Items whose description begins with this string.
+         * @param constraint The input entered thus far. The resulting query will
+         *                   search for Items whose description begins with this string.
          * @return A Cursor that is positioned to the first row (if one exists)
-         *         and managed by the activity.
+         * and managed by the activity.
          */
         @Override
         public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
@@ -377,7 +367,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             Cursor cursor = dbTools.fetchItemsByDesc(
                     (constraint != null ? constraint.toString() : "@@@@"));
 
-            if(myInstance.getCityName() == null){
+            if (myInstance.getCityName() == null) {//if we are in MainGrid Activity, not inside a city...
                 cursor = dbTools.defaultEmptyRow((constraint != null ? constraint.toString() : "@@@@"));
             }
 
@@ -388,11 +378,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          * Called by the AutoCompleteTextView field to get the text that will be
          * entered in the field after a choice has been made.
          *
-         * @param cursor
-         *            The cursor, positioned to a particular row in the list.
+         * @param cursor The cursor, positioned to a particular row in the list.
          * @return A String representing the row's text value. (Note that this
-         *         specializes the base class return value for this method,
-         *         which is {@link CharSequence}.)
+         * specializes the base class return value for this method,
+         * which is {@link CharSequence}.)
          */
         @Override
         public String convertToString(Cursor cursor) {
@@ -405,14 +394,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          * Called by the ListView for the AutoCompleteTextView field to display
          * the text for a particular choice in the list.
          *
-         * @param view
-         *            The TextView used by the ListView to display a particular
-         *            choice.
-         * @param context
-         *            The context (Activity) to which this form belongs;
-         * @param cursor
-         *            The cursor for the list of choices, positioned to a
-         *            particular row.
+         * @param view    The TextView used by the ListView to display a particular
+         *                choice.
+         * @param context The context (Activity) to which this form belongs;
+         * @param cursor  The cursor for the list of choices, positioned to a
+         *                particular row.
          */
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
@@ -420,12 +406,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             text1 = (TextView) view.findViewById(R.id.search_hebText);
             text2 = (TextView) view.findViewById(R.id.search_engText);
 
-            if(cursor.getCount()==1){
+            if (cursor.getCount() == 1) {
                 text1.setText("נא לבחור מדריך");
                 text2.setText("");
 
-            }
-            else {
+            } else {
 
                 final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
                 final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
@@ -439,14 +424,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          * Called by the AutoCompleteTextView field to display the text for a
          * particular choice in the list.
          *
-         * @param context
-         *            The context (Activity) to which this form belongs;
-         * @param cursor
-         *            The cursor for the list of choices, positioned to a
-         *            particular row.
-         * @param parent
-         *            The ListView that contains the list of choices.
-         *
+         * @param context The context (Activity) to which this form belongs;
+         * @param cursor  The cursor for the list of choices, positioned to a
+         *                particular row.
+         * @param parent  The ListView that contains the list of choices.
          * @return A new View (really, a TextView) to hold a particular choice.
          */
         @Override
@@ -460,27 +441,26 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
 
-                    if(myInstance.getCityName()==null){
-                        return;
-                    }
+            if (myInstance.getCityName() == null) {//if we are in MainGrid Activity, not inside a city...
+                return;
+            }
+
             else {
+                // Get the cursor, positioned to the corresponding row in the result set
+                Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
+                Bundle bundle = new Bundle();
+                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                        // Get the cursor, positioned to the corresponding row in the result set
-                        Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-                        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+                Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
+                placeActivity.putExtras(bundle);
+                startActivity(placeActivity);
 
-                        myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-
-                        Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
-                        placeActivity.putExtras(bundle);
-                        startActivity(placeActivity);
-
-                        itemDescriptionView.setText("");
-                    }
+                itemDescriptionView.setText("");
+            }
 
         }
     }

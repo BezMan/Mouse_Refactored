@@ -230,7 +230,7 @@ public class DBTools extends SQLiteOpenHelper {
         String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "='" + cursor.getString(cursor.getColumnIndex(DBConstants.name)) +"' AND "+ DBConstants.cityId +"='"+ cursor.getString(cursor.getColumnIndex(DBConstants.cityId)) + "'";
         Cursor checkCursor = database.rawQuery(sql, null);
 
-        if(checkCursor.getCount() == 0){
+        if(checkCursor.getCount() == 0){    //not already inside Favorites Table.
             values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
             values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
             values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
