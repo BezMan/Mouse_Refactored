@@ -164,7 +164,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
         @Override
         public void onClick(View arg0) {
             MainGridActivity cla = (MainGridActivity) _activity;
-            cla.onListItemClick(mPosition);
+            cla.onCityItemClick(mPosition);
         }
     }
 

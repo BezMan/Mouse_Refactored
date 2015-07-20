@@ -1,5 +1,6 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -263,7 +265,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
-    public void onListItemClick(int mPosition) {
+    public void onCityItemClick(final int mPosition) {
         CitiesModel tempValues = CitiesArray.get(mPosition);
 
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
@@ -271,7 +273,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 //save clicked cityId:
                 myInstance.set_cityId(tempValues.getId());
 
-                String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
+                final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
@@ -281,15 +283,42 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 //only download if non-existant.
                 if (!sourceZipFile.exists()) {
 
-                    new DownloadFileAsync().execute(filePath, updateDate);
-                    break;
+                    //show dialog//
+                    final Dialog dialog = new Dialog(MainGridActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.custom_city_download_dialog);
+
+
+                    Button startDownloadButton = (Button) dialog.findViewById(R.id.start_download_btn);
+                    startDownloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            dialog.dismiss();
+                            new DownloadFileAsync().execute(filePath, updateDate);
+                        }
+
+                    });
+
+                    Button cancelDownloadButton = (Button) dialog.findViewById(R.id.cancel_download_btn);
+                    cancelDownloadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+
                 }
+
                 else{
                     nextActivity(destinationFolder, updateDate);
 
                 }
             }
         }
+
 
     }
 
