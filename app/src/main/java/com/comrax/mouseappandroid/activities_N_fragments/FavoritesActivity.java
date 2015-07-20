@@ -24,13 +24,15 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FavoritesActivity extends MyBaseDrawerActivity  {
+public class FavoritesActivity extends MyBaseDrawerActivity {
     AmazingListView lsComposer;
-    FavoritesModel[][] allItems = new FavoritesModel[4][];
+    FavoritesModel[][] allItems;
     DBTools dbTools = new DBTools(this);
     FavoritesAdapter adapter;
     TextView editPage;
     int currentHeader;
+
+    int mySize;
 
     @Override
     protected int getLayoutResourceId() {
@@ -45,6 +47,9 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mySize = GlobalVars.detailMenuItems.size();
+        allItems = new FavoritesModel[mySize][];
 
         lsComposer = (AmazingListView) findViewById(R.id.lsComposer);
         lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.favorites_item_composer_header, lsComposer, false));
@@ -193,7 +198,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
     public List<Pair<String, List<FavoritesModel>>> getAllData() {
         List<Pair<String, List<FavoritesModel>>> pairList = new ArrayList<Pair<String, List<FavoritesModel>>>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             pairList.add(getOneSection(i));
         }
         return pairList;
@@ -201,8 +206,6 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
 
 
     public Pair<String, List<FavoritesModel>> getOneSection(int index) {
-//		String[] titles = {"מלונות", "קניות", "מסעדות וחיי לילה", "אטרקציות", "כתבות"};
-        int mySize = GlobalVars.detailMenuItems.size();
         if (mySize <= 0) {
             return new Pair<String, List<FavoritesModel>>("", Arrays.<FavoritesModel>asList());
         }
@@ -235,20 +238,30 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
         public void onClick(View v) {
 
             if (v instanceof LinearLayout) {
-//                Toast.makeText(getApplicationContext(), mFavoritesModel.getName() + "\n" + mFavoritesModel.getType(), Toast.LENGTH_SHORT).show();
-                Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
+                if (mCurrentHeaderPos < 4) { //place
+                    Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                    bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                Bundle bundle = new Bundle();
-                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+                    myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                    myInstance.setBonePosition(mCurrentHeaderPos);
 
-                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-                myInstance.setBonePosition(mCurrentHeaderPos);
+                    Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
+                    placeActivity.putExtras(bundle);
+                    startActivity(placeActivity);
+                }
+                else { //article
+                    Cursor cursor = dbTools.getData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.title, mFavoritesModel.getName(), DBConstants.objId, mFavoritesModel.getObjId());
 
-                Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
-                placeActivity.putExtras(bundle);
-                startActivity(placeActivity);
+                    myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                    myInstance.setBonePosition(mCurrentHeaderPos);
 
+                    Intent articleActivity = new Intent(FavoritesActivity.this, ArticleActivity.class);
+                    articleActivity.putExtra("articleData", cursor.getString(cursor.getColumnIndex(DBConstants.urlContent)));
+                    startActivity(articleActivity);
+
+                }
 
             } else if (v instanceof ImageView) {//item delete btn:
                 dbTools.deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName());
@@ -274,7 +287,6 @@ public class FavoritesActivity extends MyBaseDrawerActivity  {
             }
         }
     }
-
 
 
 }

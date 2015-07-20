@@ -42,7 +42,6 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     String imagePath, name, hebName, description, address, type,
             phone, activityHours, publicTransportation, responses;
 
-    Bundle bundle;
 
     Button b1, b2, b3, b4;
     ImageView image1, image2, image3, image4;
@@ -50,6 +49,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     RatingBar rating;
 
+    Bundle bundle;
     DBTools dbTools;
     Cursor cursor;
 
@@ -206,7 +206,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
                 addFavButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbTools.insertFavorite(cursor);
+                        dbTools.insertPlaceFavorite(cursor);
                         Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }

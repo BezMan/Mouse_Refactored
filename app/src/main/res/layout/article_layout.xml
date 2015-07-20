@@ -77,6 +77,8 @@
                         />
 
 
+                    <include layout="@layout/article_footer" />
+
                 </LinearLayout>
             </ScrollView>
 

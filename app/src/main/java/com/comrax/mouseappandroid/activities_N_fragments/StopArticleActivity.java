@@ -92,7 +92,7 @@ DBTools dbTools = new DBTools(this);
                 addFavButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        dbTools.insertFavorite(cursor);
+//                        dbTools.insertPlaceFavorite(cursor);
                         Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
