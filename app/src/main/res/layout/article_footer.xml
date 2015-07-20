@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <Button
+        android:id="@+id/detailed_place_comment_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:background="@color/Achbar_green"
+        android:text="יש לך מה להגיד? הוסף תגובה"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        />
+
+
+    <Button
+        android:id="@+id/detailed_place_prefs_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/Gray"
+        android:text="שמור למועדפים"
+        android:textColor="@color/White"
+        android:textSize="18dp" />
+
+
+
+    <ImageView
+        android:id="@+id/footer_item_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+
+
+        />
+
+</LinearLayout>
