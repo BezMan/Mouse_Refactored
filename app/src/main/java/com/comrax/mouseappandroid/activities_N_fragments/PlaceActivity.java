@@ -321,7 +321,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
             int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getPackageName());
             images[i] = (ImageView) findViewById(imageID);
 
-            File file = new File("/sdcard/Mouse_App/Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG());
+            File file = new File(GlobalVars.trialMethod(getApplicationContext(), "Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 images[i].setImageBitmap(bitmap);

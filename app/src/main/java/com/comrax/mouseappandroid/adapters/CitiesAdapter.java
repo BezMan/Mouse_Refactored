@@ -129,7 +129,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
             /************  Set Model values in Holder elements ***********/
             holder.nameCity.setText(tempValues.getName());
 
-            File file = new File(GlobalVars.StorageFolder + "Default_master/" + tempValues.getImage());
+            File file = new File(GlobalVars.trialMethod(_activity.getApplicationContext(), "Default_master/" + tempValues.getImage()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 holder.imageCity.setImageBitmap(bitmap);

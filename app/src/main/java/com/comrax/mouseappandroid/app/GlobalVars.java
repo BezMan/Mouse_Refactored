@@ -1,17 +1,23 @@
 package com.comrax.mouseappandroid.app;
 
+import android.content.Context;
 import android.os.Environment;
 
 import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by betzalel on 16/04/2015.
  */
 public class GlobalVars {
+
+    public static String trialMethod(Context ctx, String fileName){
+        return new File (ctx.getFilesDir(), fileName ).toString();
+    }
 
     public static final String StorageFolder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Mouse_App/";
     public static final String IconFolder = StorageFolder + "Default_master/Images/MenuIcons/";

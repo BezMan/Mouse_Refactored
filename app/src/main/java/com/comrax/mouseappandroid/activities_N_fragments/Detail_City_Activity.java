@@ -360,7 +360,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
                     listItem.title = (menuItem.getString("name"));
-                    listItem.imagePath = ("/sdcard/Mouse_App/" + menuItem.getString("icon"));
+                    listItem.imagePath = (GlobalVars.trialMethod(getApplicationContext(), menuItem.getString("icon")));
                     listItem.boneId = (boneId);
 
                     if(m<4)

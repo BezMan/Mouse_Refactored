@@ -144,9 +144,6 @@ public class SplashActivity extends Activity {
             }
 
             _request = Request.ZIP;
-            File mouseFolder = new File("/sdcard/Mouse_App");
-            if(mouseFolder.isDirectory()==false)
-                mouseFolder.mkdirs();
             new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
 
 
@@ -192,8 +189,8 @@ public class SplashActivity extends Activity {
 
                 int lengthOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
-                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 //only continue if non-existant.
                 if (!sourceZipFile.exists()) {

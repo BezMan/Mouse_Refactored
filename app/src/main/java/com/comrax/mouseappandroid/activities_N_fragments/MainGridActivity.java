@@ -87,10 +87,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
-        saveStaticPages(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/staticPages.json"));
+        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json")));
 
-        setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
-        setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
+        setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/banners.json")));
+        setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/cities.json")));
 
         addDummyViews();
 
@@ -194,7 +194,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 int imageID = getResources().getIdentifier("banner_image" + (i + 1), "id", getPackageName());
                 images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/Default_master/" + BannersArray.get(i).getImageBIG());
+                File file = new File(GlobalVars.trialMethod(getApplicationContext(), "Default_master/" + BannersArray.get(i).getImageBIG()));
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -277,8 +277,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
-                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(),  fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 //only download if non-existant.
                 if (!sourceZipFile.exists()) {
