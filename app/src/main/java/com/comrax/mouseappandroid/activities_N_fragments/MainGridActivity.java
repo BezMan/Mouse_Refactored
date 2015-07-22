@@ -74,7 +74,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
     @Override
     protected String getTextForAppBar() {
-            return "עכבר עולם";
+        return "עכבר עולם";
     }
 
 
@@ -100,17 +100,14 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
-
     private void saveStaticPages(JSONObject jsonObject) {
         try {
             GlobalVars.staticPagesArray = jsonObject.getJSONArray("pages");
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
-
 
 
     private void addDummyViews() {
@@ -265,8 +262,54 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
+    public void onLongCityItemClick(final int mPosition) {
+        final CitiesModel tempValues = CitiesArray.get(mPosition);
+
+//        for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
+//            if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
+        //save clicked cityId:
+//                myInstance.set_cityId(tempValues.getId());
+
+//                final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
+//                updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
+//                fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+
+//        sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
+//                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+
+
+        //only delete if existant.
+        if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() > 0) {
+
+//                if (sourceZipFile.exists()) {
+
+            //show dialog//
+            final Dialog dialog = new Dialog(MainGridActivity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.update_city_dialog);
+
+
+            Button startDownloadButton = (Button) dialog.findViewById(R.id.update_download_btn);
+            startDownloadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    dialog.dismiss();
+                    dbTools.deleteWholeCity(tempValues.getId());
+//                            new DownloadFileAsync().execute(filePath, updateDate);
+                    recreate();
+                }
+            });
+
+            dialog.show();
+
+        }
+//            }
+//        }
+    }
+
     public void onCityItemClick(final int mPosition) {
-        CitiesModel tempValues = CitiesArray.get(mPosition);
+        final CitiesModel tempValues = CitiesArray.get(mPosition);
 
         for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
             if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
@@ -281,7 +324,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
                 //only download if non-existant.
-                if (!sourceZipFile.exists()) {
+                if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
 
                     //show dialog//
                     final Dialog dialog = new Dialog(MainGridActivity.this);
@@ -312,10 +355,34 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
                 }
 
-                else{
-                    nextActivity(destinationFolder, updateDate);
+                else {
+                    //city exists:
+                    if (!updateDate.equals(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId()))) {
 
+                        //show dialog//
+                        final Dialog dialog = new Dialog(MainGridActivity.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.update_city_dialog);
+
+
+                        Button startDownloadButton = (Button) dialog.findViewById(R.id.update_download_btn);
+                        startDownloadButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+                                dbTools.deleteWholeCity(tempValues.getId());
+                                new DownloadFileAsync().execute(filePath, updateDate);
+                            }
+                        });
+
+                        dialog.show();
+
+                    } else {
+                        nextActivity(destinationFolder, updateDate);
+                    }
                 }
+                break;
             }
         }
 
@@ -357,26 +424,26 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
                 int lenghtOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                    OutputStream output = new FileOutputStream(sourceZipFile);
-                    byte data[] = new byte[1024];
-                    long total = 0;
+                OutputStream output = new FileOutputStream(sourceZipFile);
+                byte data[] = new byte[1024];
+                long total = 0;
 
-                    while ((count = input.read(data)) != -1) {
-                        total += count;
-                        publishProgress("" + (int) ((total * 100) / lenghtOfFile));
-                        output.write(data, 0, count);
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                    output.write(data, 0, count);
 
-                        if (isCancelled()) {
-                            output.flush();
-                            output.close();
-                            input.close();
-                            return null;
-                        }
+                    if (isCancelled()) {
+                        output.flush();
+                        output.close();
+                        input.close();
+                        return null;
                     }
+                }
 
-                    output.flush();
-                    output.close();
-                    input.close();
+                output.flush();
+                output.close();
+                input.close();
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
@@ -392,8 +459,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         protected void onPostExecute(String unused) {
-                mProgressDialog.dismiss();
-                new SavingFilesAsync().execute();
+            mProgressDialog.dismiss();
+            new SavingFilesAsync().execute();
 
         }
 
@@ -432,15 +499,15 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         protected String doInBackground(String... initData) {//filepath + date//
-                    try {
-                        HelperMethods.unzip(sourceZipFile, destinationFolder);
-                        setDBdata();
-                        mSavingDialog.dismiss();
+            try {
+                HelperMethods.unzip(sourceZipFile, destinationFolder);
+                setDBdata();
+                mSavingDialog.dismiss();
 
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
-                        onCancelled();
-                    }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
+                onCancelled();
+            }
             return null;
         }
 
@@ -486,16 +553,13 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                         cityObject.put(DBConstants.name, fullObject.getString("EnglishName"));
                         cityObject.put(DBConstants.centerCoordinateLat, fullObject.getString("latitude"));
                         cityObject.put(DBConstants.centerCoordinateLon, fullObject.getString("longitude"));
-                    }
-                    else if (child.toString().contains("StopsArticle")) {
+                    } else if (child.toString().contains("StopsArticle")) {
                         JSONObject jsonStopsArticle = HelperMethods.loadJsonDataFromFile(child.toString());
                         cityObject.put(DBConstants.stopsArticle, jsonStopsArticle.toString());
-                    }
-                    else if (child.toString().contains("TuristArticalsList")) {
+                    } else if (child.toString().contains("TuristArticalsList")) {
                         JSONObject jsonTuristArticalsList = HelperMethods.loadJsonDataFromFile(child.toString());
                         cityObject.put(DBConstants.touristArticlesList, jsonTuristArticalsList.toString());
-                    }
-                    else if (child.toString().contains("PlacesList")) {
+                    } else if (child.toString().contains("PlacesList")) {
                         JSONObject jsonPlace = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonPlace.getJSONArray("places");
                         // looping through All nodes of json file:
@@ -504,8 +568,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                             item.put(DBConstants.cityId, myInstance.get_cityId());
                             dbTools.insertPlaceTable(item);
                         }
-                    }
-                    else if (child.toString().contains("ArticalsList")) {
+                    } else if (child.toString().contains("ArticalsList")) {
                         JSONObject jsonArticle = HelperMethods.loadJsonDataFromFile(child.toString());
                         JSONArray data = jsonArticle.getJSONArray("articles");
                         // looping through All nodes of json file:
@@ -515,7 +578,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                             dbTools.insertArticleTable(item);
                         }
                     }
-
 
 
                 }
@@ -534,21 +596,21 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                     }
                 }
 
-                            for (File child : directoryListing) {
+                for (File child : directoryListing) {
 
-                                if (child.toString().contains("PlacesCoordinatesList")) {
-                    JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
-                            JSONArray data = jsonPlacesCoordinatesList.getJSONArray("cityPlcesCoordinates");
+                    if (child.toString().contains("PlacesCoordinatesList")) {
+                        JSONObject jsonPlacesCoordinatesList = HelperMethods.loadJsonDataFromFile(child.toString());
+                        JSONArray data = jsonPlacesCoordinatesList.getJSONArray("cityPlcesCoordinates");
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject item = data.getJSONObject(i);
 
                             String boneId = child.toString();
-                            boneId = boneId.substring(boneId.lastIndexOf("/")+1);
+                            boneId = boneId.substring(boneId.lastIndexOf("/") + 1);
                             boneId = boneId.substring(5, 9);
 
 
-                            for(int j = 0; j<boneId_boneName.size(); j++){
-                                if(boneId.equals(boneId_boneName.get(j).first)){
+                            for (int j = 0; j < boneId_boneName.size(); j++) {
+                                if (boneId.equals(boneId_boneName.get(j).first)) {
                                     item.put(DBConstants.boneCategoryName, boneId_boneName.get(j).second);
                                 }
                             }
@@ -581,7 +643,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 //        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);
     }
-
 
 
     @Override

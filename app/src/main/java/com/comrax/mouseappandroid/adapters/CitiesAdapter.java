@@ -145,6 +145,8 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
             /******** Set Item Click Listner for LayoutInflater for each row ***********/
             view.setOnClickListener(new OnItemClickListener(position));
 
+            view.setOnLongClickListener(new OnLongItemClickListener(position));
+
 
         }
         return view;
@@ -165,6 +167,27 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
         public void onClick(View arg0) {
             MainGridActivity cla = (MainGridActivity) _activity;
             cla.onCityItemClick(mPosition);
+        }
+    }
+
+
+    private class OnLongItemClickListener implements View.OnClickListener, View.OnLongClickListener {
+        private int mPosition;
+
+        OnLongItemClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            MainGridActivity cla = (MainGridActivity) _activity;
+            cla.onLongCityItemClick(mPosition);
+            return false;
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 

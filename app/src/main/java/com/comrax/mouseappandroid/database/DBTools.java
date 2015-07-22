@@ -285,7 +285,7 @@ public class DBTools extends SQLiteOpenHelper {
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
         String sql = "SELECT " + colName + " FROM " + TableName + " WHERE " + colName + "=?" ;
-        Cursor cursor = database.rawQuery(sql, new String [] {rowValue});
+        Cursor cursor = database.rawQuery(sql, new String[]{rowValue});
 
         return cursor.getCount() > 0;
     }
@@ -370,6 +370,13 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
+    public void deleteWholeCity(String cityId) {
+        deleteRow(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, cityId);
+        deleteRow(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId);
+        deleteRow(DBConstants.ARTICLE_TABLE_NAME, DBConstants.cityId, cityId);
+        deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, cityId);
+    }
+
 
     public Cursor fetchItemsByDesc(String inputText) throws SQLException {
         SQLiteDatabase database = this.getReadableDatabase();
@@ -399,6 +406,7 @@ public class DBTools extends SQLiteOpenHelper {
         return mCursor;
 
     }
+
 
 
 }

@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -57,29 +59,28 @@ public class SplashActivity extends Activity {
 
     private void getInitialData() {
 
-        if(isNetworkOnline()) {
+        if (isNetworkOnline()) {
             _request = Request.PRIMARY;
             new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
-        }
-        else{
+        } else {
             Toast.makeText(getApplicationContext(), "exit and connect to network", Toast.LENGTH_LONG).show();
         }
     }
 
 
     public boolean isNetworkOnline() {
-        boolean status=false;
-        try{
+        boolean status = false;
+        try {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getNetworkInfo(0);
-            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
-                status= true;
-            }else {
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                status = true;
+            } else {
                 netInfo = cm.getNetworkInfo(1);
-                if(netInfo!=null && netInfo.getState()==NetworkInfo.State.CONNECTED)
-                    status= true;
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
+                    status = true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -125,8 +126,15 @@ public class SplashActivity extends Activity {
     public void saveInitCitiesData(String result) {
 
         try {
+
+            File mouseFolder = new File("/sdcard/Mouse_App");
+            if (mouseFolder.isDirectory() == false)
+                mouseFolder.mkdirs();
+
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
+//            JSONArray files = new JSONArray("[{\"Update_date\":\"29\\/10\\/2014 11:43:05\",\"id\":\"1\",\"CityId\":\"0\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Default_master.zip\"},{\"Update_date\":\"24\\/10\\/2014 11:43:05\",\"id\":\"2\",\"CityId\":\"1146\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/London_master_1146.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"3\",\"CityId\":\"1174\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Rome_master_1174.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"4\",\"CityId\":\"1179\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/NewYork_master_1179.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"5\",\"CityId\":\"1185\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Amsterdam_master_1185.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"6\",\"CityId\":\"1190\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Barcelona_master_1190.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"7\",\"CityId\":\"1193\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Berlin_master_1193.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"8\",\"CityId\":\"1197\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Prauge_master_1197.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"9\",\"CityId\":\"1372\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Budapest_master_1372.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"10\",\"CityId\":\"1448\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Madrid_master_1448.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"11\",\"CityId\":\"1171\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Paris_master_1171.zip\"}]");
+
             GlobalVars.initDataModelArrayList = new ArrayList<>();
 
             for (int i = 0; i < files.length(); i++) {
@@ -143,11 +151,27 @@ public class SplashActivity extends Activity {
                 GlobalVars.initDataModelArrayList.add(arrayItem);
             }
 
-            _request = Request.ZIP;
-            File mouseFolder = new File("/sdcard/Mouse_App");
-            if(mouseFolder.isDirectory()==false)
-                mouseFolder.mkdirs();
-            new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String savedDateJson = prefs.getString("masterDateJson", null);
+            String masterDate="";
+            if(savedDateJson!=null){
+                JSONObject jsonObject1 = (JSONObject) new JSONArray(savedDateJson).get(0) ;
+                masterDate = jsonObject1.getString("Update_date");
+            }
+
+            if (!files.toString().equals(savedDateJson)) {
+                //if new Json Data:
+                if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
+                    //if new masterDate exists:
+                    _request = Request.ZIP;
+                    new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+                }
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("masterDateJson", files.toString()).commit();
+
+            } else {
+                nextActivity();
+            }
 
 
         } catch (JSONException e) {
@@ -195,26 +219,23 @@ public class SplashActivity extends Activity {
                 sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
                 destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
 
-                //only continue if non-existant.
-                if (!sourceZipFile.exists()) {
+                OutputStream output = new FileOutputStream(sourceZipFile);
+                byte data[] = new byte[1024];
+                long total = 0;
 
-                    OutputStream output = new FileOutputStream(sourceZipFile);
-                    byte data[] = new byte[1024];
-                    long total = 0;
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
+                    output.write(data, 0, count);
 
-                    while ((count = input.read(data)) != -1) {
-                        total += count;
-                        publishProgress("" + (int) ((total * 100) / lengthOfFile));
-                        output.write(data, 0, count);
-
-                        if (isCancelled())
-                            break;
-                    }
-
-                    output.flush();
-                    output.close();
-                    input.close();
+                    if (isCancelled())
+                        break;
                 }
+
+                output.flush();
+                output.close();
+                input.close();
+
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
