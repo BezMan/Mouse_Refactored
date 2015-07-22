@@ -182,7 +182,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
         public boolean onLongClick(View v) {
             MainGridActivity cla = (MainGridActivity) _activity;
             cla.onLongCityItemClick(mPosition);
-            return false;
+            return true;
         }
 
         @Override

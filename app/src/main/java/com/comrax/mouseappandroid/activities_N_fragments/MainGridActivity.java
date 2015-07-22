@@ -286,18 +286,25 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             //show dialog//
             final Dialog dialog = new Dialog(MainGridActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.update_city_dialog);
+            dialog.setContentView(R.layout.custom_city_delete_dialog);
 
 
-            Button startDownloadButton = (Button) dialog.findViewById(R.id.update_download_btn);
+            Button startDownloadButton = (Button) dialog.findViewById(R.id.start_delete_btn);
             startDownloadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     dialog.dismiss();
                     dbTools.deleteWholeCity(tempValues.getId());
-//                            new DownloadFileAsync().execute(filePath, updateDate);
                     recreate();
+                }
+
+            });
+
+            Button cancelDownloadButton = (Button) dialog.findViewById(R.id.cancel_delete_btn);
+            cancelDownloadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
                 }
             });
 
