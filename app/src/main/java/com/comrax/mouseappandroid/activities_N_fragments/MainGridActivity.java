@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Pair;
@@ -218,8 +217,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         public void onClick(View arg0) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BannersArray.get(mPosition).getUrlAndroid()));
-            startActivity(browserIntent);
+            Intent fullAdIntent = new Intent(MainGridActivity.this, FullAdActivity.class);
+            fullAdIntent.putExtra("adNum",mPosition);
+            startActivity(fullAdIntent);
         }
     }
 

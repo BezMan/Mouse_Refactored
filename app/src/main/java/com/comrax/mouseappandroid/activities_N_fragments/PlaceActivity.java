@@ -357,8 +357,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         @Override
         public void onClick(View arg0) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition).getUrlAndroid()));
-            startActivity(browserIntent);
+            Intent fullAdIntent = new Intent(PlaceActivity.this, FullAdActivity.class);
+            fullAdIntent.putExtra("adNum",mPosition);
+            startActivity(fullAdIntent);
         }
     }
 

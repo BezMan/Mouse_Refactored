@@ -1,10 +1,6 @@
 package com.comrax.mouseappandroid.database;
 
-import com.comrax.mouseappandroid.app.GlobalVars;
-
 public class DBConstants {
-    public static final String DATABASE_NAME = GlobalVars.StorageFolder + "/mouseAppData.db";
-    public static final int DATABASE_VERSION = 1;
 
 
     public static final String

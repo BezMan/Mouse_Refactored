@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -429,8 +428,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
 
         } else if (mPosition > infoItemPosition) {   //pos 7-10
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(mPosition - infoItemPosition - 1).getUrlAndroid()));
-            startActivity(browserIntent);
+            Intent fullAdIntent = new Intent(Detail_City_Activity.this, FullAdActivity.class);
+            fullAdIntent.putExtra("adNum",mPosition - infoItemPosition - 1);
+            startActivity(fullAdIntent);
 
         } else {                                         //pos 1-4
             Intent intent = new Intent(this, Open_Details_header_N_list.class);

@@ -6,26 +6,22 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <!--<uses-permission android:name="android.permission.CALL_PHONE" />-->
 
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAyFjRKYX45ikAzbrgRG45MY_tJGUN8B7o" />
-
-
-
 
         <activity
             android:name=".activities_N_fragments.SplashActivity"
@@ -48,43 +44,38 @@
             android:name=".activities_N_fragments.Open_Details_header_N_list"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.PlaceActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.FavoritesActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.AddCommentActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.StopArticleActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.TiyulimActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.ArticleActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
         <activity
             android:name=".activities_N_fragments.UsefulInfoActivity"
             android:label="@string/title_activity_detail_city" >
         </activity>
-
-
+        <activity
+            android:name=".activities_N_fragments.FullAdActivity"
+            android:label="@string/title_activity_full_ad" >
+        </activity>
     </application>
 
 </manifest>

@@ -9,5 +9,6 @@
     <string name="title_activity_detail_city">Detail_City_Activity</string>
 
     <string name="dareg"> <u>דרג</u> </string>
+    <string name="title_activity_full_ad">FullAdActivity</string>
 
 </resources>

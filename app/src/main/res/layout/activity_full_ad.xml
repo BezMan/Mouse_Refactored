@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:id="@+id/ad_background_layout">
+
+
+    <ImageView
+
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/cancel"
+        android:focusable="true"
+        android:id="@+id/ad_exit_button">
+
+
+
+    </ImageView>
+
+
+</RelativeLayout>
