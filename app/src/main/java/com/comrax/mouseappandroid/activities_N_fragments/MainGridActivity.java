@@ -87,10 +87,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
-        saveStaticPages(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/staticPages.json"));
+        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json")));
 
-        setBanners(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/banners.json"));
-        setCities(HelperMethods.loadJsonDataFromFile("/sdcard/Mouse_App/Default_master/cities.json"));
+        setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/banners.json")));
+        setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/cities.json")));
 
         addDummyViews();
 
@@ -191,7 +191,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 int imageID = getResources().getIdentifier("banner_image" + (i + 1), "id", getPackageName());
                 images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
-                File file = new File("/sdcard/Mouse_App/Default_master/" + BannersArray.get(i).getImageBIG());
+                File file = new File(GlobalVars.trialMethod(getApplicationContext(), "Default_master/" + BannersArray.get(i).getImageBIG()));
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -265,29 +265,13 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     public void onLongCityItemClick(final int mPosition) {
         final CitiesModel tempValues = CitiesArray.get(mPosition);
 
-//        for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
-//            if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
-        //save clicked cityId:
-//                myInstance.set_cityId(tempValues.getId());
-
-//                final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
-//                updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
-//                fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-
-//        sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
-//                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
-
-
         //only delete if existant.
         if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() > 0) {
-
-//                if (sourceZipFile.exists()) {
 
             //show dialog//
             final Dialog dialog = new Dialog(MainGridActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.custom_city_delete_dialog);
-
 
             Button startDownloadButton = (Button) dialog.findViewById(R.id.start_delete_btn);
             startDownloadButton.setOnClickListener(new View.OnClickListener() {
@@ -309,11 +293,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             });
 
             dialog.show();
-
         }
-//            }
-//        }
     }
+
 
     public void onCityItemClick(final int mPosition) {
         final CitiesModel tempValues = CitiesArray.get(mPosition);
@@ -327,8 +309,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
-                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(),fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 //only download if non-existant.
                 if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
@@ -366,7 +348,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                     //city exists:
                     if (!updateDate.equals(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId()))) {
 
-                        //show dialog//
+                        //show dialog, needs update//
                         final Dialog dialog = new Dialog(MainGridActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.update_city_dialog);
@@ -474,8 +456,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File(GlobalVars.StorageFolder + fileName).delete();
-            new File(GlobalVars.StorageFolder + destinationFolder).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mProgressDialog.dismiss();
 
         }
@@ -533,8 +515,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             mSavingDialog.show();
-            new File(GlobalVars.StorageFolder + fileName).delete();
-            new File(GlobalVars.StorageFolder + destinationFolder).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mSavingDialog.dismiss();
 
         }

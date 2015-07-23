@@ -127,9 +127,9 @@ public class SplashActivity extends Activity {
 
         try {
 
-            File mouseFolder = new File("/sdcard/Mouse_App");
-            if (mouseFolder.isDirectory() == false)
-                mouseFolder.mkdirs();
+//            File mouseFolder = new File("/sdcard/Mouse_App");
+//            if (mouseFolder.isDirectory() == false)
+//                mouseFolder.mkdirs();
 
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
@@ -216,8 +216,8 @@ public class SplashActivity extends Activity {
 
                 int lengthOfFile = conexion.getContentLength();
                 InputStream input = new BufferedInputStream(url.openStream());
-                sourceZipFile = new File(GlobalVars.StorageFolder + fileName);    //download to here//
-                destinationFolder = new File(GlobalVars.StorageFolder + fileName.substring(0, fileName.indexOf('.'))); //without .zip//
+                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 OutputStream output = new FileOutputStream(sourceZipFile);
                 byte data[] = new byte[1024];
@@ -264,7 +264,7 @@ public class SplashActivity extends Activity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File(GlobalVars.StorageFolder + fileName).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
 
         }
 
