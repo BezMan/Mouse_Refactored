@@ -253,6 +253,8 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String unused) {
             try {
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
+                new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+
                 mProgressDialog.dismiss();
                 nextActivity();
 
@@ -272,6 +274,15 @@ public class SplashActivity extends Activity {
 
 
     private void nextActivity() {
+//
+//        File[] files = getFilesDir().listFiles();
+//
+//        for (File file : files) {
+////            file.delete();
+//            Log.wtf("files: ", "" + file.getName() );
+//
+//        }
+
         startActivity(new Intent(SplashActivity.this, MainGridActivity.class));
         finish();
 

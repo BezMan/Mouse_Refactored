@@ -59,6 +59,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     LinearLayout layout1, layout2, layout3, layout4;
 
     DBTools dbTools = new DBTools(this);
+    boolean b;
 
     int existingCityCounter = 0;
 
@@ -279,6 +280,16 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 public void onClick(View v) {
                     dialog.dismiss();
                     dbTools.deleteWholeCity(tempValues.getId());
+
+
+//                    File[] files = getFilesDir().listFiles();
+//                    for (File file : files) {
+//                        if (file.getName().contains(tempValues.getId())) {
+//                            b = file.delete();
+//                            Log.wtf("delete: ", "" + b);
+//                        }
+//                    }
+
                     recreate();
                 }
 
@@ -361,6 +372,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
                                 dialog.dismiss();
                                 dbTools.deleteWholeCity(tempValues.getId());
+
+
                                 new DownloadFileAsync().execute(filePath, updateDate);
                             }
                         });
@@ -490,6 +503,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         protected String doInBackground(String... initData) {//filepath + date//
             try {
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
+                new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
                 setDBdata();
                 mSavingDialog.dismiss();
 
