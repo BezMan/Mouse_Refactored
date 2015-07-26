@@ -3,6 +3,8 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,11 @@ public class StaticPageFragment extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject(bundle.getString("data", null));
             title.setText(jsonObject.getString("Title"));
-            mainTxt.setText(jsonObject.getString("Content"));
+//            mainTxt.setText(jsonObject.getString("Content"));
+
+            mainTxt.setText(Html.fromHtml(Html.fromHtml(jsonObject.getString("Content")).toString()));
+            mainTxt.setMovementMethod(LinkMovementMethod.getInstance());
+
         }
         catch (JSONException e) {
             e.printStackTrace();

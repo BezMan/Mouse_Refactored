@@ -58,7 +58,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     LinearLayout layout1, layout2, layout3, layout4;
 
     DBTools dbTools = new DBTools(this);
-    boolean b;
 
     int existingCityCounter = 0;
 
@@ -356,13 +355,18 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 }
 
                 else {
-                    //city exists:
-                    if (!updateDate.equals(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId()))) {
+                    //city exists, diff date:
+                    String cityDBDate = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
+                    if (!updateDate.equals(cityDBDate)) {
 
                         //show dialog, needs update//
                         final Dialog dialog = new Dialog(MainGridActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(R.layout.update_city_dialog);
+                        dialog.setContentView(R.layout.custom_city_update_dialog);
+
+                        Window window = dialog.getWindow();
+//                        window.setGravity(Gravity.BOTTOM);
+                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
 
                         Button startDownloadButton = (Button) dialog.findViewById(R.id.update_download_btn);
@@ -381,7 +385,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                         dialog.show();
 
                     } else {
-                        nextActivity(destinationFolder, updateDate);
+                        nextActivity(destinationFolder);
                     }
                 }
                 break;
@@ -640,10 +644,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
-    private void nextActivity(File file, String updateDate) {
+    private void nextActivity(File file) {
         Intent cityFolderNameIntent = new Intent(MainGridActivity.this, Detail_City_Activity.class);
         cityFolderNameIntent.putExtra("cityFolderName", file.toString());
-//        cityFolderNameIntent.putExtra("cityUpdateDate", updateDate);
         startActivity(cityFolderNameIntent);
     }
 
