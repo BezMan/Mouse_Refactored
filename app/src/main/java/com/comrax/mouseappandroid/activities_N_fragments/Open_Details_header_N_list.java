@@ -265,7 +265,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
         boneText.setText(boneTitle);
 
         int pos = myInstance.getBonePosition();
-        boneText.setBackgroundColor(GlobalVars.boneColors[pos]);
+        boneText.setBackgroundColor(GlobalVars.boneColors[pos-1]);
     }
 
 
@@ -420,15 +420,15 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity {
 
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
-            pos = 0;
-        } else if (boneId.equals(myInstance.getBoneShop())) {
             pos = 1;
-        } else if (boneId.equals(myInstance.getBoneRest())) {
+        } else if (boneId.equals(myInstance.getBoneShop())) {
             pos = 2;
-        } else {
+        } else if (boneId.equals(myInstance.getBoneRest())) {
             pos = 3;
+        } else {
+            pos = 4;
         }
-        return icon[pos];
+        return icon[pos-1];
     }
 
 

@@ -278,15 +278,15 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private String getIconByBoneId(String boneId) {
         if (boneId.equals(myInstance.getBoneHotel())) {
-            pos = 0;
-        } else if (boneId.equals(myInstance.getBoneShop())) {
             pos = 1;
-        } else if (boneId.equals(myInstance.getBoneRest())) {
+        } else if (boneId.equals(myInstance.getBoneShop())) {
             pos = 2;
-        } else {
+        } else if (boneId.equals(myInstance.getBoneRest())) {
             pos = 3;
+        } else {
+            pos = 4;
         }
-        return icon[pos];
+        return icon[pos-1];
     }
 
 
@@ -437,7 +437,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             myInstance.set_boneId(items.get(mPosition).boneId);
             String title = items.get(mPosition).title;
             myInstance.set_boneIdTitle(title);
-            myInstance.setBonePosition(mPosition - 1);
+            myInstance.setBonePosition(mPosition);
             startActivity(intent);
 
         }

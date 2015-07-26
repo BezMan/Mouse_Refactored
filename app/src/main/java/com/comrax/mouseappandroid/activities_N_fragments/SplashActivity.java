@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -42,28 +43,33 @@ import java.util.ArrayList;
 
 public class SplashActivity extends Activity {
 
-    enum Request {
-        PRIMARY, ZIP
-    }
 
-    public static Request _request;
+    String savedDateJson;
+    SharedPreferences prefs;
 
+    String requestStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        getInitialData();
-    }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedDateJson = prefs.getString("masterDateJson", null);
 
-    private void getInitialData() {
 
         if (isNetworkOnline()) {
-            _request = Request.PRIMARY;
             new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
-        } else {
-            Toast.makeText(getApplicationContext(), "exit and connect to network", Toast.LENGTH_LONG).show();
+        }
+        else {
+
+//            Toast.makeText(getApplicationContext(), "network disconnected", Toast.LENGTH_LONG).show();
+
+            if (savedDateJson != null) {
+                fillArray(savedDateJson);
+                nextActivity();
+            }
+
         }
     }
 
@@ -87,6 +93,8 @@ public class SplashActivity extends Activity {
         return status;
 
     }
+
+
 
     class RequestTask extends AsyncTask<String, String, String> {
 
@@ -117,23 +125,48 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            //Do anything with response..
-            saveInitCitiesData(result);
+            requestStr = result;
+            fillArray(requestStr);
+            checkVals(requestStr);
+            nextActivity();
+
         }
     }
 
 
-    public void saveInitCitiesData(String result) {
+    private void checkVals(String result) {
 
+        if (!savedDateJson.equals(result)) {
+    //new json value exists:
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray files = jsonObject.getJSONArray("files");
+
+                String masterDate = "";
+                JSONObject jsonObject1 = (JSONObject) files.get(0);
+                masterDate = jsonObject1.getString("Update_date");
+
+                //if new default_master Data exists, we need to download it:
+                if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
+                    //if new masterDate exists:
+                    new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+    public void fillArray(String result) {
         try {
 
-//            File mouseFolder = new File("/sdcard/Mouse_App");
-//            if (mouseFolder.isDirectory() == false)
-//                mouseFolder.mkdirs();
 
             JSONObject jsonObject = new JSONObject(result);
             JSONArray files = jsonObject.getJSONArray("files");
-//            JSONArray files = new JSONArray("[{\"Update_date\":\"29\\/10\\/2014 11:43:05\",\"id\":\"1\",\"CityId\":\"0\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Default_master.zip\"},{\"Update_date\":\"24\\/10\\/2014 11:43:05\",\"id\":\"2\",\"CityId\":\"1146\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/London_master_1146.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"3\",\"CityId\":\"1174\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Rome_master_1174.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"4\",\"CityId\":\"1179\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/NewYork_master_1179.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"5\",\"CityId\":\"1185\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Amsterdam_master_1185.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"6\",\"CityId\":\"1190\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Barcelona_master_1190.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"7\",\"CityId\":\"1193\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Berlin_master_1193.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"8\",\"CityId\":\"1197\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Prauge_master_1197.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"9\",\"CityId\":\"1372\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Budapest_master_1372.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"10\",\"CityId\":\"1448\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Madrid_master_1448.zip\"},{\"Update_date\":\"27\\/10\\/2014 11:43:05\",\"id\":\"11\",\"CityId\":\"1171\",\"File\":\"http:\\/\\/aws.comrax.com\\/mouse\\/Paris_master_1171.zip\"}]");
 
             GlobalVars.initDataModelArrayList = new ArrayList<>();
 
@@ -150,29 +183,6 @@ public class SplashActivity extends Activity {
                 /******** Add Model Object in ArrayList **********/
                 GlobalVars.initDataModelArrayList.add(arrayItem);
             }
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String savedDateJson = prefs.getString("masterDateJson", null);
-            String masterDate="";
-            if(savedDateJson!=null){
-                JSONObject jsonObject1 = (JSONObject) new JSONArray(savedDateJson).get(0) ;
-                masterDate = jsonObject1.getString("Update_date");
-            }
-
-            if (!files.toString().equals(savedDateJson)) {
-                //if new Json Data:
-                if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
-                    //if new masterDate exists:
-                    _request = Request.ZIP;
-                    new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
-                }
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("masterDateJson", files.toString()).commit();
-
-            } else {
-                nextActivity();
-            }
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -205,12 +215,13 @@ public class SplashActivity extends Activity {
         }
 
         @Override
-        protected String doInBackground(String... aurl) {
+        protected String doInBackground(String... urls) {
             int count;
-            fileName = aurl[0].substring(aurl[0].lastIndexOf("/") + 1);
+            String urlStr = urls[0];
+            fileName = urlStr.substring(urlStr.lastIndexOf("/") + 1);
             try {
 
-                URL url = new URL(aurl[0]);
+                URL url = new URL(urlStr);
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
 
@@ -236,6 +247,8 @@ public class SplashActivity extends Activity {
                 output.close();
                 input.close();
 
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("masterDateJson", urlStr).commit();
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
@@ -252,11 +265,13 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPostExecute(String unused) {
             try {
+
+                Log.wtf("unused: ", ""+unused);
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
-                new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+                new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
 
                 mProgressDialog.dismiss();
-                nextActivity();
+//                nextActivity();
 
             } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), "Error unzipping file", Toast.LENGTH_LONG).show();
@@ -266,22 +281,14 @@ public class SplashActivity extends Activity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
-
+//            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
+            finish();
         }
 
     }
 
 
     private void nextActivity() {
-//
-//        File[] files = getFilesDir().listFiles();
-//
-//        for (File file : files) {
-////            file.delete();
-//            Log.wtf("files: ", "" + file.getName() );
-//
-//        }
 
         startActivity(new Intent(SplashActivity.this, MainGridActivity.class));
         finish();

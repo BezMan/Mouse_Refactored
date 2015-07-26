@@ -118,7 +118,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         boneTextView.setText(boneTitle);
 
         int pos = myInstance.getBonePosition();
-        boneTextView.setBackgroundColor(GlobalVars.boneColors[pos]);
+        boneTextView.setBackgroundColor(GlobalVars.boneColors[pos-1]);
     }
 
 
