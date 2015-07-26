@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -252,8 +251,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
                 myInstance.setBonePosition(pos);
-                Log.wtf("pos:", " "+pos);
-
 
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));

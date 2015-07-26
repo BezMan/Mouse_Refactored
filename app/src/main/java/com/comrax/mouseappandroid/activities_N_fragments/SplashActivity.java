@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -57,17 +56,20 @@ public class SplashActivity extends Activity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         savedDateJson = prefs.getString("masterDateJson", null);
 
+//        savedDateJson=  "{ \"files\": [{\"id\": \"1\",\"CityId\": \"0\",\"File\": \"http://aws.comrax.com/mouse/Default_master.zip\",\"Update_date\": \"11/11/2014 18:02:13\"},{\"id\": \"2\",\"CityId\": \"1146\",\"File\": \"http://aws.comrax.com/mouse/London_master_1146.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"3\",\"CityId\": \"1174\",\"File\": \"http://aws.comrax.com/mouse/Rome_master_1174.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"4\",\"CityId\": \"1179\",\"File\": \"http://aws.comrax.com/mouse/NewYork_master_1179.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"5\",\"CityId\": \"1185\",\"File\": \"http://aws.comrax.com/mouse/Amsterdam_master_1185.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"6\",\"CityId\": \"1190\",\"File\": \"http://aws.comrax.com/mouse/Barcelona_master_1190.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"7\",\"CityId\": \"1193\",\"File\": \"http://aws.comrax.com/mouse/Berlin_master_1193.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"8\",\"CityId\": \"1197\",\"File\": \"http://aws.comrax.com/mouse/Prauge_master_1197.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"9\",\"CityId\": \"1372\",\"File\": \"http://aws.comrax.com/mouse/Budapest_master_1372.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"10\",\"CityId\": \"1448\",\"File\": \"http://aws.comrax.com/mouse/Madrid_master_1448.zip\",\"Update_date\": \"30/11/2014 18:02:13\"},{\"id\": \"11\",\"CityId\": \"1171\",\"File\": \"http://aws.comrax.com/mouse/Paris_master_1171.zip\",\"Update_date\": \"30/11/2014 18:02:13\"}]}";
 
         if (isNetworkOnline()) {
             new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
         }
+
         else {
-
-//            Toast.makeText(getApplicationContext(), "network disconnected", Toast.LENGTH_LONG).show();
-
             if (savedDateJson != null) {
                 fillArray(savedDateJson);
                 nextActivity();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "network required", Toast.LENGTH_LONG).show();
+                finish();
             }
 
         }
@@ -93,7 +95,6 @@ public class SplashActivity extends Activity {
         return status;
 
     }
-
 
 
     class RequestTask extends AsyncTask<String, String, String> {
@@ -125,37 +126,43 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
             requestStr = result;
             fillArray(requestStr);
-            checkVals(requestStr);
-            nextActivity();
+            compareJsonVals(requestStr);
 
         }
     }
 
 
-    private void checkVals(String result) {
+    private void compareJsonVals(String result) {
 
         if (!savedDateJson.equals(result)) {
-    //new json value exists:
+            //new json value exists:
             try {
-                JSONObject jsonObject = new JSONObject(result);
+                JSONObject jsonObject = new JSONObject(savedDateJson);
                 JSONArray files = jsonObject.getJSONArray("files");
 
-                String masterDate = "";
-                JSONObject jsonObject1 = (JSONObject) files.get(0);
-                masterDate = jsonObject1.getString("Update_date");
 
-                //if new default_master Data exists, we need to download it:
+                JSONObject masterItem = (JSONObject) files.get(0);
+                String masterDate = masterItem.getString("Update_date");
+
                 if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
-                    //if new masterDate exists:
+                    //if new masterDate exists, we need to download it:
                     new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+                }
+                else{
+                    nextActivity();
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
+
             }
 
+        }
+        else{
+            nextActivity();
         }
 
     }
@@ -248,7 +255,7 @@ public class SplashActivity extends Activity {
                 input.close();
 
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("masterDateJson", urlStr).commit();
+                editor.putString("masterDateJson", requestStr).commit();
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
@@ -266,12 +273,11 @@ public class SplashActivity extends Activity {
         protected void onPostExecute(String unused) {
             try {
 
-                Log.wtf("unused: ", ""+unused);
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
                 new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
 
                 mProgressDialog.dismiss();
-//                nextActivity();
+                nextActivity();
 
             } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), "Error unzipping file", Toast.LENGTH_LONG).show();
@@ -280,8 +286,6 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onCancelled() {
-//            delete downloaded zip file on cancel:
-//            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
             finish();
         }
 
