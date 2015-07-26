@@ -11,4 +11,6 @@
     <string name="dareg"> <u>דרג</u> </string>
     <string name="title_activity_full_ad">FullAdActivity</string>
 
+    <string name="location_updated_message">Location updated</string>
+
 </resources>

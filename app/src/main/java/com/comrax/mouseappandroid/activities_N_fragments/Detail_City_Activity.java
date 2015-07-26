@@ -47,7 +47,7 @@ import java.util.List;
 public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     MyPageAdapter pageAdapter;
-    public String CITY_FOLDER_PATH, CITY_UPDATE_DATE, cityId;
+    public String CITY_FOLDER_PATH, cityId;
     int infoItemPosition;
     DBTools dbTools = new DBTools(this);
 
@@ -97,6 +97,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
 
         GlobalVars.detailMenuItems = new ArrayList<>();
