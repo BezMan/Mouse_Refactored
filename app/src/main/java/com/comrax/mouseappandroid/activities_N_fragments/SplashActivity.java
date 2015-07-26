@@ -63,14 +63,11 @@ public class SplashActivity extends Activity {
 
         if (isNetworkOnline()) {
             new RequestTask().execute("http://www.mouse.co.il/appService.ashx?appName=master@mouse.co.il");
-        }
-
-        else {
+        } else {
             if (savedDateJson != null) {
                 fillArray(savedDateJson);
                 nextActivity();
-            }
-            else {
+            } else {
                 Toast.makeText(getApplicationContext(), "network required, no data", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -140,33 +137,35 @@ public class SplashActivity extends Activity {
 
     private void compareJsonVals(String result) {
 
-        if (!savedDateJson.equals(result)) {
-            //new json value exists:
-            try {
-                JSONObject jsonObject = new JSONObject(savedDateJson);
-                JSONArray files = jsonObject.getJSONArray("files");
+        try {
+            if (savedDateJson != null) {
+                if (!savedDateJson.equals(result)) {
+                    //new json value exists:
+                    JSONObject jsonObject = new JSONObject(savedDateJson);
+                    JSONArray files = jsonObject.getJSONArray("files");
 
+                    JSONObject masterItem = (JSONObject) files.get(0);
+                    String masterDate = masterItem.getString("Update_date");
 
-                JSONObject masterItem = (JSONObject) files.get(0);
-                String masterDate = masterItem.getString("Update_date");
-
-                if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
-                    //if new masterDate exists, we need to download it:
-                    new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
-                }
-                else{
+                    if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
+                        //if new masterDate exists, we need to download it:
+                        new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+                    } else {
+                        nextActivity();
+                    }
+                } else {
                     nextActivity();
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-
+            }
+            else{// no saved vals:
+                new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
             }
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+
         }
-        else{
-            nextActivity();
-        }
+
 
     }
 
