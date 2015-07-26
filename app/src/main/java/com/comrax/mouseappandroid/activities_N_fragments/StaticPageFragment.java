@@ -3,9 +3,12 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
@@ -16,7 +19,9 @@ import org.json.JSONObject;
 public class StaticPageFragment extends Fragment {
 
     Bundle bundle;
-    TextView title, mainTxt, barTitleTextView;
+    TextView title;
+    //WebView mainTxt;
+    TextView barTitleTextView;
     String originalTitle;
 
     @Override
@@ -46,19 +51,41 @@ public class StaticPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         title = (TextView)getActivity().findViewById(R.id.static_page_title);
-        mainTxt = (TextView)getActivity().findViewById(R.id.static_page_main_text);
+        //mainTxt = (TextView)getActivity().findViewById(R.id.static_page_main_text);
+        WebView mainTxtView = (WebView)getActivity().findViewById(R.id.static_page_main_text);
+
+        WebSettings settings = mainTxtView.getSettings();
+        settings.setDefaultTextEncodingName("utf-8");
 
         try {
             JSONObject jsonObject = new JSONObject(bundle.getString("data", null));
             title.setText(jsonObject.getString("Title"));
-            mainTxt.setText(jsonObject.getString("Content"));
+            String content = jsonObject.getString("Content");
+
+            String formattedContent = Html.fromHtml((String)content).toString();
+            StringBuilder sb = new StringBuilder();
+            sb.append("<!doctype html><html><head>");
+            sb.append("<meta charset='utf-8'>");
+            sb.append("<style>\n" +
+                    "body{direction:rtl;font-family:arial !important;}\n" +
+                    "h3{text-align:center;}\n" +
+                    "iframe{display:none;}\n" +
+                    ".map_widget clearfix{width:304px;}\n" +
+                    "img{max-width:304px;border:none;}\n" +
+                    "</style>\n" +
+                    "<script>function onLoad(){document.getElementsByTagName('iframe')[0].setAttribute('width', '304');window.scrollTo(window.innerWidth, 0)}</script>\n" +
+                    "</head>");
+
+            String html = String.format("<body>%s</body></html>", formattedContent);
+            sb.append(html);
+
+            //mainTxtView.loadData(sb.toString(), "text/html;charset=utf-8", "UTF-8");
+            mainTxtView.loadDataWithBaseURL(null, sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
-
 
     @Override
     public void onStop() {
