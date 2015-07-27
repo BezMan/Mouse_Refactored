@@ -78,10 +78,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        dbTools = new DBTools(this);
-
-        myInstance.setCityName("עכבר עולם");
-        myInstance.set_cityId("blankPage");
         GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
@@ -653,7 +649,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        myInstance.setCityName(null);
-//        myInstance.set_cityId(null);
+        myInstance.setCityName("עכבר עולם");
+        myInstance.set_cityId("noSearch");
     }
+
 }

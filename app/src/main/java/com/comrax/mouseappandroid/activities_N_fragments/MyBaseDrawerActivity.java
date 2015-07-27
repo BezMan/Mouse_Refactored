@@ -323,8 +323,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     }
 
 
-    class ItemAutoTextAdapter extends CursorAdapter
-            implements android.widget.AdapterView.OnItemClickListener{
+    class ItemAutoTextAdapter extends CursorAdapter implements android.widget.AdapterView.OnItemClickListener{
 
         /**
          * Constructor. Note that no cursor is needed when we create the
@@ -361,12 +360,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
                 return getFilterQueryProvider().runQuery(constraint);
             }
 
-            Cursor cursor = dbTools.fetchItemsByDesc(
-                    (constraint != null ? constraint.toString() : "@@@@"));
-
-            if (myInstance.getCityName() == null) {//if we are in MainGrid Activity, not inside a city...
-                cursor = dbTools.defaultEmptyRow((constraint != null ? constraint.toString() : "@@@@"));
-            }
+            Cursor cursor = dbTools.fetchItemsByDesc((constraint != null ? constraint.toString() : "@@@@"));
 
             return cursor;
         }
@@ -438,7 +432,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
 
-            if (myInstance.getCityName() == null) {//if we are in MainGrid Activity, not inside a city...
+            if (myInstance.get_cityId().equals("noSearch")) {//if we are in MainGrid Activity, not inside a city...
                 return;
             }
 

@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.comrax.mouseappandroid.app.App;
@@ -16,7 +17,9 @@ import org.json.JSONObject;
 
 public class DBTools extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "mouseAppData.db";
+//    public static final String DATABASE_NAME = "mouseAppData.db";
+public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
+
     public static final int DATABASE_VERSION = 1;
 
 
@@ -381,12 +384,25 @@ public class DBTools extends SQLiteOpenHelper {
 
 
     public Cursor fetchItemsByDesc(String inputText) throws SQLException {
+
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
-                new String[]{},
-                DBConstants.cityId + "=" + App.getInstance().get_cityId() + " AND (" +
-                        DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%')",
-                null, null, null, null, null);
+        Cursor mCursor;
+
+        if(App.getInstance().get_cityId().equals("noSearch")){
+            mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
+                    new String[]{DBConstants.name, DBConstants.hebrewName, DBConstants.id},
+                    DBConstants.id + " = 1",
+                    null, null, null, null, null);
+
+        }
+        else {
+
+             mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
+                    new String[]{},
+                    DBConstants.cityId + "=" + App.getInstance().get_cityId() + " AND (" +
+                            DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%')",
+                    null, null, null, null, null);
+        }
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -396,18 +412,6 @@ public class DBTools extends SQLiteOpenHelper {
 
 
 
-    public Cursor defaultEmptyRow(String inputText) throws SQLException {
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
-                new String[]{DBConstants.name, DBConstants.hebrewName, DBConstants.id},
-                DBConstants.id + " = 1",
-                null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-
-    }
 
 
 
