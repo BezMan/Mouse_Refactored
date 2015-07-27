@@ -57,7 +57,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     TextView boneText;
     Cursor cursor;
-    DBTools dbTools = new DBTools(this);
     private SlidingLayer mSlidingLayer;
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
@@ -345,7 +344,9 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
 //        updateUI();
-        Toast.makeText(this, getResources().getString(R.string.location_updated_message),
+        Toast.makeText(this, getResources().getString(R.string.location_updated_message) +
+                        "\n"+mCurrentLocation.getLatitude() +
+                        "\n"+mCurrentLocation.getLongitude(),
                 Toast.LENGTH_SHORT).show();
         stopUpdatesButtonHandler();
     }
@@ -366,15 +367,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
-    /**
-     * Stores activity data in the Bundle.
-     */
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY, mRequestingLocationUpdates);
-        savedInstanceState.putParcelable(LOCATION_KEY, mCurrentLocation);
-        savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
-        super.onSaveInstanceState(savedInstanceState);
-    }
 
 
     private void setStikkyHeader() {
@@ -723,12 +715,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
 
     public void onPlaceItemClick() {
-//        Log.wtf("item id's: ", "city: " + myInstance.get_cityId() +
-//                        ", bone: " + myInstance.get_boneId() +
-//                        ", obj: " + myInstance.get_objId() +
-//                        ", nsId: " + myInstance.get_nsId()
-//                );
-
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
         Bundle bundle = new Bundle();

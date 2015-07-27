@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +26,6 @@ import java.io.File;
  * Created by bez on 14/07/2015.
  */
 public class StopArticleActivity extends MyBaseDrawerActivity{
-
-DBTools dbTools = new DBTools(this);
 
     @Override
     protected int getLayoutResourceId() {

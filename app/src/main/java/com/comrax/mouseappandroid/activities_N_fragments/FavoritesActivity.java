@@ -15,7 +15,6 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AmazingAdapter;
 import com.comrax.mouseappandroid.helpers.AmazingListView;
 import com.comrax.mouseappandroid.model.FavoritesModel;
@@ -28,7 +27,6 @@ import java.util.List;
 public class FavoritesActivity extends MyBaseDrawerActivity {
     AmazingListView lsComposer;
     FavoritesModel[][] allItems;
-    DBTools dbTools = new DBTools(this);
     FavoritesAdapter adapter;
     TextView editPage;
     int currentHeader;

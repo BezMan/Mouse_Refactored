@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.http.RequestTask;
 import com.comrax.mouseappandroid.http.RequestTaskDelegate;
 import com.comrax.mouseappandroid.http.RequestTaskGet;
@@ -50,7 +49,6 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     RatingBar rating;
 
     Bundle bundle;
-    DBTools dbTools;
     Cursor cursor;
 
     @Override
@@ -68,7 +66,6 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dbTools = new DBTools(this);
         bundle = getIntent().getExtras();
         cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, bundle.getString(DBConstants.name, null), DBConstants.objId, bundle.getString(DBConstants.objId, null));
 
@@ -118,7 +115,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         boneTextView.setText(boneTitle);
 
         int pos = myInstance.getBonePosition();
-        boneTextView.setBackgroundColor(GlobalVars.boneColors[pos-1]);
+        if(pos!=0)
+            boneTextView.setBackgroundColor(GlobalVars.boneColors[pos-1]);
     }
 
 

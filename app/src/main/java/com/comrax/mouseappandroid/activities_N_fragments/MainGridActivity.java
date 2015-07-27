@@ -23,7 +23,6 @@ import com.comrax.mouseappandroid.adapters.CitiesAdapter;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.CitiesModel;
 
@@ -57,8 +56,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     ImageView image1, image2, image3, image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
-    DBTools dbTools = new DBTools(this);
-
     int existingCityCounter = 0;
 
     String fileName, updateDate;
@@ -80,6 +77,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        dbTools = new DBTools(this);
 
         myInstance.setCityName("עכבר עולם");
         myInstance.set_cityId("blankPage");
@@ -405,10 +404,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(MainGridActivity.this, R.style.full_screen_dialog);
             mProgressDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            mProgressDialog.setMessage("Downloading file..");
+            mProgressDialog.setMessage("מוריד...");
             mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             mProgressDialog.setCancelable(true);
-            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "ביטול", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     DownloadFileAsync.this.cancel(true);
@@ -490,10 +489,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             super.onPreExecute();
 
             mSavingDialog = new ProgressDialog(MainGridActivity.this, R.style.full_screen_dialog);
-            mSavingDialog.setMessage("Saving city data..");
+            mSavingDialog.setMessage("שומר נתונים");
             mSavingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mSavingDialog.setCancelable(true);
-            mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "ביטול", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SavingFilesAsync.this.cancel(true);
@@ -655,6 +654,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         myInstance.setCityName(null);
-        myInstance.set_cityId(null);
+//        myInstance.set_cityId(null);
     }
 }

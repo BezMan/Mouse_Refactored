@@ -39,7 +39,6 @@ import java.util.ArrayList;
 public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     private AutoCompleteTextView itemDescriptionView;
-    private DBTools dbTools;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -48,7 +47,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     protected TextView appBarTextView;
 
     protected App myInstance = App.getInstance();
-
+    protected DBTools dbTools = new DBTools(this);
 
     private static final String STATIC_PAGE_TAG = "staticPageTag";
 
@@ -68,7 +67,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
         setNavDrawerData();
 
-        dbTools = new DBTools(this);
+
 
         itemDescriptionView = (AutoCompleteTextView) findViewById(R.id.autocomplete_desc);
 
@@ -325,9 +324,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
 
     class ItemAutoTextAdapter extends CursorAdapter
-            implements android.widget.AdapterView.OnItemClickListener {
-
-        private DBTools dbTools;
+            implements android.widget.AdapterView.OnItemClickListener{
 
         /**
          * Constructor. Note that no cursor is needed when we create the

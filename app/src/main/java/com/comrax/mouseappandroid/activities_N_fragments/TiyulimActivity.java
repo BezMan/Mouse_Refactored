@@ -7,7 +7,6 @@ import android.widget.ListView;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.TiyulimListAdapter;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,9 +17,7 @@ import org.json.JSONObject;
  */
 public class TiyulimActivity extends MyBaseDrawerActivity{
 
-    DBTools dbTools = new DBTools(this);
     ListView listView;
-
     TiyulimListAdapter adapter;
 
     @Override

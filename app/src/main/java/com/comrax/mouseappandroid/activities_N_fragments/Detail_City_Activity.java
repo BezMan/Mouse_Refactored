@@ -23,7 +23,6 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.helpers.AnimatedExpandableListView;
 import com.comrax.mouseappandroid.model.MapMarkerModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,7 +48,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     MyPageAdapter pageAdapter;
     public String CITY_FOLDER_PATH, cityId;
     int infoItemPosition;
-    DBTools dbTools = new DBTools(this);
 
     private AnimatedExpandableListView listView;
     private ExampleAdapter adapter;

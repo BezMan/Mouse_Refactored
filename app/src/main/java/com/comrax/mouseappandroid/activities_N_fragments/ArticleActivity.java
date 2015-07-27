@@ -2,7 +2,6 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
-import com.comrax.mouseappandroid.database.DBTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,8 +31,6 @@ import java.io.File;
  */
 public class ArticleActivity extends MyBaseDrawerActivity {
 
-    DBTools dbTools = new DBTools(this);
-    Cursor cursor;
     JSONObject urlContent;
     @Override
     protected int getLayoutResourceId() {
