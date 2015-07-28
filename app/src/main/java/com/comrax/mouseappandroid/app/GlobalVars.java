@@ -18,7 +18,8 @@ public class GlobalVars {
         return new File(ctx.getFilesDir(), fileName ).toString();
     }
 
-    public static final String IconFolder = "Default_master/Images/MenuIcons/";
+    public static final String Default_masterFolder = "Default_master/";
+    public static final String IconFolder = Default_masterFolder + "Images/MenuIcons/";
 
     public static final int[] boneColors = {0xFF73CDA4, 0xFF8F628C, 0xFFD7271A, 0xFF94C306};
 

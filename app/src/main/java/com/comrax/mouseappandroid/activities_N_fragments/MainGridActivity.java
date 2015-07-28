@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,10 +79,21 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        File[] files = getFilesDir().listFiles();
+        for (File file : files) {
+            if (file.getName().contains("Barcelona")) {
+
+                Log.wtf("my file: ", file.getPath());
+            }
+        }
+
+
         GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
-        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json")));
+        String str = GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json");
+        saveStaticPages(HelperMethods.loadJsonDataFromFile(str));
 
         setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/banners.json")));
         setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/cities.json")));
@@ -212,7 +224,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         public void onClick(View arg0) {
             Intent fullAdIntent = new Intent(MainGridActivity.this, FullAdActivity.class);
-            fullAdIntent.putExtra("adNum",mPosition);
+            fullAdIntent.putExtra("adNum", mPosition);
             startActivity(fullAdIntent);
         }
     }
@@ -315,7 +327,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
                 sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
-                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(),fileName.substring(0, fileName.indexOf('.')))); //without .zip//
+                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 //only download if non-existant.
                 if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
@@ -347,9 +359,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
                     dialog.show();
 
-                }
-
-                else {
+                } else {
                     //city exists, diff date:
                     String cityDBDate = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
                     if (!updateDate.equals(cityDBDate)) {
@@ -468,7 +478,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
-            new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
             new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mProgressDialog.dismiss();
 
@@ -502,7 +512,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         protected String doInBackground(String... initData) {//filepath + date//
             try {
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
-                new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+                new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
                 setDBdata();
                 mSavingDialog.dismiss();
 
@@ -528,7 +538,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             mSavingDialog.show();
-            new File(GlobalVars.trialMethod(getApplicationContext(),fileName)).delete();
+            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
             new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mSavingDialog.dismiss();
 

@@ -7,18 +7,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.app.App;
 import com.comrax.mouseappandroid.app.GlobalVars;
 
 import org.json.JSONException;
@@ -32,6 +32,7 @@ import java.io.File;
 public class ArticleActivity extends MyBaseDrawerActivity {
 
     JSONObject urlContent;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.article_layout;
@@ -50,17 +51,17 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         String info = getIntent().getStringExtra("articleData");
 
         try {
-             urlContent = new JSONObject(info);
+            urlContent = new JSONObject(info);
 
-            ImageView topImage = (ImageView)findViewById(R.id.open_article_topImage);
-            TextView descPhoto = (TextView)findViewById(R.id.open_article_descPhoto);
-            TextView title = (TextView)findViewById(R.id.open_article_title);
-            TextView dateAndCredit = (TextView)findViewById(R.id.open_article_dateAndCredit);
-            TextView description = (TextView)findViewById(R.id.open_article_description);
-            TextView htmlContent = (TextView)findViewById(R.id.open_article_html_content);
+            ImageView topImage = (ImageView) findViewById(R.id.open_article_topImage);
+            TextView descPhoto = (TextView) findViewById(R.id.open_article_descPhoto);
+            TextView title = (TextView) findViewById(R.id.open_article_title);
+            TextView dateAndCredit = (TextView) findViewById(R.id.open_article_dateAndCredit);
+            TextView description = (TextView) findViewById(R.id.open_article_description);
+//            TextView htmlContent = (TextView)findViewById(R.id.open_article_html_content);
 
 
-            File file = new File(App.getInstance().get_cityFolderName() + "/" + urlContent.getString("image"));
+            File file = new File(myInstance.get_cityFolderName() + "/" + urlContent.getString("image"));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 topImage.setImageBitmap(bitmap);
@@ -71,15 +72,53 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             dateAndCredit.setText(urlContent.getString("dateAndCredit"));
             description.setText(urlContent.getString("description"));
 
-            htmlContent.setText(Html.fromHtml(Html.fromHtml(urlContent.getString("content")).toString()));
-            htmlContent.setMovementMethod(LinkMovementMethod.getInstance());
+//            htmlContent.setText(Html.fromHtml(Html.fromHtml(urlContent.getString("content")).toString()));
+//            htmlContent.setMovementMethod(LinkMovementMethod.getInstance());
 
+
+            WebView mainTxtView = (WebView) findViewById(R.id.web_view_main_text);
+
+            WebSettings settings = mainTxtView.getSettings();
+            settings.setDefaultTextEncodingName("utf-8");
+
+//                JSONObject jsonObject = new JSONObject(bundle.getString("data", null));
+//                title.setText(jsonObject.getString("Title"));
+            String content = urlContent.getString("content");
+
+            String formattedContent = Html.fromHtml((String) content).toString();
+            StringBuilder sb = new StringBuilder();
+            sb.append("<!doctype html><html><head>");
+            sb.append("<meta charset='utf-8'>");
+            sb.append("<style>\n" +
+                    "body{direction:rtl;font-family:arial !important;}\n" +
+                    "h3{text-align:center;}\n" +
+                    "iframe{display:none;}\n" +
+                    ".map_widget clearfix{width:304px;}\n" +
+                    "img{max-width:304px;border:none;}\n" +
+                    "</style>\n" +
+                    "<script>function onLoad(){document.getElementsByTagName('iframe')[0].setAttribute('width', '304');window.scrollTo(window.innerWidth, 0)}</script>\n" +
+                    "</head>");
+
+            String html = String.format("<body>%s</body></html>", formattedContent);
+
+            String str = myInstance.get_cityFolderName();
+
+            String fromStr = "src=\"Images/";
+            String toStr = String.format("src=\"%s/Images/\"", str);
+
+            html = html.replace(fromStr, toStr);
+//            GlobalVars.trialMethod(getApplicationContext(), GlobalVars.Default_masterFolder);
+
+            sb.append(html);
+
+            //mainTxtView.loadData(sb.toString(), "text/html;charset=utf-8", "UTF-8");
+            String dir = getFilesDir().toString();
+            mainTxtView.loadDataWithBaseURL(dir, sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         setFooterComment();
@@ -89,8 +128,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         setFooterAd();
 
     }
-
-
 
 
     private void setFooterFav() {
