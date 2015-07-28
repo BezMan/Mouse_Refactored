@@ -166,6 +166,14 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         TextView addressView = (TextView) findViewById(R.id.detailed_place_address);
         addressView.setText(address);
+        addressView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent navIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + address));
+                startActivity(navIntent);
+
+            }
+        });
 
         TextView mainDetailedText = (TextView) findViewById(R.id.detailed_place_main_text);
         String html = Html.fromHtml(fullDescription).toString();
