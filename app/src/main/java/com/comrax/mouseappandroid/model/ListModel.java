@@ -13,7 +13,7 @@ public class ListModel {
     private String ObjId;
     private String NsId;
 
-    private String Distance = " מטרים ממך ";
+    private String Distance = "0 מטרים ממך ";
     private double Longitude, Latitude;
 
 

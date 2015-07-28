@@ -1,11 +1,14 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -81,6 +84,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     boolean setMap;
 
     protected static final String TAG = "location-updates-sample";
+
+    public static final int GPS_SETTINGS = 9; //request code
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -162,6 +167,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
         mListView.setAdapter(adapter);
 
+        toggleGPS();
 
         mRequestingLocationUpdates = true;
         mLastUpdateTime = "";
@@ -175,10 +181,27 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
-    /**
-     * Builds a GoogleApiClient. Uses the {@code #addApi} method to request the
-     * LocationServices API.
-     */
+    private void toggleGPS() {
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean gpsStatus = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!gpsStatus) { //gps is off:
+            Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(gpsIntent, GPS_SETTINGS);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK && requestCode == GPS_SETTINGS) {
+            recreate();
+        }
+    }
+            /**
+             * Builds a GoogleApiClient. Uses the {@code #addApi} method to request the
+             * LocationServices API.
+             */
     protected synchronized void buildGoogleApiClient() {
         Log.i(TAG, "Building GoogleApiClient");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -337,12 +360,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-//        updateUI();
-//        Toast.makeText(this, "my location: " +
-//                        "\n" + mCurrentLocation.getLatitude() +
-//                        "\n" + mCurrentLocation.getLongitude(),
-//                Toast.LENGTH_SHORT).show();
 
         stopUpdatesButtonHandler();
 
