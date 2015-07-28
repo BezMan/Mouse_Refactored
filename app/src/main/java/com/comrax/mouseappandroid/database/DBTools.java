@@ -114,6 +114,10 @@ public static final String DATABASE_NAME = Environment.getExternalStorageDirecto
             db.execSQL(CREATE_FAVORITE_TABLE);
             db.execSQL(CREATE_PLACE_TABLE);
             db.execSQL(CREATE_ARTICLE_TABLE);
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.name, "נא להוריד מדריך");
+
+            db.insert(DBConstants.PLACE_TABLE_NAME, null, values);
 
         } catch (SQLiteException e) {
             Log.e("Create table exception:", e.getMessage());

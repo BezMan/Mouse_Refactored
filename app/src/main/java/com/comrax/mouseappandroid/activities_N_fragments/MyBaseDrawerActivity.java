@@ -397,7 +397,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             text1 = (TextView) view.findViewById(R.id.search_hebText);
             text2 = (TextView) view.findViewById(R.id.search_engText);
 
-            if (cursor.getCount() == 1) {
+            if (App.getInstance().get_cityId().equals("noSearch") && cursor.getCount() == 1) {
                 text1.setText("נא לבחור מדריך");
                 text2.setText("");
 
