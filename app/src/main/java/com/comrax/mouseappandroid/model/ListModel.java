@@ -13,6 +13,9 @@ public class ListModel {
     private String ObjId;
     private String NsId;
 
+    private String Distance = " מטרים ממך ";
+    private double Longitude, Latitude;
+
 
     private String FullDescriptionBody="";
     private String Phone="";
@@ -33,17 +36,13 @@ public class ListModel {
         ObjId = objId;
     }
 
-    public float getDistance() {
+    public String getDistance() {
         return Distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(String distance) {
         Distance = distance;
     }
-
-    private float Distance;
-    private double Longitude, Latitude;
-
 
     public String getTitleA() {
         return TitleA;

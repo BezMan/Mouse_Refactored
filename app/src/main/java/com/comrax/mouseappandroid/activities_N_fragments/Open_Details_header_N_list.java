@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.OpenDetailsCustomAdapter;
@@ -146,7 +145,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
         setupInitCityMap();
 
-        customListViewValuesArr = new ArrayList<>();
+//        customListViewValuesArr = new ArrayList<>();
 
         setRadioGroupFilter();
 
@@ -156,8 +155,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         addPagerData(jsonData);
 
         setStikkyHeader();
-
-
 
 
         populateListView();
@@ -176,8 +173,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
 
     }
-
-
 
 
     /**
@@ -344,11 +339,24 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
 //        updateUI();
-        Toast.makeText(this, getResources().getString(R.string.location_updated_message) +
-                        "\n"+mCurrentLocation.getLatitude() +
-                        "\n"+mCurrentLocation.getLongitude(),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "my location: " +
+//                        "\n" + mCurrentLocation.getLatitude() +
+//                        "\n" + mCurrentLocation.getLongitude(),
+//                Toast.LENGTH_SHORT).show();
+
         stopUpdatesButtonHandler();
+
+        int index = mListView.getFirstVisiblePosition();
+        View v = mListView.getChildAt(0);
+        int top = (v == null) ? 0 : (v.getTop() - mListView.getPaddingTop());
+
+        populateListView();
+
+        adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
+        mListView.setAdapter(adapter);
+
+        mListView.setSelectionFromTop(index, top);
+
     }
 
     @Override
@@ -365,8 +373,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         // onConnectionFailed.
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
-
-
 
 
     private void setStikkyHeader() {
@@ -444,8 +450,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
-
-
     private void screenListView(int price) {
 
         int index = mListView.getFirstVisiblePosition();
@@ -477,6 +481,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     private void populateListView() {
 
+        customListViewValuesArr = new ArrayList<>();
+
         String cityId = myInstance.get_cityId();
         String boneId = myInstance.get_boneId();
         Cursor cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
@@ -496,15 +502,17 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             lm.setNsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
 
 
-            float[] results = new float[1];
+            float[] results = new float[3];
 
-//            Location.distanceBetween(myCoordinates.latitude, myCoordinates.longitude,
-//                    cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLat)), cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLon)), results);
+            if (mCurrentLocation != null) {
 
+                Location.distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
+                        cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLat)), cursor.getDouble(cursor.getColumnIndex(DBConstants.centerCoordinateLon)), results);
 
-            lm.setDistance(results[0]);
-            //my lon and lat are 0//
-            /////////
+                lm.setDistance(Math.round(results[0]) + " מטרים ממך ");
+
+//                Log.wtf("results: ", String.valueOf(results[0]) +"\t"+ String.valueOf(results[1]) +"\t"+ String.valueOf(results[2]));
+            }
 
             customListViewValuesArr.add(lm);
 
@@ -683,7 +691,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         } else {
             pos = 4;
         }
-        return icon[pos-1];
+        return icon[pos - 1];
     }
 
 
@@ -724,7 +732,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         placeActivity.putExtras(bundle);
         startActivity(placeActivity);
     }
-
 
 
     public void onNavigationClick() {

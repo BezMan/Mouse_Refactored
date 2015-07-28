@@ -111,7 +111,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="6"
             android:paddingRight="3dp"
-            android:text="מספר מטרים ממך"
+            android:text=" מטרים ממך"
             android:textSize="18dp" />
 
 
@@ -134,7 +134,10 @@
             android:layout_weight="6"
             android:gravity="right"
             android:text="Address"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            />
 
     </LinearLayout>
 
