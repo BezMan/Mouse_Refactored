@@ -1,6 +1,7 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -167,6 +170,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
         mListView.setAdapter(adapter);
 
+        //        if(sp gpsNotification=null)
         toggleGPS();
 
         mRequestingLocationUpdates = true;
@@ -182,14 +186,49 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
 
     private void toggleGPS() {
+
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean gpsStatus = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        if (!gpsStatus) { //gps is off:
-            Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivityForResult(gpsIntent, GPS_SETTINGS);
+        if (myInstance.isToggleGPS() && !gpsStatus) { //gps is off:
+
+            final Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.custom_toggle_gps_dialog);
+
+            Button startGPSButton = (Button) dialog.findViewById(R.id.start_gps_btn);
+            startGPSButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    dialog.dismiss();
+                    startGpsIntent();
+
+                }
+            });
+
+            Button cancelGPSButton = (Button) dialog.findViewById(R.id.cancel_gps_btn);
+            cancelGPSButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    myInstance.setToggleGPS(false);
+                    dialog.dismiss();
+
+                }
+            });
+            dialog.show();
+
         }
     }
+
+
+        private void startGpsIntent(){
+            Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(gpsIntent, GPS_SETTINGS);
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

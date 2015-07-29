@@ -19,6 +19,8 @@ public class App extends Application {
     private String BoneShop;
     private String BoneTour;
 
+    private boolean toggleGPS=true;
+
 
     private static App _instance;
 
@@ -31,6 +33,14 @@ public class App extends Application {
             _instance = new App();
         }
         return _instance;
+    }
+
+    public boolean isToggleGPS() {
+        return toggleGPS;
+    }
+
+    public void setToggleGPS(boolean toggleGPS) {
+        this.toggleGPS = toggleGPS;
     }
 
     public String get_nsId() {

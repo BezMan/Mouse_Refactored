@@ -365,7 +365,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                     if (!updateDate.equals(cityDBDate)) {
 
                         //show dialog, needs update//
-                        final Dialog dialog = new Dialog(MainGridActivity.this);
+                        final Dialog dialog = new Dialog(this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.custom_city_update_dialog);
 
@@ -495,7 +495,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             super.onPreExecute();
 
             mSavingDialog = new ProgressDialog(MainGridActivity.this, R.style.full_screen_dialog);
-            mSavingDialog.setMessage("שומר נתונים");
+            mSavingDialog.setMessage("שומר תוכן");
             mSavingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mSavingDialog.setCancelable(true);
             mSavingDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "ביטול", new DialogInterface.OnClickListener() {
