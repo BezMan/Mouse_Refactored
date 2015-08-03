@@ -458,7 +458,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
-                onCancelled();
+                cancel(true);
             }
             return null;
 
@@ -518,7 +518,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
-                onCancelled();
+                cancel(true);
             }
             return null;
         }
