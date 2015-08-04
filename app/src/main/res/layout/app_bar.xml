@@ -25,7 +25,6 @@
             android:textStyle="bold"
             android:textSize="28dp"
             android:text="עכבר העיר"
-            android:fontFamily="sans-serif-light"
             />
 
         <ImageButton

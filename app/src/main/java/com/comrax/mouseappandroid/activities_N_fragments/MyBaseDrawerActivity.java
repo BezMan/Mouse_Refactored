@@ -89,6 +89,9 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     protected void setupTextView(String text) {
         appBarTextView = (TextView) findViewById(R.id.title_text);
+
+//        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/helvetica-bold.ttf");
+//        appBarTextView.setTypeface(myFont);
         appBarTextView.setText(text);
     }
 
