@@ -64,6 +64,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
     ArrayList<Pair<String, String>> boneId_boneName = new ArrayList<>();
 
+    CitiesModel updatedCity;
+    boolean isUpdate;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.my_drawer_layout;
@@ -374,15 +377,15 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
 
-                        Button startDownloadButton = (Button) dialog.findViewById(R.id.update_download_btn);
-                        startDownloadButton.setOnClickListener(new View.OnClickListener() {
+                        Button startUpdateButton = (Button) dialog.findViewById(R.id.update_download_btn);
+                        startUpdateButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
                                 dialog.dismiss();
-                                dbTools.deleteWholeCity(tempValues.getId());
-
-
+                                updatedCity = tempValues;
+//                                dbTools.deleteWholeCity(tempValues.getId());
+                                isUpdate=true;
                                 new DownloadFileAsync().execute(filePath, updateDate);
                             }
                         });
@@ -470,6 +473,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         protected void onPostExecute(String unused) {
+            dbTools.deleteWholeCity(updatedCity.getId());
             mProgressDialog.dismiss();
             new SavingFilesAsync().execute();
 
@@ -530,7 +534,12 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         protected void onPostExecute(String unused) {
             mSavingDialog.dismiss();
-            startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
+            if(isUpdate){
+                nextActivity(destinationFolder);
+            }
+            else{
+                recreate();
+            }
             finish();
         }
 
