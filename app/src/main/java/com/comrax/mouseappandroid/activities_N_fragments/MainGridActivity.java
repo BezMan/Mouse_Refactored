@@ -85,10 +85,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         File[] files = getFilesDir().listFiles();
         for (File file : files) {
-            if (file.getName().contains("Barcelona")) {
+//            if (file.getName().contains("Barcelona")) {
 
                 Log.wtf("my file: ", file.getPath());
-            }
+//            }
         }
 
 
@@ -299,7 +299,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 //                        }
 //                    }
 
-                    recreate();
+                    startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
+                    finish();
                 }
 
             });
@@ -473,7 +474,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         protected void onPostExecute(String unused) {
-            dbTools.deleteWholeCity(updatedCity.getId());
+            if(isUpdate) {
+                dbTools.deleteWholeCity(updatedCity.getId());
+            }
             mProgressDialog.dismiss();
             new SavingFilesAsync().execute();
 
@@ -538,9 +541,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 nextActivity(destinationFolder);
             }
             else{
-                recreate();
+                startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
+                finish();
             }
-            finish();
         }
 
         @Override
