@@ -58,7 +58,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             TextView title = (TextView) findViewById(R.id.open_article_title);
             TextView dateAndCredit = (TextView) findViewById(R.id.open_article_dateAndCredit);
             TextView description = (TextView) findViewById(R.id.open_article_description);
-//            TextView htmlContent = (TextView)findViewById(R.id.open_article_html_content);
 
 
             File file = new File(myInstance.get_cityFolderName() + "/" + urlContent.getString("image"));
@@ -72,17 +71,15 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             dateAndCredit.setText(urlContent.getString("dateAndCredit"));
             description.setText(urlContent.getString("description"));
 
-//            htmlContent.setText(Html.fromHtml(Html.fromHtml(urlContent.getString("content")).toString()));
-//            htmlContent.setMovementMethod(LinkMovementMethod.getInstance());
 
+            WebView mWebView = (WebView) findViewById(R.id.web_view_main_text);
+//            mWebView.getSettings().setAllowFileAccess(true);
+//            mWebView.getSettings().setJavaScriptEnabled(true);
+//            mWebView.getSettings().setBuiltInZoomControls(true);
 
-            WebView mainTxtView = (WebView) findViewById(R.id.web_view_main_text);
-
-            WebSettings settings = mainTxtView.getSettings();
+            WebSettings settings = mWebView.getSettings();
             settings.setDefaultTextEncodingName("utf-8");
 
-//                JSONObject jsonObject = new JSONObject(bundle.getString("data", null));
-//                title.setText(jsonObject.getString("Title"));
             String content = urlContent.getString("content");
 
             String formattedContent = Html.fromHtml((String) content).toString();
@@ -101,19 +98,16 @@ public class ArticleActivity extends MyBaseDrawerActivity {
 
             String html = String.format("<body>%s</body></html>", formattedContent);
 
-            String str = myInstance.get_cityFolderName();
+            String str = myInstance.get_cityFolderName() + "/Images/";
 
             String fromStr = "src=\"Images/";
-            String toStr = String.format("src=\"%s/Images/\"", str);
+            String toStr = String.format("src=\"file://%s", str);
 
             html = html.replace(fromStr, toStr);
-//            GlobalVars.trialMethod(getApplicationContext(), GlobalVars.Default_masterFolder);
 
             sb.append(html);
 
-            //mainTxtView.loadData(sb.toString(), "text/html;charset=utf-8", "UTF-8");
-            String dir = getFilesDir().toString();
-            mainTxtView.loadDataWithBaseURL(dir, sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
+            mWebView.loadDataWithBaseURL("", sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
 
 
         } catch (JSONException e) {
