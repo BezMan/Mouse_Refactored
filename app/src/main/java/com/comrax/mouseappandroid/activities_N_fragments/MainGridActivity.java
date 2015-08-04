@@ -65,7 +65,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     ArrayList<Pair<String, String>> boneId_boneName = new ArrayList<>();
 
     CitiesModel updatedCity;
-    boolean isUpdate;
+    boolean isUpdate, b;
 
     @Override
     protected int getLayoutResourceId() {
@@ -283,21 +283,22 @@ public class MainGridActivity extends MyBaseDrawerActivity {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.custom_city_delete_dialog);
 
-            Button startDownloadButton = (Button) dialog.findViewById(R.id.start_delete_btn);
-            startDownloadButton.setOnClickListener(new View.OnClickListener() {
+            Button startDeleteButton = (Button) dialog.findViewById(R.id.start_delete_btn);
+            startDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
                     dbTools.deleteWholeCity(tempValues.getId());
 
 
-//                    File[] files = getFilesDir().listFiles();
-//                    for (File file : files) {
-//                        if (file.getName().contains(tempValues.getId())) {
+                    File[] files = getFilesDir().listFiles();
+                    for (File file : files) {
+                        if (file.getName().contains(tempValues.getId())) {
 //                            b = file.delete();
-//                            Log.wtf("delete: ", "" + b);
-//                        }
-//                    }
+//                            Log.wtf(file.getName()+ " , delete: ", "" + b);
+                            deleteRecursive(file);
+                        }
+                    }
 
                     startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
                     finish();
@@ -315,6 +316,13 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
             dialog.show();
         }
+    }
+
+    public void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
+        fileOrDirectory.delete();
     }
 
 

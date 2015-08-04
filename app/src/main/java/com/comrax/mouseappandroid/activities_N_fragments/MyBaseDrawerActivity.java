@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -91,8 +90,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
     protected void setupTextView(String text) {
         appBarTextView = (TextView) findViewById(R.id.title_text);
 
-        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/dorianclm-book-webfont.ttf");
-        appBarTextView.setTypeface(myFont);
+//        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/dorianclm-book-webfont.ttf");
+//        appBarTextView.setTypeface(myFont);
         appBarTextView.setText(text);
     }
 
