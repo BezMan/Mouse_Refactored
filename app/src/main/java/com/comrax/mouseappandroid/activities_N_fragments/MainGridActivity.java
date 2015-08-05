@@ -680,7 +680,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         myInstance.setCityName("עכבר עולם");
-        myInstance.set_cityId("noSearch");
+        myInstance.set_cityId(null);
+        myInstance.set_boneIdTitle(null);
     }
 
 }

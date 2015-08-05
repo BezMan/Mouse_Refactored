@@ -112,6 +112,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     private void setBoneTitleAndColor() {
         boneTextView = (TextView) findViewById(R.id.bone_title);
         String boneTitle = myInstance.get_boneIdTitle();
+        if(boneTitle==null){
+            boneTitle = cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName));
+        }
         boneTextView.setText(boneTitle);
 
         int pos = myInstance.getBonePosition();

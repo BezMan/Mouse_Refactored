@@ -391,7 +391,7 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor mCursor;
 
-        if(App.getInstance().get_cityId().equals("noSearch")){
+        if(App.getInstance().get_cityId()==null){
             mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
                     new String[]{DBConstants.name, DBConstants.hebrewName, DBConstants.id},
                     DBConstants.id + " = 1",
