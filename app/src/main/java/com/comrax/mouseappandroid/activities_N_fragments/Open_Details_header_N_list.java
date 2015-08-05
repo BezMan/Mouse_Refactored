@@ -714,7 +714,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
                 Bundle bundle = new Bundle();
-                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
                 myInstance.setBonePosition(pos);

@@ -7,12 +7,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
+import com.comrax.mouseappandroid.database.DBConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,6 +112,43 @@ public class ArticleActivity extends MyBaseDrawerActivity {
 
             mWebView.loadDataWithBaseURL("", sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
 
+
+            WebViewClient yourWebClient = new WebViewClient(){
+                // you tell the webclient you want to catch when a url is about to load
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView  view, String  url){
+                    Log.wtf("url_clicked", url);
+                    if(url.contains("world_place")){
+                        String first = url.substring(url.indexOf(",") + 1);
+                        String second = first.substring(first.indexOf(",") + 1);
+                        String third = second.substring(second.indexOf(",") + 1);
+
+//                        String boneId = first.substring(0,first.indexOf(","));
+//                        String nsId = second.substring(0,second.indexOf(","));
+
+                        myInstance.set_objId(third.substring(0,third.indexOf(",")));
+//                        Log.wtf("id's: ", "bone "+boneId+" ns: "+ nsId+ " obj: "+ objId);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+                        bundle.putString(DBConstants.objId, myInstance.get_objId());
+
+                        Intent placeActivity = new Intent(getApplicationContext(), PlaceActivity.class);
+                        placeActivity.putExtras(bundle);
+                        startActivity(placeActivity);
+
+                        return true;
+                    }
+                    return false;
+                }
+                // here you execute an action when the URL you want is about to load
+                @Override
+                public void onLoadResource(WebView  view, String  url){
+                    //on init load webView with html links//
+                }
+            };
+
+            mWebView.setWebViewClient(yourWebClient);
 
         } catch (JSONException e) {
             e.printStackTrace();

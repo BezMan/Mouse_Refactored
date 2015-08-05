@@ -247,7 +247,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
                 Bundle bundle = new Bundle();
-                bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
@@ -580,7 +580,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             holder.title.setText(item.title);
             holder.itemLayout.setBackgroundColor(getResources().getColor(R.color.Achbar_gray_light_background));
             holder.imageViewBackground.setBackgroundColor(getResources().getColor(R.color.Achbar_trial));
-            holder.arrowIcon.setImageResource(getResources().getColor(R.color.Achbar_gray_light_background));
+            holder.arrowIcon.setVisibility(View.GONE);
 
 
             return convertView;

@@ -240,7 +240,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
                 if (mCurrentHeaderPos > 0) { //place
                     Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
                     Bundle bundle = new Bundle();
-                    bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                     bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                     myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
