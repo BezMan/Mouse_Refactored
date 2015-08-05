@@ -19,8 +19,6 @@ import org.json.JSONObject;
 public class StaticPageFragment extends Fragment {
 
     Bundle bundle;
-    TextView title;
-    //WebView mainTxt;
     TextView barTitleTextView;
     String originalTitle;
 
@@ -50,9 +48,8 @@ public class StaticPageFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        title = (TextView)getActivity().findViewById(R.id.static_page_title);
-        //mainTxt = (TextView)getActivity().findViewById(R.id.static_page_main_text);
-        WebView mainTxtView = (WebView)getActivity().findViewById(R.id.web_view_main_text);
+        TextView title = (TextView)getActivity().findViewById(R.id.static_page_title);
+        WebView mainTxtView = (WebView)getActivity().findViewById(R.id.web_view_static);
 
         WebSettings settings = mainTxtView.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
@@ -79,7 +76,6 @@ public class StaticPageFragment extends Fragment {
             String html = String.format("<body>%s</body></html>", formattedContent);
             sb.append(html);
 
-            //mainTxtView.loadData(sb.toString(), "text/html;charset=utf-8", "UTF-8");
             mainTxtView.loadDataWithBaseURL(null, sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
         }
         catch (JSONException e) {

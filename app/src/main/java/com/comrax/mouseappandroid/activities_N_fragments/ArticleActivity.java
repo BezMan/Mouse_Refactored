@@ -72,7 +72,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             description.setText(urlContent.getString("description"));
 
 
-            WebView mWebView = (WebView) findViewById(R.id.web_view_main_text);
+            WebView mWebView = (WebView) findViewById(R.id.web_view_article);
 //            mWebView.getSettings().setAllowFileAccess(true);
 //            mWebView.getSettings().setJavaScriptEnabled(true);
 //            mWebView.getSettings().setBuiltInZoomControls(true);

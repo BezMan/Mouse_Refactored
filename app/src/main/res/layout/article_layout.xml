@@ -69,7 +69,7 @@
                         />
 
                     <WebView
-                        android:id="@+id/web_view_main_text"
+                        android:id="@+id/web_view_article"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="mainTxt"

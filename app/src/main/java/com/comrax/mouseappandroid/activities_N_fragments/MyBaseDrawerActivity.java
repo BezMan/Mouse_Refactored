@@ -284,7 +284,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 //                    .addToBackStack(fragTag)
                     .commit();
 
-        } else {   //inside static page :
+        } else {   //not in static page :
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_container, fragment, fragTag)
