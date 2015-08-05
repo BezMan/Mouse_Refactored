@@ -35,18 +35,17 @@
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
+                        android:text="title"
                         />
 
-                    <TextView
-                        android:id="@+id/uesful_info_html_content"
+                    <WebView
+                        android:id="@+id/web_view_article"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="17dp"
-                        />
-
+                        android:text="mainTxt"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 </LinearLayout>
             </ScrollView>
