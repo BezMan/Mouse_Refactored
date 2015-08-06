@@ -118,6 +118,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView  view, String  url){
                     Log.wtf("url_clicked", url);
+
                     if(url.contains("CM.world_place")){
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
@@ -149,24 +150,40 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                         String article_obj = third.substring(0,third.indexOf(","));
 
 
-                        String content = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
+                        String articleContent = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
 
-                        if(content!=null) {
+                        if(articleContent!=null) {
                             Intent articleIntent = new Intent(getApplicationContext(), ArticleActivity.class);
-                            articleIntent.putExtra("articleData", content);
+                            articleIntent.putExtra("articleData", articleContent);
                             startActivity(articleIntent);
-
-                            return true;
+                        }
+                        else{
+                            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                         }
                     }
                     else if(url.contains("CM.city")) {
-                        Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
-                        activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(activityIntent);
 
+                        String first = url.substring(url.indexOf(",") + 1);
+                        String cityId = first.substring(0,first.indexOf(","));
+
+                        if(cityId.equals(myInstance.get_cityId())){
+                            Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
+                            activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(activityIntent);
+                        }
+                        else{
+                            Intent activityIntent = new Intent(getApplicationContext(), MainGridActivity.class);
+                            activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Toast.makeText(getApplicationContext(), "בחר/הורד עיר", Toast.LENGTH_LONG).show();
+                            startActivity(activityIntent);
+                        }
                     }
 
-                    return false;
+                    else{
+                        view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    }
+
+                    return true;
                 }
                 // here you execute an action when the URL you want is about to load
                 @Override
