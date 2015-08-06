@@ -39,6 +39,7 @@ public class DBConstants {
             urlString = "url",
             userComments = "responses",
             boneCategoryName = "boneCategoryName",
+            boneCategoryId = "boneCategoryId",
             phone = "phone",
             price = "priceDegree",
             activityHours = "activityHours",

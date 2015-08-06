@@ -244,7 +244,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
                     bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                     myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-                    myInstance.setBonePosition(mCurrentHeaderPos);
+//                    myInstance.setBonePosition(mCurrentHeaderPos);
 
                     Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
                     placeActivity.putExtras(bundle);
@@ -254,7 +254,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
                     Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
 
                     myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-                    myInstance.setBonePosition(mCurrentHeaderPos);
+//                    myInstance.setBonePosition(mCurrentHeaderPos);
 
                     Intent articleActivity = new Intent(FavoritesActivity.this, ArticleActivity.class);
                     articleActivity.putExtra("articleData", cursor.getString(cursor.getColumnIndex(DBConstants.description)));

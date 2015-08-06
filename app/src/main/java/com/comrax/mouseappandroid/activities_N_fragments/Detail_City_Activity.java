@@ -174,6 +174,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             final MapMarkerModel mapItem = new MapMarkerModel();
             mapItem.setBoneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
             mapItem.setPlaceName(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            mapItem.setBoneCategoryId(cursor.getInt(cursor.getColumnIndex(DBConstants.boneCategoryId)));
 
             String itemLatitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
             String itemLongitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
@@ -185,7 +186,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                         .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
-                String currentIcon = getIconByBoneId(mapItem.getBoneId());
+                String currentIcon = icon[mapItem.getBoneCategoryId()-1];
 
                 marker.setIcon((BitmapDescriptorFactory
                         .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon + "_blank", null, null))));
@@ -202,9 +203,10 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             public boolean onMarkerClick(Marker marker) {
 
                 int currIndex = markers.indexOf(marker);
-                String currBoneId = markerArray.get(currIndex).getBoneId();
+                int currBoneId = markerArray.get(currIndex).getBoneCategoryId();
 
-                String currentIcon = getIconByBoneId(currBoneId);
+//                String currentIcon = getIconByBoneId(currBoneId);
+                String currentIcon = icon[currBoneId-1];
 
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
@@ -251,7 +253,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-                myInstance.setBonePosition(pos);
+//                myInstance.setBonePosition(pos);
 
 
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
@@ -273,20 +275,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     }
 
 
-
-
-    private String getIconByBoneId(String boneId) {
-        if (boneId.equals(myInstance.getBoneHotel())) {
-            pos = 1;
-        } else if (boneId.equals(myInstance.getBoneShop())) {
-            pos = 2;
-        } else if (boneId.equals(myInstance.getBoneRest())) {
-            pos = 3;
-        } else {
-            pos = 4;
-        }
-        return icon[pos-1];
-    }
 
 
     @Override
@@ -338,24 +326,9 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                         }
 
                     }
-                } else {  //get From Json data//
+                } else {  //items 1-5: get From Json data//
                     JSONObject menuItem = menuArray.getJSONObject(m);
                     String boneId = menuItem.getString("boneId");
-                    switch (m) {
-                        case 0:
-                            myInstance.setBoneHotel(boneId);
-                            break;
-                        case 1:
-                            myInstance.setBoneShop(boneId);
-                            break;
-                        case 2:
-                            myInstance.setBoneRest(boneId);
-                            break;
-                        case 3:
-                            myInstance.setBoneTour(boneId);
-                            break;
-                    }
-
 
                     listItem.title = (menuItem.getString("name"));
                     listItem.imagePath = (GlobalVars.trialMethod(getApplicationContext(), menuItem.getString("icon")));

@@ -220,7 +220,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 //                    .addToBackStack(fragment.getClass().getName())
                     .commit();
 
-            //TODO: change hardcoded!!!
             setupTextView("המועדפים שלי");
         } else {
             Intent intent = new Intent(this, FavoritesActivity.class);
@@ -400,7 +399,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             text1 = (TextView) view.findViewById(R.id.search_hebText);
             text2 = (TextView) view.findViewById(R.id.search_engText);
 
-            if (App.getInstance().get_cityId().equals(null) && cursor.getCount() == 1) {
+            if (App.getInstance().get_cityId()==null && cursor.getCount() == 1) {
                 text1.setText("נא לבחור מדריך");
                 text2.setText("");
 
@@ -434,8 +433,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
-
-            if (myInstance.get_cityId().equals("noSearch")) {//if we are in MainGrid Activity, not inside a city...
+            //search item clicked:
+            if (myInstance.get_cityId()==null) {//if we are in MainGrid Activity, not inside a city...
                 return;
             }
 

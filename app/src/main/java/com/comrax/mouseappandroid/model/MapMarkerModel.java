@@ -7,6 +7,7 @@ public class MapMarkerModel {
 
     private String placeName;
     private String boneId;
+    private int boneCategoryId;
 
     public String getPlaceName() {
         return placeName;
@@ -24,6 +25,12 @@ public class MapMarkerModel {
         this.boneId = boneId;
     }
 
+    public int getBoneCategoryId() {
+        return boneCategoryId;
+    }
 
+    public void setBoneCategoryId(int boneCategoryId) {
+        this.boneCategoryId = boneCategoryId;
+    }
 }
 

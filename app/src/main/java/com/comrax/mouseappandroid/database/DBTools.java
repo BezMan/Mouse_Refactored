@@ -16,7 +16,9 @@ import org.json.JSONObject;
 
 public class DBTools extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "mouseAppData.db";
+    //TODO: change back to internal!
+
+        public static final String DATABASE_NAME = "mouseAppData.db";
 //public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
 
     public static final int DATABASE_VERSION = 1;
@@ -54,6 +56,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.price + " INTEGER, "
                 + DBConstants.boneId + " TEXT, "
                 + DBConstants.boneCategoryName + " TEXT, "
+                + DBConstants.boneCategoryId + " INTEGER, "
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId + " TEXT, "
@@ -90,7 +93,6 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_FAVORITE_TABLE = "CREATE TABLE "
                 + DBConstants.FAVORITE_TABLE_NAME + " ("
-
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.boneId + " TEXT, "
                 + DBConstants.boneCategoryName + " TEXT, "
@@ -307,6 +309,7 @@ public class DBTools extends SQLiteOpenHelper {
             newValues.put(DBConstants.centerCoordinateLat, item.getString(DBConstants.centerCoordinateLat));
             newValues.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
             newValues.put(DBConstants.boneCategoryName, item.getString(DBConstants.boneCategoryName));
+            newValues.put(DBConstants.boneCategoryId, item.getString(DBConstants.boneCategoryId));
             String condition = DBConstants.objId + "=? AND " + DBConstants.boneId +"=?" ;
             database.update(TableName, newValues, condition, new String [] {item.getString(DBConstants.objId), boneId});
 

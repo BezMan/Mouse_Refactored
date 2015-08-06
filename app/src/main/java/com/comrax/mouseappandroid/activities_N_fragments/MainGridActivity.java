@@ -644,6 +644,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                             for (int j = 0; j < boneId_boneName.size(); j++) {
                                 if (boneId.equals(boneId_boneName.get(j).first)) {
                                     item.put(DBConstants.boneCategoryName, boneId_boneName.get(j).second);
+                                    item.put(DBConstants.boneCategoryId, j+1);
                                 }
                             }
 

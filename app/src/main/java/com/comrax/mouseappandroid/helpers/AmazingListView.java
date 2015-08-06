@@ -33,7 +33,7 @@ public class AmazingListView extends ListView implements AmazingAdapter.HasMoreP
         mHeaderView = view;
 
         // Disable vertical fading when the pinned header is present
-        // TODO change ListView to allow separate measures for top and bottom fading edge;
+        // change ListView to allow separate measures for top and bottom fading edge;
         // in this particular case we would like to disable the top, but not the bottom edge.
         if (mHeaderView != null) {
             setFadingEdgeLength(0);

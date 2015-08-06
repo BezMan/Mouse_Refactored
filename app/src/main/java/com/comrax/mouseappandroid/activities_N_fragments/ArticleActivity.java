@@ -113,7 +113,9 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             mWebView.loadDataWithBaseURL("", sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
 
 
-            WebViewClient yourWebClient = new WebViewClient(){
+
+
+            mWebView.setWebViewClient(new WebViewClient(){
                 // you tell the webclient you want to catch when a url is about to load
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView  view, String  url){
@@ -123,9 +125,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
                         String third = second.substring(second.indexOf(",") + 1);
-
-//                        String boneId = first.substring(0,first.indexOf(","));
-//                        String nsId = second.substring(0,second.indexOf(","));
 
                         myInstance.set_objId(third.substring(0, third.indexOf(",")));
 
@@ -143,9 +142,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
                         String third = second.substring(second.indexOf(",") + 1);
-
-//                        String boneId = first.substring(0,first.indexOf(","));
-//                        String nsId = second.substring(0,second.indexOf(","));
 
                         String article_obj = third.substring(0,third.indexOf(","));
 
@@ -185,14 +181,12 @@ public class ArticleActivity extends MyBaseDrawerActivity {
 
                     return true;
                 }
-                // here you execute an action when the URL you want is about to load
+
                 @Override
                 public void onLoadResource(WebView  view, String  url){
                     //on init load webView with html links//
                 }
-            };
-
-            mWebView.setWebViewClient(yourWebClient);
+            });
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -254,7 +248,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ArticleActivity.this, AddCommentActivity.class));
-//                Toast.makeText(getApplicationContext(), "btn", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -641,6 +641,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             final MapMarkerModel mapItem = new MapMarkerModel();
             mapItem.setBoneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
             mapItem.setPlaceName(cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+            mapItem.setBoneCategoryId(cursor.getInt(cursor.getColumnIndex(DBConstants.boneCategoryId)));
 
             String itemLatitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
             String itemLongitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
@@ -652,7 +653,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                         .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
-                String currentIcon = getIconByBoneId(mapItem.getBoneId());
+                String currentIcon = icon[mapItem.getBoneCategoryId()-1];
 
                 marker.setIcon((BitmapDescriptorFactory
                         .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon + "_blank", null, null))));
@@ -669,9 +670,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             public boolean onMarkerClick(Marker marker) {
 
                 int currIndex = markers.indexOf(marker);
-                String currBoneId = markerArray.get(currIndex).getBoneId();
+                int currBoneId = markerArray.get(currIndex).getBoneCategoryId();
 
-                String currentIcon = getIconByBoneId(currBoneId);
+//                String currentIcon = getIconByBoneId(currBoneId);
+                String currentIcon = icon[currBoneId-1];
 
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
@@ -717,7 +719,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-                myInstance.setBonePosition(pos);
+//                myInstance.setBonePosition(pos);
 
                 Log.wtf("pos:", " " + pos);
 
@@ -736,19 +738,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         }
     }
 
-
-    private String getIconByBoneId(String boneId) {
-        if (boneId.equals(myInstance.getBoneHotel())) {
-            pos = 1;
-        } else if (boneId.equals(myInstance.getBoneShop())) {
-            pos = 2;
-        } else if (boneId.equals(myInstance.getBoneRest())) {
-            pos = 3;
-        } else {
-            pos = 4;
-        }
-        return icon[pos - 1];
-    }
 
 
     @Override
