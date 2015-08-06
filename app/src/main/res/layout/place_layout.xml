@@ -13,7 +13,8 @@
         <ImageView
             android:id="@+id/detailed_place_head_imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
+            android:scaleType="fitCenter"
             android:adjustViewBounds="true"/>
 
         <Button
@@ -431,10 +432,11 @@
         <ImageView
             android:id="@+id/footer_item_ad"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
 
 
             />

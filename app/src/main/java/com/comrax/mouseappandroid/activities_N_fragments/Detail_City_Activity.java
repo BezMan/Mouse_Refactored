@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -125,8 +126,12 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         // Move the camera instantly to current city with a zoom of 10.
         String cityLat = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
         String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
-        LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+
+//emulator vs device check//
+        if (Build.BRAND.compareTo("generic") != 0) {
+            LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+        }
 
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);

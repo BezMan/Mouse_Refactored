@@ -18,8 +18,10 @@ public class DBTools extends SQLiteOpenHelper {
 
     //TODO: change back to internal!
 
+        //internal:
         public static final String DATABASE_NAME = "mouseAppData.db";
-//public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
+        //external:
+        //public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
 
     public static final int DATABASE_VERSION = 1;
 

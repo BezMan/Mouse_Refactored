@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -594,40 +595,43 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         // Move the camera instantly to current city with a zoom of 10.
         String cityLat = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
         String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
-        LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 
+        //emulator vs device check//
+        if (Build.BRAND.compareTo("generic") != 0) {
+            LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+        }
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 
-        mSlidingLayer.setOnInteractListener(new SlidingLayer.OnInteractListener() {
-            @Override
-            public void onOpen() {
-            }
+    mSlidingLayer.setOnInteractListener(new SlidingLayer.OnInteractListener() {
+        @Override
+        public void onOpen() {
+        }
 
-            @Override
-            public void onShowPreview() {
-            }
+        @Override
+        public void onShowPreview() {
+        }
 
-            @Override
-            public void onClose() {
-                mSlidingLayer.setSlidingEnabled(true);
-            }
+        @Override
+        public void onClose() {
+            mSlidingLayer.setSlidingEnabled(true);
+        }
 
-            @Override
-            public void onOpened() {
-                if (!setMap) {
-                    setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
-                    setMap = true;
-                }
-                mSlidingLayer.setSlidingEnabled(false);
+        @Override
+        public void onOpened() {
+            if (!setMap) {
+                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                setMap = true;
             }
+            mSlidingLayer.setSlidingEnabled(false);
+        }
 
-            @Override
-            public void onPreviewShowed() {
-            }
+        @Override
+        public void onPreviewShowed() {
+        }
 
-            @Override
+        @Override
             public void onClosed() {
             }
         });
