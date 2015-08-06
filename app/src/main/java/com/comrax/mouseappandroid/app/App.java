@@ -14,10 +14,6 @@ public class App extends Application {
     private String _boneIdTitle;
     private int BoneCategoryName;
     private String CityName;
-    private String BoneHotel;
-    private String BoneRest;
-    private String BoneShop;
-    private String BoneTour;
 
     private boolean toggleGPS=true;
 
@@ -59,39 +55,6 @@ public class App extends Application {
         BoneCategoryName = boneCategoryName;
     }
 
-    public String getBoneTour() {
-        return BoneTour;
-    }
-
-    public void setBoneTour(String boneTour) {
-        BoneTour = boneTour;
-    }
-
-    public String getBoneHotel() {
-        return BoneHotel;
-    }
-
-    public void setBoneHotel(String boneHotel) {
-        BoneHotel = boneHotel;
-    }
-
-    public String getBoneRest() {
-        return BoneRest;
-    }
-
-    public void setBoneRest(String boneRest) {
-        BoneRest = boneRest;
-    }
-
-    public String getBoneShop() {
-        return BoneShop;
-    }
-
-    public void setBoneShop(String boneShop) {
-        BoneShop = boneShop;
-    }
-
-
     public void set_cityId(String cityId) {
         _cityId = cityId;
     }
@@ -99,7 +62,6 @@ public class App extends Application {
     public String get_cityId() {
         return _cityId;
     }
-
 
     public void set_boneId(String boneId) {
         _boneId = boneId;
@@ -109,7 +71,6 @@ public class App extends Application {
         return _boneId;
     }
 
-
     public String get_objId() {
         return _objId;
     }
@@ -118,13 +79,11 @@ public class App extends Application {
         _objId = objId;
     }
 
-
     public String get_cityFolderName() {
         return _cityFolderName;
     }
 
     public void set_cityFolderName(String cityFolderName) {_cityFolderName = cityFolderName; }
-
 
     public String get_boneIdTitle() {
         return _boneIdTitle;
@@ -133,7 +92,6 @@ public class App extends Application {
     public void set_boneIdTitle(String boneIdTitle) {
         _boneIdTitle = boneIdTitle;
     }
-
 
     public String getCityName() {
         return CityName;

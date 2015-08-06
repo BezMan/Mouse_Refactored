@@ -253,7 +253,7 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
                 else { //article
                     Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
 
-                    myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+//                    myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
 //                    myInstance.setBonePosition(mCurrentHeaderPos);
 
                     Intent articleActivity = new Intent(FavoritesActivity.this, ArticleActivity.class);

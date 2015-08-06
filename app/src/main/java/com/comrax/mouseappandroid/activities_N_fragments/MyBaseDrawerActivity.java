@@ -242,6 +242,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
 
     private void rateApp() {
+        String url = "http://www.mouse.co.il/appMouseWorld.aspx?action=rate&device=android";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+
     }
 
 
