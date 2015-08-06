@@ -67,7 +67,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         super.onCreate(savedInstanceState);
 
         bundle = getIntent().getExtras();
-        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, bundle.getString(DBConstants.cityId, null), DBConstants.objId, bundle.getString(DBConstants.objId, null));
+        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, bundle.getString(DBConstants.objId, null));
 
         setBoneTitleAndColor();
 

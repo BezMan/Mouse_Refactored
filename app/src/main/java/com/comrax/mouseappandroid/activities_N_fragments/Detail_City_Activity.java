@@ -111,7 +111,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
         setDetailsListItems();
 
-        myInstance.setCityName(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
+        myInstance.setCityName(dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.hebrewName, DBConstants.cityId, cityId));
 
         listView.setAdapter(adapter);
 
@@ -123,8 +123,8 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Move the camera instantly to current city with a zoom of 10.
-        String cityLat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
-        String cityLon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
+        String cityLat = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
+        String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
         LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 
@@ -459,8 +459,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 //        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
 
         CITY_FOLDER_PATH = dataFileIntent.getStringExtra("cityFolderName");
-        myInstance.set_cityFolderName(CITY_FOLDER_PATH);
 
+        if(CITY_FOLDER_PATH==null){ //back from article link..
+            CITY_FOLDER_PATH = myInstance.get_cityFolderName();
+        }
+        myInstance.set_cityFolderName(CITY_FOLDER_PATH);
         cityId = CITY_FOLDER_PATH.substring(CITY_FOLDER_PATH.length() - 4, CITY_FOLDER_PATH.length());
         myInstance.set_cityId(cityId);
 

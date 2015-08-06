@@ -373,7 +373,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
                 } else {
                     //city exists, diff date:
-                    String cityDBDate = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
+                    String cityDBDate = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
                     if (!updateDate.equals(cityDBDate)) {
 
                         //show dialog, needs update//

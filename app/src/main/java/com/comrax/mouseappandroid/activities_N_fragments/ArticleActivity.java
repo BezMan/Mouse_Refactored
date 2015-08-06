@@ -118,7 +118,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView  view, String  url){
                     Log.wtf("url_clicked", url);
-                    if(url.contains("world_place")){
+                    if(url.contains("CM.world_place")){
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
                         String third = second.substring(second.indexOf(",") + 1);
@@ -126,8 +126,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
 //                        String boneId = first.substring(0,first.indexOf(","));
 //                        String nsId = second.substring(0,second.indexOf(","));
 
-                        myInstance.set_objId(third.substring(0,third.indexOf(",")));
-//                        Log.wtf("id's: ", "bone "+boneId+" ns: "+ nsId+ " obj: "+ objId);
+                        myInstance.set_objId(third.substring(0, third.indexOf(",")));
 
                         Bundle bundle = new Bundle();
                         bundle.putString(DBConstants.cityId, myInstance.get_cityId());
@@ -139,6 +138,34 @@ public class ArticleActivity extends MyBaseDrawerActivity {
 
                         return true;
                     }
+                    else if(url.contains("CM.world_articles_item")){
+                        String first = url.substring(url.indexOf(",") + 1);
+                        String second = first.substring(first.indexOf(",") + 1);
+                        String third = second.substring(second.indexOf(",") + 1);
+
+//                        String boneId = first.substring(0,first.indexOf(","));
+//                        String nsId = second.substring(0,second.indexOf(","));
+
+                        String article_obj = third.substring(0,third.indexOf(","));
+
+
+                        String content = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
+
+                        if(content!=null) {
+                            Intent articleIntent = new Intent(getApplicationContext(), ArticleActivity.class);
+                            articleIntent.putExtra("articleData", content);
+                            startActivity(articleIntent);
+
+                            return true;
+                        }
+                    }
+                    else if(url.contains("CM.city")) {
+                        Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
+                        activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activityIntent);
+
+                    }
+
                     return false;
                 }
                 // here you execute an action when the URL you want is about to load

@@ -319,10 +319,21 @@ public class DBTools extends SQLiteOpenHelper {
     }
 
 
-    public String getData(String TableName, String ColumnReturned, String checkColumn, String checkVal) {
+    public String getCellData(String TableName, String ColumnReturned, String checkColumn, String checkVal) {
         SQLiteDatabase database = this.getReadableDatabase();
         String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn + "=?" ;
         Cursor cursor = database.rawQuery(sql, new String[]{checkVal});
+        String res = null;
+        if (cursor.moveToFirst()) {
+            res = cursor.getString(cursor.getColumnIndex(ColumnReturned));
+        }
+        return res;
+    }
+
+    public String getCellData(String TableName, String ColumnReturned, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=?" ;
+        Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2});
         String res = null;
         if (cursor.moveToFirst()) {
             res = cursor.getString(cursor.getColumnIndex(ColumnReturned));

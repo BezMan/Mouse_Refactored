@@ -37,7 +37,7 @@ public class TiyulimActivity extends MyBaseDrawerActivity{
 
         listView = (ListView)findViewById(R.id.tiyulim_listView);
         try {
-            JSONObject jsonObject = new JSONObject(dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.touristArticlesList, DBConstants.cityId, myInstance.get_cityId()));
+            JSONObject jsonObject = new JSONObject(dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.touristArticlesList, DBConstants.cityId, myInstance.get_cityId()));
             JSONArray jsonArray = jsonObject.getJSONArray("articles");
 
             adapter = new TiyulimListAdapter(this, jsonArray, getResources());

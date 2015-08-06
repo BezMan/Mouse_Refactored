@@ -592,8 +592,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Move the camera instantly to current city with a zoom of 10.
-        String cityLat = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
-        String cityLon = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
+        String cityLat = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLat, DBConstants.cityId, myInstance.get_cityId());
+        String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
         LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
 

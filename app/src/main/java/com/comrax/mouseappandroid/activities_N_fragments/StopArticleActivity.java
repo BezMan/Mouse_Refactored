@@ -42,7 +42,7 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
         super.onCreate(savedInstanceState);
 
         TextView stopTxt = (TextView)findViewById(R.id.stop_textview);
-        String wholeTxt = dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.stopsArticle, DBConstants.cityId, myInstance.get_cityId());
+        String wholeTxt = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.stopsArticle, DBConstants.cityId, myInstance.get_cityId());
 
         try {
             JSONObject jsonObject = new JSONObject(wholeTxt);
@@ -60,52 +60,11 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
 
         setFooterComment();
 
-//        setFooterFav();
-
         setFooterAd();
 
 
     }
 
-//    private void setFooterFav() {
-//        Button favoritesBtn = (Button) findViewById(R.id.footer_prefs_button);
-//        favoritesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // custom dialog
-//                final Dialog dialog = new Dialog(StopArticleActivity.this);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setContentView(R.layout.custom_fav_dialog);
-//
-//                Window window = dialog.getWindow();
-//                window.setGravity(Gravity.BOTTOM);
-//                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//
-//                Button addFavButton = (Button) dialog.findViewById(R.id.add_fav_btn);
-//                addFavButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-////                        dbTools.insertPlaceFavorite(cursor);
-//                        Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                Button cancelFavButton = (Button) dialog.findViewById(R.id.cancel_fav_btn);
-//                cancelFavButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                dialog.show();
-//
-//            }
-//
-//        });
-//
-//    }
 
     private void setFooterComment() {
         Button btnComment = (Button) findViewById(R.id.footer_comment_btn);
@@ -113,7 +72,6 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StopArticleActivity.this, AddCommentActivity.class));
-//                Toast.makeText(getApplicationContext(), "btn", Toast.LENGTH_SHORT).show();
             }
         });
 
