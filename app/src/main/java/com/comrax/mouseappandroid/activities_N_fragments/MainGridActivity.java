@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +64,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     ArrayList<Pair<String, String>> boneId_boneName = new ArrayList<>();
 
     CitiesModel updatedCity;
-    boolean isUpdate, b;
+    boolean isUpdate;
 
     @Override
     protected int getLayoutResourceId() {
@@ -81,15 +80,6 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        File[] files = getFilesDir().listFiles();
-        for (File file : files) {
-//            if (file.getName().contains("Barcelona")) {
-
-                Log.wtf("my file: ", file.getPath());
-//            }
-        }
 
 
         GlobalVars.detailMenuItems = new ArrayList<>();

@@ -27,7 +27,7 @@
         android:textSize="14dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginBottom="2dp"
-
+        android:gravity="left"
         />
 
     <View

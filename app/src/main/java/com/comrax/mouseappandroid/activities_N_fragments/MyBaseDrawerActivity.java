@@ -405,8 +405,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             text2 = (TextView) view.findViewById(R.id.search_engText);
 
             if (App.getInstance().get_cityId()==null && cursor.getCount() == 1) {
-                text1.setText("נא לבחור מדריך");
-                text2.setText("");
+                text1.setText("על מנת לבצע חיפוש");
+                text2.setText("יש להוריד תחילה מדריך");
 
             } else {
 
@@ -448,10 +448,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
-                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
 
                 Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
                 placeActivity.putExtras(bundle);

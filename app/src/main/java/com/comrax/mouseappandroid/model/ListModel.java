@@ -12,13 +12,7 @@ public class ListModel {
     private  float Rating;
     private String ObjId;
     private String NsId;
-
     private String Distance = "0 מטרים ממך ";
-    private double Longitude, Latitude;
-
-
-    private String FullDescriptionBody="";
-    private String Phone="";
 
     public String getNsId() {
         return NsId;
@@ -91,41 +85,6 @@ public class ListModel {
     public void setRating(float rating) {
         Rating = rating;
     }
-
-
-    public double getLongitude() {
-        return Longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        Longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return Latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        Latitude = latitude;
-    }
-
-
-    public String getFullDescriptionBody() {
-        return FullDescriptionBody;
-    }
-
-    public void setFullDescriptionBody(String fullDescriptionBody) {
-        FullDescriptionBody = fullDescriptionBody;
-    }
-
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String phone) {
-        Phone = phone;
-    }
-
 
 
 }

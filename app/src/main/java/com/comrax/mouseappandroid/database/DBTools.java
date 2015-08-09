@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.comrax.mouseappandroid.app.App;
@@ -19,9 +20,9 @@ public class DBTools extends SQLiteOpenHelper {
     //TODO: change back to internal!
 
         //internal:
-        public static final String DATABASE_NAME = "mouseAppData.db";
+//        public static final String DATABASE_NAME = "mouseAppData.db";
         //external:
-        //public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
+        public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -418,8 +419,7 @@ public class DBTools extends SQLiteOpenHelper {
 
              mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
                     new String[]{},
-                    DBConstants.cityId + "=" + App.getInstance().get_cityId() + " AND (" +
-                            DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%')",
+                    DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%'"+ " OR " + DBConstants.address + " like '%" + inputText + "%'"+ ")",
                     null, null, null, null, null);
         }
         if (mCursor != null) {
