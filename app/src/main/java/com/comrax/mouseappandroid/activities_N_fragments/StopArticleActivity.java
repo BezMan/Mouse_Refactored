@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
@@ -52,6 +53,27 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
             JSONObject item = (JSONObject) jsonArray.get(0);
             String content = item.getString("content");
 
+            ImageView topImage = (ImageView) findViewById(R.id.open_article_topImage);
+            TextView descPhoto = (TextView) findViewById(R.id.open_article_descPhoto);
+            TextView title = (TextView) findViewById(R.id.open_article_title);
+            TextView dateAndCredit = (TextView) findViewById(R.id.open_article_dateAndCredit);
+//            TextView description = (TextView) findViewById(R.id.open_article_description);
+
+
+            File file = new File(myInstance.get_cityFolderName() + "/Images/" + myInstance.get_cityId() + "_" + item.getString("image1"));
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                topImage.setImageBitmap(bitmap);
+            }
+            else{
+                topImage.setVisibility(View.GONE);
+            }
+
+            descPhoto.setText(item.getString("descPhoto") + " " + item.getString("photographer1"));
+            title.setText(item.getString("nameTitle"));
+            dateAndCredit.setText(item.getString("dateAndCredit"));
+//            description.setText(item.getString("description"));
+
 
             WebView mWebView = (WebView) findViewById(R.id.web_view_article);
 //            mWebView.getSettings().setAllowFileAccess(true);
@@ -61,7 +83,7 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
             WebSettings settings = mWebView.getSettings();
             settings.setDefaultTextEncodingName("utf-8");
 
-//            String content = urlContent.getString("content");
+//            String content = item.getString("content");
 
             String formattedContent = Html.fromHtml((String) content).toString();
             StringBuilder sb = new StringBuilder();

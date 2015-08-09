@@ -68,6 +68,9 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 topImage.setImageBitmap(bitmap);
             }
+            else{
+                topImage.setVisibility(View.GONE);
+            }
 
             descPhoto.setText(urlContent.getString("descPhoto"));
             title.setText(urlContent.getString("nameTitle"));
