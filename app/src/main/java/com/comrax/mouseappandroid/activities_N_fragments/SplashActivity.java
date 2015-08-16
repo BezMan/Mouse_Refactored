@@ -118,7 +118,8 @@ public class SplashActivity extends Activity {
                     throw new IOException(statusLine.getReasonPhrase());
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
+                fillArray(savedDateJson);
+                nextActivity();
             }
             return responseString;
         }

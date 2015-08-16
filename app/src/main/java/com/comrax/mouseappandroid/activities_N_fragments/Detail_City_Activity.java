@@ -130,7 +130,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 //emulator vs device check//
         if (Build.BRAND.compareTo("generic") != 0) {
             LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 12));
         }
 
 

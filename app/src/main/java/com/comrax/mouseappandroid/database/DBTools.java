@@ -417,9 +417,11 @@ public class DBTools extends SQLiteOpenHelper {
         }
         else {
 
-             mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
+
+            mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
                     new String[]{},
-                    DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%'"+ " OR " + DBConstants.address + " like '%" + inputText + "%'"+ ")",
+                    DBConstants.cityId + "=" + App.getInstance().get_cityId() + " AND (" +
+                            DBConstants.name + " like '%" + inputText + "%'" + " OR " + DBConstants.hebrewName + " like '%" + inputText + "%')",
                     null, null, null, null, null);
         }
         if (mCursor != null) {

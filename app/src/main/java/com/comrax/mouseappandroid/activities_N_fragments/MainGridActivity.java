@@ -2,10 +2,13 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Pair;
@@ -316,88 +319,150 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     }
 
 
+    public boolean isNetworkOnline() {
+        boolean status = false;
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+            if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                status = true;
+            } else {
+                netInfo = cm.getNetworkInfo(1);
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
+                    status = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return status;
+
+    }
+
     public void onCityItemClick(final int mPosition) {
-        final CitiesModel tempValues = CitiesArray.get(mPosition);
 
-        for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
-            if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
-                //save clicked cityId:
-                myInstance.set_cityId(tempValues.getId());
+            final CitiesModel tempValues = CitiesArray.get(mPosition);
 
-                final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
-                updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
-                fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
+                if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
+                    //save clicked cityId:
+                    myInstance.set_cityId(tempValues.getId());
 
-                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
-                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
+                    final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
+                    updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
+                    fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                //only download if non-existant.
-                if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
+                    sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
+                    destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
-                    //show dialog//
-                    final Dialog dialog = new Dialog(MainGridActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.custom_city_download_dialog);
+                    //only download if non-existant.
+                    if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
 
-
-                    Button startDownloadButton = (Button) dialog.findViewById(R.id.start_download_btn);
-                    startDownloadButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            dialog.dismiss();
-                            new DownloadFileAsync().execute(filePath, updateDate);
-                        }
-
-                    });
-
-                    Button cancelDownloadButton = (Button) dialog.findViewById(R.id.cancel_download_btn);
-                    cancelDownloadButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-
-                    dialog.show();
-
-                } else {
-                    //city exists, diff date:
-                    String cityDBDate = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
-                    if (!updateDate.equals(cityDBDate)) {
-
-                        //show dialog, needs update//
-                        final Dialog dialog = new Dialog(this);
+                        if(isNetworkOnline()){
+                        //show dialog//
+                        final Dialog dialog = new Dialog(MainGridActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(R.layout.custom_city_update_dialog);
-
-                        Window window = dialog.getWindow();
-//                        window.setGravity(Gravity.BOTTOM);
-                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        dialog.setContentView(R.layout.custom_city_download_dialog);
 
 
-                        Button startUpdateButton = (Button) dialog.findViewById(R.id.update_download_btn);
-                        startUpdateButton.setOnClickListener(new View.OnClickListener() {
+                        Button startDownloadButton = (Button) dialog.findViewById(R.id.start_download_btn);
+                        startDownloadButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
                                 dialog.dismiss();
-                                updatedCity = tempValues;
-//                                dbTools.deleteWholeCity(tempValues.getId());
-                                isUpdate=true;
                                 new DownloadFileAsync().execute(filePath, updateDate);
+                            }
+
+                        });
+
+                        Button cancelDownloadButton = (Button) dialog.findViewById(R.id.cancel_download_btn);
+                        cancelDownloadButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
                             }
                         });
 
                         dialog.show();
 
-                    } else {
-                        nextActivity(destinationFolder);
                     }
+                        else{
+                            final Dialog dialog = new Dialog(this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.custom_no_connection_dialog);
+
+                            Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
+                            okButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+                            dialog.show();
+
+                        }
+                    }
+
+                    else {
+                        //city exists, diff date:
+                        String cityDBDate = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
+                        if (!updateDate.equals(cityDBDate)) {
+
+                            //show dialog, needs update//
+                            final Dialog dialog = new Dialog(this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.custom_city_update_dialog);
+
+                            Window window = dialog.getWindow();
+//                        window.setGravity(Gravity.BOTTOM);
+                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+                            Button startUpdateButton = (Button) dialog.findViewById(R.id.update_download_btn);
+                            startUpdateButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    if (isNetworkOnline()) {
+                                        dialog.dismiss();
+                                        updatedCity = tempValues;
+//                                dbTools.deleteWholeCity(tempValues.getId());
+                                        isUpdate = true;
+                                        new DownloadFileAsync().execute(filePath, updateDate);
+
+                                    }
+                                    else{
+                                        dialog.setContentView(R.layout.custom_no_connection_dialog);
+
+                                        Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
+                                        okButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+
+                                        dialog.show();
+
+                                    }
+                                }
+                            });
+
+                            dialog.show();
+
+                        } else {
+                            nextActivity(destinationFolder);
+                        }
+                    }
+                    break;
                 }
-                break;
             }
-        }
 
 
     }
