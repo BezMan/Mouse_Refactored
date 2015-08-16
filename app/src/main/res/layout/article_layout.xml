@@ -74,9 +74,8 @@
                         android:id="@+id/web_view_article"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="mainTxt"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:layout_margin="5dp"/>
+                        android:layout_margin="4dp"/>
 
 
                     <include layout="@layout/article_footer" />

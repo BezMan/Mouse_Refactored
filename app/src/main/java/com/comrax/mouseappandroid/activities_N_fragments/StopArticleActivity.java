@@ -72,7 +72,6 @@ public class StopArticleActivity extends MyBaseDrawerActivity{
             descPhoto.setText(item.getString("descPhoto") + " " + item.getString("photographer1"));
             title.setText(item.getString("nameTitle"));
             dateAndCredit.setText(item.getString("dateAndCredit"));
-//            description.setText(item.getString("description"));
 
 
             WebView mWebView = (WebView) findViewById(R.id.web_view_article);
