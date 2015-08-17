@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -471,6 +472,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     class DownloadFileAsync extends AsyncTask<String, String, String> {
 
         private ProgressDialog mProgressDialog;
+        InputStream input;
+        OutputStream output;
 
         @Override
         protected void onPreExecute() {
@@ -501,8 +504,8 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 conexion.connect();
 
                 int lenghtOfFile = conexion.getContentLength();
-                InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream(sourceZipFile);
+                input = new BufferedInputStream(url.openStream());
+                output = new FileOutputStream(sourceZipFile);
                 byte data[] = new byte[1024];
                 long total = 0;
 
@@ -524,7 +527,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 input.close();
 
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
                 cancel(true);
             }
             return null;
@@ -547,6 +550,14 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
         @Override
         protected void onCancelled() {
+            try {
+                output.flush();
+                output.close();
+//                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 //            delete downloaded zip file on cancel:
             new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
             new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();

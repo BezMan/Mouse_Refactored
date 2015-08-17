@@ -1,13 +1,18 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.database.DBConstants;
 
 /**
  * Created by bez on 15/07/2015.
@@ -42,7 +47,6 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
 //        htmlContent.setMovementMethod(LinkMovementMethod.getInstance());
 
         WebView mWebView = (WebView) findViewById(R.id.web_view_article);
-
         WebSettings settings = mWebView.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
 
@@ -75,5 +79,71 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
 
 
 
+        mWebView.setWebViewClient(new WebViewClient() {
+            // you tell the webclient you want to catch when a url is about to load
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.wtf("url_clicked", url);
+
+                if (url.contains("CM.world_place")) {
+                    String first = url.substring(url.indexOf(",") + 1);
+                    String second = first.substring(first.indexOf(",") + 1);
+                    String third = second.substring(second.indexOf(",") + 1);
+
+                    myInstance.set_objId(third.substring(0, third.indexOf(",")));
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+                    bundle.putString(DBConstants.objId, myInstance.get_objId());
+
+                    Intent placeActivity = new Intent(getApplicationContext(), PlaceActivity.class);
+                    placeActivity.putExtras(bundle);
+                    startActivity(placeActivity);
+
+                    return true;
+                } else if (url.contains("CM.world_articles_item")) {
+                    String first = url.substring(url.indexOf(",") + 1);
+                    String second = first.substring(first.indexOf(",") + 1);
+                    String third = second.substring(second.indexOf(",") + 1);
+
+                    String article_obj = third.substring(0, third.indexOf(","));
+
+
+                    String articleContent = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
+
+                    if (articleContent != null) {
+                        Intent articleIntent = new Intent(getApplicationContext(), ArticleActivity.class);
+                        articleIntent.putExtra("articleData", articleContent);
+                        startActivity(articleIntent);
+                    } else {
+                        view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    }
+                } else if (url.contains("CM.city")) {
+
+                    String first = url.substring(url.indexOf(",") + 1);
+                    String cityId = first.substring(0, first.indexOf(","));
+
+                    if (cityId.equals(myInstance.get_cityId())) {
+                        Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
+                        activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activityIntent);
+                    } else {
+                        Intent activityIntent = new Intent(getApplicationContext(), MainGridActivity.class);
+                        activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Toast.makeText(getApplicationContext(), "בחר/הורד עיר", Toast.LENGTH_LONG).show();
+                        startActivity(activityIntent);
+                    }
+                } else {
+                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }
+
+                return true;
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                //on init load webView with html links//
+            }
+        });
     }
 }
