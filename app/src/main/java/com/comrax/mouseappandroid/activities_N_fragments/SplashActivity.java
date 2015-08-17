@@ -149,12 +149,12 @@ public class SplashActivity extends Activity {
 
                     //TODO: remove comments: //
 
-//                    if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
+                    if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
 //                        if new masterDate exists, we need to download it:
-//                        new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
-//                    } else {
+                        new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
+                    } else {
                         nextActivity();
-//                    }
+                    }
                 } else {
                     nextActivity();
                 }
