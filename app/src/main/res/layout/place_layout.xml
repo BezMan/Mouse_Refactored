@@ -210,15 +210,11 @@
                 android:visibility="gone"
                 />
 
-            <TextView
-                android:id="@+id/detailed_place_responses"
+            <LinearLayout
+                android:id="@+id/linear_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/White"
-                android:text="Large Text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:visibility="gone"
-                />
+                android:orientation="vertical" />
 
 
             <Button

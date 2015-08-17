@@ -1,6 +1,7 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,6 +32,10 @@ import com.comrax.mouseappandroid.http.RequestTask;
 import com.comrax.mouseappandroid.http.RequestTaskDelegate;
 import com.comrax.mouseappandroid.http.RequestTaskGet;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 
 /**
@@ -41,7 +47,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     TextView boneTextView, dareg;
 
     String imagePath, name, hebName, content, address, type,
-            phone, activityHours, publicTransportation, responses;
+            phone, activityHours, publicTransportation;
 
 
     Button b1, b2, b3, b4;
@@ -53,6 +59,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     Bundle bundle;
     Cursor cursor;
 
+    JSONArray jsonArray;
     @Override
     protected int getLayoutResourceId() {
         return R.layout.place_full_layout;
@@ -143,7 +150,11 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         phone = cursor.getString(cursor.getColumnIndex(DBConstants.phone));
         activityHours = cursor.getString(cursor.getColumnIndex(DBConstants.activityHours));
         publicTransportation = cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation));
-        responses = cursor.getString(cursor.getColumnIndex(DBConstants.responses));
+        try {
+            jsonArray = new JSONArray(cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         ImageView headImageView = (ImageView) findViewById(R.id.detailed_place_head_imageView);
@@ -346,7 +357,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         final TextView phoneView = (TextView) findViewById(R.id.detailed_place_phone_num);
         TextView activityHoursView = (TextView) findViewById(R.id.detailed_place_activity_hours);
         TextView publicTransportationView = (TextView) findViewById(R.id.detailed_place_public_transportation);
-        TextView responsesView = (TextView) findViewById(R.id.detailed_place_responses);
+//        TextView responsesView = (TextView) findViewById(R.id.detailed_place_responses);
 
 
         if (phone.length() > 8) {
@@ -379,13 +390,72 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         }
 
-        if (!responses.equals("[]")) {
-            responsesTitle.setVisibility(View.VISIBLE);
-            responsesView.setVisibility(View.VISIBLE);
-            responsesView.setText(responses);
+//        if (!responses.equals("[]")) {
+//            responsesTitle.setVisibility(View.VISIBLE);
+//            responsesView.setVisibility(View.VISIBLE);
+//            responsesView.setText(responses);
+//
+//        }
 
+        if (jsonArray.length() > 0) {
+
+//            TextView responsesTitle = (TextView)findViewById(R.id.detailed_article_responses_title);
+            responsesTitle.setVisibility(View.VISIBLE);
+
+            LinearLayout mLinearListView = (LinearLayout) findViewById(R.id.linear_listview);
+            /***
+             * adding item into listview
+             */
+            for (int i = 0; i < jsonArray.length(); i++) {
+                /**
+                 * inflate items/ add items in linear layout instead of listview
+                 */
+                LayoutInflater inflater = null;
+                inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View mLinearView = inflater.inflate(R.layout.response_item_layout, null);
+                /**
+                 * getting id of response_item_layout.xml
+                 */
+                TextView mFirstNameView = (TextView) mLinearView.findViewById(R.id.response_message);
+                TextView namePlusDateView = (TextView) mLinearView.findViewById(R.id.response_namePlusDate);
+
+                /**
+                 * set item into row
+                 */
+                try {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    final String message = jsonObject.getString("message");
+                    final String userName = jsonObject.getString("userName");
+                    final String date = jsonObject.getString("date");
+                    mFirstNameView.setText(message);
+                    namePlusDateView.setText(userName + " " + date);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                /**
+                 * add view in top linear
+                 */
+
+                mLinearListView.addView(mLinearView);
+            }
         }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private void setFooterAd() {
