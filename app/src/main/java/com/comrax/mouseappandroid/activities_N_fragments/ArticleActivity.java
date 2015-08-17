@@ -1,6 +1,7 @@
 package com.comrax.mouseappandroid.activities_N_fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.database.DBConstants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,8 +71,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 topImage.setImageBitmap(bitmap);
-            }
-            else{
+            } else {
                 topImage.setVisibility(View.GONE);
             }
 
@@ -77,6 +80,53 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             dateAndCredit.setText(urlContent.getString("dateAndCredit"));
             description.setText(urlContent.getString("description"));
 
+            JSONArray jsonArray = new JSONArray(urlContent.getString("responses"));
+
+
+            if (jsonArray.length() > 0) {
+
+                TextView responsesTitle = (TextView)findViewById(R.id.detailed_article_responses_title);
+                responsesTitle.setVisibility(View.VISIBLE);
+
+                LinearLayout mLinearListView = (LinearLayout) findViewById(R.id.linear_listview);
+                /***
+                 * adding item into listview
+                 */
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    /**
+                     * inflate items/ add items in linear layout instead of listview
+                     */
+                    LayoutInflater inflater = null;
+                    inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View mLinearView = inflater.inflate(R.layout.response_item_layout, null);
+                    /**
+                     * getting id of response_item_layout.xml
+                     */
+                    TextView mFirstNameView = (TextView) mLinearView.findViewById(R.id.response_message);
+                    TextView namePlusDateView = (TextView) mLinearView.findViewById(R.id.response_namePlusDate);
+
+                    /**
+                     * set item into row
+                     */
+                    try {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        final String message = jsonObject.getString("message");
+                        final String userName = jsonObject.getString("userName");
+                        final String date = jsonObject.getString("date");
+                        mFirstNameView.setText(message);
+                        namePlusDateView.setText(userName + " " + date);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    /**
+                     * add view in top linear
+                     */
+
+                    mLinearListView.addView(mLinearView);
+                }
+            }
 
             WebView mWebView = (WebView) findViewById(R.id.web_view_article);
 //            mWebView.getSettings().setAllowFileAccess(true);
@@ -116,15 +166,13 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             mWebView.loadDataWithBaseURL("", sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
 
 
-
-
-            mWebView.setWebViewClient(new WebViewClient(){
+            mWebView.setWebViewClient(new WebViewClient() {
                 // you tell the webclient you want to catch when a url is about to load
                 @Override
-                public boolean shouldOverrideUrlLoading(WebView  view, String  url){
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     Log.wtf("url_clicked", url);
 
-                    if(url.contains("CM.world_place")){
+                    if (url.contains("CM.world_place")) {
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
                         String third = second.substring(second.indexOf(",") + 1);
@@ -140,45 +188,39 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                         startActivity(placeActivity);
 
                         return true;
-                    }
-                    else if(url.contains("CM.world_articles_item")){
+                    } else if (url.contains("CM.world_articles_item")) {
                         String first = url.substring(url.indexOf(",") + 1);
                         String second = first.substring(first.indexOf(",") + 1);
                         String third = second.substring(second.indexOf(",") + 1);
 
-                        String article_obj = third.substring(0,third.indexOf(","));
+                        String article_obj = third.substring(0, third.indexOf(","));
 
 
                         String articleContent = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
 
-                        if(articleContent!=null) {
+                        if (articleContent != null) {
                             Intent articleIntent = new Intent(getApplicationContext(), ArticleActivity.class);
                             articleIntent.putExtra("articleData", articleContent);
                             startActivity(articleIntent);
-                        }
-                        else{
+                        } else {
                             view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                         }
-                    }
-                    else if(url.contains("CM.city")) {
+                    } else if (url.contains("CM.city")) {
 
                         String first = url.substring(url.indexOf(",") + 1);
-                        String cityId = first.substring(0,first.indexOf(","));
+                        String cityId = first.substring(0, first.indexOf(","));
 
-                        if(cityId.equals(myInstance.get_cityId())){
+                        if (cityId.equals(myInstance.get_cityId())) {
                             Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
                             activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(activityIntent);
-                        }
-                        else{
+                        } else {
                             Intent activityIntent = new Intent(getApplicationContext(), MainGridActivity.class);
                             activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             Toast.makeText(getApplicationContext(), "בחר/הורד עיר", Toast.LENGTH_LONG).show();
                             startActivity(activityIntent);
                         }
-                    }
-
-                    else{
+                    } else {
                         view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     }
 
@@ -186,7 +228,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                 }
 
                 @Override
-                public void onLoadResource(WebView  view, String  url){
+                public void onLoadResource(WebView view, String url) {
                     //on init load webView with html links//
                 }
             });

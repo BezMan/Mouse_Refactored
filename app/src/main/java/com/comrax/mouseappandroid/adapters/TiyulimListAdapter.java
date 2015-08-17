@@ -2,7 +2,6 @@ package com.comrax.mouseappandroid.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -32,17 +31,15 @@ public class TiyulimListAdapter extends BaseAdapter {
      */
     private Activity _activity;
     private JSONArray _jsonArray;
-    private Resources _resources;
 
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public TiyulimListAdapter(Activity activity, JSONArray jsonArray, Resources resLocal) {
+    public TiyulimListAdapter(Activity activity, JSONArray jsonArray) {
 
         /********** Take passed values **********/
         _activity = activity;
         _jsonArray = jsonArray;
-        _resources = resLocal;
 
         /***********  Layout inflator to call external xml layout () **********************/
         inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

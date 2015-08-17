@@ -78,6 +78,27 @@
                         android:layout_margin="4dp"/>
 
 
+
+
+                    <TextView
+                        android:id="@+id/detailed_article_responses_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Gray"
+                        android:paddingRight="10dp"
+                        android:text="תגובות גולשים"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/White"
+                        android:visibility="gone"
+                        android:layout_margin="10dp"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/linear_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
                     <include layout="@layout/article_footer" />
                 </LinearLayout>
 
