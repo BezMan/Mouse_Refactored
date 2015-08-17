@@ -47,8 +47,8 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.title + " TEXT, "
                 + DBConstants.image + " TEXT, "
-                + DBConstants.urlContent + " TEXT, "
-                + DBConstants.url + " TEXT " + ");";
+//                + DBConstants.url + " TEXT, "
+                + DBConstants.urlContent + " TEXT " + ");";
 
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
@@ -71,7 +71,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.rating + " REAL, "
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.type + " TEXT, "
-                + DBConstants.urlString + " TEXT, "
+//                + DBConstants.urlString + " TEXT, "
                 + DBConstants.image + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.activityHours + " TEXT, "
@@ -176,7 +176,7 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-            values.put(DBConstants.url, item.getString(DBConstants.url));
+//            values.put(DBConstants.url, item.getString(DBConstants.url));
             values.put(DBConstants.title, item.getString(DBConstants.title));
             values.put(DBConstants.menuItemId, item.getString(DBConstants.menuItemId));
             values.put(DBConstants.image, item.getString(DBConstants.image));
@@ -207,7 +207,7 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-            values.put(DBConstants.urlString, item.getString(DBConstants.urlString));
+//            values.put(DBConstants.urlString, item.getString(DBConstants.urlString));
             values.put(DBConstants.description, item.getString(DBConstants.description));
             values.put(DBConstants.address, item.getString(DBConstants.address));
             values.put(DBConstants.phone, item.getString(DBConstants.phone));
