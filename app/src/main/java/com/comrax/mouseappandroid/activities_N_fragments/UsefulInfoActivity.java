@@ -3,7 +3,6 @@ package com.comrax.mouseappandroid.activities_N_fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -50,7 +49,7 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
         WebSettings settings = mWebView.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
 
-        String formattedContent = Html.fromHtml((String) content).toString();
+//        String formattedContent = Html.fromHtml((String) content).toString();
         StringBuilder sb = new StringBuilder();
         sb.append("<!doctype html><html><head>");
         sb.append("<meta charset='utf-8'>");
@@ -64,7 +63,7 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
                 "<script>function onLoad(){document.getElementsByTagName('iframe')[0].setAttribute('width', '304');window.scrollTo(window.innerWidth, 0)}</script>\n" +
                 "</head>");
 
-        String html = String.format("<body>%s</body></html>", formattedContent);
+        String html = String.format("<body>%s</body></html>", content);
 
         String str = myInstance.get_cityFolderName() + "/Images/";
 
@@ -79,13 +78,14 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
 
 
 
-        mWebView.setWebViewClient(new WebViewClient() {
+
+        mWebView.setWebViewClient(new WebViewClient(){
             // you tell the webclient you want to catch when a url is about to load
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            public boolean shouldOverrideUrlLoading(WebView  view, String  url){
                 Log.wtf("url_clicked", url);
 
-                if (url.contains("CM.world_place")) {
+                if(url.contains("CM.world_place")){
                     String first = url.substring(url.indexOf(",") + 1);
                     String second = first.substring(first.indexOf(",") + 1);
                     String third = second.substring(second.indexOf(",") + 1);
@@ -101,39 +101,45 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
                     startActivity(placeActivity);
 
                     return true;
-                } else if (url.contains("CM.world_articles_item")) {
+                }
+                else if(url.contains("CM.world_articles_item")){
                     String first = url.substring(url.indexOf(",") + 1);
                     String second = first.substring(first.indexOf(",") + 1);
                     String third = second.substring(second.indexOf(",") + 1);
 
-                    String article_obj = third.substring(0, third.indexOf(","));
+                    String article_obj = third.substring(0,third.indexOf(","));
 
 
                     String articleContent = dbTools.getCellData(DBConstants.ARTICLE_TABLE_NAME, DBConstants.urlContent, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, article_obj);
 
-                    if (articleContent != null) {
+                    if(articleContent!=null) {
                         Intent articleIntent = new Intent(getApplicationContext(), ArticleActivity.class);
                         articleIntent.putExtra("articleData", articleContent);
                         startActivity(articleIntent);
-                    } else {
+                    }
+                    else{
                         view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     }
-                } else if (url.contains("CM.city")) {
+                }
+                else if(url.contains("CM.city")) {
 
                     String first = url.substring(url.indexOf(",") + 1);
-                    String cityId = first.substring(0, first.indexOf(","));
+                    String cityId = first.substring(0,first.indexOf(","));
 
-                    if (cityId.equals(myInstance.get_cityId())) {
+                    if(cityId.equals(myInstance.get_cityId())){
                         Intent activityIntent = new Intent(getApplicationContext(), Detail_City_Activity.class);
                         activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(activityIntent);
-                    } else {
+                    }
+                    else{
                         Intent activityIntent = new Intent(getApplicationContext(), MainGridActivity.class);
                         activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         Toast.makeText(getApplicationContext(), "בחר/הורד עיר", Toast.LENGTH_LONG).show();
                         startActivity(activityIntent);
                     }
-                } else {
+                }
+
+                else{
                     view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 }
 
@@ -141,7 +147,7 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
             }
 
             @Override
-            public void onLoadResource(WebView view, String url) {
+            public void onLoadResource(WebView  view, String  url){
                 //on init load webView with html links//
             }
         });

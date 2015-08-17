@@ -40,7 +40,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     int myRating;
     TextView boneTextView, dareg;
 
-    String imagePath, name, hebName, description, address, type,
+    String imagePath, name, hebName, content, address, type,
             phone, activityHours, publicTransportation, responses;
 
 
@@ -137,7 +137,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         imagePath = cursor.getString(cursor.getColumnIndex(DBConstants.image));
         name = cursor.getString(cursor.getColumnIndex(DBConstants.name));
         hebName = cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName));
-        description = cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody));
+        content = cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody));
         address = cursor.getString(cursor.getColumnIndex(DBConstants.address));
         type = cursor.getString(cursor.getColumnIndex(DBConstants.type));
         phone = cursor.getString(cursor.getColumnIndex(DBConstants.phone));
@@ -177,7 +177,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         settings.setDefaultTextEncodingName("utf-8");
 
 
-        String formattedContent = Html.fromHtml((String) description).toString();
+        String formattedContent = Html.fromHtml((String) content).toString();
         StringBuilder sb = new StringBuilder();
         sb.append("<!doctype html><html><head>");
         sb.append("<meta charset='utf-8'>");
