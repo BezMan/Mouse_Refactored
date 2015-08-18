@@ -161,7 +161,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
 
         File file = new File(myInstance.get_cityFolderName() + "/" + imagePath);
-        if (file.exists()) {
+        if ( !imagePath.equals("") && file.exists()) {
             headImageView.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             headImageView.setImageBitmap(bitmap);
