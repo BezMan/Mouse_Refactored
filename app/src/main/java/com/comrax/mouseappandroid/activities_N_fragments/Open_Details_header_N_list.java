@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -597,10 +596,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
 
         //emulator vs device check//
-        if (Build.BRAND.compareTo("generic") != 0) {
+//        if (Build.BRAND.compareTo("generic") != 0) {
             LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
-        }
+//        }
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 

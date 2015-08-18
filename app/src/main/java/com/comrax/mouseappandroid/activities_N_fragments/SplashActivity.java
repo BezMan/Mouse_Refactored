@@ -147,8 +147,6 @@ public class SplashActivity extends Activity {
                     JSONObject masterItem = (JSONObject) files.get(0);
                     String masterDate = masterItem.getString("Update_date");
 
-                    //TODO: remove comments: //
-
                     if (!GlobalVars.initDataModelArrayList.get(0).getUpdate_date().equals(masterDate)) {
 //                        if new masterDate exists, we need to download it:
                         new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());

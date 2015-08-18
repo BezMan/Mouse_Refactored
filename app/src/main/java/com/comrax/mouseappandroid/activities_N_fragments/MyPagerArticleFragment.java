@@ -63,7 +63,7 @@ public class MyPagerArticleFragment extends Fragment {
                 imageText.setImageBitmap(bitmap);
             }
 
-            v.setOnClickListener(new OnPagerItemClicked(jsonObject.toString()));
+            v.setOnClickListener(new OnPagerItemClicked(jsonObject.toString(), image));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -74,11 +74,11 @@ public class MyPagerArticleFragment extends Fragment {
 
 
     private class OnPagerItemClicked implements View.OnClickListener {
-        String mUrlContent;
+        String mUrlContent, mImage;
 
-        public OnPagerItemClicked(String urlContent) {
-
+        public OnPagerItemClicked(String urlContent, String image) {
             mUrlContent=urlContent;
+            mImage=image;
         }
 
         @Override
@@ -86,6 +86,7 @@ public class MyPagerArticleFragment extends Fragment {
 
             Intent articleIntent = new Intent(getActivity(), ArticleActivity.class);
             articleIntent.putExtra("articleData", mUrlContent);
+            articleIntent.putExtra("articleImage", mImage);
             startActivity(articleIntent);
 
         }

@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/detailed_place_prefs_button"

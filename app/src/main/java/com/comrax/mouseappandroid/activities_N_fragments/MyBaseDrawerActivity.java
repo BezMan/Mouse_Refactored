@@ -89,9 +89,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
     protected void setupTextView(String text) {
         appBarTextView = (TextView) findViewById(R.id.title_text);
-
-//        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/dorianclm-book-webfont.ttf");
-//        appBarTextView.setTypeface(myFont);
         appBarTextView.setText(text);
     }
 
@@ -383,9 +380,10 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
          */
         @Override
         public String convertToString(Cursor cursor) {
-            final int columnIndex = cursor.getColumnIndexOrThrow(DBConstants.id);
-            final String str = cursor.getString(columnIndex);
-            return str;
+            return itemDescriptionView.getText().toString();
+//            final int columnIndex = cursor.getColumnIndexOrThrow(DBConstants.id);
+//            final String str = cursor.getString(columnIndex);
+//            return str;
         }
 
         /**
@@ -410,11 +408,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
 
             } else {
 
-                final int itemColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
-                final int descColumnIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
+                final int HebItemIndex = cursor.getColumnIndexOrThrow(DBConstants.hebrewName);
+                final int EngItemIndex = cursor.getColumnIndexOrThrow(DBConstants.name);
                 text1 = (TextView) view.findViewById(R.id.search_hebText);
-                text1.setText(cursor.getString(itemColumnIndex));
-                text2.setText(cursor.getString(descColumnIndex));
+                text1.setText(cursor.getString(HebItemIndex));
+                text2.setText(cursor.getString(EngItemIndex));
             }
         }
 
@@ -454,7 +452,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
                 placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
 
-                itemDescriptionView.setText("");
+//                itemDescriptionView.setText("");
             }
 
         }

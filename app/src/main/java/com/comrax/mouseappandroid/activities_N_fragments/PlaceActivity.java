@@ -162,6 +162,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         File file = new File(myInstance.get_cityFolderName() + "/" + imagePath);
         if (file.exists()) {
+            headImageView.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             headImageView.setImageBitmap(bitmap);
         }
@@ -390,16 +391,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         }
 
-//        if (!responses.equals("[]")) {
-//            responsesTitle.setVisibility(View.VISIBLE);
-//            responsesView.setVisibility(View.VISIBLE);
-//            responsesView.setText(responses);
-//
-//        }
-
         if (jsonArray.length() > 0) {
 
-//            TextView responsesTitle = (TextView)findViewById(R.id.detailed_article_responses_title);
             responsesTitle.setVisibility(View.VISIBLE);
 
             LinearLayout mLinearListView = (LinearLayout) findViewById(R.id.linear_listview);

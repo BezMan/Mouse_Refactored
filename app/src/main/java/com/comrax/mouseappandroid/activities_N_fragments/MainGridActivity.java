@@ -541,7 +541,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
         @Override
         protected void onPostExecute(String unused) {
             if(isUpdate) {
-                dbTools.deleteWholeCity(updatedCity.getId());
+                dbTools.deleteWholeCityLeaveFavorites(updatedCity.getId());
             }
             mProgressDialog.dismiss();
             new SavingFilesAsync().execute();

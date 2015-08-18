@@ -7,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.util.Log;
 
 import com.comrax.mouseappandroid.app.App;
@@ -20,9 +19,9 @@ public class DBTools extends SQLiteOpenHelper {
     //TODO: change back to internal!
 
         //internal:
-//        public static final String DATABASE_NAME = "mouseAppData.db";
-        //external:
-        public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
+        public static final String DATABASE_NAME = "mouseAppData.db";
+//        external:
+//        public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -400,6 +399,12 @@ public class DBTools extends SQLiteOpenHelper {
         deleteRow(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId);
         deleteRow(DBConstants.ARTICLE_TABLE_NAME, DBConstants.cityId, cityId);
         deleteRow(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, cityId);
+    }
+
+    public void deleteWholeCityLeaveFavorites(String cityId) {
+        deleteRow(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, cityId);
+        deleteRow(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId);
+        deleteRow(DBConstants.ARTICLE_TABLE_NAME, DBConstants.cityId, cityId);
     }
 
 
