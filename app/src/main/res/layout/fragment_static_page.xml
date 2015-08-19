@@ -8,7 +8,6 @@
         android:id="@+id/layout_container"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
-        <!--you can put your existing views of your current xml here, so yes your entire xml is now inside this FrameLayout -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,9 +27,7 @@
             <WebView
                 android:id="@+id/web_view_static"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="mainTxt"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </FrameLayout>

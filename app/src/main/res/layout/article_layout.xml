@@ -74,7 +74,6 @@
                         android:id="@+id/web_view_article"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         />
 
 
