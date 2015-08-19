@@ -49,9 +49,9 @@ public class StaticPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView title = (TextView)getActivity().findViewById(R.id.static_page_title);
-        WebView mainTxtView = (WebView)getActivity().findViewById(R.id.web_view_static);
+        WebView mWebView = (WebView)getActivity().findViewById(R.id.web_view_static);
 
-        WebSettings settings = mainTxtView.getSettings();
+        WebSettings settings = mWebView.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
 
         try {
@@ -76,9 +76,9 @@ public class StaticPageFragment extends Fragment {
             String html = String.format("<body>%s</body></html>", formattedContent);
             sb.append(html);
 
-            mainTxtView.loadDataWithBaseURL(null, sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
-        }
-        catch (JSONException e) {
+            mWebView.loadDataWithBaseURL(null, sb.toString(), null, "UTF-8", null);
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

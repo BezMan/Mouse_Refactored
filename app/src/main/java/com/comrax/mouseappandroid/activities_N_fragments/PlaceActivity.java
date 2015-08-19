@@ -207,7 +207,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
         sb.append(html);
 
-        mWebView.loadDataWithBaseURL("", sb.toString(), "text/html; charset=utf-8", "UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, sb.toString(), null, "UTF-8", null);
 
 
 
