@@ -16,7 +16,7 @@ import android.widget.ListView;
  * indicator.
  */
 public class AmazingListView extends ListView implements AmazingAdapter.HasMorePagesListener {
-	public static final String TAG = AmazingListView.class.getSimpleName();
+//	public static final String TAG = AmazingListView.class.getSimpleName();
 	
 	View listFooter;
 	boolean footerViewAttached = false;

@@ -5,14 +5,17 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -434,9 +437,18 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     private void setStikkyHeader() {
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frame_layout);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+//        int width = size.x;
+//        int height = size.y;
+
+//        Log.wtf("size: " , " width: " + size.x + " height: " + size.y);
+
         StikkyHeaderBuilder.stickTo(mListView)
                 .setHeader(R.id.header, frameLayout)
-                .minHeightHeader(160)
+//                .minHeightHeader(160)
+                .minHeightHeader(size.y / 8)
                 .build();
     }
 
@@ -596,10 +608,10 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         String cityLon = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.centerCoordinateLon, DBConstants.cityId, myInstance.get_cityId());
 
         //emulator vs device check//
-//        if (Build.BRAND.compareTo("generic") != 0) {
+        if (Build.BRAND.compareTo("generic") != 0) {
             LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
-//        }
+        }
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 

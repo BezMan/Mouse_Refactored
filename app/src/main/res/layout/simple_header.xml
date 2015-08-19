@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="585px"
+    android:layout_height="292dp"
     android:orientation="vertical">
 
 
@@ -17,7 +17,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="420px" />
+            android:layout_height="210dp" />
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/titles"
@@ -42,7 +42,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <RadioGroup
@@ -122,7 +122,7 @@
             <TextView
                 android:id="@+id/txtResultsCount"
                 android:layout_width="match_parent"
-                android:layout_height="60px"
+                android:layout_height="30dp"
                 android:gravity="center_vertical"
                 android:paddingRight="10dp"
                 android:text="התקבלו"
@@ -132,7 +132,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2px"
+                android:layout_height="1dp"
                 android:background="@color/Black" />
         </LinearLayout>
 

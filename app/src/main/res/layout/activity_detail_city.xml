@@ -56,7 +56,7 @@
                         <View
                             android:id="@+id/blackLine"
                             android:layout_width="match_parent"
-                            android:layout_height="5px"
+                            android:layout_height="2dp"
                             android:layout_below="@+id/map"
                             android:background="@color/Black">
 
