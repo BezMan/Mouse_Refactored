@@ -20,7 +20,7 @@
                 android:id="@+id/static_page_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Χ›Χ•ΧªΧ¨Χª"
+                android:text="λεϊψϊ"
                 android:padding="10dp"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
