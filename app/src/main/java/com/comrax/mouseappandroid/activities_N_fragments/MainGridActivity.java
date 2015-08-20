@@ -434,7 +434,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                                     if (isNetworkOnline()) {
                                         dialog.dismiss();
                                         updatedCity = tempValues;
-//                                dbTools.deleteWholeCity(tempValues.getId());
                                         isUpdate = true;
                                         new DownloadFileAsync().execute(filePath, updateDate);
 
