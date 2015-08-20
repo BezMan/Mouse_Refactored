@@ -64,14 +64,11 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private ArrayList<MapMarkerModel> markerArray;
 
-    String[] icon = {"hotel","shop", "rest", "tour"};
-
     List<Marker> markers = new ArrayList<>();
 
     Marker currentMarker;
     String prevIcon;
 
-    int pos;
     boolean setMap;
 
     public void mapButtonClicked(View v) {
@@ -191,7 +188,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                         .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
-                String currentIcon = icon[mapItem.getBoneCategoryId()-1];
+                String currentIcon = GlobalVars.icon[mapItem.getBoneCategoryId()-1];
 
                 marker.setIcon((BitmapDescriptorFactory
                         .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon + "_blank", null, null))));
@@ -210,8 +207,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 int currIndex = markers.indexOf(marker);
                 int currBoneId = markerArray.get(currIndex).getBoneCategoryId();
 
-//                String currentIcon = getIconByBoneId(currBoneId);
-                String currentIcon = icon[currBoneId-1];
+                String currentIcon = GlobalVars.icon[currBoneId-1];
 
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
@@ -258,9 +254,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-//                myInstance.setBonePosition(pos);
-
-
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 

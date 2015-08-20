@@ -29,14 +29,14 @@ public class OpenDetailsCustomAdapter extends BaseAdapter {
     /**
      * ******** Declare Used Variables ********
      */
-    private Activity _activity;
+    private OpenDetailsAdapterInterface _activity;
     private ArrayList _listModelList;
     private Resources _resources;
 
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public OpenDetailsCustomAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    public OpenDetailsCustomAdapter(OpenDetailsAdapterInterface activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
@@ -44,7 +44,7 @@ public class OpenDetailsCustomAdapter extends BaseAdapter {
         _resources = resLocal;
 
         /***********  Layout inflator to call external xml layout () **********************/
-        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) ((Activity)_activity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -192,5 +192,10 @@ public class OpenDetailsCustomAdapter extends BaseAdapter {
             myActivity.onNavigationClick();
 
         }
+    }
+
+    public interface OpenDetailsAdapterInterface{
+        void onNavigationClick();
+        void onPlaceItemClick();
     }
 }

@@ -15,7 +15,7 @@ import org.json.JSONObject;
 /**
  * Created by bez on 14/07/2015.
  */
-public class TiyulimActivity extends MyBaseDrawerActivity{
+public class TiyulimActivity extends MyBaseDrawerActivity implements TiyulimListAdapter.TiyulimAdapterInterface{
 
     ListView listView;
     TiyulimListAdapter adapter;
@@ -50,6 +50,7 @@ public class TiyulimActivity extends MyBaseDrawerActivity{
     }
 
 
+    @Override
     public void onTiyulimItemClicked(JSONObject item) {
         Intent articleIntent = new Intent(this, ArticleActivity.class);
         articleIntent.putExtra("articleData", item.toString());

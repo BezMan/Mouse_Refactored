@@ -61,14 +61,13 @@ import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 /**
  * Created by bez on 07/06/2015.
  */
-public class Open_Details_header_N_list extends MyBaseDrawerActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class Open_Details_header_N_list extends MyBaseDrawerActivity implements OpenDetailsCustomAdapter.OpenDetailsAdapterInterface, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
     TextView boneText;
     Cursor cursor;
     private SlidingLayer mSlidingLayer;
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
-    String[] icon = {"hotel", "shop", "rest", "tour"};
     List<Marker> markers = new ArrayList<>();
     Marker currentMarker;
     String prevIcon;
@@ -104,11 +103,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
      */
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-
-    // Keys for storing activity state in the Bundle.
-    protected final static String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates-key";
-    protected final static String LOCATION_KEY = "location-key";
-    protected final static String LAST_UPDATED_TIME_STRING_KEY = "last-updated-time-string-key";
 
     /**
      * Provides the entry point to Google Play services.
@@ -156,8 +150,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
         setupInitCityMap();
 
-//        customListViewValuesArr = new ArrayList<>();
-
         setRadioGroupFilter();
 
         String data = myInstance.get_cityFolderName() + "/" + myInstance.get_cityId() + "_" + myInstance.get_boneId() + "_ArticalsList.json";
@@ -173,15 +165,12 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         adapter = new OpenDetailsCustomAdapter(this, customListViewValuesArr, getResources());
         mListView.setAdapter(adapter);
 
-        //        if(sp gpsNotification=null)
         toggleGPS();
 
         mRequestingLocationUpdates = true;
         mLastUpdateTime = "";
 
-
-        // Kick off the process of building a GoogleApiClient and requesting the LocationServices
-        // API.
+        // Kick off the process of building a GoogleApiClient and requesting the LocationServices API.
         buildGoogleApiClient();
 
 
@@ -668,7 +657,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                         .position(new LatLng(Double.parseDouble(itemLatitude), Double.parseDouble(itemLongitude)))
                         .title(mapItem.getPlaceName()));
 
-                String currentIcon = icon[mapItem.getBoneCategoryId()-1];
+                String currentIcon = GlobalVars.icon[mapItem.getBoneCategoryId()-1];
 
                 marker.setIcon((BitmapDescriptorFactory
                         .fromResource(getResources().getIdentifier("com.comrax.mouseappandroid:drawable/" + "pin_" + currentIcon + "_blank", null, null))));
@@ -687,8 +676,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 int currIndex = markers.indexOf(marker);
                 int currBoneId = markerArray.get(currIndex).getBoneCategoryId();
 
-//                String currentIcon = getIconByBoneId(currBoneId);
-                String currentIcon = icon[currBoneId-1];
+                String currentIcon = GlobalVars.icon[currBoneId-1];
 
                 if (currentMarker != null) {
                     currentMarker.setIcon(BitmapDescriptorFactory
@@ -733,8 +721,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 Bundle bundle = new Bundle();
                 bundle.putString(DBConstants.cityId, myInstance.get_cityId());
                 bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-//                myInstance.setBonePosition(pos);
 
                 Log.wtf("pos:", " " + pos);
 
@@ -782,6 +770,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
+    @Override
     public void onPlaceItemClick() {
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
@@ -794,11 +783,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     }
 
 
+    @Override
     public void onNavigationClick() {
-
-        //tel aviv test coord:
-//        String latitude = "32.111767";
-//        String longitude = "34.801361";
 
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 

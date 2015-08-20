@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.TiyulimActivity;
 import com.comrax.mouseappandroid.app.App;
 
 import org.json.JSONArray;
@@ -29,20 +28,20 @@ public class TiyulimListAdapter extends BaseAdapter {
     /**
      * ******** Declare Used Variables ********
      */
-    private Activity _activity;
+    private TiyulimAdapterInterface _activity;
     private JSONArray _jsonArray;
 
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public TiyulimListAdapter(Activity activity, JSONArray jsonArray) {
+    public TiyulimListAdapter(TiyulimAdapterInterface activity, JSONArray jsonArray) {
 
         /********** Take passed values **********/
         _activity = activity;
         _jsonArray = jsonArray;
 
         /***********  Layout inflator to call external xml layout () **********************/
-        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) ((Activity)_activity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -123,14 +122,18 @@ public class TiyulimListAdapter extends BaseAdapter {
             try {
                 JSONObject urlContent = _jsonArray.getJSONObject(mPosition).getJSONObject("urlContent");
 
-
-                TiyulimActivity myActivity = (TiyulimActivity) _activity;
-                myActivity.onTiyulimItemClicked(urlContent);
+                _activity.onTiyulimItemClicked(urlContent);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    public interface TiyulimAdapterInterface{
+        void onTiyulimItemClicked(JSONObject jsonObject);
     }
 
 }
