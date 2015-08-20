@@ -296,7 +296,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT " + colName + " FROM " + TableName + " WHERE " + colName + "=?" ;
+        String sql = "SELECT * FROM " + TableName + " WHERE " + colName + "=?" ;
         Cursor cursor = database.rawQuery(sql, new String[]{rowValue});
 
         return cursor.getCount() > 0;

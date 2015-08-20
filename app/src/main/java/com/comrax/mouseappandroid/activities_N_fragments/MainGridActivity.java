@@ -51,7 +51,7 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
 public class MainGridActivity extends MyBaseDrawerActivity {
 
     GridViewWithHeaderAndFooter gridView;
-    public ArrayList<CitiesModel> CitiesArray = new ArrayList<>();
+    public ArrayList<CitiesModel> CitiesArray;
     public static ArrayList<BannersModel> BannersArray;
     CitiesAdapter citiesAdapter;
 
@@ -60,12 +60,12 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     ImageView image1, image2, image3, image4;
     LinearLayout layout1, layout2, layout3, layout4;
 
-    int existingCityCounter = 0;
+    int existingCityCounter;
 
     String fileName, updateDate;
     File sourceZipFile, destinationFolder;
 
-    ArrayList<Pair<String, String>> boneId_boneName = new ArrayList<>();
+    ArrayList<Pair<String, String>> boneId_boneName;
 
     CitiesModel updatedCity;
     boolean isUpdate;
@@ -85,13 +85,9 @@ public class MainGridActivity extends MyBaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        GlobalVars.detailMenuItems = new ArrayList<>();
         initVarsAndHeaders();
 
-        String str = GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json");
-        saveStaticPages(HelperMethods.loadJsonDataFromFile(str));
-
+        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json")));
         setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/banners.json")));
         setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/cities.json")));
 
@@ -152,6 +148,12 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
 
     private void initVarsAndHeaders() {
+
+        existingCityCounter = 0;
+        CitiesArray = new ArrayList<>();
+        GlobalVars.detailMenuItems = new ArrayList<>();
+        boneId_boneName = new ArrayList<>();
+
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         gridView = (GridViewWithHeaderAndFooter) findViewById(R.id.main_grid);
         bannerLayout = layoutInflater.inflate(R.layout.banner_layout, null);
@@ -249,7 +251,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
                 cityItem.setName(name);
 
                 //order the cities//
-                boolean cityExists = dbTools.isDataAlreadyInDB(DBConstants.CITY_TABLE_NAME, "cityId", cityItem.getId());
+                boolean cityExists = dbTools.isDataAlreadyInDB(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, cityItem.getId());
                 if (!cityExists) {
                     CitiesArray.add(CitiesArray.size(), cityItem);
                 } else {
