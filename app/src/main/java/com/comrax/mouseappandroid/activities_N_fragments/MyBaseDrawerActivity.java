@@ -36,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public abstract class MyBaseDrawerActivity extends AppCompatActivity {
+public abstract class MyBaseDrawerActivity extends AppCompatActivity implements CustomGlobalNavDrawerAdapter.DrawerAdapterInterface{
 
     private AutoCompleteTextView itemDescriptionView;
 
@@ -177,7 +177,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawers();
     }
 
-
+    @Override
     public void onNavDrawerItemClick(int mPosition) {
 
         if (mPosition == 0) {

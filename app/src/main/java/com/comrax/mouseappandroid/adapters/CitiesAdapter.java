@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.MainGridActivity;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.model.CitiesModel;
 
@@ -31,7 +30,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
     /**
      * ******** Declare Used Variables ********
      */
-    private Activity _activity;
+    private CitiesAdapterInterface _activity;
     private ArrayList _listModelList;
     private int _existingCityCounter;
     private Resources _resources;
@@ -39,7 +38,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
     /* **********  CustomAdapter Constructor ****************
     */
-    public CitiesAdapter(Activity activity, ArrayList arrayList, int existingCityCounter, Resources resLocal) {
+    public CitiesAdapter(CitiesAdapterInterface activity, ArrayList arrayList, int existingCityCounter, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
@@ -49,7 +48,7 @@ public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener
 
 
         /***********  Layout inflator to call external xml layout () **********************/
-        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) ((Activity)_activity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -129,7 +128,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
             /************  Set Model values in Holder elements ***********/
             holder.nameCity.setText(tempValues.getName());
 
-            File file = new File(GlobalVars.trialMethod(_activity.getApplicationContext(), "Default_master/" + tempValues.getImage()));
+            File file = new File(GlobalVars.trialMethod(((Activity) _activity).getApplicationContext(), "Default_master/" + tempValues.getImage()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 holder.imageCity.setImageBitmap(bitmap);
@@ -165,8 +164,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
 
         @Override
         public void onClick(View arg0) {
-            MainGridActivity cla = (MainGridActivity) _activity;
-            cla.onCityItemClick(mPosition);
+            _activity.onCityItemClick(mPosition);
         }
     }
 
@@ -180,8 +178,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
 
         @Override
         public boolean onLongClick(View v) {
-            MainGridActivity cla = (MainGridActivity) _activity;
-            cla.onLongCityItemClick(mPosition);
+            _activity.onLongCityItemClick(mPosition);
             return true;
         }
 
@@ -190,5 +187,11 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
 
         }
     }
+
+    public interface CitiesAdapterInterface{
+        void onCityItemClick(int position);
+        void onLongCityItemClick(int position);
+    }
+
 
 }

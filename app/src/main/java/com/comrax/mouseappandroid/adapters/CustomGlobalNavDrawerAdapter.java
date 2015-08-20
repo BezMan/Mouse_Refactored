@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
-import com.comrax.mouseappandroid.activities_N_fragments.MyBaseDrawerActivity;
 import com.comrax.mouseappandroid.model.DrawerModel;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     DrawerModel tempValues = null;
-    private Activity _activity;
+    private DrawerAdapterInterface _activity;
     private ArrayList _listModelList;
     private Resources _resources;
 
@@ -30,7 +29,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
     /**
      * **********  CustomAdapter Constructor ****************
      */
-    public CustomGlobalNavDrawerAdapter(Activity activity, ArrayList arrayList, Resources resLocal) {
+    public CustomGlobalNavDrawerAdapter(DrawerAdapterInterface activity, ArrayList arrayList, Resources resLocal) {
 
         /********** Take passed values **********/
         _activity = activity;
@@ -38,7 +37,7 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
         _resources = resLocal;
 
         /***********  Layout inflator to call external xml layout () **********************/
-        inflater = (LayoutInflater) _activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) ((Activity)_activity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
@@ -113,27 +112,12 @@ public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View arg0) {
-
-            if(_activity instanceof MyBaseDrawerActivity)
-                ((MyBaseDrawerActivity) _activity).onNavDrawerItemClick(mPosition);
-
-//        if(_activity instanceof MainGridActivity)
-//            ((MainGridActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof Detail_City_Activity)
-//            ((Detail_City_Activity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof Open_Details_header_N_list)
-//            ((Open_Details_header_N_list) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof FavoritesActivity)
-//            ((FavoritesActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof PlaceActivity)
-//            ((PlaceActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof StopArticleActivity)
-//            ((StopArticleActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof TiyulimActivity)
-//            ((TiyulimActivity) _activity).onNavDrawerItemClick(mPosition);
-//        else if(_activity instanceof ArticleActivity)
-//            ((ArticleActivity) _activity).onNavDrawerItemClick(mPosition);
+            _activity.onNavDrawerItemClick(mPosition);
         }
+    }
+
+    public interface DrawerAdapterInterface{
+        void onNavDrawerItemClick(int position);
     }
 
 }

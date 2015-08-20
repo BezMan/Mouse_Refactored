@@ -48,7 +48,7 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
 /**
  * Created by bez on 10/05/2015.
  */
-public class MainGridActivity extends MyBaseDrawerActivity {
+public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdapter.CitiesAdapterInterface {
 
     GridViewWithHeaderAndFooter gridView;
     public ArrayList<CitiesModel> CitiesArray;
@@ -267,7 +267,7 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
     }
 
-
+    @Override
     public void onLongCityItemClick(final int mPosition) {
         final CitiesModel tempValues = CitiesArray.get(mPosition);
 
@@ -342,9 +342,10 @@ public class MainGridActivity extends MyBaseDrawerActivity {
 
     }
 
-    public void onCityItemClick(final int mPosition) {
+    @Override
+    public void onCityItemClick(final int position) {
 
-            final CitiesModel tempValues = CitiesArray.get(mPosition);
+            final CitiesModel tempValues = CitiesArray.get(position);
 
             for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
                 if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
