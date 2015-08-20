@@ -718,15 +718,17 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             public void onInfoWindowClick(Marker marker) {
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
-                Bundle bundle = new Bundle();
-                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+//                Bundle bundle = new Bundle();
+//                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+//                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                myInstance.set_boneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+                myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+                myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                Log.wtf("pos:", " " + pos);
+//                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
 
-                placeActivity.putExtras(bundle);
+//                placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
 
 
@@ -774,11 +776,11 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     public void onPlaceItemClick() {
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
-        Bundle bundle = new Bundle();
-        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
-        placeActivity.putExtras(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+//        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+//
+//        placeActivity.putExtras(bundle);
         startActivity(placeActivity);
     }
 

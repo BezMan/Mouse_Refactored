@@ -239,15 +239,18 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
             if (v instanceof LinearLayout) {
                 if (mCurrentHeaderPos > 0) { //place
                     Cursor cursor = dbTools.getData(DBConstants.FAVORITE_TABLE_NAME, DBConstants.name, mFavoritesModel.getName(), DBConstants.cityId, App.getInstance().get_cityId());
-                    Bundle bundle = new Bundle();
-                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-                    bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+//                    bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                     myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                    myInstance.set_boneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+                    myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+                    myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 //                    myInstance.setBonePosition(mCurrentHeaderPos);
 
                     Intent placeActivity = new Intent(FavoritesActivity.this, PlaceActivity.class);
-                    placeActivity.putExtras(bundle);
+//                    placeActivity.putExtras(bundle);
                     startActivity(placeActivity);
                 }
                 else { //article

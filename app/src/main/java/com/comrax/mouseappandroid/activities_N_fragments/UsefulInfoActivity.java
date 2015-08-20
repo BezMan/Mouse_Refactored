@@ -92,12 +92,12 @@ public class UsefulInfoActivity extends MyBaseDrawerActivity {
 
                     myInstance.set_objId(third.substring(0, third.indexOf(",")));
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-                    bundle.putString(DBConstants.objId, myInstance.get_objId());
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+//                    bundle.putString(DBConstants.objId, myInstance.get_objId());
 
                     Intent placeActivity = new Intent(getApplicationContext(), PlaceActivity.class);
-                    placeActivity.putExtras(bundle);
+//                    placeActivity.putExtras(bundle);
                     startActivity(placeActivity);
 
                     return true;

@@ -56,7 +56,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     RatingBar rating;
 
-    Bundle bundle;
+//    Bundle bundle;
     Cursor cursor;
 
     JSONArray jsonArray;
@@ -75,8 +75,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bundle = getIntent().getExtras();
-        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.objId, bundle.getString(DBConstants.objId, null));
+//        bundle = getIntent().getExtras();
+        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.nsId, myInstance.get_nsId(), DBConstants.objId, myInstance.get_objId());
 
         setBoneTitleAndColor();
 
@@ -217,17 +217,18 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
                 if(url.contains("CM.world_place")){
                     String first = url.substring(url.indexOf(",") + 1);
+                    myInstance.set_boneId(first.substring(0, first.indexOf(",")));
                     String second = first.substring(first.indexOf(",") + 1);
+                    myInstance.set_nsId(second.substring(0, second.indexOf(",")));
                     String third = second.substring(second.indexOf(",") + 1);
-
                     myInstance.set_objId(third.substring(0, third.indexOf(",")));
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-                    bundle.putString(DBConstants.objId, myInstance.get_objId());
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(DBConstants.cityId, myInstance.get_cityId());
+//                    bundle.putString(DBConstants.objId, myInstance.get_objId());
 
                     Intent placeActivity = new Intent(getApplicationContext(), PlaceActivity.class);
-                    placeActivity.putExtras(bundle);
+//                    placeActivity.putExtras(bundle);
                     startActivity(placeActivity);
 
                     return true;
