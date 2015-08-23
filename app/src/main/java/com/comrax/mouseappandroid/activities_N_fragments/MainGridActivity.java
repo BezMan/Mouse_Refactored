@@ -19,7 +19,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.comrax.mouseappandroid.R;
 import com.comrax.mouseappandroid.adapters.CitiesAdapter;
@@ -50,25 +49,24 @@ import in.srain.cube.views.GridViewWithHeaderAndFooter;
  */
 public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdapter.CitiesAdapterInterface {
 
-    GridViewWithHeaderAndFooter gridView;
-    public ArrayList<CitiesModel> CitiesArray;
-    public static ArrayList<BannersModel> BannersArray;
-    CitiesAdapter citiesAdapter;
+    private GridViewWithHeaderAndFooter gridView;
+    private ArrayList<CitiesModel> CitiesArray;
+    private CitiesAdapter citiesAdapter;
 
-    View bannerLayout;
-    Button b1, b2, b3, b4;
-    ImageView image1, image2, image3, image4;
-    LinearLayout layout1, layout2, layout3, layout4;
+    private View bannerLayout;
+    public Button b1, b2, b3, b4;
+    public ImageView image1, image2, image3, image4;
+    public LinearLayout layout1, layout2, layout3, layout4;
 
-    int existingCityCounter;
+    private int existingCityCounter;
 
-    String fileName, updateDate;
-    File sourceZipFile, destinationFolder;
+    private String fileName, updateDate;
+    private File sourceZipFile, destinationFolder;
 
-    ArrayList<Pair<String, String>> boneId_boneName;
+    private ArrayList<Pair<String, String>> boneId_boneName;
 
-    CitiesModel updatedCity;
-    boolean isUpdate;
+    private CitiesModel updatedCity;
+    private boolean isUpdate;
 
     @Override
     protected int getLayoutResourceId() {
@@ -104,6 +102,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             GlobalVars.staticPagesArray = jsonObject.getJSONArray("pages");
         } catch (JSONException e) {
             e.printStackTrace();
+            sendErrorMail(e);
         }
 
     }
@@ -168,7 +167,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
         ImageView[] images = {image1, image2, image3, image4};
         LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
         // Getting data JSON Array nodes
-        BannersArray = new ArrayList<>();
+        GlobalVars.BannersArray = new ArrayList<>();
         JSONArray data = null;
         try {
             data = jsonObj.getJSONArray("banners");
@@ -186,17 +185,17 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 bannerItem.setImageBIG(imageBIG);
                 bannerItem.setUrlAndroid(urlAndroid);
 
-                BannersArray.add(bannerItem);
+                GlobalVars.BannersArray.add(bannerItem);
 
                 int buttonID = getResources().getIdentifier("banner_button" + (i + 1), "id", getPackageName());
                 buttons[i] = (Button) bannerLayout.findViewById(buttonID);
-                buttons[i].setText(BannersArray.get(i).getText());
+                buttons[i].setText(GlobalVars.BannersArray.get(i).getText());
 
 
                 int imageID = getResources().getIdentifier("banner_image" + (i + 1), "id", getPackageName());
                 images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
-                File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + BannersArray.get(i).getImageBIG()));
+                File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + GlobalVars.BannersArray.get(i).getImageBIG()));
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -209,6 +208,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
         } catch (JSONException e) {
             e.printStackTrace();
+            sendErrorMail(e);
+
         }
 
     }
@@ -262,6 +263,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            sendErrorMail(e);
+
         }
 
 
@@ -292,7 +295,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                         if (file.getName().contains(tempValues.getId())) {
 //                            b = file.delete();
 //                            Log.wtf(file.getName()+ " , delete: ", "" + b);
-                            deleteRecursive(file);
+                            HelperMethods.deleteRecursive(file);
                         }
                     }
 
@@ -314,13 +317,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
         }
     }
 
-    public void deleteRecursive(File fileOrDirectory) {
-        if (fileOrDirectory.isDirectory())
-            for (File child : fileOrDirectory.listFiles())
-                deleteRecursive(child);
-        fileOrDirectory.delete();
-    }
-
 
     public boolean isNetworkOnline() {
         boolean status = false;
@@ -336,6 +332,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
         } catch (Exception e) {
             e.printStackTrace();
+            sendErrorMail(e);
+
             return false;
         }
         return status;
@@ -345,24 +343,24 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
     @Override
     public void onCityItemClick(final int position) {
 
-            final CitiesModel tempValues = CitiesArray.get(position);
+        final CitiesModel tempValues = CitiesArray.get(position);
 
-            for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
-                if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
-                    //save clicked cityId:
-                    myInstance.set_cityId(tempValues.getId());
+        for (int i = 0; i < GlobalVars.initDataModelArrayList.size(); i++) {
+            if (GlobalVars.initDataModelArrayList.get(i).getCityId().equals(tempValues.getId())) {
+                //save clicked cityId:
+                myInstance.set_cityId(tempValues.getId());
 
-                    final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
-                    updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
-                    fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                final String filePath = GlobalVars.initDataModelArrayList.get(i).getFile();
+                updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
+                fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                    sourceZipFile = new File(GlobalVars.getBasePath(getApplicationContext(), fileName));    //download to here//
-                    destinationFolder = new File(GlobalVars.getBasePath(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
+                sourceZipFile = new File(GlobalVars.getBasePath(getApplicationContext(), fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.getBasePath(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
-                    //only download if non-existant.
-                    if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
+                //only download if non-existant.
+                if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
 
-                        if(isNetworkOnline()){
+                    if (isNetworkOnline()) {
                         //show dialog//
                         final Dialog dialog = new Dialog(MainGridActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -390,82 +388,78 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
                         dialog.show();
 
+                    } else {
+                        final Dialog dialog = new Dialog(this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.custom_no_connection_dialog);
+
+                        Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
+                        okButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                            }
+                        });
+
+                        dialog.show();
+
                     }
-                        else{
-                            final Dialog dialog = new Dialog(this);
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            dialog.setContentView(R.layout.custom_no_connection_dialog);
+                } else {
+                    //city exists, diff date:
+                    String cityDBDate = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
+                    if (!updateDate.equals(cityDBDate)) {
 
-                            Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
-                            okButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                        //show dialog, needs update//
+                        final Dialog dialog = new Dialog(this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.custom_city_update_dialog);
 
-                                    dialog.dismiss();
-
-                                }
-                            });
-
-                            dialog.show();
-
-                        }
-                    }
-
-                    else {
-                        //city exists, diff date:
-                        String cityDBDate = dbTools.getCellData(DBConstants.CITY_TABLE_NAME, DBConstants.dateUpdated, DBConstants.cityId, tempValues.getId());
-                        if (!updateDate.equals(cityDBDate)) {
-
-                            //show dialog, needs update//
-                            final Dialog dialog = new Dialog(this);
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            dialog.setContentView(R.layout.custom_city_update_dialog);
-
-                            Window window = dialog.getWindow();
+                        Window window = dialog.getWindow();
 //                        window.setGravity(Gravity.BOTTOM);
-                            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
 
-                            Button startUpdateButton = (Button) dialog.findViewById(R.id.update_download_btn);
-                            startUpdateButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                        Button startUpdateButton = (Button) dialog.findViewById(R.id.update_download_btn);
+                        startUpdateButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                                    if (isNetworkOnline()) {
-                                        dialog.dismiss();
-                                        updatedCity = tempValues;
-                                        isUpdate = true;
-                                        new DownloadFileAsync().execute(filePath, updateDate);
+                                if (isNetworkOnline()) {
+                                    dialog.dismiss();
+                                    updatedCity = tempValues;
+                                    isUpdate = true;
+                                    new DownloadFileAsync().execute(filePath, updateDate);
 
-                                    }
-                                    else{
-                                        dialog.setContentView(R.layout.custom_no_connection_dialog);
+                                } else {
+                                    dialog.setContentView(R.layout.custom_no_connection_dialog);
 
-                                        Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
-                                        okButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
+                                    Button okButton = (Button) dialog.findViewById(R.id.ok_btn);
+                                    okButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
 
-                                                dialog.dismiss();
+                                            dialog.dismiss();
 
-                                            }
-                                        });
+                                        }
+                                    });
 
-                                        dialog.show();
+                                    dialog.show();
 
-                                    }
                                 }
-                            });
+                            }
+                        });
 
-                            dialog.show();
+                        dialog.show();
 
-                        } else {
-                            nextActivity(destinationFolder);
-                        }
+                    } else {
+                        nextActivity(destinationFolder);
                     }
-                    break;
                 }
+                break;
             }
+        }
 
 
     }
@@ -529,7 +523,9 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 input.close();
 
             } catch (Exception e) {
-//                Toast.makeText(getApplicationContext(), "Bad connection \n try again", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+                sendErrorMail(e);
+
                 cancel(true);
             }
             return null;
@@ -542,7 +538,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
         @Override
         protected void onPostExecute(String unused) {
-            if(isUpdate) {
+            if (isUpdate) {
                 dbTools.deleteWholeCityLeaveFavorites(updatedCity.getId());
             }
             mProgressDialog.dismiss();
@@ -558,14 +554,43 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 //                input.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                sendErrorMail(e);
+
             }
 
-//            delete downloaded zip file on cancel:
-            new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
-            new File(GlobalVars.getBasePath(getApplicationContext(), String.valueOf(destinationFolder))).delete();
-            mProgressDialog.dismiss();
+//            delete files on cancel:
+            finally {
+                new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
+                new File(GlobalVars.getBasePath(getApplicationContext(), String.valueOf(destinationFolder))).delete();
+                mProgressDialog.dismiss();
+            }
 
         }
+    }
+
+    private void sendErrorMail(Exception e) {
+        //String ex = String.format("%s: %s", throwable.getCause(), throwable.getMessage());
+        String ex = String.format("%s: %s, Line: %d",
+                e.getClass().getName(),
+                e.getMessage(),
+                e.getStackTrace()[0].getLineNumber());
+
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        intent.setType("plain/text");
+        //intent.setType("message/rfc822");
+        //sendIntent.setData(Uri.parse("comraxepad@gmail.com"));
+        //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"bez@comrax.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Mouse App Exception");
+        intent.putExtra(Intent.EXTRA_TEXT, ex);
+
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        Intent mailer = Intent.createChooser(intent, null);
+        mailer.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+
+        startActivity(mailer);
+
     }
 
 
@@ -600,7 +625,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 mSavingDialog.dismiss();
 
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Error saving file", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+                sendErrorMail(e);
                 cancel(true);
             }
             return null;
@@ -613,10 +639,9 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
         @Override
         protected void onPostExecute(String unused) {
             mSavingDialog.dismiss();
-            if(isUpdate){
+            if (isUpdate) {
                 nextActivity(destinationFolder);
-            }
-            else{
+            } else {
                 startActivity(new Intent(MainGridActivity.this, MainGridActivity.class));
                 finish();
             }
@@ -712,7 +737,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                             for (int j = 0; j < boneId_boneName.size(); j++) {
                                 if (boneId.equals(boneId_boneName.get(j).first)) {
                                     item.put(DBConstants.boneCategoryName, boneId_boneName.get(j).second);
-                                    item.put(DBConstants.boneCategoryId, j+1);
+                                    item.put(DBConstants.boneCategoryId, j + 1);
                                 }
                             }
 
@@ -730,7 +755,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 dbTools.insertCityTable(cityObject);
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "error with setDBdata", Toast.LENGTH_LONG).show();
+                sendErrorMail(e);
 
             }
 

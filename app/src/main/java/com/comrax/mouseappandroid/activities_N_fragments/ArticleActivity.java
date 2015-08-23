@@ -313,7 +313,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(0).getUrlAndroid()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GlobalVars.BannersArray.get(0).getUrlAndroid()));
                 startActivity(browserIntent);
             }
         });

@@ -464,7 +464,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(0).getUrlAndroid()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GlobalVars.BannersArray.get(0).getUrlAndroid()));
                 startActivity(browserIntent);
             }
         });
@@ -479,17 +479,17 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         LinearLayout[] layouts = {layout1, layout2, layout3, layout4};
 
 
-        for (int i = 0; i < MainGridActivity.BannersArray.size(); i++) {
+        for (int i = 0; i < GlobalVars.BannersArray.size(); i++) {
 
             int buttonID = getResources().getIdentifier("footer_item_title_" + (i + 1), "id", getPackageName());
             textViews[i] = (TextView) findViewById(buttonID);
-            textViews[i].setText(MainGridActivity.BannersArray.get(i).getText());
+            textViews[i].setText(GlobalVars.BannersArray.get(i).getText());
 
 
             int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getPackageName());
             images[i] = (ImageView) findViewById(imageID);
 
-            File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG()));
+            File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + GlobalVars.BannersArray.get(i).getImageBIG()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 images[i].setImageBitmap(bitmap);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.app.GlobalVars;
 
 public class FullAdActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class FullAdActivity extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(MainGridActivity.BannersArray.get(position).getUrlAndroid()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GlobalVars.BannersArray.get(position).getUrlAndroid()));
                 startActivity(browserIntent);
                 finish();
             }

@@ -43,8 +43,8 @@ import java.util.ArrayList;
 public class SplashActivity extends Activity {
 
 
-    String savedDateJson, requestStr;
-    SharedPreferences prefs;
+    private String savedDateJson, requestStr;
+    private SharedPreferences prefs;
 
 
     @Override

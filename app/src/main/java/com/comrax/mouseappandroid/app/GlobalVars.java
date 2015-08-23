@@ -2,6 +2,7 @@ package com.comrax.mouseappandroid.app;
 
 import android.content.Context;
 
+import com.comrax.mouseappandroid.model.BannersModel;
 import com.comrax.mouseappandroid.model.InitDataModel;
 
 import org.json.JSONArray;
@@ -33,6 +34,9 @@ public class GlobalVars {
     public static ArrayList<InitDataModel> initDataModelArrayList;
 
     public static ArrayList<String> detailMenuItems;
+
+    public static ArrayList<BannersModel> BannersArray;
+
 
     public static JSONArray staticPagesArray;
 
