@@ -46,22 +46,18 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.title + " TEXT, "
                 + DBConstants.image + " TEXT, "
-//                + DBConstants.url + " TEXT, "
-                + DBConstants.urlContent + " TEXT " + ");";
+                + DBConstants.urlContent + " TEXT );";
 
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
                 +  DBConstants.id + " integer PRIMARY KEY autoincrement, "
-                + DBConstants.centerCoordinateLat + " TEXT, "
-                + DBConstants.centerCoordinateLon + " TEXT, "
-                + DBConstants.price + " INTEGER, "
-                + DBConstants.boneId + " TEXT, "
-                + DBConstants.boneCategoryName + " TEXT, "
-                + DBConstants.boneCategoryId + " INTEGER, "
                 + DBConstants.cityId + " TEXT, "
+                + DBConstants.boneId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId + " TEXT, "
+                + DBConstants.boneCategoryName + " TEXT, "
+                + DBConstants.boneCategoryId + " INTEGER, "
                 + DBConstants.address + " TEXT, "
                 + DBConstants.description + " TEXT, "
                 + DBConstants.fullDescriptionBody + " TEXT, "
@@ -70,35 +66,36 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.rating + " REAL, "
                 + DBConstants.ratingCount + " INTEGER, "
                 + DBConstants.type + " TEXT, "
-//                + DBConstants.urlString + " TEXT, "
+                + DBConstants.centerCoordinateLat + " TEXT, "
+                + DBConstants.centerCoordinateLon + " TEXT, "
+                + DBConstants.price + " INTEGER, "
                 + DBConstants.image + " TEXT, "
                 + DBConstants.phone + " TEXT, "
                 + DBConstants.activityHours + " TEXT, "
                 + DBConstants.publicTransportation + " TEXT, "
-                + DBConstants.userComments + " TEXT "
-                + ");";
+                + DBConstants.userComments + " TEXT );";
 
 
         String CREATE_CITY_TABLE = "CREATE TABLE "
                 + DBConstants.CITY_TABLE_NAME + " ("
-                + DBConstants.centerCoordinateLat + " TEXT, "
-                + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.cityFolderPath + " TEXT, "
                 + DBConstants.dateUpdated + " TEXT, "
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
                 + DBConstants.name + " TEXT, "
+                + DBConstants.centerCoordinateLat + " TEXT, "
+                + DBConstants.centerCoordinateLon + " TEXT, "
                 + DBConstants.stopsArticle + " TEXT, "
-                + DBConstants.touristArticlesList + " TEXT "
-                + ");";
+                + DBConstants.touristArticlesList + " TEXT );";
 
 
         String CREATE_FAVORITE_TABLE = "CREATE TABLE "
                 + DBConstants.FAVORITE_TABLE_NAME + " ("
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.boneId + " TEXT, "
-                + DBConstants.boneCategoryName + " TEXT, "
+                + DBConstants.nsId + " TEXT, "
                 + DBConstants.objId+ " TEXT, "
+                + DBConstants.boneCategoryName + " TEXT, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.name + " TEXT, "
                 + DBConstants.hebrewName + " TEXT, "
@@ -108,9 +105,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.activityHours + " TEXT, "
                 + DBConstants.publicTransportation + " TEXT, "
                 + DBConstants.responses + " TEXT, "
-
-                + DBConstants.imagePath + " TEXT "
-                + ");";
+                + DBConstants.imagePath + " TEXT );";
 
         try {
             db.execSQL(CREATE_CITY_TABLE);
@@ -245,18 +240,19 @@ public class DBTools extends SQLiteOpenHelper {
         if(checkCursor.getCount() == 0){    //not already inside Favorites Table.
             values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
             values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+            values.put(DBConstants.nsId, cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
             values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
             values.put(DBConstants.boneCategoryName, cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
             values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
             values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
             values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-            values.put(DBConstants.description, cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
-            values.put(DBConstants.address, cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-            values.put(DBConstants.phone, cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-            values.put(DBConstants.activityHours, cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-            values.put(DBConstants.publicTransportation, cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-            values.put(DBConstants.responses, cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-            values.put(DBConstants.image, cursor.getString(cursor.getColumnIndex(DBConstants.image)));
+//            values.put(DBConstants.description, cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
+//            values.put(DBConstants.address, cursor.getString(cursor.getColumnIndex(DBConstants.address)));
+//            values.put(DBConstants.phone, cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
+//            values.put(DBConstants.activityHours, cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
+//            values.put(DBConstants.publicTransportation, cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
+//            values.put(DBConstants.responses, cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+//            values.put(DBConstants.image, cursor.getString(cursor.getColumnIndex(DBConstants.image)));
 
             database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
         }

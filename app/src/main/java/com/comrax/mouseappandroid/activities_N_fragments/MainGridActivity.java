@@ -87,9 +87,9 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
         initVarsAndHeaders();
 
-        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/staticPages.json")));
-        setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/banners.json")));
-        setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.trialMethod(getApplicationContext(), "Default_master/cities.json")));
+        saveStaticPages(HelperMethods.loadJsonDataFromFile(GlobalVars.getBasePath(getApplicationContext(), "Default_master/staticPages.json")));
+        setBanners(HelperMethods.loadJsonDataFromFile(GlobalVars.getBasePath(getApplicationContext(), "Default_master/banners.json")));
+        setCities(HelperMethods.loadJsonDataFromFile(GlobalVars.getBasePath(getApplicationContext(), "Default_master/cities.json")));
 
         addDummyViews();
 
@@ -196,7 +196,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 int imageID = getResources().getIdentifier("banner_image" + (i + 1), "id", getPackageName());
                 images[i] = (ImageView) bannerLayout.findViewById(imageID);
 
-                File file = new File(GlobalVars.trialMethod(getApplicationContext(), "Default_master/" + BannersArray.get(i).getImageBIG()));
+                File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + BannersArray.get(i).getImageBIG()));
                 if (file.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                     images[i].setImageBitmap(bitmap);
@@ -356,8 +356,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                     updateDate = GlobalVars.initDataModelArrayList.get(i).getUpdate_date();
                     fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-                    sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
-                    destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
+                    sourceZipFile = new File(GlobalVars.getBasePath(getApplicationContext(), fileName));    //download to here//
+                    destinationFolder = new File(GlobalVars.getBasePath(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                     //only download if non-existant.
                     if (dbTools.getData(DBConstants.CITY_TABLE_NAME, DBConstants.cityId, tempValues.getId()).getCount() == 0) {
@@ -561,8 +561,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
 
 //            delete downloaded zip file on cancel:
-            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
-            new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
+            new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
+            new File(GlobalVars.getBasePath(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mProgressDialog.dismiss();
 
         }
@@ -595,7 +595,7 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
         protected String doInBackground(String... initData) {//filepath + date//
             try {
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
-                new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
+                new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
                 setDBdata();
                 mSavingDialog.dismiss();
 
@@ -626,8 +626,8 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
         protected void onCancelled() {
 //            delete downloaded zip file on cancel:
             mSavingDialog.show();
-            new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
-            new File(GlobalVars.trialMethod(getApplicationContext(), String.valueOf(destinationFolder))).delete();
+            new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
+            new File(GlobalVars.getBasePath(getApplicationContext(), String.valueOf(destinationFolder))).delete();
             mSavingDialog.dismiss();
 
         }

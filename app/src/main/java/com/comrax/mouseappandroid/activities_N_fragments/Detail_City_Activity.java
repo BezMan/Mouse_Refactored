@@ -310,7 +310,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
                 if (i == 0 || i >= infoItemPosition) {
                     listItem.title = (GlobalVars.detailsListTitles[k]);
-                    listItem.imagePath = GlobalVars.trialMethod(getApplicationContext(), GlobalVars.IconFolder + (GlobalVars.detailsListImages[k]));
+                    listItem.imagePath = GlobalVars.getBasePath(getApplicationContext(), GlobalVars.IconFolder + (GlobalVars.detailsListImages[k]));
                     k++;
 
                     if (i == infoItemPosition) {
@@ -330,7 +330,7 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
                     String boneId = menuItem.getString("boneId");
 
                     listItem.title = (menuItem.getString("name"));
-                    listItem.imagePath = (GlobalVars.trialMethod(getApplicationContext(), menuItem.getString("icon")));
+                    listItem.imagePath = (GlobalVars.getBasePath(getApplicationContext(), menuItem.getString("icon")));
                     listItem.boneId = (boneId);
 
                     if(m<4)

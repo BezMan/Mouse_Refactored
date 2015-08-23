@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class GlobalVars {
 
-    public static String trialMethod(Context ctx, String fileName){
+    public static String getBasePath(Context ctx, String fileName){
         return new File(ctx.getFilesDir(), fileName ).toString();
     }
 

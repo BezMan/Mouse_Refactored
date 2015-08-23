@@ -304,7 +304,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
         ImageView imageButton = (ImageView) findViewById(R.id.footer_item_ad);
         int rand = (int) (Math.random() * 10 + 1);
 
-        File file = new File(GlobalVars.trialMethod(getApplicationContext(), GlobalVars.IconFolder + "320x50_" + rand + ".jpg"));
+        File file = new File(GlobalVars.getBasePath(getApplicationContext(), GlobalVars.IconFolder + "320x50_" + rand + ".jpg"));
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageButton.setImageBitmap(bitmap);

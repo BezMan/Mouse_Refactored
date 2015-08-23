@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by betzalel on 30/03/2015.
  */
-public class CitiesAdapter extends BaseAdapter /*implements View.OnClickListener*/ {
+public class CitiesAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     CitiesModel tempValues = null;
@@ -128,7 +128,7 @@ else if (tempValues.getId().equals("greenYesDownloaded")) {
             /************  Set Model values in Holder elements ***********/
             holder.nameCity.setText(tempValues.getName());
 
-            File file = new File(GlobalVars.trialMethod(((Activity) _activity).getApplicationContext(), "Default_master/" + tempValues.getImage()));
+            File file = new File(GlobalVars.getBasePath(((Activity) _activity).getApplicationContext(), "Default_master/" + tempValues.getImage()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 holder.imageCity.setImageBitmap(bitmap);

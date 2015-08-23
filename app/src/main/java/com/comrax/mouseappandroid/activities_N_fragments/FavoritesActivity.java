@@ -205,21 +205,27 @@ public class FavoritesActivity extends MyBaseDrawerActivity {
 
 
     public Pair<String, List<FavoritesModel>> getOneSection(int index) {
-        if (mySize <= 0) {
-            return new Pair<String, List<FavoritesModel>>("", Arrays.<FavoritesModel>asList());
-        }
+//        if (mySize <= 0) {
+//            return new Pair<String, List<FavoritesModel>>("", Arrays.<FavoritesModel>asList());
+//        }
         String[] titles = new String[mySize];
         titles = GlobalVars.detailMenuItems.toArray(titles);
 
-        Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneCategoryName, titles[index]);
-
-        allItems[index] = new FavoritesModel[cursor.getCount()];
-
-        for (int j = 0; j < cursor.getCount(); j++, cursor.moveToNext()) {
-
-            allItems[index][j] = new FavoritesModel(cursor);
+        if(myInstance.get_cityId()==null){
+            return new Pair<String, List<FavoritesModel>>("", Arrays.<FavoritesModel>asList());
         }
-        return new Pair<String, List<FavoritesModel>>(titles[index], Arrays.asList(allItems[index]));
+
+        else {
+            Cursor cursor = dbTools.getFavorites(DBConstants.FAVORITE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneCategoryName, titles[index]);
+
+            allItems[index] = new FavoritesModel[cursor.getCount()];
+
+            for (int j = 0; j < cursor.getCount(); j++, cursor.moveToNext()) {
+
+                allItems[index][j] = new FavoritesModel(cursor);
+            }
+            return new Pair<String, List<FavoritesModel>>(titles[index], Arrays.asList(allItems[index]));
+        }
 
     }
 

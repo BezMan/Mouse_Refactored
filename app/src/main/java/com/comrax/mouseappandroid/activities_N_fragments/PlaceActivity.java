@@ -120,7 +120,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     private void setBoneTitleAndColor() {
         boneTextView = (TextView) findViewById(R.id.bone_title);
-        String boneTitle = cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName));
+        int a = cursor.getColumnIndex(DBConstants.boneCategoryName);
+        Log.wtf("cursor.getColumnIndex: ", ""+a);
+        String boneTitle = cursor.getString(a);
         boneTextView.setText(boneTitle);
 
         int pos = cursor.getInt(cursor.getColumnIndex(DBConstants.boneCategoryId));
@@ -453,7 +455,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
         ImageView imageButton = (ImageView) findViewById(R.id.footer_item_ad);
         int rand = (int) (Math.random() * 10 + 1);
 
-        File file = new File(GlobalVars.trialMethod(getApplicationContext(), GlobalVars.IconFolder + "320x50_" + rand + ".jpg"));
+        File file = new File(GlobalVars.getBasePath(getApplicationContext(), GlobalVars.IconFolder + "320x50_" + rand + ".jpg"));
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageButton.setImageBitmap(bitmap);
@@ -487,7 +489,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
             int imageID = getResources().getIdentifier("footer_item_image_" + (i + 1), "id", getPackageName());
             images[i] = (ImageView) findViewById(imageID);
 
-            File file = new File(GlobalVars.trialMethod(getApplicationContext(), "Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG()));
+            File file = new File(GlobalVars.getBasePath(getApplicationContext(), "Default_master/" + MainGridActivity.BannersArray.get(i).getImageBIG()));
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 images[i].setImageBitmap(bitmap);

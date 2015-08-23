@@ -238,8 +238,8 @@ public class SplashActivity extends Activity {
 
                 int lengthOfFile = conexion.getContentLength();
                 input = new BufferedInputStream(url.openStream());
-                sourceZipFile = new File(GlobalVars.trialMethod(getApplicationContext(), fileName));    //download to here//
-                destinationFolder = new File(GlobalVars.trialMethod(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
+                sourceZipFile = new File(GlobalVars.getBasePath(getApplicationContext(), fileName));    //download to here//
+                destinationFolder = new File(GlobalVars.getBasePath(getApplicationContext(), fileName.substring(0, fileName.indexOf('.')))); //without .zip//
 
                 output = new FileOutputStream(sourceZipFile);
                 byte data[] = new byte[1024];
@@ -278,7 +278,7 @@ public class SplashActivity extends Activity {
             try {
 
                 HelperMethods.unzip(sourceZipFile, destinationFolder);
-                new File(GlobalVars.trialMethod(getApplicationContext(), fileName)).delete();
+                new File(GlobalVars.getBasePath(getApplicationContext(), fileName)).delete();
 
                 mProgressDialog.dismiss();
                 nextActivity();
