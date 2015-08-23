@@ -7,10 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.adapters.MyPageAdapter;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
@@ -46,17 +45,17 @@ import java.util.List;
 
 public class Detail_City_Activity extends MyBaseDrawerActivity {
 
-    MyPageAdapter pageAdapter;
-    public String CITY_FOLDER_PATH, cityId;
-    int infoItemPosition;
+    public MyPageAdapter pageAdapter;
+    private String CITY_FOLDER_PATH, cityId;
+    private int infoItemPosition;
 
     private AnimatedExpandableListView listView;
     private ExampleAdapter adapter;
 
-    ViewPager pager;
-    View pagerLayout;
+    private ViewPager pager;
+    private View pagerLayout;
 
-    List<GroupItem> items;
+    private List<GroupItem> items;
 
     private SlidingLayer mSlidingLayer;
 
@@ -64,12 +63,13 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private ArrayList<MapMarkerModel> markerArray;
 
-    List<Marker> markers = new ArrayList<>();
+    private List<Marker> markers = new ArrayList<>();
 
-    Marker currentMarker;
-    String prevIcon;
+    private Marker currentMarker;
+    private String prevIcon;
 
-    boolean setMap;
+    private boolean setMap;
+
 
     public void mapButtonClicked(View v) {
         if (mSlidingLayer.isOpened()) {
@@ -93,10 +93,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
 
         GlobalVars.detailMenuItems = new ArrayList<>();
         GlobalVars.detailMenuItems.add("כתבות");
@@ -249,17 +245,12 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             public void onInfoWindowClick(Marker marker) {
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
-//                Bundle bundle = new Bundle();
-//                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-//                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
                 myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
                 myInstance.set_boneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 Intent placeActivity = new Intent(Detail_City_Activity.this, PlaceActivity.class);
-//                placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
 
                 closeSlidingMapPanel();
@@ -428,7 +419,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
 
     private void setDetailsListItems() {
         Intent dataFileIntent = getIntent();
-//        CITY_UPDATE_DATE = dataFileIntent.getStringExtra("cityUpdateDate");
 
         CITY_FOLDER_PATH = dataFileIntent.getStringExtra("cityFolderName");
 
@@ -616,12 +606,6 @@ public class Detail_City_Activity extends MyBaseDrawerActivity {
             return true;
         }
 
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
     }
 
 }

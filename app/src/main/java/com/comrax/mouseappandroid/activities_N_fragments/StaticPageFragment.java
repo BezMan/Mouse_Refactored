@@ -18,9 +18,9 @@ import org.json.JSONObject;
 
 public class StaticPageFragment extends Fragment {
 
-    Bundle bundle;
-    TextView barTitleTextView;
-    String originalTitle;
+    private Bundle bundle;
+    private TextView barTitleTextView;
+    private String originalTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

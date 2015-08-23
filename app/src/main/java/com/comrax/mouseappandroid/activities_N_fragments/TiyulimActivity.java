@@ -17,8 +17,8 @@ import org.json.JSONObject;
  */
 public class TiyulimActivity extends MyBaseDrawerActivity implements TiyulimListAdapter.TiyulimAdapterInterface{
 
-    ListView listView;
-    TiyulimListAdapter adapter;
+    private ListView listView;
+    private TiyulimListAdapter adapter;
 
     @Override
     protected int getLayoutResourceId() {

@@ -201,7 +201,6 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-//            values.put(DBConstants.urlString, item.getString(DBConstants.urlString));
             values.put(DBConstants.description, item.getString(DBConstants.description));
             values.put(DBConstants.address, item.getString(DBConstants.address));
             values.put(DBConstants.phone, item.getString(DBConstants.phone));
@@ -246,13 +245,6 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
             values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
             values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
-//            values.put(DBConstants.description, cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody)));
-//            values.put(DBConstants.address, cursor.getString(cursor.getColumnIndex(DBConstants.address)));
-//            values.put(DBConstants.phone, cursor.getString(cursor.getColumnIndex(DBConstants.phone)));
-//            values.put(DBConstants.activityHours, cursor.getString(cursor.getColumnIndex(DBConstants.activityHours)));
-//            values.put(DBConstants.publicTransportation, cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation)));
-//            values.put(DBConstants.responses, cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
-//            values.put(DBConstants.image, cursor.getString(cursor.getColumnIndex(DBConstants.image)));
 
             database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
         }

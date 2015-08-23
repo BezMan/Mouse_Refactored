@@ -38,7 +38,7 @@ import java.io.File;
  */
 public class ArticleActivity extends MyBaseDrawerActivity {
 
-    JSONObject urlContent;
+    private JSONObject urlContent;
 
     @Override
     protected int getLayoutResourceId() {
@@ -129,9 +129,6 @@ public class ArticleActivity extends MyBaseDrawerActivity {
             }
 
             WebView mWebView = (WebView) findViewById(R.id.web_view_article);
-//            mWebView.getSettings().setAllowFileAccess(true);
-//            mWebView.getSettings().setJavaScriptEnabled(true);
-//            mWebView.getSettings().setBuiltInZoomControls(true);
 
             WebSettings settings = mWebView.getSettings();
             settings.setDefaultTextEncodingName("utf-8");
@@ -180,12 +177,7 @@ public class ArticleActivity extends MyBaseDrawerActivity {
                         String third = second.substring(second.indexOf(",") + 1);
                         myInstance.set_objId(third.substring(0, third.indexOf(",")));
 
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-//                        bundle.putString(DBConstants.objId, myInstance.get_objId());
-
                         Intent placeActivity = new Intent(getApplicationContext(), PlaceActivity.class);
-//                        placeActivity.putExtras(bundle);
                         startActivity(placeActivity);
 
                         return true;

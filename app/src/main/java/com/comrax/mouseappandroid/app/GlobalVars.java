@@ -37,7 +37,6 @@ public class GlobalVars {
 
     public static ArrayList<BannersModel> BannersArray;
 
-
     public static JSONArray staticPagesArray;
 
     public static String[] icon = {"hotel", "shop", "rest", "tour"};

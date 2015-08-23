@@ -43,23 +43,23 @@ import java.io.File;
  */
 public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDelegate {
 
-    int myRating;
-    TextView boneTextView, dareg;
+    private int myRating;
+    private TextView boneTextView, dareg;
 
-    String imagePath, name, hebName, content, address, type,
+    public String imagePath, name, hebName, content, address, type,
             phone, activityHours, publicTransportation;
 
 
-    Button b1, b2, b3, b4;
-    ImageView image1, image2, image3, image4;
-    LinearLayout layout1, layout2, layout3, layout4;
+    public Button b1, b2, b3, b4;
+    public ImageView image1, image2, image3, image4;
+    public LinearLayout layout1, layout2, layout3, layout4;
 
-    RatingBar rating;
+    private RatingBar rating;
 
-//    Bundle bundle;
-    Cursor cursor;
+    private Cursor cursor;
 
-    JSONArray jsonArray;
+    private JSONArray jsonArray;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.place_full_layout;

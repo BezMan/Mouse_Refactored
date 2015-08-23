@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class OpenDetailsCustomAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    ListModel tempValues = null;
+    private ListModel tempValues = null;
     /**
      * ******** Declare Used Variables ********
      */

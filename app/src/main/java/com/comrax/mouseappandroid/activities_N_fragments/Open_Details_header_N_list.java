@@ -26,6 +26,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.comrax.mouseappandroid.R;
+import com.comrax.mouseappandroid.adapters.MyPageAdapter;
 import com.comrax.mouseappandroid.adapters.OpenDetailsCustomAdapter;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
@@ -63,30 +64,29 @@ import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
  */
 public class Open_Details_header_N_list extends MyBaseDrawerActivity implements OpenDetailsCustomAdapter.OpenDetailsAdapterInterface, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-    TextView boneText;
-    Cursor cursor;
+    private TextView boneText;
+    private Cursor cursor;
     private SlidingLayer mSlidingLayer;
     private GoogleMap map;
     private ArrayList<MapMarkerModel> markerArray;
-    List<Marker> markers = new ArrayList<>();
-    Marker currentMarker;
-    String prevIcon;
+    private List<Marker> markers = new ArrayList<>();
+    private Marker currentMarker;
+    private String prevIcon;
     private ListView mListView;
-    TextView resultsTxtView;
+    private TextView resultsTxtView;
 
 
-    OpenDetailsCustomAdapter adapter;
-    public ArrayList<ListModel> customListViewValuesArr;
+    private OpenDetailsCustomAdapter adapter;
+    private ArrayList<ListModel> customListViewValuesArr;
 
     private RadioGroup radioGroup;
 
-    ViewPager pager;
-    MyPageAdapter pageAdapter;
+    private ViewPager pager;
+    private MyPageAdapter pageAdapter;
 
-    Intent placeActivity;
+    private Intent placeActivity;
 
-    int pos;
-    boolean setMap;
+    private boolean setMap;
 
     protected static final String TAG = "location-updates-sample";
 
@@ -492,7 +492,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             JSONArray articlesArray = jsonData.getJSONArray("articles");
 
             //lets add items thru loop
-            for (int i = 0; i < 5; i++) {   //we want only 5 first arurlContent = item.getJSONObject("urlContent").toString();tem.getString("image");
+            for (int i = 0; i < 5; i++) {   //we want only 5 first urlContent = item.getJSONObject("urlContent").toString();tem.getString("image");
                 JSONObject item = articlesArray.getJSONObject(i);
                 String urlContent = item.getJSONObject("urlContent").toString();
                 String image = item.getString("image").toString();
@@ -599,7 +599,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         //emulator vs device check//
         if (Build.BRAND.compareTo("generic") != 0) {
             LatLng zoomCamera = new LatLng(Double.parseDouble(cityLat), Double.parseDouble(cityLon));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 10));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(zoomCamera, 12));
         }
 
         mSlidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
@@ -718,19 +718,11 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
             public void onInfoWindowClick(Marker marker) {
                 Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.name, marker.getTitle(), DBConstants.cityId, myInstance.get_cityId());
 
-//                Bundle bundle = new Bundle();
-//                bundle.putString(DBConstants.cityId, myInstance.get_cityId());
-//                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
                 myInstance.set_boneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-//                myInstance.set_boneIdTitle(cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-
-//                placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
-
 
                 closeSlidingMapPanel();
             }
@@ -775,12 +767,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     @Override
     public void onPlaceItemClick() {
         cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
-
-//        Bundle bundle = new Bundle();
-//        bundle.putString(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-//        bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-//
-//        placeActivity.putExtras(bundle);
         startActivity(placeActivity);
     }
 

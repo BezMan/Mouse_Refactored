@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class CitiesAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    CitiesModel tempValues = null;
+    private CitiesModel tempValues = null;
     /**
      * ******** Declare Used Variables ********
      */

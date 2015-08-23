@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class CustomGlobalNavDrawerAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    DrawerModel tempValues = null;
+    private DrawerModel tempValues = null;
     private DrawerAdapterInterface _activity;
     private ArrayList _listModelList;
     private Resources _resources;

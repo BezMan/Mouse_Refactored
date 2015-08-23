@@ -314,10 +314,6 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity implements 
 //                    .addToBackStack(fragment.getClass().getName())
                         .commit();
 
-//                if(this instanceof FavoritesActivity)
-//                    setupTextView("המועדפים שלי");
-//                else
-//                    setupTextView(App.getInstance().getCityName());
             }
 
 
@@ -445,15 +441,11 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity implements 
                 // Get the cursor, positioned to the corresponding row in the result set
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
-//                Bundle bundle = new Bundle();
-//                bundle.putString(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-
                 myInstance.set_boneId(cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
                 Intent placeActivity = new Intent(MyBaseDrawerActivity.this, PlaceActivity.class);
-//                placeActivity.putExtras(bundle);
                 startActivity(placeActivity);
 
 //                itemDescriptionView.setText("");

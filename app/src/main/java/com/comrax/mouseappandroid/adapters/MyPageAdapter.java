@@ -1,4 +1,4 @@
-package com.comrax.mouseappandroid.activities_N_fragments;
+package com.comrax.mouseappandroid.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by bez on 15/07/2015.
  */
 
-class MyPageAdapter extends FragmentPagerAdapter{
+public class MyPageAdapter extends FragmentPagerAdapter{
     private List<Fragment> fragments;
 
     public MyPageAdapter(FragmentManager fm, List<Fragment> fragments) {
