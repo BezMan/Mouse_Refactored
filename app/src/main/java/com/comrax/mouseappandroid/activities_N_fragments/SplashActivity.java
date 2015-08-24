@@ -156,8 +156,7 @@ public class SplashActivity extends Activity {
                 } else {
                     nextActivity();
                 }
-            }
-            else{// no saved vals:
+            } else {// no saved vals:
                 new DownloadFileAsync().execute(GlobalVars.initDataModelArrayList.get(0).getFile());
             }
 
@@ -294,8 +293,7 @@ public class SplashActivity extends Activity {
                 output.flush();
                 output.close();
 //                input.close();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -306,6 +304,11 @@ public class SplashActivity extends Activity {
 
 
     private void nextActivity() {
+
+//        File[] files = getFilesDir().listFiles();
+//        for (File file : files) {
+//            Log.wtf("listFiles: ", file.getName() + "");
+//        }
 
         startActivity(new Intent(SplashActivity.this, MainGridActivity.class));
         finish();

@@ -1,7 +1,6 @@
 package com.comrax.mouseappandroid.app;
 
 import android.app.Application;
-import android.content.Intent;
 
 /**
  * Created by bez on 12/05/2015.
@@ -102,50 +101,50 @@ public class App extends Application {
         CityName = cityName;
     }
 
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-
-            @Override
-            public void uncaughtException(Thread thread, Throwable ex) {
-                handleUncaughtException(thread, ex);
-            }
-        });
-    }
-
-    public void handleUncaughtException(Thread thread, Throwable throwable) {
-        throwable.printStackTrace();
-
-        try {
-            //String ex = String.format("%s: %s", throwable.getCause(), throwable.getMessage());
-            String ex = String.format("%s: %s, Line: %d",
-                    throwable.getClass().getName(),
-                    throwable.getMessage(),
-                    throwable.getStackTrace()[0].getLineNumber());
-
-            final Intent intent = new Intent(Intent.ACTION_SEND);
-            //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-            intent.setType("plain/text");
-            //intent.setType("message/rfc822");
-            //sendIntent.setData(Uri.parse("comraxepad@gmail.com"));
-            //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "silverbez@gmail.com" });
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Mouse App Exception");
-            intent.putExtra(Intent.EXTRA_TEXT, ex);
-
-            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            Intent mailer = Intent.createChooser(intent, null);
-            mailer.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-
-            getApplicationContext().startActivity(mailer);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//
+//        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//
+//            @Override
+//            public void uncaughtException(Thread thread, Throwable ex) {
+//                handleUncaughtException(thread, ex);
+//            }
+//        });
+//    }
+//
+//    public void handleUncaughtException(Thread thread, Throwable throwable) {
+//        throwable.printStackTrace();
+//
+//        try {
+//            //String ex = String.format("%s: %s", throwable.getCause(), throwable.getMessage());
+//            String ex = String.format("%s: %s, Line: %d",
+//                    throwable.getClass().getName(),
+//                    throwable.getMessage(),
+//                    throwable.getStackTrace()[0].getLineNumber());
+//
+//            final Intent intent = new Intent(Intent.ACTION_SEND);
+//            //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+//            intent.setType("plain/text");
+//            //intent.setType("message/rfc822");
+//            //sendIntent.setData(Uri.parse("comraxepad@gmail.com"));
+//            //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+//            intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "silverbez@gmail.com" });
+//            intent.putExtra(Intent.EXTRA_SUBJECT, "Mouse App Exception");
+//            intent.putExtra(Intent.EXTRA_TEXT, ex);
+//
+//            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//            Intent mailer = Intent.createChooser(intent, null);
+//            mailer.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//
+//            getApplicationContext().startActivity(mailer);
+//        }
+//        catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 }

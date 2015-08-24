@@ -83,4 +83,30 @@ public class HelperMethods {
 
 
 
+//    private void sendErrorMail(Exception e) {
+//        //String ex = String.format("%s: %s", throwable.getCause(), throwable.getMessage());
+//        String ex = String.format("%s: %s, Line: %d",
+//                e.getClass().getName(),
+//                e.getMessage(),
+//                e.getStackTrace()[0].getLineNumber());
+//
+//        final Intent intent = new Intent(Intent.ACTION_SEND);
+//        //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+//        intent.setType("plain/text");
+//        //intent.setType("message/rfc822");
+//        //sendIntent.setData(Uri.parse("comraxepad@gmail.com"));
+//        //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+//        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"bez@comrax.com"});
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "Mouse App Exception");
+//        intent.putExtra(Intent.EXTRA_TEXT, ex);
+//
+//        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//        Intent mailer = Intent.createChooser(intent, null);
+//        mailer.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//
+//        startActivity(mailer);
+//
+//    }
+
+
 }

@@ -102,7 +102,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             GlobalVars.staticPagesArray = jsonObject.getJSONArray("pages");
         } catch (JSONException e) {
             e.printStackTrace();
-            sendErrorMail(e);
         }
 
     }
@@ -208,8 +207,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
         } catch (JSONException e) {
             e.printStackTrace();
-            sendErrorMail(e);
-
         }
 
     }
@@ -263,8 +260,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            sendErrorMail(e);
-
         }
 
 
@@ -293,8 +288,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                     File[] files = getFilesDir().listFiles();
                     for (File file : files) {
                         if (file.getName().contains(tempValues.getId())) {
-//                            b = file.delete();
-//                            Log.wtf(file.getName()+ " , delete: ", "" + b);
                             HelperMethods.deleteRecursive(file);
                         }
                     }
@@ -332,8 +325,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
         } catch (Exception e) {
             e.printStackTrace();
-            sendErrorMail(e);
-
             return false;
         }
         return status;
@@ -524,8 +515,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
             } catch (Exception e) {
                 e.printStackTrace();
-                sendErrorMail(e);
-
                 cancel(true);
             }
             return null;
@@ -554,8 +543,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 //                input.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                sendErrorMail(e);
-
             }
 
 //            delete files on cancel:
@@ -566,31 +553,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
             }
 
         }
-    }
-
-    private void sendErrorMail(Exception e) {
-        //String ex = String.format("%s: %s", throwable.getCause(), throwable.getMessage());
-        String ex = String.format("%s: %s, Line: %d",
-                e.getClass().getName(),
-                e.getMessage(),
-                e.getStackTrace()[0].getLineNumber());
-
-        final Intent intent = new Intent(Intent.ACTION_SEND);
-        //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        intent.setType("plain/text");
-        //intent.setType("message/rfc822");
-        //sendIntent.setData(Uri.parse("comraxepad@gmail.com"));
-        //sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"bez@comrax.com"});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Mouse App Exception");
-        intent.putExtra(Intent.EXTRA_TEXT, ex);
-
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        Intent mailer = Intent.createChooser(intent, null);
-        mailer.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-
-        startActivity(mailer);
-
     }
 
 
@@ -626,7 +588,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
 
             } catch (Exception e) {
                 e.printStackTrace();
-                sendErrorMail(e);
                 cancel(true);
             }
             return null;
@@ -755,7 +716,6 @@ public class MainGridActivity extends MyBaseDrawerActivity implements CitiesAdap
                 dbTools.insertCityTable(cityObject);
             } catch (JSONException e) {
                 e.printStackTrace();
-                sendErrorMail(e);
 
             }
 

@@ -18,8 +18,8 @@ public class DBTools extends SQLiteOpenHelper {
 
     //TODO: change back to internal!
 
-        //internal:
-        public static final String DATABASE_NAME = "mouseAppData.db";
+    //internal:
+    public static final String DATABASE_NAME = "MouseAppData.db";
 //        external:
 //        public static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mouseAppData.db";
 
@@ -29,7 +29,6 @@ public class DBTools extends SQLiteOpenHelper {
     public DBTools(Context applicationContext) {
         super(applicationContext, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
 
     @Override
@@ -51,7 +50,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         String CREATE_PLACE_TABLE = "CREATE TABLE "
                 + DBConstants.PLACE_TABLE_NAME + " ("
-                +  DBConstants.id + " integer PRIMARY KEY autoincrement, "
+                + DBConstants.id + " integer PRIMARY KEY autoincrement, "
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.boneId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
@@ -94,7 +93,7 @@ public class DBTools extends SQLiteOpenHelper {
                 + DBConstants.cityId + " TEXT, "
                 + DBConstants.boneId + " TEXT, "
                 + DBConstants.nsId + " TEXT, "
-                + DBConstants.objId+ " TEXT, "
+                + DBConstants.objId + " TEXT, "
                 + DBConstants.boneCategoryName + " TEXT, "
                 + DBConstants.type + " TEXT, "
                 + DBConstants.name + " TEXT, "
@@ -153,7 +152,8 @@ public class DBTools extends SQLiteOpenHelper {
             database.insert(DBConstants.CITY_TABLE_NAME, null, values);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.wtf("catching: ", "insertCityTable" );
         }
 
         database.close();
@@ -170,7 +170,6 @@ public class DBTools extends SQLiteOpenHelper {
             values.put(DBConstants.nsId, item.getString(DBConstants.nsId));
             values.put(DBConstants.objId, item.getString(DBConstants.objId));
             values.put(DBConstants.boneId, item.getString(DBConstants.boneId));
-//            values.put(DBConstants.url, item.getString(DBConstants.url));
             values.put(DBConstants.title, item.getString(DBConstants.title));
             values.put(DBConstants.menuItemId, item.getString(DBConstants.menuItemId));
             values.put(DBConstants.image, item.getString(DBConstants.image));
@@ -182,7 +181,8 @@ public class DBTools extends SQLiteOpenHelper {
             database.insert(DBConstants.ARTICLE_TABLE_NAME, null, values);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.wtf("catching: ", "insertArticleTable" );
         }
 
         database.close();
@@ -233,58 +233,65 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "=? AND " + DBConstants.cityId +"=?" ;
-        Cursor checkCursor = database.rawQuery(sql, new String [] {cursor.getString(cursor.getColumnIndex(DBConstants.name)), cursor.getString(cursor.getColumnIndex(DBConstants.cityId))});
+        try {
 
-        if(checkCursor.getCount() == 0){    //not already inside Favorites Table.
-            values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
-            values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
-            values.put(DBConstants.nsId, cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
-            values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
-            values.put(DBConstants.boneCategoryName, cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
-            values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
-            values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
-            values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+            String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "=? AND " + DBConstants.cityId + "=?";
+            Cursor checkCursor = database.rawQuery(sql, new String[]{cursor.getString(cursor.getColumnIndex(DBConstants.name)), cursor.getString(cursor.getColumnIndex(DBConstants.cityId))});
 
-            database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+            if (checkCursor.getCount() == 0) {    //not already inside Favorites Table.
+                values.put(DBConstants.cityId, cursor.getString(cursor.getColumnIndex(DBConstants.cityId)));
+                values.put(DBConstants.boneId, cursor.getString(cursor.getColumnIndex(DBConstants.boneId)));
+                values.put(DBConstants.nsId, cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
+                values.put(DBConstants.objId, cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
+                values.put(DBConstants.boneCategoryName, cursor.getString(cursor.getColumnIndex(DBConstants.boneCategoryName)));
+                values.put(DBConstants.type, cursor.getString(cursor.getColumnIndex(DBConstants.type)));
+                values.put(DBConstants.name, cursor.getString(cursor.getColumnIndex(DBConstants.name)));
+                values.put(DBConstants.hebrewName, cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName)));
+
+                database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
         database.close();
     }
-
 
 
     public void insertArticleFavorite(JSONObject jsonObject) {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        String name="", cityId=App.getInstance().get_cityId();
+        String name = "", cityId = App.getInstance().get_cityId();
         try {
-             name = jsonObject.getString(DBConstants.name).toString();
+            name = jsonObject.getString(DBConstants.name).toString();
+
+            String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "=? AND " + DBConstants.cityId + "=?";
+            Cursor checkCursor = database.rawQuery(sql, new String[]{name, cityId});
+
+            if (checkCursor.getCount() == 0) {    //not already inside Favorites Table.
+                values.put(DBConstants.name, name);
+                values.put(DBConstants.cityId, cityId);
+                values.put(DBConstants.boneCategoryName, "כתבות");
+                values.put(DBConstants.description, jsonObject.toString());
+
+                database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        String sql = "SELECT 1 FROM " + DBConstants.FAVORITE_TABLE_NAME + " WHERE " + DBConstants.name + "=? AND "+ DBConstants.cityId +"=?";
-        Cursor checkCursor = database.rawQuery(sql, new String [] {name, cityId});
-
-        if(checkCursor.getCount() == 0){    //not already inside Favorites Table.
-            values.put(DBConstants.name, name);
-            values.put(DBConstants.cityId, cityId);
-            values.put(DBConstants.boneCategoryName, "כתבות");
-            values.put(DBConstants.description, jsonObject.toString());
-
-            database.insert(DBConstants.FAVORITE_TABLE_NAME, null, values);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         database.close();
     }
 
 
-
-
     public boolean isDataAlreadyInDB(String TableName, String colName, String rowValue) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + colName + "=?" ;
+        String sql = "SELECT * FROM " + TableName + " WHERE " + colName + "=?";
         Cursor cursor = database.rawQuery(sql, new String[]{rowValue});
 
         return cursor.getCount() > 0;
@@ -300,11 +307,10 @@ public class DBTools extends SQLiteOpenHelper {
             newValues.put(DBConstants.centerCoordinateLon, item.getString(DBConstants.centerCoordinateLon));
             newValues.put(DBConstants.boneCategoryName, item.getString(DBConstants.boneCategoryName));
             newValues.put(DBConstants.boneCategoryId, item.getString(DBConstants.boneCategoryId));
-            String condition = DBConstants.objId + "=? AND " + DBConstants.boneId +"=?" ;
-            database.update(TableName, newValues, condition, new String [] {item.getString(DBConstants.objId), boneId});
+            String condition = DBConstants.objId + "=? AND " + DBConstants.boneId + "=?";
+            database.update(TableName, newValues, condition, new String[]{item.getString(DBConstants.objId), boneId});
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         database.close();
@@ -314,7 +320,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public String getCellData(String TableName, String ColumnReturned, String checkColumn, String checkVal) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn + "=?" ;
+        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn + "=?";
         Cursor cursor = database.rawQuery(sql, new String[]{checkVal});
         String res = null;
         if (cursor.moveToFirst()) {
@@ -325,7 +331,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public String getCellData(String TableName, String ColumnReturned, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=?" ;
+        String sql = "SELECT " + ColumnReturned + " FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=?";
         Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2});
         String res = null;
         if (cursor.moveToFirst()) {
@@ -337,7 +343,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public Cursor getData(String TableName, String checkColumn1, String checkVal1) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=?" ;
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=?";
         Cursor cursor = database.rawQuery(sql, new String[]{checkVal1});
         cursor.moveToFirst();
         return cursor;
@@ -347,17 +353,16 @@ public class DBTools extends SQLiteOpenHelper {
     public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
         String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=?";
-        Cursor cursor = database.rawQuery(sql, new String [] {checkVal1, checkVal2});
+        Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2});
         cursor.moveToFirst();
         return cursor;
     }
 
 
-
     public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2, String checkColumn3, String checkVal3) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2+ "=? AND "+ checkColumn3+ "=?" ;
-        Cursor cursor = database.rawQuery(sql, new String[] {checkVal1, checkVal2, checkVal3} );
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=? AND " + checkColumn3 + "=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2, checkVal3});
         cursor.moveToFirst();
 
         return cursor;
@@ -366,21 +371,18 @@ public class DBTools extends SQLiteOpenHelper {
 
     public Cursor getData(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2, String checkColumn3, String checkVal3, String checkColumn4, String checkVal4) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2+ "=? AND "+ checkColumn3+ "=? AND "+ checkColumn4+ "=?" ;
-        Cursor cursor = database.rawQuery(sql, new String[] {checkVal1, checkVal2, checkVal3, checkVal4 } );
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=? AND " + checkColumn3 + "=? AND " + checkColumn4 + "=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2, checkVal3, checkVal4});
         cursor.moveToFirst();
 
         return cursor;
     }
 
 
-
-
-
     public Cursor getFavorites(String TableName, String checkColumn1, String checkVal1, String checkColumn2, String checkVal2) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND "+ checkColumn2+ "=?" ;
-        Cursor cursor = database.rawQuery(sql, new String[] {checkVal1, checkVal2} );
+        String sql = "SELECT * FROM " + TableName + " WHERE " + checkColumn1 + "=? AND " + checkColumn2 + "=?";
+        Cursor cursor = database.rawQuery(sql, new String[]{checkVal1, checkVal2});
         cursor.moveToFirst();
         return cursor;
     }
@@ -388,7 +390,7 @@ public class DBTools extends SQLiteOpenHelper {
 
     public int deleteRow(String TableName, String KEY_NAME, String VALUE) {
         SQLiteDatabase database = this.getWritableDatabase();
-        return database.delete(TableName, KEY_NAME + "=?", new String[] {VALUE} );
+        return database.delete(TableName, KEY_NAME + "=?", new String[]{VALUE});
 
     }
 
@@ -411,14 +413,13 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor mCursor;
 
-        if(App.getInstance().get_cityId()==null){
+        if (App.getInstance().get_cityId() == null) {
             mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
                     new String[]{DBConstants.name, DBConstants.hebrewName, DBConstants.id},
                     DBConstants.id + " = 1",
                     null, null, null, null, null);
 
-        }
-        else {
+        } else {
 
 
             mCursor = database.query(true, DBConstants.PLACE_TABLE_NAME,
@@ -433,10 +434,6 @@ public class DBTools extends SQLiteOpenHelper {
         return mCursor;
 
     }
-
-
-
-
 
 
 }
