@@ -202,6 +202,7 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity implements 
     private void allCities() {
         Intent cityIntent = new Intent(this, MainGridActivity.class);
         cityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        cityIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(cityIntent);
     }
 
@@ -221,6 +222,8 @@ public abstract class MyBaseDrawerActivity extends AppCompatActivity implements 
         } else {
             Intent intent = new Intent(this, FavoritesActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             startActivity(intent);
         }
 

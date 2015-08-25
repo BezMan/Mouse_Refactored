@@ -56,7 +56,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     private RatingBar rating;
 
-    private Cursor cursor;
+    private Cursor mCursor;
 
     private JSONArray jsonArray;
 
@@ -75,8 +75,8 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        bundle = getIntent().getExtras();
-        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.nsId, myInstance.get_nsId(), DBConstants.objId, myInstance.get_objId());
+        Cursor cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.nsId, myInstance.get_nsId(), DBConstants.objId, myInstance.get_objId());
+        mCursor=cursor;
 
         setBoneTitleAndColor();
 
@@ -120,12 +120,11 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     private void setBoneTitleAndColor() {
         boneTextView = (TextView) findViewById(R.id.bone_title);
-        int a = cursor.getColumnIndex(DBConstants.boneCategoryName);
-        Log.wtf("cursor.getColumnIndex: ", ""+a);
-        String boneTitle = cursor.getString(a);
+        int a = mCursor.getColumnIndex(DBConstants.boneCategoryName);
+        String boneTitle = mCursor.getString(a);
         boneTextView.setText(boneTitle);
 
-        int pos = cursor.getInt(cursor.getColumnIndex(DBConstants.boneCategoryId));
+        int pos = mCursor.getInt(mCursor.getColumnIndex(DBConstants.boneCategoryId));
         if(pos>0)
             boneTextView.setBackgroundColor(GlobalVars.boneColors[pos-1]);
 
@@ -140,17 +139,17 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
 
     private void setUpperData() {
-        imagePath = cursor.getString(cursor.getColumnIndex(DBConstants.image));
-        name = cursor.getString(cursor.getColumnIndex(DBConstants.name));
-        hebName = cursor.getString(cursor.getColumnIndex(DBConstants.hebrewName));
-        content = cursor.getString(cursor.getColumnIndex(DBConstants.fullDescriptionBody));
-        address = cursor.getString(cursor.getColumnIndex(DBConstants.address));
-        type = cursor.getString(cursor.getColumnIndex(DBConstants.type));
-        phone = cursor.getString(cursor.getColumnIndex(DBConstants.phone));
-        activityHours = cursor.getString(cursor.getColumnIndex(DBConstants.activityHours));
-        publicTransportation = cursor.getString(cursor.getColumnIndex(DBConstants.publicTransportation));
+        imagePath = mCursor.getString(mCursor.getColumnIndex(DBConstants.image));
+        name = mCursor.getString(mCursor.getColumnIndex(DBConstants.name));
+        hebName = mCursor.getString(mCursor.getColumnIndex(DBConstants.hebrewName));
+        content = mCursor.getString(mCursor.getColumnIndex(DBConstants.fullDescriptionBody));
+        address = mCursor.getString(mCursor.getColumnIndex(DBConstants.address));
+        type = mCursor.getString(mCursor.getColumnIndex(DBConstants.type));
+        phone = mCursor.getString(mCursor.getColumnIndex(DBConstants.phone));
+        activityHours = mCursor.getString(mCursor.getColumnIndex(DBConstants.activityHours));
+        publicTransportation = mCursor.getString(mCursor.getColumnIndex(DBConstants.publicTransportation));
         try {
-            jsonArray = new JSONArray(cursor.getString(cursor.getColumnIndex(DBConstants.responses)));
+            jsonArray = new JSONArray(mCursor.getString(mCursor.getColumnIndex(DBConstants.responses)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -323,7 +322,7 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
                 addFavButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbTools.insertPlaceFavorite(cursor);
+                        dbTools.insertPlaceFavorite(mCursor);
                         Toast.makeText(getApplicationContext(), "נשמר בהצלחה", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
@@ -546,5 +545,9 @@ public class PlaceActivity extends MyBaseDrawerActivity implements RequestTaskDe
 
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCursor.close();
+    }
 }

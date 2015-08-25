@@ -31,7 +31,6 @@ import com.comrax.mouseappandroid.adapters.OpenDetailsCustomAdapter;
 import com.comrax.mouseappandroid.app.GlobalVars;
 import com.comrax.mouseappandroid.app.HelperMethods;
 import com.comrax.mouseappandroid.database.DBConstants;
-import com.comrax.mouseappandroid.database.DBTools;
 import com.comrax.mouseappandroid.model.ListModel;
 import com.comrax.mouseappandroid.model.MapMarkerModel;
 import com.google.android.gms.common.ConnectionResult;
@@ -75,6 +74,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     private ListView mListView;
     private TextView resultsTxtView;
 
+    private String realboneId;
+
 
     private OpenDetailsCustomAdapter adapter;
     private ArrayList<ListModel> customListViewValuesArr;
@@ -83,8 +84,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     private ViewPager pager;
     private MyPageAdapter pageAdapter;
-
-    private Intent placeActivity;
 
     private boolean setMap;
 
@@ -336,6 +335,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 //            startLocationUpdates();
             startUpdatesButtonHandler();
         }
+
+        myInstance.set_boneId(realboneId);
     }
 
     @Override
@@ -350,8 +351,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
     @Override
     protected void onStop() {
         mGoogleApiClient.disconnect();
-
         super.onStop();
+        cursor.close();
     }
 
     /**
@@ -469,8 +470,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         resultsTxtView = (TextView) findViewById(R.id.txtResultsCount);
         mListView = (ListView) findViewById(R.id.listview);
         pager = (ViewPager) findViewById(R.id.viewpager);
-        placeActivity = new Intent(this, PlaceActivity.class);
 
+        realboneId = myInstance.get_boneId();
     }
 
 
@@ -542,7 +543,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
         String cityId = myInstance.get_cityId();
         String boneId = myInstance.get_boneId();
-        Cursor cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
+        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, cityId, DBConstants.boneId, boneId);
 
         resultsTxtView.setText("התקבלו " + cursor.getCount() + " תוצאות");
 
@@ -568,7 +569,6 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
                 lm.setDistance(Math.round(results[0]) + " מטרים ממך ");
 
-//                Log.wtf("results: ", String.valueOf(results[0]) +"\t"+ String.valueOf(results[1]) +"\t"+ String.valueOf(results[2]));
             }
 
             customListViewValuesArr.add(lm);
@@ -621,7 +621,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         @Override
         public void onOpened() {
             if (!setMap) {
-                setupMapData(dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId()));
+                cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId());
+                setupMapData(cursor);
                 setMap = true;
             }
             mSlidingLayer.setSlidingEnabled(false);
@@ -722,7 +723,7 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
                 myInstance.set_nsId(cursor.getString(cursor.getColumnIndex(DBConstants.nsId)));
                 myInstance.set_objId(cursor.getString(cursor.getColumnIndex(DBConstants.objId)));
 
-                startActivity(placeActivity);
+                startActivity(new Intent(getApplicationContext(), PlaceActivity.class));
 
                 closeSlidingMapPanel();
             }
@@ -766,15 +767,14 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
 
     @Override
     public void onPlaceItemClick() {
-        cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
-        startActivity(placeActivity);
+        startActivity(new Intent(getApplicationContext(), PlaceActivity.class));
     }
 
 
     @Override
     public void onNavigationClick() {
 
-        cursor = new DBTools(this).getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
+        cursor = dbTools.getData(DBConstants.PLACE_TABLE_NAME, DBConstants.cityId, myInstance.get_cityId(), DBConstants.boneId, myInstance.get_boneId(), DBConstants.objId, myInstance.get_objId());
 
         String latitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLat));
         String longitude = cursor.getString(cursor.getColumnIndex(DBConstants.centerCoordinateLon));
@@ -790,6 +790,8 @@ public class Open_Details_header_N_list extends MyBaseDrawerActivity implements 
         }
 
     }
+
+
 
 
 }
