@@ -117,8 +117,10 @@ public class SplashActivity extends Activity {
                     throw new IOException(statusLine.getReasonPhrase());
                 }
             } catch (Exception e) {
-                fillArray(savedDateJson);
-                nextActivity();
+                if(savedDateJson != null){
+                    fillArray(savedDateJson);
+                    nextActivity();
+                }
             }
             return responseString;
         }
@@ -128,9 +130,10 @@ public class SplashActivity extends Activity {
             super.onPostExecute(result);
 
             requestStr = result;
-            fillArray(requestStr);
-            compareJsonVals(requestStr);
-
+            if(requestStr != null) {
+                fillArray(requestStr);
+                compareJsonVals(requestStr);
+            }
         }
     }
 
